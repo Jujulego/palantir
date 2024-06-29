@@ -2,16 +2,25 @@
 
 import SearchIcon from '@mui/icons-material/Search';
 import { CircularProgress, IconButton, Paper, styled } from '@mui/material';
-import { ChangeEvent, FormEvent, useCallback, useState, useTransition } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { ChangeEvent, FormEvent, useCallback, useEffect, useState, useTransition } from 'react';
 
 // Component
-export interface SearchBarProps {
-  readonly onSearch?: (search: string) => void;
-}
-
-export default function SearchBar({ onSearch }: SearchBarProps) {
+export default function SearchBar() {
   const [search, setSearch] = useState('');
   const [isSearching, startTransition] = useTransition();
+
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  useEffect(() => {
+    const ip = searchParams.get('ip');
+
+    if (ip) {
+      setSearch(ip);
+    }
+  }, []);
 
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
@@ -20,12 +29,10 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
   const handleSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (onSearch) {
-      startTransition(() => {
-        onSearch(search);
-      });
-    }
-  }, [search, onSearch]);
+    startTransition(() => {
+      router.push(`${pathname}?ip=${search}`);
+    });
+  }, [search, pathname, router]);
 
   return (
     <Paper
@@ -43,7 +50,7 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
       />
 
       { isSearching ? (
-        <CircularProgress size={32} />
+        <CircularProgress size={32} sx={{ m: 1 }} />
       ) : (
         <IconButton type="submit" sx={{ ml: 1, my: 0.5, mr: 0.5 }} disabled={!search}>
           <SearchIcon />
