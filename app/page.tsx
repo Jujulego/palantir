@@ -1,7 +1,11 @@
+import MapboxMap from '@/src/mapbox/MapboxMap';
+import { Box } from '@mui/material';
+
+// Page
 export default function Home() {
   return (
-    <main>
-      <h1>Hello sauron !</h1>
-    </main>
+    <Box component="main" height="100vh" width="100vw">
+      <MapboxMap />
+    </Box>
   );
 }
