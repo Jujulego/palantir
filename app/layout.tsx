@@ -1,6 +1,8 @@
 import { CssBaseline } from '@mui/material';
 import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/styles';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from 'next';
 import { ReactNode } from 'react';
 
@@ -25,6 +27,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
             { children }
           </CssVarsProvider>
         </AppRouterCacheProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
