@@ -50,9 +50,9 @@ export default function SearchBar() {
       />
 
       { isSearching ? (
-        <CircularProgress size={24} sx={{ m: 1.5 }} />
+        <CircularProgress size={24} sx={{ ml: 2.5, my: 1.5, mr: 1.5 }} />
       ) : (
-        <IconButton type="submit" sx={{ ml: 1, my: 0.5, mr: 0.5 }} disabled={!search}>
+        <IconButton type="submit" sx={{ ml: 1, my: 0.5, mr: 0.5 }} disabled={!search} aria-label="Search">
           <SearchIcon />
         </IconButton>
       ) }
