@@ -545,6 +545,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mui/icons-material@npm:5.15.21":
+  version: 5.15.21
+  resolution: "@mui/icons-material@npm:5.15.21"
+  dependencies:
+    "@babel/runtime": "npm:^7.23.9"
+  peerDependencies:
+    "@mui/material": ^5.0.0
+    "@types/react": ^17.0.0 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 10c0/28685825504a24aa497715ec519014e780e570d00e8edc8f3423da2cb55b2aa2c44e829429efc9059d82542035e6f121d79a9f503cb6ae19439aca9e5321e959
+  languageName: node
+  linkType: hard
+
 "@mui/material-nextjs@npm:5.15.11":
   version: 5.15.11
   resolution: "@mui/material-nextjs@npm:5.15.11"
@@ -3327,6 +3343,7 @@ __metadata:
     "@emotion/cache": "npm:11.11.0"
     "@emotion/react": "npm:11.11.4"
     "@emotion/styled": "npm:11.11.5"
+    "@mui/icons-material": "npm:5.15.21"
     "@mui/material": "npm:5.15.21"
     "@mui/material-nextjs": "npm:5.15.11"
     "@types/mapbox-gl": "npm:3.1.0"

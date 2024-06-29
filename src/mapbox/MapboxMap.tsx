@@ -1,9 +1,10 @@
 'use client';
 
-import { Box, NoSsr } from '@mui/material';
+import { Box, NoSsr, SxProps } from '@mui/material';
 import { var$ } from 'kyrielle';
 import mapboxgl from 'mapbox-gl';
 import { ReactNode, Suspense, useEffect, useRef } from 'react';
+
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import { MapboxContext } from '@/src/mapbox/Mapbox.context';
@@ -14,9 +15,10 @@ mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PK!;
 // Component
 export interface MapboxMapProps {
   readonly children?: ReactNode;
+  readonly sx?: SxProps;
 }
 
-export default function MapboxMap({ children }: MapboxMapProps) {
+export default function MapboxMap({ children, sx }: MapboxMapProps) {
   const map$ = useRef(var$<mapboxgl.Map>());
   const container = useRef<HTMLDivElement>(null);
 
@@ -37,7 +39,7 @@ export default function MapboxMap({ children }: MapboxMapProps) {
 
   return (
     <MapboxContext.Provider value={map$.current}>
-      <Box height="100%" width="100%" ref={container} />
+      <Box ref={container} sx={sx} />
 
       <NoSsr>
         <Suspense>
