@@ -40,7 +40,7 @@ export default function SearchBar() {
       sx={{
         display: 'flex',
         alignItems: 'center',
-        borderRadius: '9999px',
+        borderRadius: 9999,
         overflow: 'hidden'
       }}
     >
@@ -50,7 +50,7 @@ export default function SearchBar() {
       />
 
       { isSearching ? (
-        <CircularProgress size={32} sx={{ m: 1 }} />
+        <CircularProgress size={24} sx={{ m: 2 }} />
       ) : (
         <IconButton type="submit" sx={{ ml: 1, my: 0.5, mr: 0.5 }} disabled={!search}>
           <SearchIcon />
@@ -62,7 +62,8 @@ export default function SearchBar() {
 
 // Utils
 const SearchInput = styled('input')(({ theme }) => ({
-    border: 'none',
-    outline: 'none',
-    paddingLeft: theme.spacing(2.5),
+  minWidth: 250,
+  border: 'none',
+  outline: 'none',
+  paddingLeft: theme.spacing(2.5),
 }));
