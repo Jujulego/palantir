@@ -1,6 +1,7 @@
+import { Box } from '@mui/material';
+
 import MapboxMap from '@/src/mapbox/MapboxMap';
 import MapboxNavigationControl from '@/src/mapbox/MapboxNavigationControl';
-import { Box } from '@mui/material';
 
 // Page
 export default function Home() {

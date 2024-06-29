@@ -1,19 +1,18 @@
 'use client';
 
-import { useMapboxMap } from '@/src/mapbox/Mapbox.context';
 import mapboxgl from 'mapbox-gl';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
+
+import { useMapboxMap } from '@/src/mapbox/Mapbox.context';
 
 export default function MapboxNavigationControl() {
   const map = useMapboxMap();
-  const controls = useRef(new mapboxgl.NavigationControl());
 
   useEffect(() => {
-    map.addControl(controls.current);
+    const control = new mapboxgl.NavigationControl();
+    map.addControl(control);
 
-    return () => {
-      map.removeControl(controls.current)
-    };
+    return () => void map.removeControl(control);
   }, [map]);
 
   return null;
