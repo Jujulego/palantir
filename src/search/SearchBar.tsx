@@ -50,7 +50,7 @@ export default function SearchBar() {
       />
 
       { isSearching ? (
-        <CircularProgress size={24} sx={{ m: 2 }} />
+        <CircularProgress size={24} sx={{ m: 1.5 }} />
       ) : (
         <IconButton type="submit" sx={{ ml: 1, my: 0.5, mr: 0.5 }} disabled={!search}>
           <SearchIcon />
