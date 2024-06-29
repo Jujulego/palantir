@@ -8,6 +8,7 @@ export function useStore$<D>(res: StoredResource<D>): D {
       return () => sub.unsubscribe();
     }, [res]),
     () => res.defer(),
+    () => undefined,
   );
 
   if (data === undefined) {

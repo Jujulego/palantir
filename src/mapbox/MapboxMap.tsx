@@ -1,9 +1,10 @@
 'use client';
 
-import { Box } from '@mui/material';
+import { Box, NoSsr } from '@mui/material';
 import { var$ } from 'kyrielle';
 import mapboxgl from 'mapbox-gl';
 import { ReactNode, Suspense, useEffect, useRef } from 'react';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 import { MapboxContext } from '@/src/mapbox/Mapbox.context';
 
@@ -37,9 +38,12 @@ export default function MapboxMap({ children }: MapboxMapProps) {
   return (
     <MapboxContext.Provider value={map$.current}>
       <Box height="100%" width="100%" ref={container} />
-      <Suspense>
-        { children }
-      </Suspense>
+
+      <NoSsr>
+        <Suspense>
+          { children }
+        </Suspense>
+      </NoSsr>
     </MapboxContext.Provider>
   )
 }
