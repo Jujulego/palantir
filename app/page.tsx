@@ -16,16 +16,12 @@ export default function Home(props: HomeProps) {
   const { ip } = props.searchParams;
 
   return (
-    <Box component="main" position="relative" height="100vh" width="100vw">
-      <MapboxMap
-        sx={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          height: '100%',
-          width: '100%'
-        }}
-      >
+    <Box component="main" display="flex" flexDirection="column" position="relative" height="100vh" width="100vw">
+      <Box position="absolute" top={12} left={16} zIndex="appBar">
+        <SearchBar />
+      </Box>
+
+      <MapboxMap sx={{ flex: 1 }}>
         <NoSsr>
           <MapboxNavigationControl />
         </NoSsr>
@@ -34,10 +30,6 @@ export default function Home(props: HomeProps) {
           <IpGeolocationMarker ip={ip} />
         ) }
       </MapboxMap>
-
-      <Box position="absolute" top={0} left={0} zIndex="appBar" px={2} py={1.5}>
-        <SearchBar />
-      </Box>
     </Box>
   );
 }
