@@ -1,14 +1,7 @@
-import {
-  Avatar,
-  Card,
-  CardHeader, Chip,
-  Divider,
-  List,
-  ListItem, ListItemButton, ListItemText, Tooltip,
-  Typography
-} from '@mui/material';
+import { Avatar, Card, CardHeader, Chip, Divider, List } from '@mui/material';
 import { blue } from '@mui/material/colors';
 
+import DataItem from '@/src/common/DataItem';
 import { RefSpan } from '@/src/common/utils';
 import { searchIpGeolocation } from '@/src/ip-geolocation/data';
 import MapboxFocusButton from '@/src/mapbox/MapboxFocusButton';
@@ -42,45 +35,23 @@ export default async function IpGeolocationCard({ ip }: IpGeolocationCardProps) 
       <Divider />
 
       <List dense>
-        <ListItem>
-          <Typography variant="subtitle2" sx={{ width: 108, flex: '0 0 auto' }}>ISP</Typography>
-          <Tooltip title={result.isp}>
-            <ListItemText primaryTypographyProps={{ noWrap: true }}>{ result.isp }</ListItemText>
-          </Tooltip>
-        </ListItem>
-        <ListItem>
-          <Typography variant="subtitle2" sx={{ width: 108, flex: '0 0 auto' }}>Organisation</Typography>
-          <Tooltip title={result.organization}>
-            <ListItemText primaryTypographyProps={{ noWrap: true }}>{ result.organization }</ListItemText>
-          </Tooltip>
-        </ListItem>
+        <DataItem name="ISP">{ result.isp }</DataItem>
+        <DataItem name="Organisation">{ result.organization }</DataItem>
       </List>
 
       <Divider />
 
       <List dense>
-        <ListItemButton>
-          <Typography variant="subtitle2" sx={{ width: 108, flex: '0 0 auto' }}>Adresse</Typography>
-          <ListItemText>{ result.zipcode } { result.city }</ListItemText>
-        </ListItemButton>
-        <ListItem>
-          <Typography variant="subtitle2" sx={{ width: 108, flex: '0 0 auto' }}>Région</Typography>
-          <ListItemText>
-            { result.state_prov } <RefSpan>({ result.state_code })</RefSpan>
-          </ListItemText>
-        </ListItem>
-        <ListItem>
-          <Typography variant="subtitle2" sx={{ width: 108, flex: '0 0 auto' }}>Pays</Typography>
-          <ListItemText>
-            { result.country_emoji } { result.country_name } <RefSpan>({ result.country_code2 })</RefSpan>
-          </ListItemText>
-        </ListItem>
-        <ListItem>
-          <Typography variant="subtitle2" sx={{ width: 108, flex: '0 0 auto' }}>Continent</Typography>
-          <ListItemText>
-            { result.continent_name } <RefSpan>({ result.continent_code })</RefSpan>
-          </ListItemText>
-        </ListItem>
+        <DataItem name="Adresse">{ result.zipcode } { result.city }</DataItem>
+        <DataItem name="Région">
+          { result.state_prov } <RefSpan>({ result.state_code })</RefSpan>
+        </DataItem>
+        <DataItem name="Pays">
+          { result.country_emoji } { result.country_name } <RefSpan>({ result.country_code2 })</RefSpan>
+        </DataItem>
+        <DataItem name="Continent">
+          { result.continent_name } <RefSpan>({ result.continent_code })</RefSpan>
+        </DataItem>
       </List>
     </Card>
   );
