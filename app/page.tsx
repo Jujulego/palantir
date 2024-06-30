@@ -5,6 +5,7 @@ import IpGeolocationCard from '@/src/ip-geolocation/IpGeolocationCard';
 import IpGeolocationMarker from '@/src/ip-geolocation/IpGeolocationMarker';
 import MapboxMap from '@/src/mapbox/MapboxMap';
 import MapboxNavigationControl from '@/src/mapbox/MapboxNavigationControl';
+import { Suspense } from 'react';
 
 // Page
 export interface HomeProps {
@@ -23,9 +24,7 @@ export default function Home(props: HomeProps) {
       </Box>
 
       <MapboxMap sx={{ flex: 1 }}>
-        <NoSsr>
-          <MapboxNavigationControl />
-        </NoSsr>
+        <MapboxNavigationControl />
 
         { ip && (
           <IpGeolocationMarker ip={ip} />
@@ -34,7 +33,9 @@ export default function Home(props: HomeProps) {
 
       { ip && (
         <Box position="absolute" left={16} top={80} zIndex={10} width={376}>
-          <IpGeolocationCard ip={ip} />
+          <Suspense>
+            <IpGeolocationCard ip={ip} />
+          </Suspense>
         </Box>
       ) }
     </Box>

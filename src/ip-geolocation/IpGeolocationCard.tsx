@@ -1,9 +1,15 @@
-import { Avatar, Card, CardHeader, Chip, Divider, List } from '@mui/material';
+import { Avatar, Card, CardHeader, Divider, List } from '@mui/material';
 import { blue } from '@mui/material/colors';
+import { Suspense } from 'react';
 
 import DataItem from '@/src/common/DataItem';
-import { RefSpan } from '@/src/common/utils';
-import { searchIpGeolocation } from '@/src/ip-geolocation/data';
+import IpGeolocationAddress from '@/src/ip-geolocation/IpGeolocationAddress';
+import IpGeolocationConnectionType from '@/src/ip-geolocation/IpGeolocationConnectionType';
+import IpGeolocationContinent from '@/src/ip-geolocation/IpGeolocationContinent';
+import IpGeolocationCountry from '@/src/ip-geolocation/IpGeolocationCountry';
+import IpGeolocationISP from '@/src/ip-geolocation/IpGeolocationISP';
+import IpGeolocationOrganization from '@/src/ip-geolocation/IpGeolocationOrganization';
+import IpGeolocationState from '@/src/ip-geolocation/IpGeolocationState';
 import MapboxFocusButton from '@/src/mapbox/MapboxFocusButton';
 
 // Component
@@ -11,9 +17,7 @@ export interface IpGeolocationCardProps {
   readonly ip: string;
 }
 
-export default async function IpGeolocationCard({ ip }: IpGeolocationCardProps) {
-  const result = await searchIpGeolocation(ip);
-
+export default function IpGeolocationCard({ ip }: IpGeolocationCardProps) {
   return (
     <Card>
       <CardHeader
@@ -21,9 +25,9 @@ export default async function IpGeolocationCard({ ip }: IpGeolocationCardProps) 
         title={
           <>
             IP Geolocation
-            { result.connection_type && (
-              <Chip label={result.connection_type} size="small" sx={{ ml: 1, my: -0.25 }} />
-            ) }
+            <Suspense>
+              <IpGeolocationConnectionType ip={ip} sx={{ ml: 1, my: -0.25 }} />
+            </Suspense>
           </>
         }
         subheader={ip}
@@ -35,23 +39,17 @@ export default async function IpGeolocationCard({ ip }: IpGeolocationCardProps) 
       <Divider />
 
       <List dense>
-        <DataItem name="ISP">{ result.isp }</DataItem>
-        <DataItem name="Organisation">{ result.organization }</DataItem>
+        <DataItem name="ISP"><IpGeolocationISP ip={ip} /></DataItem>
+        <DataItem name="Organisation"><IpGeolocationOrganization ip={ip} /></DataItem>
       </List>
 
       <Divider />
 
       <List dense>
-        <DataItem name="Adresse">{ result.zipcode } { result.city }</DataItem>
-        <DataItem name="Région">
-          { result.state_prov } <RefSpan>({ result.state_code })</RefSpan>
-        </DataItem>
-        <DataItem name="Pays">
-          { result.country_emoji } { result.country_name } <RefSpan>({ result.country_code2 })</RefSpan>
-        </DataItem>
-        <DataItem name="Continent">
-          { result.continent_name } <RefSpan>({ result.continent_code })</RefSpan>
-        </DataItem>
+        <DataItem name="Adresse"><IpGeolocationAddress ip={ip} /></DataItem>
+        <DataItem name="Région"><IpGeolocationState ip={ip} /></DataItem>
+        <DataItem name="Pays"><IpGeolocationCountry ip={ip} /></DataItem>
+        <DataItem name="Continent"><IpGeolocationContinent ip={ip} /></DataItem>
       </List>
     </Card>
   );

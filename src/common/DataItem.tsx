@@ -1,5 +1,5 @@
-import { ListItem, ListItemText, Typography } from '@mui/material';
-import type { ReactNode } from 'react';
+import { ListItem, ListItemText, Skeleton, Typography } from '@mui/material';
+import { type ReactNode, Suspense } from 'react';
 
 // Component
 export interface CardListItemProps {
@@ -11,7 +11,9 @@ export default function DataItem({ name, children }: CardListItemProps) {
   return (
     <ListItem>
       <Typography variant="subtitle2" sx={{ width: 108, flex: '0 0 auto' }}>{ name }</Typography>
-      <ListItemText primaryTypographyProps={{ noWrap: true }}>{ children }</ListItemText>
+      <ListItemText primaryTypographyProps={{ noWrap: true }}>
+        <Suspense fallback={<Skeleton />}>{ children }</Suspense>
+      </ListItemText>
     </ListItem>
   );
 }

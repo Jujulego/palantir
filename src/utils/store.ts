@@ -1,5 +1,5 @@
 import { StoredResource, waitFor$ } from 'kyrielle';
-import { useCallback, useSyncExternalStore } from 'react';
+import { use, useCallback, useSyncExternalStore } from 'react';
 
 // Hook
 export function useStore$<D>(res: StoredResource<D>): D {
@@ -13,8 +13,7 @@ export function useStore$<D>(res: StoredResource<D>): D {
   );
 
   if (data === undefined) {
-    // TODO: use "use" once React 19 is out
-    throw waitFor$(res);
+    return use(waitFor$(res));
   }
 
   return data;
