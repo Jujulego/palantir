@@ -20,6 +20,7 @@ export default async function IpGeolocationMarker({ ip }: IpGeolocationMarkerPro
     <NoSsr>
       <MapboxMarker
         color={blue[300]}
+        focusKey="ip-geolocation"
         lngLat={[parseFloat(result.longitude), parseFloat(result.latitude)]}
       />
     </NoSsr>

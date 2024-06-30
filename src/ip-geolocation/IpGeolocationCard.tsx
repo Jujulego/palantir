@@ -9,9 +9,9 @@ import {
 } from '@mui/material';
 import { blue } from '@mui/material/colors';
 
+import { RefSpan } from '@/src/common/utils';
 import { searchIpGeolocation } from '@/src/ip-geolocation/data';
-import { RefSpan } from '@/src/ip-geolocation/utils';
-import MapboxFlyToButton from '@/src/mapbox/MapboxFlyToButton';
+import MapboxFocusButton from '@/src/mapbox/MapboxFocusButton';
 
 // Component
 export interface IpGeolocationCardProps {
@@ -38,7 +38,7 @@ export default async function IpGeolocationCard({ ip }: IpGeolocationCardProps) 
           <Typography variant="body2" color="text.secondary">{ result.ip }</Typography>
         }
         action={
-          <MapboxFlyToButton lngLat={[parseFloat(result.longitude), parseFloat(result.latitude)]} />
+          <MapboxFocusButton focusKey="ip-geolocation" />
         }
       />
 

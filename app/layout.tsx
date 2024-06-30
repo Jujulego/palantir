@@ -6,6 +6,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from 'next';
 import { ReactNode } from 'react';
 
+import MapboxFocusProvider from '@/src/mapbox/MapboxFocusProvider';
 import theme from '@/src/theme';
 
 export const metadata: Metadata = {
@@ -24,7 +25,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <AppRouterCacheProvider>
           <CssVarsProvider theme={theme}>
             <CssBaseline />
-            { children }
+
+            <MapboxFocusProvider initialFocusKey="ip-geolocation">
+              { children }
+            </MapboxFocusProvider>
           </CssVarsProvider>
         </AppRouterCacheProvider>
         <Analytics />
