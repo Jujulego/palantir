@@ -4,7 +4,7 @@ import {
   CardHeader, Chip,
   Divider,
   List,
-  ListItem, ListItemButton, ListItemText,
+  ListItem, ListItemButton, ListItemText, Tooltip,
   Typography
 } from '@mui/material';
 import { blue } from '@mui/material/colors';
@@ -25,18 +25,15 @@ export default async function IpGeolocationCard({ ip }: IpGeolocationCardProps) 
     <Card>
       <CardHeader
         avatar={<Avatar sx={{ bgcolor: blue[300] }}>GL</Avatar>}
-        disableTypography
         title={
-          <Typography component="h4" variant="body2">
+          <>
             IP Geolocation
             { result.connection_type && (
               <Chip label={result.connection_type} size="small" sx={{ ml: 1, my: -0.25 }} />
             ) }
-          </Typography>
+          </>
         }
-        subheader={
-          <Typography variant="body2" color="text.secondary">{ result.ip }</Typography>
-        }
+        subheader={ip}
         action={
           <MapboxFocusButton focusKey="ip-geolocation" />
         }
@@ -46,12 +43,16 @@ export default async function IpGeolocationCard({ ip }: IpGeolocationCardProps) 
 
       <List dense>
         <ListItem>
-          <Typography variant="subtitle2" sx={{ width: 108 }}>ISP</Typography>
-          <ListItemText>{ result.isp }</ListItemText>
+          <Typography variant="subtitle2" sx={{ width: 108, flex: '0 0 auto' }}>ISP</Typography>
+          <Tooltip title={result.isp}>
+            <ListItemText primaryTypographyProps={{ noWrap: true }}>{ result.isp }</ListItemText>
+          </Tooltip>
         </ListItem>
         <ListItem>
-          <Typography variant="subtitle2" sx={{ width: 108 }}>Organisation</Typography>
-          <ListItemText>{ result.organization }</ListItemText>
+          <Typography variant="subtitle2" sx={{ width: 108, flex: '0 0 auto' }}>Organisation</Typography>
+          <Tooltip title={result.organization}>
+            <ListItemText primaryTypographyProps={{ noWrap: true }}>{ result.organization }</ListItemText>
+          </Tooltip>
         </ListItem>
       </List>
 
@@ -59,23 +60,23 @@ export default async function IpGeolocationCard({ ip }: IpGeolocationCardProps) 
 
       <List dense>
         <ListItemButton>
-          <Typography variant="subtitle2" sx={{ width: 108 }}>Adresse</Typography>
+          <Typography variant="subtitle2" sx={{ width: 108, flex: '0 0 auto' }}>Adresse</Typography>
           <ListItemText>{ result.zipcode } { result.city }</ListItemText>
         </ListItemButton>
         <ListItem>
-          <Typography variant="subtitle2" sx={{ width: 108 }}>Région</Typography>
+          <Typography variant="subtitle2" sx={{ width: 108, flex: '0 0 auto' }}>Région</Typography>
           <ListItemText>
             { result.state_prov } <RefSpan>({ result.state_code })</RefSpan>
           </ListItemText>
         </ListItem>
         <ListItem>
-          <Typography variant="subtitle2" sx={{ width: 108 }}>Pays</Typography>
+          <Typography variant="subtitle2" sx={{ width: 108, flex: '0 0 auto' }}>Pays</Typography>
           <ListItemText>
             { result.country_emoji } { result.country_name } <RefSpan>({ result.country_code2 })</RefSpan>
           </ListItemText>
         </ListItem>
         <ListItem>
-          <Typography variant="subtitle2" sx={{ width: 108 }}>Continent</Typography>
+          <Typography variant="subtitle2" sx={{ width: 108, flex: '0 0 auto' }}>Continent</Typography>
           <ListItemText>
             { result.continent_name } <RefSpan>({ result.continent_code })</RefSpan>
           </ListItemText>
