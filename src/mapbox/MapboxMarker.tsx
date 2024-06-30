@@ -7,9 +7,10 @@ import { useEffect, useRef } from 'react';
 // Components
 export interface MapboxMarkerProps {
   readonly lngLat: LngLatLike;
+  readonly flyTo?: boolean;
 }
 
-export default function MapboxMarker({ lngLat }: MapboxMarkerProps) {
+export default function MapboxMarker({ lngLat, flyTo }: MapboxMarkerProps) {
   const map = useMapboxMap();
   const marker = useRef(new mapboxgl.Marker());
 
@@ -21,6 +22,12 @@ export default function MapboxMarker({ lngLat }: MapboxMarkerProps) {
     const m = marker.current.addTo(map);
     return () => void m.remove();
   }, [map]);
+
+  useEffect(() => {
+    if (flyTo) {
+      map.flyTo({ center: lngLat, zoom: 4 });
+    }
+  }, [map, lngLat]);
 
   return null;
 }

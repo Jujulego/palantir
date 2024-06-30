@@ -3403,6 +3403,7 @@ __metadata:
     next: "npm:14.2.4"
     react: "npm:18.3.1"
     react-dom: "npm:18.3.1"
+    server-only: "npm:0.0.1"
     typescript: "npm:5.5.2"
   languageName: unknown
   linkType: soft
@@ -3820,7 +3821,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"server-only@npm:^0.0.1":
+"server-only@npm:0.0.1, server-only@npm:^0.0.1":
   version: 0.0.1
   resolution: "server-only@npm:0.0.1"
   checksum: 10c0/4704f0ef85da0be981af6d4ed8e739d39bcfd265b9c246a684060acda5642d0fdc6daffc2308e71e2682c5f508090978802eae0a77623c9b90a49f9ae68048d6

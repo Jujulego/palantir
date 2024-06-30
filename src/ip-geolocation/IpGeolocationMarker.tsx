@@ -1,24 +1,19 @@
-'use client';
+import { NoSsr } from '@mui/material';
 
-import { useMapboxMap } from '@/src/mapbox/Mapbox.context';
-import { LngLatLike } from 'mapbox-gl';
-import { useEffect, useMemo } from 'react';
-
-import { IpGeolocationResult } from '@/src/ip-geolocation/actions';
+import { searchIpGeolocation } from '@/src/ip-geolocation/data';
 import MapboxMarker from '@/src/mapbox/MapboxMarker';
 
 // Component
 export interface IpGeolocationMarkerProps {
-  readonly result: IpGeolocationResult;
+  readonly ip: string;
 }
 
-export default function IpGeolocationMarker({ result }: IpGeolocationMarkerProps) {
-  const map = useMapboxMap();
-  const lngLat = useMemo<LngLatLike>(() => [parseFloat(result.longitude), parseFloat(result.latitude)], [result]);
+export default async function IpGeolocationMarker({ ip }: IpGeolocationMarkerProps) {
+  const result = await searchIpGeolocation(ip);
 
-  useEffect(() => {
-    map.flyTo({ center: lngLat, zoom: 4 });
-  }, [map, lngLat]);
-
-  return <MapboxMarker lngLat={lngLat} />;
+  return (
+    <NoSsr>
+      <MapboxMarker lngLat={[parseFloat(result.longitude), parseFloat(result.latitude)]} flyTo />
+    </NoSsr>
+  );
 }

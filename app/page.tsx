@@ -1,6 +1,6 @@
-import { Box } from '@mui/material';
+import { Box, NoSsr } from '@mui/material';
 
-import IpGeolocation from '@/src/ip-geolocation/IpGeolocation';
+import IpGeolocationMarker from '@/src/ip-geolocation/IpGeolocationMarker';
 import MapboxMap from '@/src/mapbox/MapboxMap';
 import MapboxNavigationControl from '@/src/mapbox/MapboxNavigationControl';
 import SearchBar from '@/src/search/SearchBar';
@@ -26,10 +26,12 @@ export default function Home(props: HomeProps) {
           width: '100%'
         }}
       >
-        <MapboxNavigationControl />
+        <NoSsr>
+          <MapboxNavigationControl />
+        </NoSsr>
 
         { ip && (
-          <IpGeolocation ip={ip} />
+          <IpGeolocationMarker ip={ip} />
         ) }
       </MapboxMap>
 

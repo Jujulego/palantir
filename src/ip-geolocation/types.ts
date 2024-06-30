@@ -1,18 +1,3 @@
-'use server';
-
-// Actions
-export async function searchIpGeolocation(ip: string): Promise<IpGeolocationResult> {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-
-  const res = await fetch(`https://api.ipgeolocation.io/ipgeo?apiKey=${process.env.IP_GEOLOCATION_API_KEY}&ip=${ip}`, {
-    next: {
-      revalidate: 86400,
-    }
-  });
-
-  return await res.json();
-}
-
 // Types
 export interface IpGeolocationCurrency {
   readonly code: string;
