@@ -1,10 +1,11 @@
 'use client';
 
-import mapboxgl from 'mapbox-gl';
-import { useEffect } from 'react';
+import { useMapboxMap } from '@/src/mapbox/Mapbox.context';
+import { LngLatLike } from 'mapbox-gl';
+import { useEffect, useMemo } from 'react';
 
 import { IpGeolocationResult } from '@/src/ip-geolocation/actions';
-import { useMapboxMap } from '@/src/mapbox/Mapbox.context';
+import MapboxMarker from '@/src/mapbox/MapboxMarker';
 
 // Component
 export interface IpGeolocationMarkerProps {
@@ -13,14 +14,11 @@ export interface IpGeolocationMarkerProps {
 
 export default function IpGeolocationMarker({ result }: IpGeolocationMarkerProps) {
   const map = useMapboxMap();
+  const lngLat = useMemo<LngLatLike>(() => [parseFloat(result.longitude), parseFloat(result.latitude)], [result]);
 
   useEffect(() => {
-    const marker = new mapboxgl.Marker({ scale: 0.5 })
-      .setLngLat([parseFloat(result.longitude), parseFloat(result.latitude)])
-      .addTo(map);
+    map.flyTo({ center: lngLat, zoom: 4 });
+  }, [map, lngLat]);
 
-    return () => void marker.remove();
-  }, [map, result]);
-
-  return null;
+  return <MapboxMarker lngLat={lngLat} />;
 }
