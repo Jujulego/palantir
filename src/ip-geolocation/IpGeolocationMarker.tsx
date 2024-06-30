@@ -1,4 +1,5 @@
 import { NoSsr } from '@mui/material';
+import { blue } from '@mui/material/colors';
 
 import { searchIpGeolocation } from '@/src/ip-geolocation/data';
 import MapboxMarker from '@/src/mapbox/MapboxMarker';
@@ -17,7 +18,10 @@ export default async function IpGeolocationMarker({ ip }: IpGeolocationMarkerPro
 
   return (
     <NoSsr>
-      <MapboxMarker lngLat={[parseFloat(result.longitude), parseFloat(result.latitude)]} flyTo />
+      <MapboxMarker
+        color={blue[300]}
+        lngLat={[parseFloat(result.longitude), parseFloat(result.latitude)]}
+      />
     </NoSsr>
   );
 }

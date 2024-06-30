@@ -2,32 +2,30 @@
 
 import { useMapboxMap } from '@/src/mapbox/Mapbox.context';
 import mapboxgl, { LngLatLike } from 'mapbox-gl';
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 // Components
 export interface MapboxMarkerProps {
+  readonly color?: string;
   readonly lngLat: LngLatLike;
-  readonly flyTo?: boolean;
 }
 
-export default function MapboxMarker({ lngLat, flyTo }: MapboxMarkerProps) {
+export default function MapboxMarker({ color, lngLat }: MapboxMarkerProps) {
   const map = useMapboxMap();
-  const marker = useRef(new mapboxgl.Marker());
+  const [marker, setMarker] = useState<mapboxgl.Marker>(new mapboxgl.Marker());
+
+  useLayoutEffect(() => {
+    setMarker(new mapboxgl.Marker({ color }));
+  }, [color]);
 
   useEffect(() => {
-    marker.current.setLngLat(lngLat);
-  }, [lngLat]);
+    marker.setLngLat(lngLat);
+  }, [marker, lngLat]);
 
   useEffect(() => {
-    const m = marker.current.addTo(map);
+    const m = marker.addTo(map);
     return () => void m.remove();
-  }, [map]);
-
-  useEffect(() => {
-    if (flyTo) {
-      map.flyTo({ center: lngLat, zoom: 4 });
-    }
-  }, [map, lngLat]);
+  }, [marker, map]);
 
   return null;
 }

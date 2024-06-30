@@ -13,6 +13,15 @@ const theme = extendTheme({
   typography: {
     fontFamily: roboto.style.fontFamily,
   },
+  components: {
+    MuiPaper: {
+      styleOverrides: {
+        rounded: {
+          borderRadius: 12,
+        }
+      }
+    }
+  }
 });
 
 export default theme;

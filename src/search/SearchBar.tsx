@@ -50,9 +50,9 @@ export default function SearchBar() {
       />
 
       { isSearching ? (
-        <CircularProgress size={24} sx={{ ml: 2, my: 1.5, mr: 1.5 }} />
+        <CircularProgress size={24} sx={{ ml: 2, my: 1.5, mr: 1.5, flex: '0 0 auto' }} />
       ) : (
-        <IconButton type="submit" sx={{ ml: 1, my: 0.5, mr: 0.5 }} disabled={!search} aria-label="Search">
+        <IconButton type="submit" sx={{ ml: 1, my: 0.5, mr: 0.5, flex: '0 0 auto' }} disabled={!search} aria-label="Search">
           <SearchIcon />
         </IconButton>
       ) }
@@ -62,7 +62,7 @@ export default function SearchBar() {
 
 // Utils
 const SearchInput = styled('input')(({ theme }) => ({
-  minWidth: 250,
+  flex: 1,
   border: 'none',
   outline: 'none',
   paddingLeft: theme.spacing(2.5),

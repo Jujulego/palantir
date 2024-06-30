@@ -3,7 +3,11 @@ import 'server-only';
 
 // Actions
 export async function searchIpGeolocation(ip: string): Promise<IpGeolocationResult> {
-  const res = await fetch(`https://api.ipgeolocation.io/ipgeo?apiKey=${process.env.IP_GEOLOCATION_API_KEY}&ip=${ip}`, {
+  const url = new URL('https://api.ipgeolocation.io/ipgeo');
+  url.searchParams.set('apiKey', process.env.IP_GEOLOCATION_API_KEY!);
+  url.searchParams.set('ip', ip);
+
+  const res = await fetch(url, {
     next: {
       revalidate: 86400,
     }
