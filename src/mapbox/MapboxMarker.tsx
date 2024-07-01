@@ -14,13 +14,14 @@ export interface MapboxMarkerProps {
 
 export default function MapboxMarker({ color, focusKey, lngLat }: MapboxMarkerProps) {
   const map = useMapboxMap();
-  const focus = useContext(MapboxFocus);
+  const { focus } = useContext(MapboxFocus);
 
   const [marker, setMarker] = useState<mapboxgl.Marker>(new mapboxgl.Marker());
+  const scale = focus === focusKey ? 1 : 0.5;
 
   useLayoutEffect(() => {
-    setMarker(new mapboxgl.Marker({ color }));
-  }, [color]);
+    setMarker(new mapboxgl.Marker({ color, scale }));
+  }, [color, scale]);
 
   useEffect(() => {
     marker.setLngLat(lngLat);
@@ -32,7 +33,7 @@ export default function MapboxMarker({ color, focusKey, lngLat }: MapboxMarkerPr
   }, [marker, map]);
 
   useEffect(() => {
-    if (focusKey === focusKey) {
+    if (focus === focusKey) {
       map.flyTo({ center: lngLat, zoom: 4, padding: { left: 318, top: 16, right: 16, bottom: 16 } });
     }
   }, [lngLat, focusKey, focus, map]);

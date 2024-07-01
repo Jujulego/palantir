@@ -4,7 +4,7 @@ import { useMapboxMap } from '@/src/mapbox/Mapbox.context';
 import { useColorScheme } from '@mui/material';
 import { useEffect } from 'react';
 
-export function MapboxTheme() {
+export default function MapboxTheme() {
   const map = useMapboxMap();
   const { mode } = useColorScheme();
 
