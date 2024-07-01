@@ -7,5 +7,5 @@ export interface IpGeolocationISPProps {
 
 export default async function IpGeolocationISP({ ip }: IpGeolocationISPProps) {
   const result = await searchIpGeolocation(ip);
-  return <>{ result.isp }</>;
+  return result.isp;
 }

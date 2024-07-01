@@ -7,5 +7,5 @@ export interface IpGeolocationOrganizationProps {
 
 export default async function IpGeolocationOrganization({ ip }: IpGeolocationOrganizationProps) {
   const result = await searchIpGeolocation(ip);
-  return <>{ result.organization }</>;
+  return result.organization;
 }

@@ -9,7 +9,11 @@ export interface IpGeolocationStateProps {
 
 export default async function IpGeolocationState({ ip }: IpGeolocationStateProps) {
   const result = await searchIpGeolocation(ip);
-  return (<>
-    { result.state_prov } <Box component="span" color="text.secondary">({ result.state_code })</Box>
-  </>);
+
+  return <>
+    { result.state_prov }{' '}
+    { result.state_code && (
+      <Box component="span" color="text.secondary">({ result.state_code })</Box>
+    ) }
+  </>;
 }
