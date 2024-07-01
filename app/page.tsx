@@ -1,3 +1,4 @@
+import ColorModeToggle from '@/src/common/ColorModeToggle';
 import { Box, NoSsr } from '@mui/material';
 
 import SearchBar from '@/src/common/SearchBar';
@@ -19,8 +20,10 @@ export default function Home(props: HomeProps) {
 
   return (
     <Box component="main" display="flex" flexDirection="column" position="relative" height="100vh" width="100vw">
-      <Box position="absolute" left={16} top={16} zIndex="appBar" width={376}>
-        <SearchBar />
+      <Box position="absolute" left={16} top={16} zIndex="appBar" display="flex">
+        <SearchBar sx={{ width: 376 }} />
+
+        <ColorModeToggle sx={{ ml: 2 }} />
       </Box>
 
       <MapboxMap sx={{ flex: 1 }}>

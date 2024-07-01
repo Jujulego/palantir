@@ -10,6 +10,18 @@ const roboto = Roboto({
 });
 
 const theme = extendTheme({
+  colorSchemes: {
+    light: {
+      palette: {
+        mode: 'light'
+      }
+    },
+    dark: {
+      palette: {
+        mode: 'dark'
+      }
+    }
+  },
   typography: {
     fontFamily: roboto.style.fontFamily,
   },

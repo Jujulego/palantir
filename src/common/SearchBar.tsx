@@ -1,12 +1,16 @@
 'use client';
 
 import SearchIcon from '@mui/icons-material/Search';
-import { CircularProgress, IconButton, Paper, styled } from '@mui/material';
+import { CircularProgress, IconButton, Paper, styled, SxProps } from '@mui/material';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ChangeEvent, FormEvent, useCallback, useEffect, useState, useTransition } from 'react';
 
 // Component
-export default function SearchBar() {
+export interface SearchBarProps {
+  readonly sx?: SxProps;
+}
+
+export default function SearchBar({ sx }: SearchBarProps) {
   const [search, setSearch] = useState('');
   const [isSearching, startTransition] = useTransition();
 
@@ -37,12 +41,12 @@ export default function SearchBar() {
   return (
     <Paper
       component="form" role="search" onSubmit={handleSubmit}
-      sx={{
+      sx={[{
         display: 'flex',
         alignItems: 'center',
         borderRadius: 9999,
         overflow: 'hidden'
-      }}
+      }, ...(Array.isArray(sx) ? sx : [sx])]}
     >
       <SearchInput
         type="search" placeholder="Adresse IP" required
@@ -63,7 +67,9 @@ export default function SearchBar() {
 // Utils
 const SearchInput = styled('input')(({ theme }) => ({
   flex: 1,
+  height: '100%',
+  paddingLeft: theme.spacing(2.5),
+  backgroundColor: 'transparent',
   border: 'none',
   outline: 'none',
-  paddingLeft: theme.spacing(2.5),
 }));

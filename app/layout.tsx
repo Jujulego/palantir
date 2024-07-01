@@ -24,7 +24,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body>
         <AppRouterCacheProvider>
           <CssVarsProvider theme={theme}>
-            <CssBaseline />
+            <CssBaseline enableColorScheme />
 
             <MapboxFocusProvider initialFocusKey="ip-geolocation">
               { children }
