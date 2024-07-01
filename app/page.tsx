@@ -1,4 +1,3 @@
-import IpInfoCard from '@/src/ip-info/IpInfoCard';
 import { Box } from '@mui/material';
 import { Suspense } from 'react';
 
@@ -6,6 +5,7 @@ import ColorModeToggle from '@/src/common/ColorModeToggle';
 import SearchBar from '@/src/common/SearchBar';
 import IpGeolocationCard from '@/src/ip-geolocation/IpGeolocationCard';
 import IpGeolocationMarker from '@/src/ip-geolocation/IpGeolocationMarker';
+import IpInfoCard from '@/src/ip-info/IpInfoCard';
 import IpInfoMarker from '@/src/ip-info/IpInfoMarker';
 import MapboxMap from '@/src/mapbox/MapboxMap';
 import MapboxNavigationControl from '@/src/mapbox/MapboxNavigationControl';
