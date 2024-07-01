@@ -9,9 +9,6 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 import { MapboxContext } from '@/src/mapbox/Mapbox.context';
 
-// Setup
-mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PK!;
-
 // Component
 export interface MapboxMapProps {
   readonly children?: ReactNode;
@@ -26,12 +23,15 @@ export default function MapboxMap({ children, sx }: MapboxMapProps) {
     if (!container.current) return;
 
     const map = new mapboxgl.Map({
+      accessToken: process.env.NEXT_PUBLIC_MAPBOX_PK!,
       container: container.current,
       center: [-74.5, 40],
-      zoom: 4,
+      zoom: 1,
     });
 
-    map$.current.mutate(map);
+    map.on('load', () => {
+      map$.current.mutate(map);
+    });
 
     return () => map.remove();
   }, []);
