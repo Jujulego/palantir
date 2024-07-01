@@ -1,4 +1,5 @@
-import { RefSpan } from '@/src/common/utils';
+import { Box } from '@mui/material';
+
 import { searchIpGeolocation } from '@/src/ip-geolocation/data';
 
 // Component
@@ -8,5 +9,7 @@ export interface IpGeolocationStateProps {
 
 export default async function IpGeolocationState({ ip }: IpGeolocationStateProps) {
   const result = await searchIpGeolocation(ip);
-  return <>{ result.state_prov } <RefSpan>({ result.state_code })</RefSpan></>;
+  return (<>
+    { result.state_prov } <Box component="span" color="text.secondary">({ result.state_code })</Box>
+  </>);
 }

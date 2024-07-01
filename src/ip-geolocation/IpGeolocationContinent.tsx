@@ -1,4 +1,5 @@
-import { RefSpan } from '@/src/common/utils';
+import { Box } from '@mui/material';
+
 import { searchIpGeolocation } from '@/src/ip-geolocation/data';
 
 // Component
@@ -8,5 +9,8 @@ export interface IpGeolocationContinentProps {
 
 export default async function IpGeolocationContinent({ ip }: IpGeolocationContinentProps) {
   const result = await searchIpGeolocation(ip);
-  return <>{ result.continent_name } <RefSpan>({ result.continent_code })</RefSpan></>;
+
+  return (<>
+    { result.continent_name } <Box component="span" color="text.secondary">({ result.continent_code })</Box>
+  </>);
 }
