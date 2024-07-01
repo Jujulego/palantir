@@ -1,3 +1,4 @@
+import IpInfoCard from '@/src/ip-info/IpInfoCard';
 import { Box } from '@mui/material';
 import { Suspense } from 'react';
 
@@ -5,9 +6,10 @@ import ColorModeToggle from '@/src/common/ColorModeToggle';
 import SearchBar from '@/src/common/SearchBar';
 import IpGeolocationCard from '@/src/ip-geolocation/IpGeolocationCard';
 import IpGeolocationMarker from '@/src/ip-geolocation/IpGeolocationMarker';
+import IpInfoMarker from '@/src/ip-info/IpInfoMarker';
 import MapboxMap from '@/src/mapbox/MapboxMap';
 import MapboxNavigationControl from '@/src/mapbox/MapboxNavigationControl';
-import { MapboxTheme } from '@/src/mapbox/MapboxTheme';
+import MapboxTheme from '@/src/mapbox/MapboxTheme';
 
 // Page
 export interface HomeProps {
@@ -32,15 +34,20 @@ export default function Home(props: HomeProps) {
         <MapboxNavigationControl />
 
         { ip && (
-          <IpGeolocationMarker ip={ip} />
+          <Suspense>
+            <IpGeolocationMarker ip={ip} />
+            <IpInfoMarker ip={ip} />
+          </Suspense>
         ) }
       </MapboxMap>
 
       { ip && (
-        <Box position="absolute" left={16} top={80} zIndex={10} width={376}>
-          <Suspense>
-            <IpGeolocationCard ip={ip} />
-          </Suspense>
+        <Box
+          position="absolute" left={16} top={80} zIndex={10} width={376}
+          display="flex" flexDirection="column" gap={1}
+        >
+          <IpGeolocationCard ip={ip} />
+          <IpInfoCard ip={ip} />
         </Box>
       ) }
     </Box>
