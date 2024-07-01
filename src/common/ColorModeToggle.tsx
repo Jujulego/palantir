@@ -20,7 +20,11 @@ export default function ColorModeToggle({ sx }: ColorModeToggleProps) {
   // Render
   return (
     <Paper sx={[{ borderRadius: 9999 }, ...(Array.isArray(sx) ? sx : [sx])]}>
-      <IconButton onClick={handleClick} color="inherit" sx={{ m: 0.5 }}>
+      <IconButton
+        color="inherit" aria-label="Switch theme"
+        onClick={handleClick}
+        sx={{ m: 0.5 }}
+      >
         <NoSsr>
           { mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon /> }
         </NoSsr>
