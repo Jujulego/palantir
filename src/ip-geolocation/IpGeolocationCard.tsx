@@ -1,7 +1,8 @@
-import { Avatar, Card, CardHeader, Divider, List } from '@mui/material';
+import { Avatar, CardHeader, Divider, List } from '@mui/material';
 import { blue } from '@mui/material/colors';
 import { Suspense } from 'react';
 
+import DataCard from '@/src/common/DataCard';
 import DataItem from '@/src/common/DataItem';
 import IpGeolocationAddress from '@/src/ip-geolocation/IpGeolocationAddress';
 import IpGeolocationConnectionType from '@/src/ip-geolocation/IpGeolocationConnectionType';
@@ -10,7 +11,6 @@ import IpGeolocationCountry from '@/src/ip-geolocation/IpGeolocationCountry';
 import IpGeolocationISP from '@/src/ip-geolocation/IpGeolocationISP';
 import IpGeolocationOrganization from '@/src/ip-geolocation/IpGeolocationOrganization';
 import IpGeolocationState from '@/src/ip-geolocation/IpGeolocationState';
-import MapboxFocusButton from '@/src/mapbox/MapboxFocusButton';
 
 // Component
 export interface IpGeolocationCardProps {
@@ -19,25 +19,21 @@ export interface IpGeolocationCardProps {
 
 export default function IpGeolocationCard({ ip }: IpGeolocationCardProps) {
   return (
-    <Card>
-      <CardHeader
-        avatar={<Avatar sx={{ bgcolor: blue[300] }}>GL</Avatar>}
-        title={
-          <>
+    <DataCard
+      focusKey="ip-geolocation"
+      header={
+        <CardHeader
+          avatar={<Avatar sx={{ bgcolor: blue[300] }}>GL</Avatar>}
+          title={<>
             IP Geolocation
             <Suspense>
               <IpGeolocationConnectionType ip={ip} sx={{ ml: 1, my: -0.25 }} />
             </Suspense>
-          </>
-        }
-        subheader={ip}
-        action={
-          <MapboxFocusButton focusKey="ip-geolocation" />
-        }
-      />
-
-      <Divider />
-
+          </>}
+          subheader={ip}
+        />
+      }
+    >
       <List dense>
         <DataItem name="ISP"><IpGeolocationISP ip={ip} /></DataItem>
         <DataItem name="Organisation"><IpGeolocationOrganization ip={ip} /></DataItem>
@@ -51,7 +47,7 @@ export default function IpGeolocationCard({ ip }: IpGeolocationCardProps) {
         <DataItem name="Pays"><IpGeolocationCountry ip={ip} /></DataItem>
         <DataItem name="Continent"><IpGeolocationContinent ip={ip} /></DataItem>
       </List>
-    </Card>
+    </DataCard>
   );
 }
 
