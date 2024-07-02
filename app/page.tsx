@@ -55,7 +55,7 @@ export default function Home(props: HomeProps) {
             sm: '376px auto 1fr',
           },
           gridTemplateRows: {
-            xs: 'auto 252px 1fr',
+            xs: 'auto 272px 1fr',
             sm: 'auto 1fr',
           },
 
@@ -72,6 +72,7 @@ export default function Home(props: HomeProps) {
           <Box
             sx={{
               display: 'flex', flexDirection: 'column', gap: 1,
+              p: 0.25,
               gridArea: {
                 xs: '2 / 1 / 2 / span 2',
                 sm: '2 / 1',

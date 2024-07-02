@@ -43,7 +43,7 @@ export default function MapboxMarker({ color, focusKey, lngLat }: MapboxMarkerPr
         center: lngLat,
         zoom: 4,
         padding: smallScreen
-          ? { left: 16, top: 332, right: 16, bottom: 16 }
+          ? { left: 16, top: 344, right: 16, bottom: 16 }
           : { left: 408, top: 16, right: 16, bottom: 16 }
       });
     }
