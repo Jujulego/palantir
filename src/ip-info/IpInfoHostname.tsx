@@ -7,5 +7,5 @@ export interface IpInfoHostnameProps {
 
 export default async function IpInfoHostname({ ip }: IpInfoHostnameProps) {
   const result = await searchIpInfo(ip);
-  return result.hostname;
+  return result.hostname ?? result.ip;
 }

@@ -7,5 +7,5 @@ export interface IpInfoAddressProps {
 
 export default async function IpInfoAddress({ ip }: IpInfoAddressProps) {
   const result = await searchIpInfo(ip);
-  return `${result.postal} ${result.city}`;
+  return `${result.postal ?? ''} ${result.city ?? ''}`;
 }
