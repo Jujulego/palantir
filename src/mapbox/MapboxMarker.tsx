@@ -1,9 +1,11 @@
 'use client';
 
-import { useMapboxMap } from '@/src/mapbox/Mapbox.context';
-import { MapboxFocus } from '@/src/mapbox/MapboxFocus.context';
+import { useMediaQuery, useTheme } from '@mui/material';
 import mapboxgl, { LngLatLike } from 'mapbox-gl';
 import { useContext, useEffect, useLayoutEffect, useState } from 'react';
+
+import { useMapboxMap } from '@/src/mapbox/Mapbox.context';
+import { MapboxFocus } from '@/src/mapbox/MapboxFocus.context';
 
 // Components
 export interface MapboxMarkerProps {
@@ -15,6 +17,9 @@ export interface MapboxMarkerProps {
 export default function MapboxMarker({ color, focusKey, lngLat }: MapboxMarkerProps) {
   const map = useMapboxMap();
   const { focus } = useContext(MapboxFocus);
+
+  const theme = useTheme();
+  const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [marker, setMarker] = useState<mapboxgl.Marker>(new mapboxgl.Marker());
   const scale = focus === focusKey ? 1 : 0.5;
@@ -34,9 +39,15 @@ export default function MapboxMarker({ color, focusKey, lngLat }: MapboxMarkerPr
 
   useEffect(() => {
     if (focus === focusKey) {
-      map.flyTo({ center: lngLat, zoom: 4, padding: { left: 318, top: 16, right: 16, bottom: 16 } });
+      map.flyTo({
+        center: lngLat,
+        zoom: 4,
+        padding: smallScreen
+          ? { left: 16, top: 332, right: 16, bottom: 16 }
+          : { left: 408, top: 16, right: 16, bottom: 16 }
+      });
     }
-  }, [lngLat, focusKey, focus, map]);
+  }, [lngLat, focusKey, focus, map, smallScreen]);
 
   return null;
 }

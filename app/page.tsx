@@ -50,8 +50,14 @@ export default function Home(props: HomeProps) {
           pointerEvents: 'none',
 
           display: 'grid',
-          gridTemplateColumns: '376px',
-          gridTemplateRows: 'auto 1fr',
+          gridTemplateColumns: {
+            xs: '1fr auto',
+            sm: '376px auto 1fr',
+          },
+          gridTemplateRows: {
+            xs: 'auto 252px 1fr',
+            sm: 'auto 1fr',
+          },
 
           pt: 2,
           px: 2,
@@ -60,13 +66,16 @@ export default function Home(props: HomeProps) {
       >
         <SearchBar sx={{ gridArea: '1 / 1', pointerEvents: 'auto' }} />
 
-        <ColorModeToggle sx={{ gridArea: '1 / 2', mr: 'auto', pointerEvents: 'auto' }} />
+        <ColorModeToggle sx={{ gridArea: '1 / 2', pointerEvents: 'auto' }} />
 
         { ip && (
           <Box
             sx={{
               display: 'flex', flexDirection: 'column', gap: 1,
-              gridArea: '2 / 1',
+              gridArea: {
+                xs: '2 / 1 / 2 / span 2',
+                sm: '2 / 1',
+              },
               overflow: 'auto',
             }}
           >
