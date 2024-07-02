@@ -1,3 +1,6 @@
+import BigDataCloudArea from '@/src/big-data-cloud/BigDataCloudArea';
+import BigDataCloudCard from '@/src/big-data-cloud/BigDataCloudCard';
+import BigDataCloudMarker from '@/src/big-data-cloud/BigDataCloudMarker';
 import { Box } from '@mui/material';
 import { headers } from 'next/headers';
 import { Suspense } from 'react';
@@ -36,6 +39,8 @@ export default function Home(props: HomeProps) {
 
         { ip && (
           <Suspense>
+            <BigDataCloudArea ip={ip} />
+            <BigDataCloudMarker ip={ip} />
             <IpGeolocationMarker ip={ip} />
             <IpInfoMarker ip={ip} />
           </Suspense>
@@ -48,6 +53,7 @@ export default function Home(props: HomeProps) {
           display="flex" flexDirection="column" gap={1}
         >
           <IpGeolocationCard ip={ip} />
+          <BigDataCloudCard ip={ip} />
           <IpInfoCard ip={ip} />
         </Box>
       ) }
