@@ -3,7 +3,7 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { CircularProgress, IconButton, Paper, styled, SxProps } from '@mui/material';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { ChangeEvent, FormEvent, useCallback, useEffect, useState, useTransition } from 'react';
+import { ChangeEvent, FormEvent, useCallback, useState, useTransition } from 'react';
 
 // Component
 export interface SearchBarProps {
@@ -11,20 +11,12 @@ export interface SearchBarProps {
 }
 
 export default function SearchBar({ sx }: SearchBarProps) {
-  const [search, setSearch] = useState('');
-  const [isSearching, startTransition] = useTransition();
-
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  useEffect(() => {
-    const ip = searchParams.get('ip');
-
-    if (ip) {
-      setSearch(ip);
-    }
-  }, []);
+  const [search, setSearch] = useState(searchParams.get('ip') ?? '');
+  const [isSearching, startTransition] = useTransition();
 
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
