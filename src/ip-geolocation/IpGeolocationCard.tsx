@@ -1,4 +1,4 @@
-import { Avatar, CardHeader, Divider, List } from '@mui/material';
+import { Avatar, CardHeader, Divider, List, SxProps } from '@mui/material';
 import { blue } from '@mui/material/colors';
 import { Suspense } from 'react';
 
@@ -15,9 +15,10 @@ import IpGeolocationState from '@/src/ip-geolocation/IpGeolocationState';
 // Component
 export interface IpGeolocationCardProps {
   readonly ip: string;
+  readonly sx?: SxProps;
 }
 
-export default function IpGeolocationCard({ ip }: IpGeolocationCardProps) {
+export default function IpGeolocationCard({ ip, sx }: IpGeolocationCardProps) {
   return (
     <DataCard
       focusKey="ip-geolocation"
@@ -33,6 +34,7 @@ export default function IpGeolocationCard({ ip }: IpGeolocationCardProps) {
           subheader={ip}
         />
       }
+      sx={sx}
     >
       <List dense>
         <DataItem name="ISP"><IpGeolocationISP ip={ip} /></DataItem>

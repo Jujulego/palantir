@@ -27,12 +27,6 @@ export default function Home(props: HomeProps) {
 
   return (
     <Box component="main" display="flex" flexDirection="column" position="relative" height="100vh" width="100vw">
-      <Box position="absolute" left={16} top={16} zIndex="appBar" display="flex">
-        <SearchBar sx={{ width: 376 }} />
-
-        <ColorModeToggle sx={{ ml: 2 }} />
-      </Box>
-
       <MapboxMap sx={{ flex: 1 }}>
         <MapboxTheme />
         <MapboxNavigationControl />
@@ -47,16 +41,41 @@ export default function Home(props: HomeProps) {
         ) }
       </MapboxMap>
 
-      { ip && (
-        <Box
-          position="absolute" left={16} top={80} zIndex={10} width={376}
-          display="flex" flexDirection="column" gap={1}
-        >
-          <IpGeolocationCard ip={ip} />
-          <BigDataCloudCard ip={ip} />
-          <IpInfoCard ip={ip} />
-        </Box>
-      ) }
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 0, left: 0, zIndex: 10,
+          height: '100%', width: '100%',
+          overflow: 'hidden',
+          pointerEvents: 'none',
+
+          display: 'grid',
+          gridTemplateColumns: '376px',
+          gridTemplateRows: 'auto 1fr',
+
+          pt: 2,
+          px: 2,
+          gap: 2,
+        }}
+      >
+        <SearchBar sx={{ gridArea: '1 / 1', pointerEvents: 'auto' }} />
+
+        <ColorModeToggle sx={{ gridArea: '1 / 2', mr: 'auto', pointerEvents: 'auto' }} />
+
+        { ip && (
+          <Box
+            sx={{
+              display: 'flex', flexDirection: 'column', gap: 1,
+              gridArea: '2 / 1',
+              overflow: 'auto',
+            }}
+          >
+            <IpGeolocationCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} />
+            <BigDataCloudCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} />
+            <IpInfoCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} />
+          </Box>
+        ) }
+      </Box>
     </Box>
   );
 }

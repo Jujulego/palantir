@@ -1,4 +1,4 @@
-import { Avatar, CardHeader, Divider, List } from '@mui/material';
+import { Avatar, CardHeader, Divider, List, SxProps } from '@mui/material';
 import { green } from '@mui/material/colors';
 import { Suspense } from 'react';
 
@@ -13,9 +13,10 @@ import IpInfoState from '@/src/ip-info/IpInfoState';
 // Component
 export interface IpInfoCardProps {
   readonly ip: string;
+  readonly sx?: SxProps;
 }
 
-export default function IpInfoCard({ ip }: IpInfoCardProps) {
+export default function IpInfoCard({ ip, sx }: IpInfoCardProps) {
   return (
     <DataCard
       focusKey="ip-info"
@@ -30,6 +31,7 @@ export default function IpInfoCard({ ip }: IpInfoCardProps) {
           }
         />
       }
+      sx={sx}
     >
       <List dense>
         <DataItem name="Organisation"><IpInfoOrganization ip={ip} /></DataItem>

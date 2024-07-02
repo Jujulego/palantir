@@ -1,4 +1,4 @@
-import { Avatar, CardHeader, Divider, List } from '@mui/material';
+import { Avatar, CardHeader, Divider, List, SxProps } from '@mui/material';
 import { pink } from '@mui/material/colors';
 import { Suspense } from 'react';
 
@@ -16,9 +16,10 @@ import DataItem from '@/src/common/DataItem';
 // Component
 export interface BigDataCloudCardProps {
   readonly ip: string;
+  readonly sx?: SxProps;
 }
 
-export default function BigDataCloudCard({ ip }: BigDataCloudCardProps) {
+export default function BigDataCloudCard({ ip, sx }: BigDataCloudCardProps) {
   return (
     <DataCard
       focusKey="big-data-cloud"
@@ -35,6 +36,7 @@ export default function BigDataCloudCard({ ip }: BigDataCloudCardProps) {
           subheader={ip}
         />
       }
+      sx={sx}
     >
       <List dense>
         <DataItem name="ISP"><BigDataCloudISP ip={ip} /></DataItem>
