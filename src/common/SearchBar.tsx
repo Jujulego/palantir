@@ -1,5 +1,6 @@
 'use client';
 
+import LocateButton from '@/src/common/LocateButton';
 import SearchIcon from '@mui/icons-material/Search';
 import { CircularProgress, IconButton, Paper, styled, SxProps } from '@mui/material';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -21,6 +22,14 @@ export default function SearchBar({ sx }: SearchBarProps) {
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
   }, []);
+
+  const handleLocate = useCallback((ip: string) => {
+    setSearch(ip);
+
+    startTransition(() => {
+      router.push(`${pathname}?ip=${ip}`);
+    });
+  }, [pathname, router]);
 
   const handleSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -44,6 +53,8 @@ export default function SearchBar({ sx }: SearchBarProps) {
         type="search" placeholder="Adresse IP" required
         value={search} onChange={handleChange}
       />
+
+      <LocateButton sx={{ ml: 1, my: 0.5, flex: '0 0 auto' }} onClick={handleLocate} />
 
       { isSearching ? (
         <CircularProgress size={24} sx={{ ml: 2, my: 1.5, mr: 1.5, flex: '0 0 auto' }} />
