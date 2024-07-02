@@ -19,8 +19,14 @@ const theme = extendTheme({
     dark: {
       palette: {
         mode: 'dark'
+      },
+      map: {
+        light: 'night',
       }
     }
+  },
+  map: {
+    light: 'day',
   },
   typography: {
     fontFamily: roboto.style.fontFamily,
@@ -37,3 +43,23 @@ const theme = extendTheme({
 });
 
 export default theme;
+
+declare module '@mui/material/styles' {
+  export interface Theme {
+    map: {
+      light: 'dawn' | 'day' | 'dusk' | 'night';
+    }
+  }
+
+  export interface ThemeOptions {
+    map?: {
+      light?: 'dawn' | 'day' | 'dusk' | 'night';
+    }
+  }
+
+  export interface ColorSystemOptions {
+    map?: {
+      light?: 'dawn' | 'day' | 'dusk' | 'night';
+    }
+  }
+}
