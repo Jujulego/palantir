@@ -57,7 +57,7 @@ export default function SearchBar({ sx }: SearchBarProps) {
       <LocateButton sx={{ ml: 1, my: 0.5, flex: '0 0 auto' }} onClick={handleLocate} />
 
       { isSearching ? (
-        <CircularProgress size={24} sx={{ ml: 2, my: 1.5, mr: 1.5, flex: '0 0 auto' }} />
+        <CircularProgress size={24} sx={{ m: 1.5, flex: '0 0 auto' }} />
       ) : (
         <IconButton
           color="inherit" type="submit" disabled={!search}
