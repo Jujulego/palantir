@@ -11,11 +11,12 @@ export interface ColorModeToggleProps {
 }
 
 export default function ColorModeToggle({ sx }: ColorModeToggleProps) {
-  const { mode, setMode } = useColorScheme();
+  const { mode, systemMode, setMode } = useColorScheme();
+  const actualMode = mode === 'system' ? systemMode : mode;
 
   const handleClick = useCallback(() => {
-    setMode(mode === 'dark' ? 'light' : 'dark');
-  }, [mode, setMode]);
+    setMode(actualMode === 'dark' ? 'light' : 'dark');
+  }, [actualMode, setMode]);
 
   // Render
   return (
@@ -26,7 +27,7 @@ export default function ColorModeToggle({ sx }: ColorModeToggleProps) {
         sx={{ m: 0.5 }}
       >
         <NoSsr>
-          { mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon /> }
+          { actualMode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon /> }
         </NoSsr>
       </IconButton>
     </Paper>
