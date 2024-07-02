@@ -22,43 +22,43 @@ export default async function IpDataTags({ ip }: IpDataTagsProps) {
     sx={{
       display: 'inline-flex',
       verticalAlign: 'middle',
-      ml: 1, my: -0.25,
+      ml: 1, mt: -0.5,
       gap: 1,
     }}
   >
     { threat?.is_datacenter && (
       <Tooltip title="Datacenter">
-        <CloudIcon fontSize="small" />
+        <CloudIcon />
       </Tooltip>
     ) }
     { threat?.is_tor && (
       <Tooltip title="TOR">
-        <PolylineIcon fontSize="small" />
+        <PolylineIcon />
       </Tooltip>
     ) }
     { threat?.is_proxy && (
       <Tooltip title="Proxy">
-        <NetworkPingIcon fontSize="small" />
+        <NetworkPingIcon />
       </Tooltip>
     ) }
     { threat?.is_anonymous && (
       <Tooltip title="Anonymous">
-        <QuestionMarkIcon fontSize="small" />
+        <QuestionMarkIcon />
       </Tooltip>
     ) }
     { threat?.is_known_attacker && (
       <Tooltip title="Attacker">
-        <CoronavirusIcon fontSize="small" />
+        <CoronavirusIcon />
       </Tooltip>
     ) }
     { threat?.is_known_abuser && (
       <Tooltip title="Abuser">
-        <WarningIcon fontSize="small" />
+        <WarningIcon />
       </Tooltip>
     ) }
     { threat?.is_threat && (
       <Tooltip title="Threat">
-        <PhishingIcon fontSize="small" />
+        <PhishingIcon />
       </Tooltip>
     ) }
   </Box>;

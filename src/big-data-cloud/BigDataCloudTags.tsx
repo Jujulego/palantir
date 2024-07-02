@@ -21,38 +21,38 @@ export default async function BigDataCloudTags({ ip }: BigDataCloudTagsProps) {
     sx={{
       display: 'inline-flex',
       verticalAlign: 'middle',
-      ml: 1, my: -0.25,
+      ml: 1, mt: -0.5,
       gap: 1,
     }}
   >
     { hazardReport?.isCellular && (
       <Tooltip title="Cellular">
-        <NetworkCellIcon fontSize="small" />
+        <NetworkCellIcon />
       </Tooltip>
     ) }
     { hazardReport?.isKnownAsMailServer && (
       <Tooltip title="Mail Server">
-        <MailIcon fontSize="small" />
+        <MailIcon />
       </Tooltip>
     ) }
     { hazardReport?.isKnownAsTorServer && (
       <Tooltip title="TOR">
-        <PolylineIcon fontSize="small" />
+        <PolylineIcon />
       </Tooltip>
     ) }
     { hazardReport?.isKnownAsVpn && (
       <Tooltip title="VPN">
-        <VpnLockIcon fontSize="small" />
+        <VpnLockIcon />
       </Tooltip>
     ) }
     { (hazardReport?.isSpamhausDrop || hazardReport?.isSpamhausEdrop || hazardReport?.isSpamhausAsnDrop) && (
       <Tooltip title="Spamhaus">
-        <ReportGmailerrorredIcon fontSize="small" />
+        <ReportGmailerrorredIcon />
       </Tooltip>
     ) }
     { (hazardReport?.isBlacklistedUceprotect || hazardReport?.isBlacklistedBlocklistDe) && (
       <Tooltip title="Blacklisted">
-        <PlaylistRemoveIcon fontSize="small" />
+        <PlaylistRemoveIcon />
       </Tooltip>
     ) }
   </Box>;
