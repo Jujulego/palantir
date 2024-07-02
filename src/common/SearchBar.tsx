@@ -62,7 +62,7 @@ export default function SearchBar({ sx }: SearchBarProps) {
         <IconButton
           color="inherit" type="submit" disabled={!search}
           aria-label="Search"
-          sx={{ ml: 1, my: 0.5, mr: 0.5, flex: '0 0 auto' }}
+          sx={{ m: 0.5, flex: '0 0 auto' }}
         >
           <SearchIcon />
         </IconButton>
