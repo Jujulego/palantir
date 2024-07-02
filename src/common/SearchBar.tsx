@@ -46,7 +46,8 @@ export default function SearchBar({ sx }: SearchBarProps) {
         display: 'flex',
         alignItems: 'center',
         borderRadius: 9999,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        minWidth: '276px'
       }, ...(Array.isArray(sx) ? sx : [sx])]}
     >
       <SearchInput
