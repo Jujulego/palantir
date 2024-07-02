@@ -1,9 +1,10 @@
 'use client';
 
+import LocateButton from '@/src/common/LocateButton';
 import SearchIcon from '@mui/icons-material/Search';
 import { CircularProgress, IconButton, Paper, styled, SxProps } from '@mui/material';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { ChangeEvent, FormEvent, useCallback, useEffect, useState, useTransition } from 'react';
+import { ChangeEvent, FormEvent, useCallback, useState, useTransition } from 'react';
 
 // Component
 export interface SearchBarProps {
@@ -11,24 +12,24 @@ export interface SearchBarProps {
 }
 
 export default function SearchBar({ sx }: SearchBarProps) {
-  const [search, setSearch] = useState('');
-  const [isSearching, startTransition] = useTransition();
-
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  useEffect(() => {
-    const ip = searchParams.get('ip');
-
-    if (ip) {
-      setSearch(ip);
-    }
-  }, []);
+  const [search, setSearch] = useState(searchParams.get('ip') ?? '');
+  const [isSearching, startTransition] = useTransition();
 
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
   }, []);
+
+  const handleLocate = useCallback((ip: string) => {
+    setSearch(ip);
+
+    startTransition(() => {
+      router.push(`${pathname}?ip=${ip}`);
+    });
+  }, [pathname, router]);
 
   const handleSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -53,13 +54,15 @@ export default function SearchBar({ sx }: SearchBarProps) {
         value={search} onChange={handleChange}
       />
 
+      <LocateButton sx={{ ml: 1, my: 0.5, flex: '0 0 auto' }} onClick={handleLocate} />
+
       { isSearching ? (
         <CircularProgress size={24} sx={{ ml: 2, my: 1.5, mr: 1.5, flex: '0 0 auto' }} />
       ) : (
         <IconButton
           color="inherit" type="submit" disabled={!search}
           aria-label="Search"
-          sx={{ ml: 1, my: 0.5, mr: 0.5, flex: '0 0 auto' }}
+          sx={{ m: 0.5, flex: '0 0 auto' }}
         >
           <SearchIcon />
         </IconButton>

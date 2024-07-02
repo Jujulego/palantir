@@ -1,4 +1,5 @@
 import { Box } from '@mui/material';
+import { headers } from 'next/headers';
 import { Suspense } from 'react';
 
 import ColorModeToggle from '@/src/common/ColorModeToggle';
@@ -19,7 +20,7 @@ export interface HomeProps {
 }
 
 export default function Home(props: HomeProps) {
-  const { ip } = props.searchParams;
+  const { ip = headers().get('X-Forwarded-For') } = props.searchParams;
 
   return (
     <Box component="main" display="flex" flexDirection="column" position="relative" height="100vh" width="100vw">

@@ -7,5 +7,9 @@ export interface IpGeolocationAddressProps {
 
 export default async function IpGeolocationAddress({ ip }: IpGeolocationAddressProps) {
   const result = await searchIpGeolocation(ip);
-  return `${result.zipcode} ${result.city}`;
+
+  return <>
+    { result.district && <>{ result.district }<br /></> }
+    { result.zipcode } { result.city }
+  </>;
 }
