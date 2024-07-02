@@ -21,7 +21,7 @@ export default async function BigDataCloudTags({ ip }: BigDataCloudTagsProps) {
     sx={{
       display: 'inline-flex',
       verticalAlign: 'middle',
-      ml: 1,
+      ml: 1, my: -0.25,
       gap: 1,
     }}
   >

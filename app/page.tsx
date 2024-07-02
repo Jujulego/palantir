@@ -7,6 +7,8 @@ import BigDataCloudCard from '@/src/big-data-cloud/BigDataCloudCard';
 import BigDataCloudMarker from '@/src/big-data-cloud/BigDataCloudMarker';
 import ColorModeToggle from '@/src/common/ColorModeToggle';
 import SearchBar from '@/src/common/SearchBar';
+import IpDataCard from '@/src/ip-data/IpDataCard';
+import IpDataMarker from '@/src/ip-data/IpDataMarker';
 import IpGeolocationCard from '@/src/ip-geolocation/IpGeolocationCard';
 import IpGeolocationMarker from '@/src/ip-geolocation/IpGeolocationMarker';
 import IpInfoCard from '@/src/ip-info/IpInfoCard';
@@ -35,6 +37,7 @@ export default function Home(props: HomeProps) {
           <Suspense>
             <BigDataCloudArea ip={ip} />
             <BigDataCloudMarker ip={ip} />
+            <IpDataMarker ip={ip} />
             <IpGeolocationMarker ip={ip} />
             <IpInfoMarker ip={ip} />
           </Suspense>
@@ -82,6 +85,7 @@ export default function Home(props: HomeProps) {
           >
             <IpGeolocationCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} />
             <BigDataCloudCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} />
+            <IpDataCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} />
             <IpInfoCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} />
           </Box>
         ) }
