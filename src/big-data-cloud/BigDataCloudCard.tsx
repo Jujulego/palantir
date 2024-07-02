@@ -1,8 +1,8 @@
 import BigDataCloudTags from '@/src/big-data-cloud/BigDataCloudTags';
 import { Avatar, Card, CardHeader, Divider, List } from '@mui/material';
 import { pink } from '@mui/material/colors';
+import { Suspense } from 'react';
 
-import DataItem from '@/src/common/DataItem';
 import BigDataCloudAddress from '@/src/big-data-cloud/BigDataCloudAddress';
 import BigDataCloudAS from '@/src/big-data-cloud/BigDataCloudAS';
 import BigDataCloudContinent from '@/src/big-data-cloud/BigDataCloudContinent';
@@ -10,8 +10,8 @@ import BigDataCloudCountry from '@/src/big-data-cloud/BigDataCloudCountry';
 import BigDataCloudISP from '@/src/big-data-cloud/BigDataCloudISP';
 import BigDataCloudOrganization from '@/src/big-data-cloud/BigDataCloudOrganization';
 import BigDataCloudStateState from '@/src/big-data-cloud/BigDataCloudState';
+import DataItem from '@/src/common/DataItem';
 import MapboxFocusButton from '@/src/mapbox/MapboxFocusButton';
-import { Suspense } from 'react';
 
 // Component
 export interface BigDataCloudCardProps {

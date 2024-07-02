@@ -1,10 +1,10 @@
-import BigDataCloudArea from '@/src/big-data-cloud/BigDataCloudArea';
-import BigDataCloudCard from '@/src/big-data-cloud/BigDataCloudCard';
-import BigDataCloudMarker from '@/src/big-data-cloud/BigDataCloudMarker';
 import { Box } from '@mui/material';
 import { headers } from 'next/headers';
 import { Suspense } from 'react';
 
+import BigDataCloudArea from '@/src/big-data-cloud/BigDataCloudArea';
+import BigDataCloudCard from '@/src/big-data-cloud/BigDataCloudCard';
+import BigDataCloudMarker from '@/src/big-data-cloud/BigDataCloudMarker';
 import ColorModeToggle from '@/src/common/ColorModeToggle';
 import SearchBar from '@/src/common/SearchBar';
 import IpGeolocationCard from '@/src/ip-geolocation/IpGeolocationCard';

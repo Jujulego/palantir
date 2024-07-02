@@ -1,5 +1,6 @@
-import { searchBigDataCloud } from '@/src/big-data-cloud/data';
 import { Box } from '@mui/material';
+
+import { searchBigDataCloud } from '@/src/big-data-cloud/data';
 
 // Component
 export interface BigDataCloudISPProps {

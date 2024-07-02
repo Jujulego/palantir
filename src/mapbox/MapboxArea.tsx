@@ -1,9 +1,8 @@
 'use client';
 
+import { useEffect, useId } from 'react';
+
 import { useMapboxMap } from '@/src/mapbox/Mapbox.context';
-import { MapboxFocus } from '@/src/mapbox/MapboxFocus.context';
-import mapboxgl, { LngLatLike } from 'mapbox-gl';
-import { useContext, useEffect, useId, useLayoutEffect, useState } from 'react';
 
 // Components
 export interface MapboxAreaProps {
@@ -37,7 +36,8 @@ export default function MapboxArea({ polygon, lineColor, lineWidth, fillColor, f
       source: id,
       paint: {
         'fill-color': fillColor,
-        'fill-opacity': fillOpacity
+        'fill-opacity': fillOpacity,
+        'fill-emissive-strength': 0.75
       }
     });
 
@@ -47,7 +47,8 @@ export default function MapboxArea({ polygon, lineColor, lineWidth, fillColor, f
       source: id,
       paint: {
         'line-color': lineColor,
-        'line-width': lineWidth
+        'line-width': lineWidth,
+        'line-emissive-strength': 0.75
       }
     });
 
