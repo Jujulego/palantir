@@ -1,5 +1,3 @@
-import IpQualityCard from '@/src/ip-quality/IpQualityCard';
-import IpQualityMarker from '@/src/ip-quality/IpQualityMarker';
 import { Box } from '@mui/material';
 import { headers } from 'next/headers';
 import { Suspense } from 'react';
@@ -15,6 +13,8 @@ import IpGeolocationCard from '@/src/ip-geolocation/IpGeolocationCard';
 import IpGeolocationMarker from '@/src/ip-geolocation/IpGeolocationMarker';
 import IpInfoCard from '@/src/ip-info/IpInfoCard';
 import IpInfoMarker from '@/src/ip-info/IpInfoMarker';
+import IpQualityCard from '@/src/ip-quality/IpQualityCard';
+import IpQualityMarker from '@/src/ip-quality/IpQualityMarker';
 import MapboxMap from '@/src/mapbox/MapboxMap';
 import MapboxNavigationControl from '@/src/mapbox/MapboxNavigationControl';
 import MapboxTheme from '@/src/mapbox/MapboxTheme';
