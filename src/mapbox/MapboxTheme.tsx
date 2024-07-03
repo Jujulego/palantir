@@ -1,6 +1,6 @@
 'use client';
 
-import { useTheme } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { useEffect } from 'react';
 
 import { useMapboxMap } from '@/src/mapbox/Mapbox.context';

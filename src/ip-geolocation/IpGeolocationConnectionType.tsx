@@ -1,5 +1,7 @@
+import Chip from '@mui/material/Chip';
+import { type SxProps } from '@mui/material/styles';
+
 import { searchIpGeolocation } from '@/src/ip-geolocation/data';
-import { Chip, type SxProps } from '@mui/material';
 
 // Component
 export interface IpGeolocationConnectionTypeProps {

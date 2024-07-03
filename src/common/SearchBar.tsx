@@ -1,10 +1,14 @@
 'use client';
 
-import LocateButton from '@/src/common/LocateButton';
 import SearchIcon from '@mui/icons-material/Search';
-import { CircularProgress, IconButton, Paper, styled, SxProps } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
+import IconButton from '@mui/material/IconButton';
+import Paper from '@mui/material/Paper';
+import { styled, type SxProps } from '@mui/material/styles';
 import { useRouter } from 'next/navigation';
-import { ChangeEvent, FormEvent, useCallback, useEffect, useState, useTransition } from 'react';
+import { ChangeEvent, FormEvent, useCallback, useState, useTransition } from 'react';
+
+import LocateButton from '@/src/common/LocateButton';
 
 // Component
 export interface SearchBarProps {

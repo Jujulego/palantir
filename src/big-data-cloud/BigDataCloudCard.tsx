@@ -1,5 +1,9 @@
-import { Avatar, CardHeader, Divider, List, SxProps } from '@mui/material';
 import { pink } from '@mui/material/colors';
+import Avatar from '@mui/material/Avatar';
+import CardHeader from '@mui/material/CardHeader';
+import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
+import type { SxProps } from '@mui/material/styles';
 import { Suspense } from 'react';
 
 import BigDataCloudAddress from '@/src/big-data-cloud/BigDataCloudAddress';

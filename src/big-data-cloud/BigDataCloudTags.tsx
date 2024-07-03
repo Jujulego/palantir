@@ -4,7 +4,8 @@ import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove';
 import PolylineIcon from '@mui/icons-material/Polyline';
 import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 import VpnLockIcon from '@mui/icons-material/VpnLock';
-import { Box, Tooltip } from '@mui/material';
+import Box from '@mui/material/Box';
+import Tooltip from '@mui/material/Tooltip';
 
 import { searchBigDataCloud } from '@/src/big-data-cloud/data';
 

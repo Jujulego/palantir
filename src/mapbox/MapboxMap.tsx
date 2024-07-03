@@ -1,9 +1,10 @@
 'use client';
 
-import { Box, NoSsr, SxProps } from '@mui/material';
+import Box from '@mui/material/Box';
+import type { SxProps } from '@mui/material/styles';
 import { var$ } from 'kyrielle';
 import mapboxgl from 'mapbox-gl';
-import { ReactNode, Suspense, useEffect, useId, useRef } from 'react';
+import { ReactNode, Suspense, useEffect, useRef } from 'react';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 

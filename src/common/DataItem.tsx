@@ -1,4 +1,7 @@
-import { ListItem, ListItemText, Skeleton, Typography } from '@mui/material';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Skeleton from '@mui/material/Skeleton';
+import Typography from '@mui/material/Typography';
 import { type ReactNode, Suspense } from 'react';
 
 // Component
