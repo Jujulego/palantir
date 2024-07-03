@@ -4,7 +4,7 @@ import LocateButton from '@/src/common/LocateButton';
 import SearchIcon from '@mui/icons-material/Search';
 import { CircularProgress, IconButton, Paper, styled, SxProps } from '@mui/material';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { ChangeEvent, FormEvent, useCallback, useState, useTransition } from 'react';
+import { ChangeEvent, FormEvent, useCallback, useEffect, useState, useTransition } from 'react';
 
 // Component
 export interface SearchBarProps {
@@ -38,6 +38,10 @@ export default function SearchBar({ sx }: SearchBarProps) {
       router.push(`${pathname}?ip=${search}`);
     });
   }, [search, pathname, router]);
+
+  useEffect(() => {
+    setSearch(searchParams.get('ip') ?? '');
+  }, [searchParams]);
 
   return (
     <Paper

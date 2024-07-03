@@ -78,7 +78,8 @@ export default function Home(props: HomeProps) {
           <Box
             sx={{
               display: 'flex', flexDirection: 'column', gap: 1,
-              p: 0.25,
+              m: -0.5,
+              p: 0.5,
               gridArea: {
                 xs: '2 / 1 / 2 / span 2',
                 sm: '2 / 1',
