@@ -1,3 +1,5 @@
+import IpQualityCard from '@/src/ip-quality/IpQualityCard';
+import IpQualityMarker from '@/src/ip-quality/IpQualityMarker';
 import { Box } from '@mui/material';
 import { headers } from 'next/headers';
 import { Suspense } from 'react';
@@ -39,6 +41,7 @@ export default function Home(props: HomeProps) {
             <BigDataCloudMarker ip={ip} />
             <IpDataMarker ip={ip} />
             <IpGeolocationMarker ip={ip} />
+            <IpQualityMarker ip={ip} />
             <IpInfoMarker ip={ip} />
           </Suspense>
         ) }
@@ -86,6 +89,7 @@ export default function Home(props: HomeProps) {
             <IpGeolocationCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} />
             <BigDataCloudCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} />
             <IpDataCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} />
+            <IpQualityCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} />
             <IpInfoCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} />
           </Box>
         ) }
