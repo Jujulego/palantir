@@ -1,6 +1,7 @@
 'use client';
 
-import { useMediaQuery, useTheme } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import mapboxgl from 'mapbox-gl';
 import { useEffect } from 'react';
 

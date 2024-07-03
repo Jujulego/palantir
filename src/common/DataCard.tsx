@@ -1,7 +1,11 @@
 'use client';
 
 import RadarIcon from '@mui/icons-material/Radar';
-import { Card, CardActionArea, Collapse, Divider, SxProps } from '@mui/material';
+import Card from '@mui/material/Card';
+import CardActionArea from '@mui/material/CardActionArea';
+import Collapse from '@mui/material/Collapse';
+import Divider from '@mui/material/Divider';
+import type { SxProps } from '@mui/material/styles';
 import { ReactNode, useCallback, useContext, useState } from 'react';
 
 import { MapboxFocus } from '@/src/mapbox/MapboxFocus.context';

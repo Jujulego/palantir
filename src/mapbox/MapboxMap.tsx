@@ -1,6 +1,7 @@
 'use client';
 
-import { Box, NoSsr, SxProps } from '@mui/material';
+import Box from '@mui/material/Box';
+import type { SxProps } from '@mui/material/styles';
 import { var$ } from 'kyrielle';
 import mapboxgl from 'mapbox-gl';
 import { ReactNode, Suspense, useEffect, useRef } from 'react';
@@ -33,7 +34,7 @@ export default function MapboxMap({ children, sx }: MapboxMapProps) {
       map$.current.mutate(map);
     });
 
-    return () => map.remove();
+    return () => map.remove()
   }, []);
 
   return (
@@ -41,7 +42,7 @@ export default function MapboxMap({ children, sx }: MapboxMapProps) {
       <Box ref={container} sx={sx} />
 
       <Suspense>
-        <NoSsr>{ children }</NoSsr>
+        { children }
       </Suspense>
     </MapboxContext.Provider>
   )

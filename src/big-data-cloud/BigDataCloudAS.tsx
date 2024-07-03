@@ -1,5 +1,4 @@
 import { searchBigDataCloud } from '@/src/big-data-cloud/data';
-import { Box } from '@mui/material';
 
 // Component
 export interface BigDataCloudASProps {

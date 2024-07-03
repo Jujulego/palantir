@@ -4,7 +4,8 @@ import PolylineIcon from '@mui/icons-material/Polyline';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import VpnLockIcon from '@mui/icons-material/VpnLock';
 import WarningIcon from '@mui/icons-material/Warning';
-import { Box, Tooltip } from '@mui/material';
+import Box from '@mui/material/Box';
+import Tooltip from '@mui/material/Tooltip';
 
 import { searchIpQuality } from '@/src/ip-quality/data';
 

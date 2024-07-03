@@ -1,4 +1,4 @@
-import { CssBaseline } from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline';
 import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/styles';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { Analytics } from '@vercel/analytics/react';
@@ -6,7 +6,6 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from 'next';
 import { ReactNode } from 'react';
 
-import MapboxFocusProvider from '@/src/mapbox/MapboxFocusProvider';
 import theme from '@/src/theme';
 
 export const metadata: Metadata = {
@@ -21,19 +20,17 @@ export interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
-      <body>
-        <AppRouterCacheProvider>
-          <CssVarsProvider theme={theme} defaultMode="system">
-            <CssBaseline enableColorScheme />
+    <body>
+      <AppRouterCacheProvider>
+        <CssVarsProvider theme={theme} defaultMode="system">
+          <CssBaseline enableColorScheme />
 
-            <MapboxFocusProvider initialFocusKey="ip-geolocation">
-              { children }
-            </MapboxFocusProvider>
-          </CssVarsProvider>
-        </AppRouterCacheProvider>
-        <Analytics />
-        <SpeedInsights />
-      </body>
+          { children }
+        </CssVarsProvider>
+      </AppRouterCacheProvider>
+      <Analytics />
+      <SpeedInsights />
+    </body>
     </html>
   );
 }

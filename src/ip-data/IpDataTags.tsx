@@ -2,10 +2,11 @@ import CloudIcon from '@mui/icons-material/Cloud';
 import CoronavirusIcon from '@mui/icons-material/Coronavirus';
 import NetworkPingIcon from '@mui/icons-material/NetworkPing';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
-import PolylineIcon from '@mui/icons-material/Polyline';
 import PhishingIcon from '@mui/icons-material/Phishing';
+import PolylineIcon from '@mui/icons-material/Polyline';
 import WarningIcon from '@mui/icons-material/Warning';
-import { Box, Tooltip } from '@mui/material';
+import Box from '@mui/material/Box';
+import Tooltip from '@mui/material/Tooltip';
 
 import { searchIpData } from '@/src/ip-data/data';
 

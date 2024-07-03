@@ -2,7 +2,7 @@
 
 import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 import GpsNotFixedIcon from '@mui/icons-material/GpsNotFixed';
-import { IconButton } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 import { useCallback, useContext } from 'react';
 
 import { MapboxFocus } from './MapboxFocus.context';
