@@ -58,3 +58,11 @@ export default function LocateIpPage({ params }: LocateIpPageProps) {
     </>
   );
 }
+
+export function generateStaticParams() {
+  return [
+    { ip: '127.0.0.1' },
+    { ip: '::ffff:127.0.0.1' },
+    { ip: '::1' },
+  ];
+}
