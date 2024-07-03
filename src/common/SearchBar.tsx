@@ -3,7 +3,7 @@
 import LocateButton from '@/src/common/LocateButton';
 import SearchIcon from '@mui/icons-material/Search';
 import { CircularProgress, IconButton, Paper, styled, SxProps } from '@mui/material';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent, useCallback, useEffect, useState, useTransition } from 'react';
 
 // Component
@@ -12,36 +12,30 @@ export interface SearchBarProps {
 }
 
 export default function SearchBar({ sx }: SearchBarProps) {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
   const router = useRouter();
 
-  const [search, setSearch] = useState(searchParams.get('ip') ?? '');
+  const [search, setSearch] = useState('');
   const [isSearching, startTransition] = useTransition();
 
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
   }, []);
 
+  const handleSearch = useCallback((ip: string) => {
+    startTransition(() => {
+      router.push(`/locate/${encodeURIComponent(ip)}`);
+    });
+  }, [router]);
+
   const handleLocate = useCallback((ip: string) => {
     setSearch(ip);
-
-    startTransition(() => {
-      router.push(`${pathname}?ip=${ip}`);
-    });
-  }, [pathname, router]);
+    handleSearch(ip);
+  }, [handleSearch]);
 
   const handleSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    startTransition(() => {
-      router.push(`${pathname}?ip=${search}`);
-    });
-  }, [search, pathname, router]);
-
-  useEffect(() => {
-    setSearch(searchParams.get('ip') ?? '');
-  }, [searchParams]);
+    handleSearch(search);
+  }, [search, handleSearch]);
 
   return (
     <Paper

@@ -3,7 +3,7 @@
 import { Box, NoSsr, SxProps } from '@mui/material';
 import { var$ } from 'kyrielle';
 import mapboxgl from 'mapbox-gl';
-import { ReactNode, Suspense, useEffect, useRef } from 'react';
+import { ReactNode, Suspense, useEffect, useId, useRef } from 'react';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -33,7 +33,7 @@ export default function MapboxMap({ children, sx }: MapboxMapProps) {
       map$.current.mutate(map);
     });
 
-    return () => map.remove();
+    return () => map.remove()
   }, []);
 
   return (
@@ -41,7 +41,7 @@ export default function MapboxMap({ children, sx }: MapboxMapProps) {
       <Box ref={container} sx={sx} />
 
       <Suspense>
-        <NoSsr>{ children }</NoSsr>
+        { children }
       </Suspense>
     </MapboxContext.Provider>
   )
