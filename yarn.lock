@@ -873,26 +873,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/geojson@npm:*":
-  version: 7946.0.14
-  resolution: "@types/geojson@npm:7946.0.14"
-  checksum: 10c0/54f3997708fa2970c03eeb31f7e4540a0eb6387b15e9f8a60513a1409c23cafec8d618525404573468b59c6fecbfd053724b3327f7fca416729c26271d799f55
-  languageName: node
-  linkType: hard
-
 "@types/json5@npm:^0.0.29":
   version: 0.0.29
   resolution: "@types/json5@npm:0.0.29"
   checksum: 10c0/6bf5337bc447b706bb5b4431d37686aa2ea6d07cfd6f79cc31de80170d6ff9b1c7384a9c0ccbc45b3f512bae9e9f75c2e12109806a15331dc94e8a8db6dbb4ac
-  languageName: node
-  linkType: hard
-
-"@types/mapbox-gl@npm:3.1.0":
-  version: 3.1.0
-  resolution: "@types/mapbox-gl@npm:3.1.0"
-  dependencies:
-    "@types/geojson": "npm:*"
-  checksum: 10c0/952ff4cef4053d986c1b35b7137c84f3f86faaa6bfbb050fd919004114a78ff3a95d28a5325a2a34d24753d3e84c019a55f873891cb2b8d0467efede2f095a7d
   languageName: node
   linkType: hard
 
@@ -3390,7 +3374,6 @@ __metadata:
     "@mui/icons-material": "npm:5.15.21"
     "@mui/material": "npm:5.15.21"
     "@mui/material-nextjs": "npm:5.15.11"
-    "@types/mapbox-gl": "npm:3.1.0"
     "@types/node": "npm:20.14.9"
     "@types/react": "npm:18.3.3"
     "@types/react-dom": "npm:18.3.0"
