@@ -1406,10 +1406,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cheap-ruler@npm:^3.0.1":
-  version: 3.0.2
-  resolution: "cheap-ruler@npm:3.0.2"
-  checksum: 10c0/01015bd8ae5eed326224e6c28a62f6c00b5b8e196f0040aac77912b6cf65c8f824e284f6cea4484adfc7868e521245022f1d82ca9b56e8a4a48369b575b71365
+"cheap-ruler@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "cheap-ruler@npm:4.0.0"
+  checksum: 10c0/0dab0383f7f60ead35d8a10265a532fba33e529509094625a694987906352badd11ad64cadc30a4c3f2e95cb7ff9ede58d1b9f0a24a803e5723c1cd714a5c314
   languageName: node
   linkType: hard
 
@@ -1664,10 +1664,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"earcut@npm:^2.2.4":
-  version: 2.2.4
-  resolution: "earcut@npm:2.2.4"
-  checksum: 10c0/01ca51830edd2787819f904ae580087d37351f6048b4565e7add4b3da8a86b7bc19262ab2aa7fdc64129ab03af2d9cec8cccee4d230c82275f97ef285c79aafb
+"earcut@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "earcut@npm:3.0.0"
+  checksum: 10c0/20f3d8492f02452648466d2ce98276c9317c4d6980fc2596b1cb119fc3ef2d034724c5721de2af191331fb43610a27995b0f1b611d3386976b770ae9af7b3bbe
   languageName: node
   linkType: hard
 
@@ -2291,10 +2291,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"geojson-vt@npm:^3.2.1":
-  version: 3.2.1
-  resolution: "geojson-vt@npm:3.2.1"
-  checksum: 10c0/db2fc1a452067ee8436fa86e5a138f6ebd3d64893e0af097bc1cc960ec63d67c0ce77444711e9583036192d6bf9ce754bf9b56a76789684fc0fea4d52321fffc
+"geojson-vt@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "geojson-vt@npm:4.0.2"
+  checksum: 10c0/f2ca14d868e46f6262f5d3862f8e38a2418ecf9bd7cd6938a67bf87f1e2f8fbf65345d95996711b07cdf8f05ef512be0e2c20f0a8179c6393c2fd41badcb0532
   languageName: node
   linkType: hard
 
@@ -2949,7 +2949,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"kdbush@npm:^4.0.1, kdbush@npm:^4.0.2":
+"kdbush@npm:^4.0.2":
   version: 4.0.2
   resolution: "kdbush@npm:4.0.2"
   checksum: 10c0/d50183b299c57e2573114e902ab47aed7494be3ca41b66d456779ecc3b2f153f491de341f9609965414784f728894f9a9001152eb9f3a40cd3755521c06a45a3
@@ -3052,9 +3052,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mapbox-gl@npm:3.4.0":
-  version: 3.4.0
-  resolution: "mapbox-gl@npm:3.4.0"
+"mapbox-gl@npm:3.5.0":
+  version: 3.5.0
+  resolution: "mapbox-gl@npm:3.5.0"
   dependencies:
     "@mapbox/jsonlint-lines-primitives": "npm:^2.0.2"
     "@mapbox/mapbox-gl-supported": "npm:^3.0.0"
@@ -3063,14 +3063,14 @@ __metadata:
     "@mapbox/unitbezier": "npm:^0.0.1"
     "@mapbox/vector-tile": "npm:^1.3.1"
     "@mapbox/whoots-js": "npm:^3.1.0"
-    cheap-ruler: "npm:^3.0.1"
+    cheap-ruler: "npm:^4.0.0"
     csscolorparser: "npm:~1.0.3"
-    earcut: "npm:^2.2.4"
+    earcut: "npm:^3.0.0"
     fflate: "npm:^0.8.1"
-    geojson-vt: "npm:^3.2.1"
+    geojson-vt: "npm:^4.0.2"
     gl-matrix: "npm:^3.4.3"
     grid-index: "npm:^1.1.0"
-    kdbush: "npm:^4.0.1"
+    kdbush: "npm:^4.0.2"
     lodash.clonedeep: "npm:^4.5.0"
     murmurhash-js: "npm:^1.0.0"
     pbf: "npm:^3.2.1"
@@ -3078,12 +3078,12 @@ __metadata:
     quickselect: "npm:^2.0.0"
     rw: "npm:^1.3.3"
     serialize-to-js: "npm:^3.1.2"
-    supercluster: "npm:^8.0.0"
+    supercluster: "npm:^8.0.1"
     tiny-lru: "npm:^11.2.6"
     tinyqueue: "npm:^2.0.3"
-    tweakpane: "npm:^4.0.3"
+    tweakpane: "npm:^4.0.4"
     vt-pbf: "npm:^3.1.3"
-  checksum: 10c0/43de1e981496e5f64e2077462684716aa40e72339f18311dbbba96b18509ff1eb31d3d6d168c06184b4376890dfce74de30e4f41d4b912c67f35b222c3c828a0
+  checksum: 10c0/d2f62a87f618cf3cdddcaad7a694ca34c60056df70273ea4146a56895732e156c0accb15210bc0d9df51e899e8aeb8ee37298dc07b4ae0514aae10f6596a5257
   languageName: node
   linkType: hard
 
@@ -3399,7 +3399,7 @@ __metadata:
     eslint: "npm:8.57.0"
     eslint-config-next: "npm:14.2.4"
     kyrielle: "npm:1.0.0-beta.2"
-    mapbox-gl: "npm:3.4.0"
+    mapbox-gl: "npm:3.5.0"
     next: "npm:14.2.4"
     react: "npm:18.3.1"
     react-dom: "npm:18.3.1"
@@ -4067,7 +4067,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"supercluster@npm:^8.0.0":
+"supercluster@npm:^8.0.1":
   version: 8.0.1
   resolution: "supercluster@npm:8.0.1"
   dependencies:
@@ -4173,10 +4173,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tweakpane@npm:^4.0.3":
-  version: 4.0.3
-  resolution: "tweakpane@npm:4.0.3"
-  checksum: 10c0/4e5e83eb29404a5620101a87c43abd4570a279523b0ea7b0c8db4ef466c454e83abe44db8b53e73e8fbef85cd40e6ee21a2646b47532afb49308a1e08a123dab
+"tweakpane@npm:^4.0.4":
+  version: 4.0.4
+  resolution: "tweakpane@npm:4.0.4"
+  checksum: 10c0/34c2099cd3321c913433b299cca5faf51535c971f43ae8f3f127dd58cfd69a787ec124bf0971e5d7e0635e5cd0fdc1881bbb1d89964187ca9bb8d73331bf782f
   languageName: node
   linkType: hard
 
