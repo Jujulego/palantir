@@ -1,6 +1,6 @@
+import { MapboxGate } from '@/src/mapbox/MapboxGate';
 import Box from '@mui/material/Box';
-import NoSsr from '@mui/material/NoSsr';
-import { ReactNode, Suspense } from 'react';
+import { ReactNode } from 'react';
 
 import ColorModeToggle from '@/src/common/ColorModeToggle';
 import SearchBar from '@/src/common/SearchBar';
@@ -19,12 +19,10 @@ export default function LocateLayout({ children }: LocateLayoutProps) {
     <Box component="main" display="flex" flexDirection="column" position="relative" height="100vh" width="100vw">
       <MapboxFocusProvider initialFocusKey="ip-geolocation">
         <MapboxMap sx={{ flex: 1 }}>
-          <NoSsr>
-            <Suspense>
-              <MapboxTheme />
-              <MapboxNavigationControl />
-            </Suspense>
-          </NoSsr>
+          <MapboxGate>
+            <MapboxTheme />
+            <MapboxNavigationControl />
+          </MapboxGate>
 
           <Box
             sx={{
