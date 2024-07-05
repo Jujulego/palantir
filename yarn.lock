@@ -3036,9 +3036,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mapbox-gl@npm:3.5.0":
-  version: 3.5.0
-  resolution: "mapbox-gl@npm:3.5.0"
+"mapbox-gl@npm:3.5.1":
+  version: 3.5.1
+  resolution: "mapbox-gl@npm:3.5.1"
   dependencies:
     "@mapbox/jsonlint-lines-primitives": "npm:^2.0.2"
     "@mapbox/mapbox-gl-supported": "npm:^3.0.0"
@@ -3067,7 +3067,7 @@ __metadata:
     tinyqueue: "npm:^2.0.3"
     tweakpane: "npm:^4.0.4"
     vt-pbf: "npm:^3.1.3"
-  checksum: 10c0/d2f62a87f618cf3cdddcaad7a694ca34c60056df70273ea4146a56895732e156c0accb15210bc0d9df51e899e8aeb8ee37298dc07b4ae0514aae10f6596a5257
+  checksum: 10c0/3e132f600ad4e4619c48cc3e1cd3f5fb6f51955c485604335f4022df2fc0bfcb6f71ed89522f62c4dc352cc5be444b6b106211434fb59dc92940449177a6eaf5
   languageName: node
   linkType: hard
 
@@ -3382,7 +3382,7 @@ __metadata:
     eslint: "npm:8.57.0"
     eslint-config-next: "npm:14.2.4"
     kyrielle: "npm:1.0.0-beta.2"
-    mapbox-gl: "npm:3.5.0"
+    mapbox-gl: "npm:3.5.1"
     next: "npm:14.2.4"
     react: "npm:18.3.1"
     react-dom: "npm:18.3.1"
