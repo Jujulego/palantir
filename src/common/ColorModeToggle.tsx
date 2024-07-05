@@ -31,7 +31,7 @@ export default function ColorModeToggle({ sx }: ColorModeToggleProps) {
           onClick={handleClick}
           sx={{ m: 0.5 }}
         >
-            { actualMode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon /> }
+          { actualMode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon /> }
         </IconButton>
       </NoSsr>
     </Paper>

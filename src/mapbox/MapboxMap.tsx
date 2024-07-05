@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import type { SxProps } from '@mui/material/styles';
 import { var$ } from 'kyrielle';
 import mapboxgl from 'mapbox-gl';
-import { ReactNode, Suspense, useEffect, useRef } from 'react';
+import { ReactNode, startTransition, useEffect, useMemo, useRef, useState } from 'react';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -17,12 +17,17 @@ export interface MapboxMapProps {
 }
 
 export default function MapboxMap({ children, sx }: MapboxMapProps) {
-  const map$ = useRef(var$<mapboxgl.Map>());
+  const [map, setMap] = useState<mapboxgl.Map>();
+
   const container = useRef<HTMLDivElement>(null);
+  const loaded$ = useRef(var$(false));
+
+  const context = useMemo(() => ({ map, loaded$: loaded$.current }), [map]);
 
   useEffect(() => {
     if (!container.current) return;
 
+    // Initiate a new map
     const map = new mapboxgl.Map({
       accessToken: process.env.NEXT_PUBLIC_MAPBOX_PK!,
       container: container.current,
@@ -30,20 +35,30 @@ export default function MapboxMap({ children, sx }: MapboxMapProps) {
       zoom: 1,
     });
 
-    map.on('load', () => {
-      map$.current.mutate(map);
-    });
+    setMap(map);
+    loaded$.current.mutate(false);
 
-    return () => map.remove()
+    // Manager loaded state
+    const listener = () => {
+      startTransition(() => {
+        loaded$.current.mutate(true);
+      });
+    };
+
+    map.once('load', listener);
+
+    // Cleanup
+    return () => {
+      map.off('load', listener);
+      map.remove();
+    }
   }, []);
 
   return (
-    <MapboxContext.Provider value={map$.current}>
+    <MapboxContext.Provider value={context}>
       <Box ref={container} sx={sx} />
 
-      <Suspense>
-        { children }
-      </Suspense>
+      { children }
     </MapboxContext.Provider>
   )
 }

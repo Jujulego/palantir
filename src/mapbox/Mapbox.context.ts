@@ -1,13 +1,32 @@
-import { useStore$ } from '@/src/utils/store';
-import { var$ } from 'kyrielle';
-import mapboxgl from 'mapbox-gl';
-import { createContext, useContext } from 'react';
+import { type Deferrable, type Observable, var$, waitFor$ } from 'kyrielle';
+import type mapboxgl from 'mapbox-gl';
+import { createContext, use, useCallback, useSyncExternalStore } from 'react';
 
 // Context
-export const MapboxContext = createContext(var$<mapboxgl.Map>());
+export interface MapboxContextProps {
+  map?: mapboxgl.Map;
+  loaded$: Observable<boolean> & Deferrable<boolean>;
+}
+
+export const MapboxContext = createContext<MapboxContextProps>({
+  loaded$: var$(false),
+});
 
 // Hook
 export function useMapboxMap(): mapboxgl.Map {
-  const map$ = useContext(MapboxContext);
-  return useStore$(map$);
+  const { map, loaded$ } = use(MapboxContext);
+  const loaded = useSyncExternalStore(
+    useCallback((cb) => {
+      const sub = loaded$.subscribe(cb);
+      return () => sub.unsubscribe();
+    }, [loaded$]),
+    () => loaded$.defer(),
+    () => false,
+  );
+
+  while (!map || !loaded) {
+    use(waitFor$(loaded$));
+  }
+
+  return map;
 }

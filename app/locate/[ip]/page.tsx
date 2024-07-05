@@ -1,6 +1,5 @@
+import { MapboxGate } from '@/src/mapbox/MapboxGate';
 import Box from '@mui/material/Box';
-import NoSsr from '@mui/material/NoSsr';
-import { Suspense } from 'react';
 
 import BigDataCloudArea from '@/src/big-data-cloud/BigDataCloudArea';
 import BigDataCloudCard from '@/src/big-data-cloud/BigDataCloudCard';
@@ -45,16 +44,14 @@ export default function LocateIpPage({ params }: LocateIpPageProps) {
         <IpInfoCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} />
       </Box>
 
-      <NoSsr>
-        <Suspense>
-          <BigDataCloudArea ip={ip} />
-          <BigDataCloudMarker ip={ip} />
-          <IpDataMarker ip={ip} />
-          <IpGeolocationMarker ip={ip} />
-          <IpQualityMarker ip={ip} />
-          <IpInfoMarker ip={ip} />
-        </Suspense>
-      </NoSsr>
+      <MapboxGate>
+        <BigDataCloudArea ip={ip} />
+        <BigDataCloudMarker ip={ip} />
+        <IpDataMarker ip={ip} />
+        <IpGeolocationMarker ip={ip} />
+        <IpQualityMarker ip={ip} />
+        <IpInfoMarker ip={ip} />
+      </MapboxGate>
     </>
   );
 }
