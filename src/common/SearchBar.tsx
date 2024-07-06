@@ -6,8 +6,9 @@ import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import { styled, type SxProps } from '@mui/material/styles';
+import ipaddr from 'ipaddr.js';
 import { useRouter, useSelectedLayoutSegment } from 'next/navigation';
-import { ChangeEvent, FormEvent, useCallback, useDeferredValue, useEffect, useState, useTransition } from 'react';
+import { ChangeEvent, FormEvent, useCallback, useEffect, useMemo, useState, useTransition } from 'react';
 
 import IpTags from '@/src/common/IpTags';
 import LocateButton from '@/src/common/LocateButton';
@@ -21,8 +22,9 @@ export default function SearchBar({ sx }: SearchBarProps) {
   const router = useRouter();
   const searchedIp = useSelectedLayoutSegment();
 
-  const [search, setSearch] = useState(() => searchedIp ? decodeURIComponent(searchedIp) : '');
   const [isSearching, startTransition] = useTransition();
+  const [search, setSearch] = useState(() => searchedIp ? decodeURIComponent(searchedIp) : '');
+  const isValid = useMemo(() => ipaddr.isValid(search), [search]);
 
   useEffect(() => {
     if (searchedIp) {
@@ -73,7 +75,7 @@ export default function SearchBar({ sx }: SearchBarProps) {
           <CircularProgress size={24} sx={{ m: 1.5, flex: '0 0 auto' }} />
         ) : (
           <IconButton
-            color="inherit" type="submit" disabled={!search}
+            color="inherit" type="submit" disabled={!isValid}
             aria-label="Search"
             sx={{ m: 0.5, flex: '0 0 auto' }}
           >
@@ -82,7 +84,7 @@ export default function SearchBar({ sx }: SearchBarProps) {
         ) }
       </Paper>
 
-      <IpTags ip={useDeferredValue(search)} />
+      <IpTags ip={search} />
     </Box>
   );
 }
