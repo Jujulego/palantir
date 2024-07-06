@@ -1,8 +1,10 @@
 import Avatar from '@mui/material/Avatar';
+import CardActions from '@mui/material/CardActions';
 import CardHeader from '@mui/material/CardHeader';
 import { yellow } from '@mui/material/colors';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
+import Skeleton from '@mui/material/Skeleton';
 import type { SxProps } from '@mui/material/styles';
 import { Suspense } from 'react';
 
@@ -13,6 +15,7 @@ import IpQualityCountry from '@/src/ip-quality/IpQualityCountry';
 import IpQualityHostname from '@/src/ip-quality/IpQualityHostname';
 import IpQualityISP from '@/src/ip-quality/IpQualityISP';
 import IpQualityOrganization from '@/src/ip-quality/IpQualityOrganization';
+import IpQualityPayload from '@/src/ip-quality/IpQualityPayload';
 import IpQualityState from '@/src/ip-quality/IpQualityState';
 import IpQualityTags from '@/src/ip-quality/IpQualityTags';
 
@@ -56,6 +59,14 @@ export default function IpQualityCard({ ip, sx }: IpQualityCardProps) {
         <DataItem name="Région"><IpQualityState ip={ip} /></DataItem>
         <DataItem name="Pays"><IpQualityCountry ip={ip} /></DataItem>
       </List>
+
+      <Divider />
+
+      <CardActions>
+        <Suspense fallback={<Skeleton variant="rounded" width={100} height={30} />}>
+          <IpQualityPayload ip={ip} />
+        </Suspense>
+      </CardActions>
     </DataCard>
   );
 }

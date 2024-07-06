@@ -1,8 +1,10 @@
 import Avatar from '@mui/material/Avatar';
+import CardActions from '@mui/material/CardActions';
 import CardHeader from '@mui/material/CardHeader';
 import { blue } from '@mui/material/colors';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
+import Skeleton from '@mui/material/Skeleton';
 import type { SxProps } from '@mui/material/styles';
 import { Suspense } from 'react';
 
@@ -14,6 +16,7 @@ import IpGeolocationContinent from '@/src/ip-geolocation/IpGeolocationContinent'
 import IpGeolocationCountry from '@/src/ip-geolocation/IpGeolocationCountry';
 import IpGeolocationISP from '@/src/ip-geolocation/IpGeolocationISP';
 import IpGeolocationOrganization from '@/src/ip-geolocation/IpGeolocationOrganization';
+import IpGeolocationPayload from '@/src/ip-geolocation/IpGeolocationPayload';
 import IpGeolocationState from '@/src/ip-geolocation/IpGeolocationState';
 
 // Component
@@ -53,6 +56,14 @@ export default function IpGeolocationCard({ ip, sx }: IpGeolocationCardProps) {
         <DataItem name="Pays"><IpGeolocationCountry ip={ip} /></DataItem>
         <DataItem name="Continent"><IpGeolocationContinent ip={ip} /></DataItem>
       </List>
+
+      <Divider />
+
+      <CardActions>
+        <Suspense fallback={<Skeleton variant="rounded" width={100} height={30} />}>
+          <IpGeolocationPayload ip={ip} />
+        </Suspense>
+      </CardActions>
     </DataCard>
   );
 }

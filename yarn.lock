@@ -3394,6 +3394,7 @@ __metadata:
     next: "npm:14.2.4"
     react: "npm:18.3.1"
     react-dom: "npm:18.3.1"
+    react-json-view-lite: "npm:1.4.0"
     server-only: "npm:0.0.1"
     typescript: "npm:5.5.3"
   languageName: unknown
@@ -3585,6 +3586,15 @@ __metadata:
   version: 18.3.1
   resolution: "react-is@npm:18.3.1"
   checksum: 10c0/f2f1e60010c683479e74c63f96b09fb41603527cd131a9959e2aee1e5a8b0caf270b365e5ca77d4a6b18aae659b60a86150bb3979073528877029b35aecd2072
+  languageName: node
+  linkType: hard
+
+"react-json-view-lite@npm:1.4.0":
+  version: 1.4.0
+  resolution: "react-json-view-lite@npm:1.4.0"
+  peerDependencies:
+    react: ^16.13.1 || ^17.0.0 || ^18.0.0
+  checksum: 10c0/80dd21b14f9dcd93b2f473084aaa934594834a98ae2ed5725c98fae34486226d2eaa69a0bc4233f89b7bab4825e2d393efd6f7d39d59aa37a5bb44a61785f7e5
   languageName: node
   linkType: hard
 
