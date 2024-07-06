@@ -14,7 +14,7 @@ export default function IpTags({ ip }: IpTagsProps) {
   const parsed = useMemo(() => ipaddr.isValid(ip) ? ipaddr.parse(ip) : null, [ip]);
 
   return <Collapse in={parsed !== null}>
-    <Box sx={{ my: 0.5, height: 24 }}>
+    <Box sx={{ my: 0.5, pl: 2, height: 24 }}>
       { parsed && (
         <>
           <Chip label={parsed.kind()} color="primary" size="small" />
