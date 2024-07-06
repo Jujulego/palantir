@@ -1,3 +1,5 @@
+import ipaddr from 'ipaddr.js';
+import { notFound } from 'next/navigation';
 import { MapboxGate } from '@/src/mapbox/MapboxGate';
 import Box from '@mui/material/Box';
 
@@ -22,6 +24,10 @@ export interface LocateIpPageProps {
 
 export default function LocateIpPage({ params }: LocateIpPageProps) {
   const ip = decodeURIComponent(params.ip);
+
+  if (!ipaddr.isValid(ip)) {
+    notFound();
+  }
 
   return (
     <>
@@ -58,8 +64,8 @@ export default function LocateIpPage({ params }: LocateIpPageProps) {
 
 export function generateStaticParams() {
   return [
-    { ip: encodeURIComponent('127.0.0.1') },
-    { ip: encodeURIComponent('::ffff:127.0.0.1') },
-    { ip: encodeURIComponent('::1') },
+    { ip: '127.0.0.1' },
+    { ip: '::ffff:127.0.0.1' },
+    { ip: '::1' },
   ];
 }

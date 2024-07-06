@@ -2569,6 +2569,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ipaddr.js@npm:2.2.0":
+  version: 2.2.0
+  resolution: "ipaddr.js@npm:2.2.0"
+  checksum: 10c0/e4ee875dc1bd92ac9d27e06cfd87cdb63ca786ff9fd7718f1d4f7a8ef27db6e5d516128f52d2c560408cbb75796ac2f83ead669e73507c86282d45f84c5abbb6
+  languageName: node
+  linkType: hard
+
 "is-arguments@npm:^1.1.1":
   version: 1.1.1
   resolution: "is-arguments@npm:1.1.1"
@@ -3381,6 +3388,7 @@ __metadata:
     "@vercel/speed-insights": "npm:1.0.12"
     eslint: "npm:8.57.0"
     eslint-config-next: "npm:14.2.4"
+    ipaddr.js: "npm:2.2.0"
     kyrielle: "npm:1.0.0-beta.2"
     mapbox-gl: "npm:3.5.1"
     next: "npm:14.2.4"
