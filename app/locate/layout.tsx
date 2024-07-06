@@ -48,7 +48,7 @@ export default function LocateLayout({ children }: LocateLayoutProps) {
             }}
           >
             <SearchBar sx={{ gridArea: '1 / 1', pointerEvents: 'auto' }} />
-            <ColorModeToggle sx={{ gridArea: '1 / 2', pointerEvents: 'auto' }} />
+            <ColorModeToggle sx={{ gridArea: '1 / 2', pointerEvents: 'auto', mb: 'auto' }} />
 
             { children }
           </Box>

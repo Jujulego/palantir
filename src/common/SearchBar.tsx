@@ -1,13 +1,15 @@
 'use client';
 
 import SearchIcon from '@mui/icons-material/Search';
+import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import { styled, type SxProps } from '@mui/material/styles';
-import { useRouter } from 'next/navigation';
-import { ChangeEvent, FormEvent, useCallback, useState, useTransition } from 'react';
+import { useRouter, useSelectedLayoutSegment } from 'next/navigation';
+import { ChangeEvent, FormEvent, useCallback, useDeferredValue, useState, useTransition } from 'react';
 
+import IpTags from '@/src/common/IpTags';
 import LocateButton from '@/src/common/LocateButton';
 
 // Component
@@ -17,8 +19,9 @@ export interface SearchBarProps {
 
 export default function SearchBar({ sx }: SearchBarProps) {
   const router = useRouter();
+  const searchedIp = useSelectedLayoutSegment();
 
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState(searchedIp ? decodeURIComponent(searchedIp) : '');
   const [isSearching, startTransition] = useTransition();
 
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
@@ -42,35 +45,39 @@ export default function SearchBar({ sx }: SearchBarProps) {
   }, [search, handleSearch]);
 
   return (
-    <Paper
-      component="form" role="search" onSubmit={handleSubmit}
-      sx={[{
-        display: 'flex',
-        alignItems: 'center',
-        borderRadius: 9999,
-        overflow: 'hidden',
-        minWidth: '276px'
-      }, ...(Array.isArray(sx) ? sx : [sx])]}
-    >
-      <SearchInput
-        type="search" placeholder="Adresse IP" required
-        value={search} onChange={handleChange}
-      />
+    <Box sx={sx}>
+      <Paper
+        component="form" role="search" onSubmit={handleSubmit}
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          borderRadius: 9999,
+          overflow: 'hidden',
+          minWidth: '276px'
+        }}
+      >
+        <SearchInput
+          type="search" placeholder="Adresse IP" required
+          value={search} onChange={handleChange}
+        />
 
-      <LocateButton sx={{ ml: 1, my: 0.5, flex: '0 0 auto' }} onClick={handleLocate} />
+        <LocateButton sx={{ ml: 1, my: 0.5, flex: '0 0 auto' }} onClick={handleLocate} />
 
-      { isSearching ? (
-        <CircularProgress size={24} sx={{ m: 1.5, flex: '0 0 auto' }} />
-      ) : (
-        <IconButton
-          color="inherit" type="submit" disabled={!search}
-          aria-label="Search"
-          sx={{ m: 0.5, flex: '0 0 auto' }}
-        >
-          <SearchIcon />
-        </IconButton>
-      ) }
-    </Paper>
+        { isSearching ? (
+          <CircularProgress size={24} sx={{ m: 1.5, flex: '0 0 auto' }} />
+        ) : (
+          <IconButton
+            color="inherit" type="submit" disabled={!search}
+            aria-label="Search"
+            sx={{ m: 0.5, flex: '0 0 auto' }}
+          >
+            <SearchIcon />
+          </IconButton>
+        ) }
+      </Paper>
+
+      <IpTags ip={useDeferredValue(search)} />
+    </Box>
   );
 }
 
