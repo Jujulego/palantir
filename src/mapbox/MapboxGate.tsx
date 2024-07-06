@@ -1,7 +1,9 @@
 'use client';
 
+import { type ReactNode, Suspense, use } from 'react';
+
 import { MapboxContext } from '@/src/mapbox/Mapbox.context';
-import { type ReactNode, Suspense, use, useCallback, useSyncExternalStore } from 'react';
+import { useStore$ } from '@/src/utils/store';
 
 // Component
 export interface MapboxGateProps {
@@ -10,14 +12,7 @@ export interface MapboxGateProps {
 
 export function MapboxGate({ children }: MapboxGateProps) {
   const { map, loaded$ } = use(MapboxContext);
-  const loaded = useSyncExternalStore(
-    useCallback((cb) => {
-      const sub = loaded$.subscribe(cb);
-      return () => sub.unsubscribe();
-    }, [loaded$]),
-    () => loaded$.defer(),
-    () => false,
-  );
+  const loaded = useStore$(loaded$, () => false);
 
   if (!map || !loaded) {
     return null;
