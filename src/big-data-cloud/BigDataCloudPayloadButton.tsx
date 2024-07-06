@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import dynamic from 'next/dynamic'
 import { useCallback, useState } from 'react';
 
-import type { BigDataCloudResult } from '@/src/big-data-cloud/type';
+import type { BigDataCloudResult } from '@/src/big-data-cloud/types';
 
 const BigDataCloudPayloadDialog = dynamic(() => import('@/src/big-data-cloud/BigDataCloudPayloadDialog'), { ssr: false });
 

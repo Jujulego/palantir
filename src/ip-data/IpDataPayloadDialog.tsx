@@ -1,6 +1,6 @@
 import JsonViewer from '@/src/common/JsonViewer';
 import PayloadDialog from '@/src/common/PayloadDialog';
-import type { IpDataResult } from '@/src/ip-data/type';
+import type { IpDataResult } from '@/src/ip-data/types';
 
 export interface IpDataPayloadDialogProps {
   readonly open: boolean;

@@ -1,7 +1,7 @@
 import ipaddr from 'ipaddr.js';
 import 'server-only';
 
-import { BigDataCloudResult } from '@/src/big-data-cloud/type';
+import { BigDataCloudResult } from '@/src/big-data-cloud/types';
 import { ipCacheDuration } from '@/src/utils/ip';
 
 // Actions

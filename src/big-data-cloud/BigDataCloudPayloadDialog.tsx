@@ -1,4 +1,4 @@
-import type { BigDataCloudResult } from '@/src/big-data-cloud/type';
+import type { BigDataCloudResult } from '@/src/big-data-cloud/types';
 import JsonViewer from '@/src/common/JsonViewer';
 import PayloadDialog from '@/src/common/PayloadDialog';
 

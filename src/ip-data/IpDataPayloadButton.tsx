@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import dynamic from 'next/dynamic'
 import { useCallback, useState } from 'react';
 
-import type { IpDataResult } from '@/src/ip-data/type';
+import type { IpDataResult } from '@/src/ip-data/types';
 
 const IpDataPayloadDialog = dynamic(() => import('@/src/ip-data/IpDataPayloadDialog'), { ssr: false });
 
