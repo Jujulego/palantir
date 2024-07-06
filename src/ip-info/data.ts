@@ -1,4 +1,5 @@
 import { IpInfoResult } from '@/src/ip-info/types';
+import { ipCacheDuration } from '@/src/utils/cache';
 import 'server-only';
 
 // Actions
@@ -8,7 +9,8 @@ export async function searchIpInfo(ip: string): Promise<IpInfoResult> {
 
   const res = await fetch(url, {
     next: {
-      revalidate: 86400,
+      revalidate: ipCacheDuration(ip),
+      tags: [ip],
     }
   });
 

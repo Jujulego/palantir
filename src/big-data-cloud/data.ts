@@ -1,4 +1,5 @@
 import { BigDataCloudResult } from '@/src/big-data-cloud/type';
+import { ipCacheDuration } from '@/src/utils/cache';
 import 'server-only';
 
 // Actions
@@ -10,7 +11,8 @@ export async function searchBigDataCloud(ip: string): Promise<BigDataCloudResult
 
   const res = await fetch(url, {
     next: {
-      revalidate: 86400,
+      revalidate: ipCacheDuration(ip),
+      tags: [ip],
     }
   });
 

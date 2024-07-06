@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import { styled, type SxProps } from '@mui/material/styles';
 import { useRouter, useSelectedLayoutSegment } from 'next/navigation';
-import { ChangeEvent, FormEvent, useCallback, useDeferredValue, useState, useTransition } from 'react';
+import { ChangeEvent, FormEvent, useCallback, useDeferredValue, useEffect, useState, useTransition } from 'react';
 
 import IpTags from '@/src/common/IpTags';
 import LocateButton from '@/src/common/LocateButton';
@@ -21,8 +21,14 @@ export default function SearchBar({ sx }: SearchBarProps) {
   const router = useRouter();
   const searchedIp = useSelectedLayoutSegment();
 
-  const [search, setSearch] = useState(searchedIp ? decodeURIComponent(searchedIp) : '');
+  const [search, setSearch] = useState(() => searchedIp ? decodeURIComponent(searchedIp) : '');
   const [isSearching, startTransition] = useTransition();
+
+  useEffect(() => {
+    if (searchedIp) {
+      setSearch(decodeURIComponent(searchedIp));
+    }
+  }, [searchedIp]);
 
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
