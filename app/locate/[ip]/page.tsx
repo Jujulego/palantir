@@ -1,7 +1,6 @@
+import Box from '@mui/material/Box';
 import ipaddr from 'ipaddr.js';
 import { notFound } from 'next/navigation';
-import { MapboxGate } from '@/src/mapbox/MapboxGate';
-import Box from '@mui/material/Box';
 
 import BigDataCloudArea from '@/src/big-data-cloud/BigDataCloudArea';
 import BigDataCloudCard from '@/src/big-data-cloud/BigDataCloudCard';
@@ -14,6 +13,7 @@ import IpInfoCard from '@/src/ip-info/IpInfoCard';
 import IpInfoMarker from '@/src/ip-info/IpInfoMarker';
 import IpQualityCard from '@/src/ip-quality/IpQualityCard';
 import IpQualityMarker from '@/src/ip-quality/IpQualityMarker';
+import MapboxGate from '@/src/mapbox/MapboxGate';
 
 // Page
 export interface LocateIpPageProps {
