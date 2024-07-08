@@ -1,10 +1,10 @@
-import { MapboxGate } from '@/src/mapbox/MapboxGate';
 import Box from '@mui/material/Box';
 import { ReactNode } from 'react';
 
 import ColorModeToggle from '@/src/common/ColorModeToggle';
 import SearchBar from '@/src/common/SearchBar';
 import MapboxFocusProvider from '@/src/mapbox/MapboxFocusProvider';
+import MapboxGate from '@/src/mapbox/MapboxGate';
 import MapboxMap from '@/src/mapbox/MapboxMap';
 import MapboxNavigationControl from '@/src/mapbox/MapboxNavigationControl';
 import MapboxTheme from '@/src/mapbox/MapboxTheme';

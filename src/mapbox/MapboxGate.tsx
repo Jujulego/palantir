@@ -10,7 +10,7 @@ export interface MapboxGateProps {
   readonly children?: ReactNode;
 }
 
-export function MapboxGate({ children }: MapboxGateProps) {
+export default function MapboxGate({ children }: MapboxGateProps) {
   const { map, loaded$ } = use(MapboxContext);
   const loaded = useStore$(loaded$, () => false);
 
