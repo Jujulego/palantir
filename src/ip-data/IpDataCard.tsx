@@ -1,8 +1,13 @@
+import IpDataPayload from '@/src/ip-data/IpDataPayload';
+import IpDataPayloadButton from '@/src/ip-data/IpDataPayloadButton';
 import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CardActions from '@mui/material/CardActions';
 import CardHeader from '@mui/material/CardHeader';
 import { deepPurple } from '@mui/material/colors';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
+import Skeleton from '@mui/material/Skeleton';
 import type { SxProps } from '@mui/material/styles';
 import { Suspense } from 'react';
 
@@ -51,6 +56,14 @@ export default function IpDataCard({ ip, sx }: IpDataCardProps) {
         <DataItem name="Pays"><IpDataCountry ip={ip} /></DataItem>
         <DataItem name="Continent"><IpDataContinent ip={ip} /></DataItem>
       </List>
+
+      <Divider />
+
+      <CardActions>
+        <Suspense fallback={<Skeleton variant="rounded" width={100} height={30} />}>
+          <IpDataPayload ip={ip} />
+        </Suspense>
+      </CardActions>
     </DataCard>
   );
 }

@@ -1,7 +1,7 @@
 import ipaddr from 'ipaddr.js';
 import 'server-only';
 
-import { IpDataResult } from '@/src/ip-data/type';
+import { IpDataResult } from '@/src/ip-data/types';
 import { ipCacheDuration } from '@/src/utils/ip';
 
 // Actions
