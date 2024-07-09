@@ -83,7 +83,3 @@ export default async function LocateIpPage({ params }: LocateIpPageProps) {
     </>
   );
 }
-
-export function generateStaticParams() {
-  return [];
-}
