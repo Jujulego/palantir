@@ -20,12 +20,13 @@ export default function MapboxMap({ children, sx }: MapboxMapProps) {
   const [map, setMap] = useState<mapboxgl.Map>();
 
   const container = useRef<HTMLDivElement>(null);
-  const loaded$ = useRef(var$(false));
+  const _loaded$ = useRef(var$(false));
 
-  const context = useMemo(() => ({ map, loaded$: loaded$.current }), [map]);
+  const context = useMemo(() => ({ map, loaded$: _loaded$.current }), [map]);
 
   useEffect(() => {
     if (!container.current) return;
+    const loaded$ = _loaded$.current;
 
     // Initiate a new map
     const map = new mapboxgl.Map({
@@ -36,12 +37,12 @@ export default function MapboxMap({ children, sx }: MapboxMapProps) {
     });
 
     setMap(map);
-    loaded$.current.mutate(false);
+    loaded$.mutate(false);
 
     // Manager loaded state
     const listener = () => {
       startTransition(() => {
-        loaded$.current.mutate(true);
+        loaded$.mutate(true);
       });
     };
 
@@ -49,6 +50,8 @@ export default function MapboxMap({ children, sx }: MapboxMapProps) {
 
     // Cleanup
     return () => {
+      loaded$.mutate(false);
+
       map.off('load', listener);
       map.remove();
     }

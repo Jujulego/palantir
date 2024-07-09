@@ -60,7 +60,7 @@ export default function MapboxArea({ polygon, lineColor, lineWidth, fillColor, f
         map.removeSource(id);
       }
     }
-  }, [map, id, polygon, fillColor, fillOpacity, lineColor, lineWidth]);
+  }, [map, id, polygon, fillColor, fillOpacity, lineColor, lineWidth, loaded$]);
 
   return null;
 }
