@@ -21,6 +21,7 @@ export const getUserFlags = async (): Promise<Partial<Record<string, boolean>>> 
   return userFlags;
 };
 
+// Flags
 export const showIpData = flag({
   key: 'showIpData',
   decide: async () => (await getUserFlags()).showIpData ?? false,

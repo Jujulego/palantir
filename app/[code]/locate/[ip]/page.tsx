@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import BigDataCloudArea from '@/src/big-data-cloud/BigDataCloudArea';
 import BigDataCloudCard from '@/src/big-data-cloud/BigDataCloudCard';
 import BigDataCloudMarker from '@/src/big-data-cloud/BigDataCloudMarker';
-import { precomputeFlags, showIpData } from '@/src/userFlags';
+import { precomputeFlags, showIpData } from '@/src/flags';
 import IpDataCard from '@/src/ip-data/IpDataCard';
 import IpDataMarker from '@/src/ip-data/IpDataMarker';
 import IpGeolocationCard from '@/src/ip-geolocation/IpGeolocationCard';

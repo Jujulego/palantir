@@ -2,8 +2,16 @@ import { getSession, withMiddlewareAuthRequired } from '@auth0/nextjs-auth0/edge
 import { unstable_precompute as precompute } from '@vercel/flags/next';
 import { NextResponse } from 'next/server';
 
-import { userFlags$, precomputeFlags } from '@/src/userFlags';
+import { userFlags$, precomputeFlags } from '@/src/flags';
 
+// Config
+export const config = {
+  matcher: [
+    '/((?!\.well-known/vercel/flags|favicon\.ico).*)',
+  ]
+}
+
+// Middleware
 export default withMiddlewareAuthRequired(async (request) => {
   if (request.nextUrl.pathname.startsWith('/api')) {
     return;
