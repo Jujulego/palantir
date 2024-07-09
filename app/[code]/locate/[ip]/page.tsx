@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import BigDataCloudArea from '@/src/big-data-cloud/BigDataCloudArea';
 import BigDataCloudCard from '@/src/big-data-cloud/BigDataCloudCard';
 import BigDataCloudMarker from '@/src/big-data-cloud/BigDataCloudMarker';
+import { precomputeFlags, showIpData } from '@/src/userFlags';
 import IpDataCard from '@/src/ip-data/IpDataCard';
 import IpDataMarker from '@/src/ip-data/IpDataMarker';
 import IpGeolocationCard from '@/src/ip-geolocation/IpGeolocationCard';
@@ -18,11 +19,12 @@ import MapboxGate from '@/src/mapbox/MapboxGate';
 // Page
 export interface LocateIpPageProps {
   readonly params: {
+    readonly code: string;
     readonly ip: string;
   }
 }
 
-export default function LocateIpPage({ params }: LocateIpPageProps) {
+export default async function LocateIpPage({ params }: LocateIpPageProps) {
   const ip = decodeURIComponent(params.ip);
 
   if (!ipaddr.isValid(ip)) {
@@ -45,7 +47,7 @@ export default function LocateIpPage({ params }: LocateIpPageProps) {
       >
         <IpGeolocationCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} />
         <BigDataCloudCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} />
-        <IpDataCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} />
+        { await showIpData(params.code, precomputeFlags) && <IpDataCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} /> }
         <IpQualityCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} />
         <IpInfoCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} />
       </Box>
@@ -53,7 +55,7 @@ export default function LocateIpPage({ params }: LocateIpPageProps) {
       <MapboxGate>
         <BigDataCloudArea ip={ip} />
         <BigDataCloudMarker ip={ip} />
-        <IpDataMarker ip={ip} />
+        { await showIpData(params.code, precomputeFlags) && <IpDataMarker ip={ip} /> }
         <IpGeolocationMarker ip={ip} />
         <IpQualityMarker ip={ip} />
         <IpInfoMarker ip={ip} />
