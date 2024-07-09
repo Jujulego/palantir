@@ -7,6 +7,7 @@ import { ipCacheDuration } from '@/src/utils/ip';
 
 // Actions
 export const searchIpData = cache(async (ip: string): Promise<IpDataResult> => {
+  await new Promise((resolve) => setTimeout(resolve, 10000));
   const parsed = ipaddr.parse(ip);
 
   const url = new URL(`https://eu-api.ipdata.co/${parsed.toNormalizedString()}`);
