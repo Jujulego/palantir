@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useId } from 'react';
+import { use, useEffect, useId } from 'react';
 
-import { useMapboxMap } from '@/src/mapbox/Mapbox.context';
+import { MapboxContext, useMapboxMap } from '@/src/mapbox/Mapbox.context';
 
 // Components
 export interface MapboxAreaProps {
@@ -14,6 +14,7 @@ export interface MapboxAreaProps {
 }
 
 export default function MapboxArea({ polygon, lineColor, lineWidth, fillColor, fillOpacity }: MapboxAreaProps) {
+  const { loaded$ } = use(MapboxContext);
   const map = useMapboxMap();
   const id = useId();
 
@@ -53,9 +54,11 @@ export default function MapboxArea({ polygon, lineColor, lineWidth, fillColor, f
     });
 
     return () => {
-      map.removeLayer(`${id}-line`);
-      map.removeLayer(`${id}-fill`);
-      map.removeSource(id);
+      if (loaded$.defer()) {
+        map.removeLayer(`${id}-line`);
+        map.removeLayer(`${id}-fill`);
+        map.removeSource(id);
+      }
     }
   }, [map, id, polygon, fillColor, fillOpacity, lineColor, lineWidth]);
 
