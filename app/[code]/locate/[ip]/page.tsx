@@ -6,7 +6,14 @@ import { notFound } from 'next/navigation';
 import BigDataCloudArea from '@/src/big-data-cloud/BigDataCloudArea';
 import BigDataCloudCard from '@/src/big-data-cloud/BigDataCloudCard';
 import BigDataCloudMarker from '@/src/big-data-cloud/BigDataCloudMarker';
-import { precomputeFlags, showIpData } from '@/src/flags';
+import {
+  precomputeFlags,
+  showBigDataCloud,
+  showIpData,
+  showIpGeolocation,
+  showIpInfo,
+  showIpQuality
+} from '@/src/flags';
 import IpDataCard from '@/src/ip-data/IpDataCard';
 import IpDataMarker from '@/src/ip-data/IpDataMarker';
 import IpGeolocationCard from '@/src/ip-geolocation/IpGeolocationCard';
@@ -33,7 +40,11 @@ export default async function LocateIpPage({ params }: LocateIpPageProps) {
   }
 
   const flags = {
+    showBigDataCloud: await showBigDataCloud(params.code, precomputeFlags),
     showIpData: await showIpData(params.code, precomputeFlags),
+    showIpGeolocation: await showIpGeolocation(params.code, precomputeFlags),
+    showIpInfo: await showIpInfo(params.code, precomputeFlags),
+    showIpQuality: await showIpQuality(params.code, precomputeFlags),
   };
 
   return (
@@ -50,20 +61,22 @@ export default async function LocateIpPage({ params }: LocateIpPageProps) {
           overflow: 'auto',
         }}
       >
-        <IpGeolocationCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} />
-        <BigDataCloudCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} />
+        { flags.showBigDataCloud && <BigDataCloudCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} /> }
         { flags.showIpData && <IpDataCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} /> }
-        <IpQualityCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} />
-        <IpInfoCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} />
+        { flags.showIpGeolocation && <IpGeolocationCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} /> }
+        { flags.showIpInfo && <IpInfoCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} /> }
+        { flags.showIpQuality && <IpQualityCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} /> }
       </Box>
 
       <MapboxGate>
-        <BigDataCloudArea ip={ip} />
-        <BigDataCloudMarker ip={ip} />
+        { flags.showBigDataCloud && (<>
+          <BigDataCloudArea ip={ip} />
+          <BigDataCloudMarker ip={ip} />
+        </>) }
         { flags.showIpData && <IpDataMarker ip={ip} /> }
-        <IpGeolocationMarker ip={ip} />
-        <IpQualityMarker ip={ip} />
-        <IpInfoMarker ip={ip} />
+        { flags.showIpGeolocation && <IpGeolocationMarker ip={ip} /> }
+        { flags.showIpInfo && <IpInfoMarker ip={ip} /> }
+        { flags.showIpQuality && <IpQualityMarker ip={ip} /> }
       </MapboxGate>
 
       <FlagValues values={flags} />

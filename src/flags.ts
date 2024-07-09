@@ -22,9 +22,29 @@ export const getUserFlags = async (): Promise<Partial<Record<string, boolean>>> 
 };
 
 // Flags
+export const showBigDataCloud = flag({
+  key: 'showBigDataCloud',
+  decide: async () => (await getUserFlags()).showBigDataCloud ?? false,
+});
+
 export const showIpData = flag({
   key: 'showIpData',
   decide: async () => (await getUserFlags()).showIpData ?? false,
 });
 
-export const precomputeFlags = [showIpData] as const;
+export const showIpGeolocation = flag({
+  key: 'showIpGeolocation',
+  decide: async () => (await getUserFlags()).showIpGeolocation ?? false,
+});
+
+export const showIpInfo = flag({
+  key: 'showIpInfo',
+  decide: async () => (await getUserFlags()).showIpInfo ?? false,
+});
+
+export const showIpQuality = flag({
+  key: 'showIpQuality',
+  decide: async () => (await getUserFlags()).showIpQuality ?? false,
+});
+
+export const precomputeFlags = [showBigDataCloud, showIpData, showIpGeolocation, showIpInfo, showIpQuality] as const;
