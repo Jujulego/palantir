@@ -1,8 +1,9 @@
-import { verifyAccess } from '@vercel/flags';
+import { type ApiData, verifyAccess } from '@vercel/flags';
+import { NextRequest, NextResponse } from 'next/server';
 
 import { showIpData } from '@/src/flags';
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   // Check access
   const access = await verifyAccess(request.headers.get('Authorization'));
 
@@ -11,7 +12,7 @@ export async function GET(request: Request) {
   }
 
   // Flags
-  return Response.json({
+  return NextResponse.json<ApiData>({
     definitions: {
       [showIpData.key]: {
         description: 'Control access to Ip Data result',
