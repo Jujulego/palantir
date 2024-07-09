@@ -18,8 +18,6 @@ export const getUserFlags = async (): Promise<Partial<Record<string, boolean>>> 
     userFlags$.mutate(userFlags);
   }
 
-  console.log(userFlags);
-
   return userFlags;
 };
 
