@@ -1,6 +1,7 @@
 import { deepPurple } from '@mui/material/colors';
 
 import { searchIpData } from '@/src/ip-data/data';
+import MapboxGate from '@/src/mapbox/MapboxGate';
 import MapboxMarker from '@/src/mapbox/MapboxMarker';
 
 // Component
@@ -16,10 +17,12 @@ export default async function IpDataMarker({ ip }: IpDataMarkerProps) {
   }
 
   return (
-    <MapboxMarker
-      color={deepPurple[300]}
-      focusKey="ip-data"
-      lngLat={[result.longitude, result.latitude]}
-    />
+    <MapboxGate>
+      <MapboxMarker
+        color={deepPurple[300]}
+        focusKey="ip-data"
+        lngLat={[result.longitude, result.latitude]}
+      />
+    </MapboxGate>
   );
 }

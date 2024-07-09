@@ -1,3 +1,4 @@
+import IpQualityMarker from '@/src/ip-quality/IpQualityMarker';
 import Avatar from '@mui/material/Avatar';
 import CardActions from '@mui/material/CardActions';
 import CardHeader from '@mui/material/CardHeader';
@@ -26,7 +27,7 @@ export interface IpQualityCardProps {
 }
 
 export default function IpQualityCard({ ip, sx }: IpQualityCardProps) {
-  return (
+  return (<>
     <DataCard
       focusKey="ip-quality"
       header={
@@ -68,6 +69,10 @@ export default function IpQualityCard({ ip, sx }: IpQualityCardProps) {
         </Suspense>
       </CardActions>
     </DataCard>
-  );
+
+    <Suspense>
+      <IpQualityMarker ip={ip} />
+    </Suspense>
+  </>);
 }
 

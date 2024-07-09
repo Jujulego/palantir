@@ -1,6 +1,7 @@
 import { yellow } from '@mui/material/colors';
 
 import { searchIpQuality } from '@/src/ip-quality/data';
+import MapboxGate from '@/src/mapbox/MapboxGate';
 import MapboxMarker from '@/src/mapbox/MapboxMarker';
 
 // Component
@@ -16,10 +17,12 @@ export default async function IpQualityMarker({ ip }: IpQualityMarkerProps) {
   }
 
   return (
-    <MapboxMarker
-      color={yellow[300]}
-      focusKey="ip-quality"
-      lngLat={[result.longitude, result.latitude]}
-    />
+    <MapboxGate>
+      <MapboxMarker
+        color={yellow[300]}
+        focusKey="ip-quality"
+        lngLat={[result.longitude, result.latitude]}
+      />
+    </MapboxGate>
   );
 }

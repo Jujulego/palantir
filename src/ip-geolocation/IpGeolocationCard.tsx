@@ -15,6 +15,7 @@ import IpGeolocationConnectionType from '@/src/ip-geolocation/IpGeolocationConne
 import IpGeolocationContinent from '@/src/ip-geolocation/IpGeolocationContinent';
 import IpGeolocationCountry from '@/src/ip-geolocation/IpGeolocationCountry';
 import IpGeolocationISP from '@/src/ip-geolocation/IpGeolocationISP';
+import IpGeolocationMarker from '@/src/ip-geolocation/IpGeolocationMarker';
 import IpGeolocationOrganization from '@/src/ip-geolocation/IpGeolocationOrganization';
 import IpGeolocationPayload from '@/src/ip-geolocation/IpGeolocationPayload';
 import IpGeolocationState from '@/src/ip-geolocation/IpGeolocationState';
@@ -26,7 +27,7 @@ export interface IpGeolocationCardProps {
 }
 
 export default function IpGeolocationCard({ ip, sx }: IpGeolocationCardProps) {
-  return (
+  return (<>
     <DataCard
       focusKey="ip-geolocation"
       header={
@@ -65,6 +66,10 @@ export default function IpGeolocationCard({ ip, sx }: IpGeolocationCardProps) {
         </Suspense>
       </CardActions>
     </DataCard>
-  );
+
+    <Suspense>
+      <IpGeolocationMarker ip={ip} />
+    </Suspense>
+  </>);
 }
 

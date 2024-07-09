@@ -1,7 +1,4 @@
-import IpDataPayload from '@/src/ip-data/IpDataPayload';
-import IpDataPayloadButton from '@/src/ip-data/IpDataPayloadButton';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import CardActions from '@mui/material/CardActions';
 import CardHeader from '@mui/material/CardHeader';
 import { deepPurple } from '@mui/material/colors';
@@ -16,7 +13,9 @@ import DataItem from '@/src/common/DataItem';
 import IpDataAddress from '@/src/ip-data/IpDataAddress';
 import IpDataCountry from '@/src/ip-data/IpDataCountry';
 import IpDataContinent from '@/src/ip-data/IpDataContinent';
+import IpDataMarker from '@/src/ip-data/IpDataMarker';
 import IpDataOrganization from '@/src/ip-data/IpDataOrganization';
+import IpDataPayload from '@/src/ip-data/IpDataPayload';
 import IpDataState from '@/src/ip-data/IpDataState';
 import IpDataTags from '@/src/ip-data/IpDataTags';
 
@@ -27,7 +26,7 @@ export interface IpDataCardProps {
 }
 
 export default function IpDataCard({ ip, sx }: IpDataCardProps) {
-  return (
+  return (<>
     <DataCard
       focusKey="ip-data"
       header={
@@ -65,6 +64,10 @@ export default function IpDataCard({ ip, sx }: IpDataCardProps) {
         </Suspense>
       </CardActions>
     </DataCard>
-  );
+
+    <Suspense>
+      <IpDataMarker ip={ip} />
+    </Suspense>
+  </>);
 }
 

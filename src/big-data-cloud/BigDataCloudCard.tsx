@@ -9,10 +9,12 @@ import type { SxProps } from '@mui/material/styles';
 import { Suspense } from 'react';
 
 import BigDataCloudAddress from '@/src/big-data-cloud/BigDataCloudAddress';
+import BigDataCloudArea from '@/src/big-data-cloud/BigDataCloudArea';
 import BigDataCloudAS from '@/src/big-data-cloud/BigDataCloudAS';
 import BigDataCloudContinent from '@/src/big-data-cloud/BigDataCloudContinent';
 import BigDataCloudCountry from '@/src/big-data-cloud/BigDataCloudCountry';
 import BigDataCloudISP from '@/src/big-data-cloud/BigDataCloudISP';
+import BigDataCloudMarker from '@/src/big-data-cloud/BigDataCloudMarker';
 import BigDataCloudOrganization from '@/src/big-data-cloud/BigDataCloudOrganization';
 import BigDataCloudPayload from '@/src/big-data-cloud/BigDataCloudPayload';
 import BigDataCloudStateState from '@/src/big-data-cloud/BigDataCloudState';
@@ -27,7 +29,7 @@ export interface BigDataCloudCardProps {
 }
 
 export default function BigDataCloudCard({ ip, sx }: BigDataCloudCardProps) {
-  return (
+  return (<>
     <DataCard
       focusKey="big-data-cloud"
       header={
@@ -68,6 +70,11 @@ export default function BigDataCloudCard({ ip, sx }: BigDataCloudCardProps) {
         </Suspense>
       </CardActions>
     </DataCard>
-  );
+
+    <Suspense>
+      <BigDataCloudArea ip={ip} />
+      <BigDataCloudMarker ip={ip} />
+    </Suspense>
+  </>);
 }
 

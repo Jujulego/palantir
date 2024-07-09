@@ -1,6 +1,7 @@
 import { pink } from '@mui/material/colors';
 
 import { searchBigDataCloud } from '@/src/big-data-cloud/data';
+import MapboxGate from '@/src/mapbox/MapboxGate';
 import MapboxMarker from '@/src/mapbox/MapboxMarker';
 
 // Component
@@ -16,10 +17,12 @@ export default async function BigDataCloudMarker({ ip }: BigDataCloudMarkerProps
   }
 
   return (
-    <MapboxMarker
-      color={pink[300]}
-      focusKey="big-data-cloud"
-      lngLat={[result.location.longitude, result.location.latitude]}
-    />
+    <MapboxGate>
+      <MapboxMarker
+        color={pink[300]}
+        focusKey="big-data-cloud"
+        lngLat={[result.location.longitude, result.location.latitude]}
+      />
+    </MapboxGate>
   );
 }

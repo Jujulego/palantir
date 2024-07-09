@@ -1,3 +1,4 @@
+import IpInfoMarker from '@/src/ip-info/IpInfoMarker';
 import Avatar from '@mui/material/Avatar';
 import CardActions from '@mui/material/CardActions';
 import CardHeader from '@mui/material/CardHeader';
@@ -24,7 +25,7 @@ export interface IpInfoCardProps {
 }
 
 export default function IpInfoCard({ ip, sx }: IpInfoCardProps) {
-  return (
+  return (<>
     <DataCard
       focusKey="ip-info"
       header={
@@ -60,6 +61,10 @@ export default function IpInfoCard({ ip, sx }: IpInfoCardProps) {
         </Suspense>
       </CardActions>
     </DataCard>
-  );
+
+    <Suspense>
+      <IpInfoMarker ip={ip} />
+    </Suspense>
+  </>);
 }
 

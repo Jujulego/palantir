@@ -1,6 +1,7 @@
 import { green } from '@mui/material/colors';
 
 import { searchIpInfo } from '@/src/ip-info/data';
+import MapboxGate from '@/src/mapbox/MapboxGate';
 import MapboxMarker from '@/src/mapbox/MapboxMarker';
 
 // Component
@@ -18,10 +19,12 @@ export default async function IpInfoMarker({ ip }: IpInfoMarkerProps) {
   const [latitude, longitude] = result.loc.split(',');
 
   return (
-    <MapboxMarker
-      color={green[300]}
-      focusKey="ip-info"
-      lngLat={[parseFloat(longitude), parseFloat(latitude)]}
-    />
+    <MapboxGate>
+      <MapboxMarker
+        color={green[300]}
+        focusKey="ip-info"
+        lngLat={[parseFloat(longitude), parseFloat(latitude)]}
+      />
+    </MapboxGate>
   );
 }
