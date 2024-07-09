@@ -1,4 +1,5 @@
 import Box from '@mui/material/Box';
+import { FlagValues } from '@vercel/flags/react';
 import ipaddr from 'ipaddr.js';
 import { notFound } from 'next/navigation';
 
@@ -31,6 +32,10 @@ export default async function LocateIpPage({ params }: LocateIpPageProps) {
     notFound();
   }
 
+  const flags = {
+    showIpData: await showIpData(params.code, precomputeFlags),
+  };
+
   return (
     <>
       <Box
@@ -47,7 +52,7 @@ export default async function LocateIpPage({ params }: LocateIpPageProps) {
       >
         <IpGeolocationCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} />
         <BigDataCloudCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} />
-        { await showIpData(params.code, precomputeFlags) && <IpDataCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} /> }
+        { flags.showIpData && <IpDataCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} /> }
         <IpQualityCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} />
         <IpInfoCard ip={ip} sx={{ flexShrink: 0, pointerEvents: 'auto' }} />
       </Box>
@@ -55,11 +60,13 @@ export default async function LocateIpPage({ params }: LocateIpPageProps) {
       <MapboxGate>
         <BigDataCloudArea ip={ip} />
         <BigDataCloudMarker ip={ip} />
-        { await showIpData(params.code, precomputeFlags) && <IpDataMarker ip={ip} /> }
+        { flags.showIpData && <IpDataMarker ip={ip} /> }
         <IpGeolocationMarker ip={ip} />
         <IpQualityMarker ip={ip} />
         <IpInfoMarker ip={ip} />
       </MapboxGate>
+
+      <FlagValues values={flags} />
     </>
   );
 }
