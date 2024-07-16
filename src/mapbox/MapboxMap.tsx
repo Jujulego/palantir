@@ -1,7 +1,7 @@
 'use client';
 
 import Box from '@mui/material/Box';
-import type { SxProps } from '@mui/material/styles';
+import { type SxProps, useTheme } from '@mui/material/styles';
 import { var$ } from 'kyrielle';
 import mapboxgl from 'mapbox-gl';
 import { ReactNode, startTransition, useEffect, useMemo, useRef, useState } from 'react';
@@ -18,6 +18,7 @@ export interface MapboxMapProps {
 
 export default function MapboxMap({ children, sx }: MapboxMapProps) {
   const [map, setMap] = useState<mapboxgl.Map>();
+  const theme = useTheme();
 
   const container = useRef<HTMLDivElement>(null);
   const _loaded$ = useRef(var$(false));
@@ -56,6 +57,19 @@ export default function MapboxMap({ children, sx }: MapboxMapProps) {
       map.remove();
     }
   }, []);
+
+  useEffect(() => {
+    if (!map) return;
+
+    const listener = () => {
+      map.setConfigProperty('basemap', 'font', ['Roboto']);
+      map.setConfigProperty('basemap', 'lightPreset', theme.map.light);
+    };
+
+    map.once('style.load', listener);
+
+    return () => void map.off('style.load', listener);
+  }, [map, theme.map.light]);
 
   return (
     <MapboxContext.Provider value={context}>
