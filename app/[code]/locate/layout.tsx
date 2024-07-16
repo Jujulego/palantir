@@ -19,8 +19,9 @@ export default function LocateLayout({ children }: LocateLayoutProps) {
     <Box component="main" display="flex" flexDirection="column" position="relative" height="100vh" width="100vw">
       <MapboxFocusProvider initialFocusKey="ip-geolocation">
         <MapboxMap sx={{ flex: 1 }}>
+          <MapboxTheme />
+
           <MapboxGate>
-            <MapboxTheme />
             <MapboxNavigationControl />
           </MapboxGate>
 
