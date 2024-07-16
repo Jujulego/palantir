@@ -7,7 +7,6 @@ import MapboxFocusProvider from '@/src/mapbox/MapboxFocusProvider';
 import MapboxGate from '@/src/mapbox/MapboxGate';
 import MapboxMap from '@/src/mapbox/MapboxMap';
 import MapboxNavigationControl from '@/src/mapbox/MapboxNavigationControl';
-import MapboxTheme from '@/src/mapbox/MapboxTheme';
 
 // Layout
 export interface LocateLayoutProps {
@@ -20,7 +19,6 @@ export default function LocateLayout({ children }: LocateLayoutProps) {
       <MapboxFocusProvider initialFocusKey="ip-geolocation">
         <MapboxMap sx={{ flex: 1 }}>
           <MapboxGate>
-            <MapboxTheme />
             <MapboxNavigationControl />
           </MapboxGate>
 
