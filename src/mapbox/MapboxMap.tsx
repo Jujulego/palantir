@@ -18,6 +18,7 @@ export interface MapboxMapProps {
 
 export default function MapboxMap({ children, sx }: MapboxMapProps) {
   const [map, setMap] = useState<mapboxgl.Map>();
+  const [styleLoaded, setStyleLoaded] = useState(false);
   const theme = useTheme();
 
   const container = useRef<HTMLDivElement>(null);
@@ -39,37 +40,38 @@ export default function MapboxMap({ children, sx }: MapboxMapProps) {
 
     setMap(map);
     loaded$.mutate(false);
+    setStyleLoaded(false);
 
     // Manager loaded state
-    const listener = () => {
+    const loadListener = () => {
       startTransition(() => {
         loaded$.mutate(true);
       });
     };
+    const styleLoadListener = () => {
+      setStyleLoaded(true);
+    };
 
-    map.once('load', listener);
+    map.once('load', loadListener);
+    map.once('style.load', styleLoadListener);
 
     // Cleanup
     return () => {
       loaded$.mutate(false);
+      setStyleLoaded(false);
 
-      map.off('load', listener);
+      map.off('load', loadListener);
+      map.off('style.load', styleLoadListener);
       map.remove();
     }
   }, []);
 
   useEffect(() => {
-    if (!map) return;
+    if (!map || !styleLoaded) return;
 
-    const listener = () => {
-      map.setConfigProperty('basemap', 'font', ['Roboto']);
-      map.setConfigProperty('basemap', 'lightPreset', theme.map.light);
-    };
-
-    map.once('style.load', listener);
-
-    return () => void map.off('style.load', listener);
-  }, [map, theme.map.light]);
+    map.setConfigProperty('basemap', 'font', ['Roboto']);
+    map.setConfigProperty('basemap', 'lightPreset', theme.map.light);
+  }, [map, styleLoaded, theme.map.light]);
 
   return (
     <MapboxContext.Provider value={context}>
