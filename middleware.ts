@@ -25,7 +25,9 @@ export default withMiddlewareAuthRequired(async (request) => {
 
   // Precompute flags
   const code = await precompute(precomputeFlags);
-  const nextUrl = new URL(`/${code}${request.nextUrl.pathname}${request.nextUrl.search}`, request.url);
+
+  const nextUrl = new URL(request.url);
+  nextUrl.searchParams.set('code', code);
 
   return NextResponse.rewrite(nextUrl, response);
 });

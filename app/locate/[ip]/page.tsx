@@ -20,12 +20,14 @@ import IpQualityCard from '@/src/ip-quality/IpQualityCard';
 // Page
 export interface LocateIpPageProps {
   readonly params: {
-    readonly code: string;
     readonly ip: string;
+  },
+  readonly searchParams: {
+    readonly code: string;
   }
 }
 
-export default async function LocateIpPage({ params }: LocateIpPageProps) {
+export default async function LocateIpPage({ params, searchParams }: LocateIpPageProps) {
   const ip = decodeURIComponent(params.ip);
 
   if (!ipaddr.isValid(ip)) {
@@ -33,11 +35,11 @@ export default async function LocateIpPage({ params }: LocateIpPageProps) {
   }
 
   const flags = {
-    showBigDataCloud: await showBigDataCloud(params.code, precomputeFlags),
-    showIpData: await showIpData(params.code, precomputeFlags),
-    showIpGeolocation: await showIpGeolocation(params.code, precomputeFlags),
-    showIpInfo: await showIpInfo(params.code, precomputeFlags),
-    showIpQuality: await showIpQuality(params.code, precomputeFlags),
+    showBigDataCloud: await showBigDataCloud(searchParams.code, precomputeFlags),
+    showIpData: await showIpData(searchParams.code, precomputeFlags),
+    showIpGeolocation: await showIpGeolocation(searchParams.code, precomputeFlags),
+    showIpInfo: await showIpInfo(searchParams.code, precomputeFlags),
+    showIpQuality: await showIpQuality(searchParams.code, precomputeFlags),
   };
 
   return (
