@@ -879,6 +879,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tsconfig/node16@npm:^1.0.3":
+  version: 1.0.4
+  resolution: "@tsconfig/node16@npm:1.0.4"
+  checksum: 10c0/05f8f2734e266fb1839eb1d57290df1664fe2aa3b0fdd685a9035806daa635f7519bf6d5d9b33f6e69dd545b8c46bd6e2b5c79acb2b1f146e885f7f11a42a5bb
+  languageName: node
+  linkType: hard
+
 "@types/json5@npm:^0.0.29":
   version: 0.0.29
   resolution: "@types/json5@npm:0.0.29"
@@ -3245,6 +3252,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"next-connect@npm:1.0.0":
+  version: 1.0.0
+  resolution: "next-connect@npm:1.0.0"
+  dependencies:
+    "@tsconfig/node16": "npm:^1.0.3"
+    regexparam: "npm:^2.0.1"
+  checksum: 10c0/3967b05c3227828bedc4c7106aed6477b4c293786b16f925a4d7eb95c5c8d6c5c5dc777c1f04ce13718ae56a6d1368bc601c63283463f0c83ce1824a1b6206d0
+  languageName: node
+  linkType: hard
+
 "next@npm:14.2.5":
   version: 14.2.5
   resolution: "next@npm:14.2.5"
@@ -3499,6 +3516,7 @@ __metadata:
     kyrielle: "npm:1.0.0-beta.2"
     mapbox-gl: "npm:3.5.1"
     next: "npm:14.2.5"
+    next-connect: "npm:1.0.0"
     react: "npm:18.3.1"
     react-dom: "npm:18.3.1"
     react-json-view-lite: "npm:1.4.0"
@@ -3760,6 +3778,13 @@ __metadata:
     es-errors: "npm:^1.3.0"
     set-function-name: "npm:^2.0.1"
   checksum: 10c0/0f3fc4f580d9c349f8b560b012725eb9c002f36daa0041b3fbf6f4238cb05932191a4d7d5db3b5e2caa336d5150ad0402ed2be81f711f9308fe7e1a9bf9bd552
+  languageName: node
+  linkType: hard
+
+"regexparam@npm:^2.0.1":
+  version: 2.0.2
+  resolution: "regexparam@npm:2.0.2"
+  checksum: 10c0/836b1f56f463dd5220719e9225a4e3059304672e9a441fdfed9882bb390860295890001e9f62325845b4caa9ea848f242debcc9a56173375eb171253619748a3
   languageName: node
   linkType: hard
 
