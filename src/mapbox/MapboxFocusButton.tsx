@@ -5,7 +5,7 @@ import GpsNotFixedIcon from '@mui/icons-material/GpsNotFixed';
 import IconButton from '@mui/material/IconButton';
 import { useCallback, useContext } from 'react';
 
-import { MapboxFocus } from './MapboxFocus.context';
+import { MapboxContext } from '@/src/mapbox/Mapbox.context';
 
 // Component
 export interface MapboxFocusButtonProps {
@@ -13,7 +13,7 @@ export interface MapboxFocusButtonProps {
 }
 
 export default function MapboxFocusButton({ focusKey }: MapboxFocusButtonProps) {
-  const { focus, setFocus } = useContext(MapboxFocus);
+  const { focus, setFocus } = useContext(MapboxContext);
 
   const handleClick = useCallback(() => {
     setFocus(focusKey);

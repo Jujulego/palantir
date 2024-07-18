@@ -1,17 +1,31 @@
 import { type Deferrable, type Observable, var$, waitFor$ } from 'kyrielle';
 import type mapboxgl from 'mapbox-gl';
-import { createContext, use } from 'react';
+import { createContext, type Dispatch, type SetStateAction, use } from 'react';
 
 import { useStore$ } from '@/src/utils/store';
 
 // Context
 export interface MapboxContextProps {
-  map?: mapboxgl.Map;
-  loaded$: Observable<boolean> & Deferrable<boolean>;
+  readonly loaded$: Observable<boolean> & Deferrable<boolean>;
+  readonly map?: mapboxgl.Map;
+
+  // Focus management
+  readonly focus: string;
+  readonly setFocus: Dispatch<SetStateAction<string>>;
+
+  // Spin management
+  readonly spin: boolean;
+  readonly setSpin: Dispatch<SetStateAction<boolean>>;
 }
 
 export const MapboxContext = createContext<MapboxContextProps>({
   loaded$: var$(false),
+
+  focus: '',
+  setFocus: () => {},
+
+  spin: false,
+  setSpin: () => {}
 });
 
 // Hook
