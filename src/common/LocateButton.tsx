@@ -4,7 +4,7 @@ import GpsNotFixedIcon from '@mui/icons-material/GpsNotFixed';
 import IconButton from '@mui/material/IconButton';
 import type { SxProps } from '@mui/material/styles';
 
-import { getClientIp } from '@/src/common/getClientIp';
+import { getClientIp } from '@/src/actions/getClientIp';
 
 // Component
 export interface LocateButtonProps {
