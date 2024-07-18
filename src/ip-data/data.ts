@@ -5,7 +5,7 @@ import { IpDataResult } from '@/src/ip-data/types';
 import { ipCacheDuration } from '@/src/utils/ip';
 
 // Actions
-export const searchIpData = async (ip: string): Promise<IpDataResult> => {
+export async function searchIpData(ip: string): Promise<IpDataResult> {
   const parsed = ipaddr.parse(ip);
 
   const url = new URL(`https://eu-api.ipdata.co/${parsed.toNormalizedString()}`);
@@ -19,4 +19,4 @@ export const searchIpData = async (ip: string): Promise<IpDataResult> => {
   });
 
   return await res.json();
-};
+}
