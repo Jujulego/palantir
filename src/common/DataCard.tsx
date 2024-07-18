@@ -8,7 +8,7 @@ import Divider from '@mui/material/Divider';
 import type { SxProps } from '@mui/material/styles';
 import { ReactNode, useCallback, useContext, useState } from 'react';
 
-import { MapboxFocus } from '@/src/mapbox/MapboxFocus.context';
+import { MapboxContext } from '@/src/mapbox/Mapbox.context';
 
 // Component
 export interface DataCardProps {
@@ -19,7 +19,7 @@ export interface DataCardProps {
 }
 
 export default function DataCard({ focusKey, header, children, sx }: DataCardProps) {
-  const { focus, setFocus } = useContext(MapboxFocus);
+  const { focus, setFocus } = useContext(MapboxContext);
   const [open, setOpen] = useState(false);
 
   const handleClick = useCallback(() => {

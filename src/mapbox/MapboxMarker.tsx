@@ -5,8 +5,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import mapboxgl, { LngLatLike } from 'mapbox-gl';
 import { useContext, useEffect, useLayoutEffect, useState } from 'react';
 
-import { useMapboxMap } from '@/src/mapbox/Mapbox.context';
-import { MapboxFocus } from '@/src/mapbox/MapboxFocus.context';
+import { MapboxContext, useMapboxMap } from '@/src/mapbox/Mapbox.context';
 
 // Components
 export interface MapboxMarkerProps {
@@ -16,8 +15,8 @@ export interface MapboxMarkerProps {
 }
 
 export default function MapboxMarker({ color, focusKey, lngLat }: MapboxMarkerProps) {
+  const { focus, setSpin } = useContext(MapboxContext);
   const map = useMapboxMap();
-  const { focus } = useContext(MapboxFocus);
 
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -40,15 +39,19 @@ export default function MapboxMarker({ color, focusKey, lngLat }: MapboxMarkerPr
 
   useEffect(() => {
     if (focus === focusKey) {
+      setSpin(false);
+
       map.flyTo({
         center: lngLat,
-        zoom: 4,
+        zoom: Math.max(4, map.getZoom()),
         padding: smallScreen
           ? { left: 16, top: 344, right: 16, bottom: 16 }
           : { left: 408, top: 16, right: 16, bottom: 16 }
       });
+
+      return () => setSpin(true);
     }
-  }, [lngLat, focusKey, focus, map, smallScreen]);
+  }, [lngLat, focusKey, focus, map, smallScreen, setSpin]);
 
   return null;
 }
