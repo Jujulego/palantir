@@ -3114,13 +3114,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash.clonedeep@npm:^4.5.0":
-  version: 4.5.0
-  resolution: "lodash.clonedeep@npm:4.5.0"
-  checksum: 10c0/2caf0e4808f319d761d2939ee0642fa6867a4bbf2cfce43276698828380756b99d4c4fa226d881655e6ac298dd453fe12a5ec8ba49861777759494c534936985
-  languageName: node
-  linkType: hard
-
 "lodash.merge@npm:^4.6.2":
   version: 4.6.2
   resolution: "lodash.merge@npm:4.6.2"
@@ -3155,9 +3148,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mapbox-gl@npm:3.5.2":
-  version: 3.5.2
-  resolution: "mapbox-gl@npm:3.5.2"
+"mapbox-gl@npm:3.6.0":
+  version: 3.6.0
+  resolution: "mapbox-gl@npm:3.6.0"
   dependencies:
     "@mapbox/jsonlint-lines-primitives": "npm:^2.0.2"
     "@mapbox/mapbox-gl-supported": "npm:^3.0.0"
@@ -3176,7 +3169,6 @@ __metadata:
     gl-matrix: "npm:^3.4.3"
     grid-index: "npm:^1.1.0"
     kdbush: "npm:^4.0.2"
-    lodash.clonedeep: "npm:^4.5.0"
     murmurhash-js: "npm:^1.0.0"
     pbf: "npm:^3.2.1"
     potpack: "npm:^2.0.0"
@@ -3184,11 +3176,10 @@ __metadata:
     rw: "npm:^1.3.3"
     serialize-to-js: "npm:^3.1.2"
     supercluster: "npm:^8.0.1"
-    tiny-lru: "npm:^11.2.11"
     tinyqueue: "npm:^3.0.0"
     tweakpane: "npm:^4.0.4"
     vt-pbf: "npm:^3.1.3"
-  checksum: 10c0/96c7851738c22763808f3ecd0b82ca1e713d6b52572e087acb0842c3af939ddec76eb9ef380f7d74ced4b8646cf2cbd9ac042e792d4046cc4344e4c7959bce8e
+  checksum: 10c0/5f433544867af6af10b37d571f46924042d8f1c2d8399e5596b406b2a549c32b07ae6cc4ba4be97bad059ac463ade8e470aa374016b4700102b5d83f18d60ad3
   languageName: node
   linkType: hard
 
@@ -3549,7 +3540,7 @@ __metadata:
     eslint-config-next: "npm:14.2.5"
     ipaddr.js: "npm:2.2.0"
     kyrielle: "npm:1.0.0-beta.2"
-    mapbox-gl: "npm:3.5.2"
+    mapbox-gl: "npm:3.6.0"
     next: "npm:14.2.5"
     next-connect: "npm:1.0.0"
     react: "npm:18.3.1"
@@ -4280,13 +4271,6 @@ __metadata:
   version: 0.2.0
   resolution: "text-table@npm:0.2.0"
   checksum: 10c0/02805740c12851ea5982686810702e2f14369a5f4c5c40a836821e3eefc65ffeec3131ba324692a37608294b0fd8c1e55a2dd571ffed4909822787668ddbee5c
-  languageName: node
-  linkType: hard
-
-"tiny-lru@npm:^11.2.11":
-  version: 11.2.11
-  resolution: "tiny-lru@npm:11.2.11"
-  checksum: 10c0/6fe45e477e198f204752cb83bb02c963e9cdcabfb0083a723b498e6a7661143641be36a3d7170df6e4a0b5d5ac6a06533b8cccc98cbdfddacec826016a5dab97
   languageName: node
   linkType: hard
 
