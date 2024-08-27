@@ -1,6 +1,6 @@
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 import CssBaseline from '@mui/material/CssBaseline';
-import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -23,13 +23,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en">
     <body>
       <AppRouterCacheProvider>
-        <CssVarsProvider theme={theme} defaultMode="system">
+        <ThemeProvider theme={theme}>
           <CssBaseline enableColorScheme />
 
           <UserProvider>
             { children }
           </UserProvider>
-        </CssVarsProvider>
+        </ThemeProvider>
       </AppRouterCacheProvider>
 
       <Analytics />

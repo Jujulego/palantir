@@ -1,6 +1,6 @@
 'use client';
 
-import { experimental_extendTheme as extendTheme } from '@mui/material/styles';
+import { extendTheme } from '@mui/material/styles';
 import { Roboto } from 'next/font/google';
 
 const roboto = Roboto({
