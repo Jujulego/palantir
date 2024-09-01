@@ -3641,7 +3641,7 @@ __metadata:
     next-connect: "npm:1.0.0"
     react: "npm:18.3.1"
     react-dom: "npm:18.3.1"
-    react-json-view-lite: "npm:1.4.0"
+    react-json-view-lite: "npm:1.5.0"
     server-only: "npm:0.0.1"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -3836,12 +3836,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-json-view-lite@npm:1.4.0":
-  version: 1.4.0
-  resolution: "react-json-view-lite@npm:1.4.0"
+"react-json-view-lite@npm:1.5.0":
+  version: 1.5.0
+  resolution: "react-json-view-lite@npm:1.5.0"
   peerDependencies:
     react: ^16.13.1 || ^17.0.0 || ^18.0.0
-  checksum: 10c0/80dd21b14f9dcd93b2f473084aaa934594834a98ae2ed5725c98fae34486226d2eaa69a0bc4233f89b7bab4825e2d393efd6f7d39d59aa37a5bb44a61785f7e5
+  checksum: 10c0/e707717cb6b9d6cca5b138cdfb066e35ee7e493d1c88d4497e3a3a42b7651c8ff924ff53ad2da142a12b23b11379d39f38d8eee278c98c46cd6bc8844864b285
   languageName: node
   linkType: hard
 
