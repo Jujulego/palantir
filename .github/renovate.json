@@ -4,6 +4,7 @@
   ],
   "baseBranches": ["main"],
   "labels": ["dependencies"],
+  "rebaseWhen": "behind-base-branch",
   "packageRules": [
     {
       "matchDepTypes": ["devDependencies"],
