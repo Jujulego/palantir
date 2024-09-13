@@ -1,32 +1,11 @@
-import { getSession, withMiddlewareAuthRequired } from '@auth0/nextjs-auth0/edge';
-import { unstable_precompute as precompute } from '@vercel/flags/next';
+import { withMiddlewareAuthRequired } from '@auth0/nextjs-auth0/edge';
 import { createEdgeRouter } from 'next-connect';
-import { NextFetchEvent, type NextRequest, NextResponse } from 'next/server';
-
-import { userFlags$, precomputeFlags } from '@/src/flags';
+import { NextFetchEvent, type NextRequest } from 'next/server';
 
 // Router
 const router = createEdgeRouter<NextRequest, NextFetchEvent>();
 
-router.get('/.well-known/vercel/flags', () => {
-  return NextResponse.next();
-});
-
-router.all(withMiddlewareAuthRequired(async (request) => {
-  const response = NextResponse.next({ request });
-
-  // Load user flags
-  const session = await getSession(request, response);
-  userFlags$.mutate(session?.user?.['https://palantir.capellari.net/featureFlags'] ?? {});
-
-  // Precompute flags
-  const code = await precompute(precomputeFlags);
-
-  const nextUrl = new URL(request.url);
-  nextUrl.searchParams.set('code', code);
-
-  return NextResponse.rewrite(nextUrl, response);
-}));
+router.all(withMiddlewareAuthRequired());
 
 // Middleware
 export const config = {
