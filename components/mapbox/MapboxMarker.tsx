@@ -11,22 +11,24 @@ export interface MapMarkerProps {
   readonly latLng: LngLatLike;
 }
 
-export default function MapMarker({ color, latLng }: MapMarkerProps) {
+export default function MapboxMarker({ color, latLng }: MapMarkerProps) {
   const id = useId();
   const dispatch = useAppDispatch();
 
-  const [marker, setMarker] = useState(new Marker({ color }));
+  const [marker, setMarker] = useState<Marker>();
 
   useEffect(() => {
     setMarker(new Marker({ color }));
   }, [color]);
 
   useEffect(() => {
-    marker.setLngLat(latLng);
+    marker?.setLngLat(latLng);
   }, [marker, latLng]);
 
   useEffect(() => {
-    dispatch(addMarker({ id, marker }));
+    if (marker) {
+      dispatch(addMarker({ id, marker }));
+    }
 
     return () => {
       dispatch(removeMarker({ id }));
