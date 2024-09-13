@@ -1,9 +1,12 @@
+import { markersReducer } from '@/state/markers/reducer';
 import { configureStore } from '@reduxjs/toolkit';
 
 // Store builder
 export function makeStore() {
   return configureStore({
-    reducer: {}
+    reducer: {
+      markers: markersReducer,
+    }
   });
 }
 

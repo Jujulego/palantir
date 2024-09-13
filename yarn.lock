@@ -2751,7 +2751,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"immer@npm:^10.0.3":
+"immer@npm:10.1.1, immer@npm:^10.0.3":
   version: 10.1.1
   resolution: "immer@npm:10.1.1"
   checksum: 10c0/b749e10d137ccae91788f41bd57e9387f32ea6d6ea8fd7eb47b23fd7766681575efc7f86ceef7fe24c3bc9d61e38ff5d2f49c2663b2b0c056e280a4510923653
@@ -3713,6 +3713,7 @@ __metadata:
     "@vercel/speed-insights": "npm:1.0.12"
     eslint: "npm:8.57.0"
     eslint-config-next: "npm:14.2.11"
+    immer: "npm:10.1.1"
     ipaddr.js: "npm:2.2.0"
     kyrielle: "npm:1.0.0-beta.2"
     mapbox-gl: "npm:3.6.0"
