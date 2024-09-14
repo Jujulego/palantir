@@ -26,13 +26,10 @@ export default function MapboxMarker({ color, latLng }: MapMarkerProps) {
   }, [marker, latLng]);
 
   useEffect(() => {
-    if (marker) {
-      dispatch(addMarker({ id, marker }));
-    }
+    if (!marker) return;
 
-    return () => {
-      dispatch(removeMarker({ id }));
-    };
+    dispatch(addMarker({ id, marker }));
+    return () => void dispatch(removeMarker({ id }));
   }, [dispatch, id, marker]);
 
   return null;
