@@ -26,18 +26,21 @@ export default function MapboxMap({ sx }: MapboxMapProps) {
       zoom: 1,
     });
 
-    const id = setTimeout(() => {
+    // Load event
+    const loadListener = () => {
       const state = store.getState();
 
       for (const marker of Object.values(state.markers.byId)) {
         marker.addTo(map);
       }
-    }, 1000);
+    };
+
+    map.once('load', loadListener);
 
     // Cleanup
     return () => {
+      map.off('load', loadListener);
       map.remove();
-      clearTimeout(id);
     };
   }, []);
 
