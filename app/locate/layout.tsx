@@ -1,7 +1,8 @@
 import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
 import { ReactNode } from 'react';
 
-import ColorModeToggle from '@/src/common/ColorModeToggle';
+import ColorModeToggle from '@/components/common/ColorModeToggle';
 import SearchBar from '@/src/common/SearchBar';
 import MapboxGate from '@/src/mapbox/MapboxGate';
 import MapboxMap from '@/src/mapbox/MapboxMap';
@@ -44,7 +45,10 @@ export default function LocateLayout({ children }: LocateLayoutProps) {
           }}
         >
           <SearchBar sx={{ gridArea: '1 / 1', pointerEvents: 'auto' }} />
-          <ColorModeToggle sx={{ gridArea: '1 / 2', pointerEvents: 'auto', mb: 'auto' }} />
+
+          <Paper sx={{ gridArea: '1 / 2', pointerEvents: 'auto', mb: 'auto', p: 0.5, borderRadius: 9999 }}>
+            <ColorModeToggle />
+          </Paper>
 
           { children }
         </Box>
