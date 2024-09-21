@@ -23,7 +23,7 @@ export default async function IpInfoMarker({ ip }: IpInfoMarkerProps) {
       <MapboxMarker
         color={green[300]}
         focusKey="ip-info"
-        lngLat={[parseFloat(longitude), parseFloat(latitude)]}
+        lngLat={[parseFloat(longitude!), parseFloat(latitude!)]}
       />
     </MapboxGate>
   );
