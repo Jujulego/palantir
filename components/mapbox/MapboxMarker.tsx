@@ -1,36 +1,30 @@
 'use client';
 
 import { useAppDispatch } from '@/state/hooks';
-import { addMarker, removeMarker } from '@/state/markers/actions';
-import { type LngLatLike, Marker } from 'mapbox-gl';
-import { useEffect, useId, useState } from 'react';
+import { putMarker, removeMarker } from '@/state/markers/actions';
+import type { LngLatLike } from 'mapbox-gl';
+import { useEffect, useId } from 'react';
 
 // Component
 export interface MapMarkerProps {
   readonly color?: string;
-  readonly latLng: LngLatLike;
+  readonly lngLat: LngLatLike;
 }
 
-export default function MapboxMarker({ color, latLng }: MapMarkerProps) {
+export default function MapboxMarker({ color, lngLat }: MapMarkerProps) {
   const id = useId();
   const dispatch = useAppDispatch();
 
-  const [marker, setMarker] = useState<Marker>();
-
   useEffect(() => {
-    setMarker(new Marker({ color }));
-  }, [color]);
+    dispatch(putMarker({
+      id,
+      marker: { color, lngLat }
+    }));
 
-  useEffect(() => {
-    marker?.setLngLat(latLng);
-  }, [marker, latLng]);
-
-  useEffect(() => {
-    if (!marker) return;
-
-    dispatch(addMarker({ id, marker }));
-    return () => void dispatch(removeMarker({ id }));
-  }, [dispatch, id, marker]);
+    return () => {
+      dispatch(removeMarker({ id }));
+    };
+  }, [dispatch, id, color, lngLat]);
 
   return null;
 }

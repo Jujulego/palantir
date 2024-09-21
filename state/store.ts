@@ -4,12 +4,6 @@ import { configureStore } from '@reduxjs/toolkit';
 // Store builder
 export function makeStore() {
   return configureStore({
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActionPaths: ['payload.marker'],
-        ignoredPaths: ['markers.byId']
-      }
-    }),
     reducer: {
       markers: markersReducer,
     }
