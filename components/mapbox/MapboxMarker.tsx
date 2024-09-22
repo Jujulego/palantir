@@ -2,29 +2,31 @@
 
 import { useAppDispatch } from '@/state/hooks';
 import { putMarker, removeMarker } from '@/state/markers/actions';
-import type { LngLatLike } from 'mapbox-gl';
-import { useEffect, useId } from 'react';
+import { memo, useEffect, useId } from 'react';
 
 // Component
 export interface MapMarkerProps {
+  readonly lng: number;
+  readonly lat: number;
   readonly color?: string;
-  readonly lngLat: LngLatLike;
 }
 
-export default function MapboxMarker({ color, lngLat }: MapMarkerProps) {
+const MapboxMarker = memo(function MapboxMarker({ color, lng, lat }: MapMarkerProps) {
   const id = useId();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(putMarker({
       id,
-      marker: { color, lngLat }
+      marker: { color, lngLat: { lng, lat } }
     }));
 
     return () => {
       dispatch(removeMarker({ id }));
     };
-  }, [dispatch, id, color, lngLat]);
+  }, [dispatch, id, color, lng, lat]);
 
   return null;
-}
+});
+
+export default MapboxMarker;

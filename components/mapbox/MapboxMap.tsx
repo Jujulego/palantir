@@ -19,6 +19,7 @@ export default function MapboxMap({ sx }: MapboxMapProps) {
   const store = useAppStore();
   const theme = useTheme();
 
+  // Map Setup
   const container = useRef<HTMLDivElement>(null);
 
   const [map, setMap] = useState<Mapbox | null>(null);
@@ -63,9 +64,8 @@ export default function MapboxMap({ sx }: MapboxMapProps) {
   }, [map, isStyleLoaded, theme]);
 
   // Render
-  return (
-    <Box ref={container} sx={sx}>
-      { map && isLoaded && <MapboxStoredMarkers map={map} /> }
-    </Box>
-  );
+  return <>
+    <Box ref={container} sx={sx} />
+    { map && isLoaded && <MapboxStoredMarkers map={map} /> }
+  </>;
 }

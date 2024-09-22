@@ -2,14 +2,14 @@
 
 import { useAppSelector } from '@/state/hooks';
 import { type Map as Mapbox, Marker } from 'mapbox-gl';
-import { useEffect } from 'react';
+import { memo, useEffect } from 'react';
 
 // Component
 export interface MapboxStoredMarkersProps {
   readonly map: Mapbox;
 }
 
-export default function MapboxStoredMarkers({ map }: MapboxStoredMarkersProps) {
+const MapboxStoredMarkers = memo(function MapboxStoredMarkers({ map }: MapboxStoredMarkersProps) {
   const ids = useAppSelector((state) => state.markers.allIds);
 
   return (
@@ -17,7 +17,9 @@ export default function MapboxStoredMarkers({ map }: MapboxStoredMarkersProps) {
       { ids.map((id) => <MapboxStoredMarker key={id} map={map} id={id} />) }
     </>
   );
-}
+});
+
+export default MapboxStoredMarkers;
 
 // Utils
 interface MapboxStoredMarkerProps {
@@ -25,7 +27,7 @@ interface MapboxStoredMarkerProps {
   readonly id: string;
 }
 
-function MapboxStoredMarker({ map, id }: MapboxStoredMarkerProps) {
+const MapboxStoredMarker = memo(function MapboxStoredMarker({ map, id }: MapboxStoredMarkerProps) {
   const state = useAppSelector((state) => state.markers.byId[id]);
 
   useEffect(() => {
@@ -41,4 +43,4 @@ function MapboxStoredMarker({ map, id }: MapboxStoredMarkerProps) {
   }, [map, state]);
 
   return null;
-}
+});
