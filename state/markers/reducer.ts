@@ -18,5 +18,8 @@ export const markersReducer = createReducer(initialState, (builder) => builder
   })
   .addCase(removeMarker, (state, { payload }) => {
     delete state.byId[payload.id];
+
+    const idx = state.allIds.indexOf(payload.id);
+    if (idx !== -1) state.allIds.splice(idx, 1);
   })
 );

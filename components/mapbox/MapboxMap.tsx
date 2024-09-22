@@ -1,13 +1,11 @@
 'use client';
 
+import MapboxStoredMarkers from '@/components/mapbox/MapboxStoredMarkers';
 import { useAppStore } from '@/state/hooks';
-import { combineLatest$ } from '@/utils/combineLatest$';
-import { selector$ } from '@/utils/selector$';
 import type { Theme } from '@mui/material';
 import Box from '@mui/material/Box';
 import { type SxProps, useTheme } from '@mui/material/styles';
-import { map$, pipe$, switchMap$ } from 'kyrielle';
-import { Map as Mapbox, Marker } from 'mapbox-gl';
+import { Map as Mapbox } from 'mapbox-gl';
 import { useEffect, useRef, useState } from 'react';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -36,6 +34,8 @@ export default function MapboxMap({ sx }: MapboxMapProps) {
     });
 
     setMap(map);
+    setIsLoaded(false);
+    setIsStyleLoaded(false);
 
     // load event
     const loadListener = () => setIsLoaded(true);
@@ -62,33 +62,10 @@ export default function MapboxMap({ sx }: MapboxMapProps) {
     map.setConfigProperty('basemap', 'lightPreset', theme.map.light);
   }, [map, isStyleLoaded, theme]);
 
-  useEffect(() => {
-    if (!map || !isLoaded) return;
-
-    // Add markers from store
-    const markers = new Map<string, Marker>();
-
-    const subscribe = pipe$(
-      selector$(store, (state) => state.markers.allIds),
-      switchMap$((ids) => combineLatest$(ids.map((id) => pipe$(
-        selector$(store, (state) => state.markers.byId[id]),
-        map$(({ color, lngLat }) => {
-          let marker = markers.get(id);
-
-          if (!marker) {
-            marker = new Marker({ color });
-            marker.setLngLat(lngLat);
-            marker.addTo(map);
-          } else {
-            marker.setLngLat(lngLat);
-          }
-        }),
-      )))),
-    ).subscribe();
-
-    return subscribe.unsubscribe;
-  }, [map, store, isLoaded]);
-
   // Render
-  return <Box ref={container} sx={sx} />;
+  return (
+    <Box ref={container} sx={sx}>
+      { map && isLoaded && <MapboxStoredMarkers map={map} /> }
+    </Box>
+  );
 }
