@@ -1,5 +1,6 @@
 'use client';
 
+import IpLocateButton from '@/components/common/IpLocateButton';
 import SearchIcon from '@mui/icons-material/Search';
 import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton';
@@ -31,6 +32,11 @@ export default function IpSearchBar({ ip, sx, onSearch }: IpSearchBarProps) {
     startSearch(() => onSearch(ip));
   }, [onSearch]);
 
+  const handleLocate = useCallback((ip: string) => {
+    setSearch(ip);
+    handleSearch(ip);
+  }, [search, handleSearch]);
+
   const handleSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleSearch(search);
@@ -43,6 +49,8 @@ export default function IpSearchBar({ ip, sx, onSearch }: IpSearchBarProps) {
         type="search" placeholder="Adresse IP" required
         value={search} onChange={handleChange}
       />
+
+      <IpLocateButton onLocate={handleLocate} />
 
       { isSearching ? (
         <CircularProgress size={24} sx={{ m: 1, flex: '0 0 auto' }} />
@@ -62,7 +70,7 @@ export default function IpSearchBar({ ip, sx, onSearch }: IpSearchBarProps) {
 // Utils
 const SearchForm = styled('form')(({ theme }) => ({
   display: 'flex',
-  gap: theme.spacing(1),
+  gap: theme.spacing(0.5),
 }));
 
 const SearchInput = styled('input')(({ theme }) => ({

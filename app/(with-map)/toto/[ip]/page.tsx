@@ -9,7 +9,7 @@ export interface TotoIpPageProps {
 }
 
 export default async function TotoIpPage({ params }: TotoIpPageProps) {
-  const { location } = await fetchIpInfo(params.ip);
+  const { location } = await fetchIpInfo(decodeURIComponent(params.ip));
 
   return location?.coordinates && (
     <MapboxMarker
