@@ -38,7 +38,6 @@ export default function MapboxMap({ children }: MapboxMapProps) {
     const map = new mapboxgl.Map({
       accessToken: process.env.NEXT_PUBLIC_MAPBOX_PK!,
       container: container.current!,
-      center: [-74.5, 40],
       zoom: 1,
     });
 
