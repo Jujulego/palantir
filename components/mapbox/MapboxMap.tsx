@@ -1,6 +1,6 @@
 'use client';
 
-import { styled, type SxProps, useTheme } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import mapboxgl from 'mapbox-gl';
 import { createContext, type ReactNode, useEffect, useRef, useState } from 'react';
 
@@ -24,10 +24,9 @@ export const MapboxContext = createContext<MapboxMapState>(initialState);
 // Component
 export interface MapboxMapProps {
   readonly children?: ReactNode;
-  readonly sx?: SxProps;
 }
 
-export default function MapboxMap({ children, sx }: MapboxMapProps) {
+export default function MapboxMap({ children }: MapboxMapProps) {
   const container = useRef<HTMLDivElement>(null);
 
   // Initiate map
@@ -81,11 +80,17 @@ export default function MapboxMap({ children, sx }: MapboxMapProps) {
   // Render
   return (
     <MapboxContext.Provider value={{ map, isLoaded, isStyleLoaded }}>
-      <Container ref={container} sx={sx} />
+      <Container ref={container} />
       { children }
     </MapboxContext.Provider>
   );
 }
 
 // Utils
-const Container = styled('div')();
+const Container = styled('div')({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  height: '100%',
+  width: '100%',
+});
