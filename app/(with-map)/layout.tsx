@@ -1,8 +1,12 @@
+'use client';
+
 import ColorModeToggle from '@/components/common/ColorModeToggle';
+import SearchBox from '@/components/common/SearchBox';
 import MapboxMap from '@/components/mapbox/MapboxMap';
 import { Toolbar } from '@mui/material';
 import Paper from '@mui/material/Paper';
-import type { ReactNode } from 'react';
+import { useRouter, useSelectedLayoutSegments } from 'next/navigation';
+import { type ReactNode, useCallback, useMemo } from 'react';
 
 // Layout
 export interface WithMapLayoutProps {
@@ -10,6 +14,16 @@ export interface WithMapLayoutProps {
 }
 
 export default function WithMapLayout({ children }: WithMapLayoutProps) {
+  const router = useRouter();
+  const segments = useSelectedLayoutSegments();
+  
+  const value = useMemo(() => segments[1] && decodeURIComponent(segments[1]), [segments])
+
+  const handleSearch = useCallback((value: string) => {
+    router.push(`ip/${value}`);
+  }, [router]);
+
+  // Render
   return <>
     <Toolbar
       component="header"
@@ -23,6 +37,10 @@ export default function WithMapLayout({ children }: WithMapLayoutProps) {
         }
       }}
     >
+      <Paper sx={{ p: 0.5, borderRadius: 9999 }}>
+        <SearchBox value={value} onSearch={handleSearch} />
+      </Paper>
+
       <Paper sx={{ ml: 'auto', p: 0.5, borderRadius: 9999 }}>
         <ColorModeToggle />
       </Paper>

@@ -3,8 +3,8 @@ import MapboxSpin from '@/components/mapbox/MapboxSpin';
 
 // Page
 export default function RootPage() {
-  return (<>
+  return <>
     <MapboxSpin />
     <MapboxMarker latitude={49} longitude={2} />
-  </>);
+  </>;
 }
