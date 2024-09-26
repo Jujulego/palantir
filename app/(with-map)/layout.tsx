@@ -37,9 +37,7 @@ export default function WithMapLayout({ children }: WithMapLayoutProps) {
         }
       }}
     >
-      <Paper sx={{ p: 0.5, borderRadius: 9999 }}>
-        <SearchBox value={value} onSearch={handleSearch} />
-      </Paper>
+      <SearchBox value={value} onSearch={handleSearch} />
 
       <Paper sx={{ ml: 'auto', p: 0.5, borderRadius: 9999 }}>
         <ColorModeToggle />

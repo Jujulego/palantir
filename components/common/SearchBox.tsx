@@ -3,6 +3,7 @@
 import SearchIcon from '@mui/icons-material/Search';
 import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton';
+import Paper from '@mui/material/Paper';
 import { styled, type SxProps, type Theme } from '@mui/material/styles';
 import ipaddr from 'ipaddr.js';
 import { type ChangeEvent, type FormEvent, useCallback, useEffect, useMemo, useState, useTransition } from 'react';
@@ -11,10 +12,9 @@ import { type ChangeEvent, type FormEvent, useCallback, useEffect, useMemo, useS
 export interface SearchBarProps {
   readonly value?: string;
   readonly onSearch: (value: string) => void;
-  readonly sx?: SxProps<Theme>;
 }
 
-export default function SearchBox({ value, onSearch, sx }: SearchBarProps) {
+export default function SearchBox({ value, onSearch }: SearchBarProps) {
   const [isSearching, startSearch] = useTransition();
   const [search, setSearch] = useState(value ?? '');
   const isValid = useMemo(() => ipaddr.isValid(search), [search]);
@@ -38,7 +38,7 @@ export default function SearchBox({ value, onSearch, sx }: SearchBarProps) {
 
   // Render
   return (
-    <SearchForm sx={sx}>
+    <Paper component="search" sx={{ display: 'flex', borderRadius: 9999 }}>
       <SearchInput
         type="search" placeholder="Adresse IP" required
         value={search} onChange={handleChange}
@@ -51,26 +51,23 @@ export default function SearchBox({ value, onSearch, sx }: SearchBarProps) {
           color="inherit" disabled={!isValid}
           aria-label="Search"
           onClick={handleSearch}
-          sx={{ flex: '0 0 auto' }}
+          sx={{ flex: '0 0 auto', m: 0.5 }}
         >
           <SearchIcon />
         </IconButton>
       ) }
-    </SearchForm>
+    </Paper>
   );
 }
 
 // Utils
-const SearchForm = styled('search')(({ theme }) => ({
-  display: 'flex',
-  gap: theme.spacing(0.5),
-}));
-
 const SearchInput = styled('input')(({ theme }) => ({
-  height: 40,
   width: 246,
   flex: '0 0 auto',
   paddingLeft: theme.spacing(2.5),
+  paddingTop: theme.spacing(0.5),
+  paddingRight: 0,
+  paddingBottom: theme.spacing(0.5),
   backgroundColor: 'transparent',
   border: 'none',
   outline: 'none',
