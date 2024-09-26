@@ -20,7 +20,7 @@ export default function WithMapLayout({ children }: WithMapLayoutProps) {
   const value = useMemo(() => segments[1] && decodeURIComponent(segments[1]), [segments])
 
   const handleSearch = useCallback((value: string) => {
-    router.push(`ip/${value}`);
+    router.push(`/ip/${value}`);
   }, [router]);
 
   // Render

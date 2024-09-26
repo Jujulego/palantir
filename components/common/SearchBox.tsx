@@ -1,12 +1,13 @@
 'use client';
 
+import LocateButton from '@/components/common/LocateButton';
 import SearchIcon from '@mui/icons-material/Search';
 import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
-import { styled, type SxProps, type Theme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import ipaddr from 'ipaddr.js';
-import { type ChangeEvent, type FormEvent, useCallback, useEffect, useMemo, useState, useTransition } from 'react';
+import { type ChangeEvent, useCallback, useEffect, useMemo, useState, useTransition } from 'react';
 
 // Component
 export interface SearchBarProps {
@@ -44,8 +45,13 @@ export default function SearchBox({ value, onSearch }: SearchBarProps) {
         value={search} onChange={handleChange}
       />
 
+      <LocateButton
+        onLocate={handleLocate}
+        sx={{ flex: '0 0 auto', m: 0.5 }}
+      />
+
       { isSearching ? (
-        <CircularProgress size={24} sx={{ m: 1, flex: '0 0 auto' }} />
+        <CircularProgress size={24} sx={{ m: 1.5, flex: '0 0 auto' }} />
       ) : (
         <IconButton
           color="inherit" disabled={!isValid}
