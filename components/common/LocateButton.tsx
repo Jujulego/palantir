@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton';
 import type { SxProps, Theme } from '@mui/material/styles';
+import Tooltip from '@mui/material/Tooltip';
 import { useCallback, useState } from 'react';
 
 export interface LocateButtonProps {
@@ -39,12 +40,14 @@ export default function LocateButton({ onLocate, sx }: LocateButtonProps) {
   }
 
   return (
-    <IconButton
-      color="inherit" aria-label="Locate"
-      onClick={handleClick}
-      sx={sx}
-    >
-      <GpsNotFixedIcon />
-    </IconButton>
+    <Tooltip title="Locate my ip">
+      <IconButton
+        color="inherit" aria-label="Locate my ip"
+        onClick={handleClick}
+        sx={sx}
+      >
+        <GpsNotFixedIcon />
+      </IconButton>
+    </Tooltip>
   );
 }

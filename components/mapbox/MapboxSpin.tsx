@@ -5,10 +5,10 @@ import { use, useEffect } from 'react';
 
 // Component
 export default function MapboxSpin() {
-  const { map } = use(MapboxContext);
+  const { map, isStyleLoaded } = use(MapboxContext);
 
   useEffect(() => {
-    if (!map) return;
+    if (!map || !isStyleLoaded) return;
 
     // Make map spin
     let pause = false;
@@ -69,7 +69,7 @@ export default function MapboxSpin() {
       map.off('touchend', restartAnimation);
       map.off('zoomend', restartAnimation);
     };
-  }, [map]);
+  }, [map, isStyleLoaded]);
 
   return null;
 }
