@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import ipaddr from 'ipaddr.js';
-import { type ChangeEvent, useCallback, useEffect, useMemo, useState, useTransition } from 'react';
+import { type ChangeEvent, type FormEvent, useCallback, useEffect, useMemo, useState, useTransition } from 'react';
 
 // Component
 export interface SearchBarProps {
@@ -33,13 +33,14 @@ export default function SearchBox({ value, onSearch }: SearchBarProps) {
     startSearch(() => onSearch(value));
   }, [onSearch]);
 
-  const handleSearch = useCallback(() => {
+  const handleSearch = useCallback((event: FormEvent) => {
+    event.preventDefault();
     startSearch(() => onSearch(search));
   }, [search, onSearch]);
 
   // Render
   return (
-    <Paper component="search" sx={{ display: 'flex', borderRadius: 9999 }}>
+    <Paper component="form" role="search" onSubmit={handleSearch} sx={{ display: 'flex', borderRadius: 9999 }}>
       <SearchInput
         type="search" placeholder="Adresse IP" required
         value={search} onChange={handleChange}
@@ -56,7 +57,7 @@ export default function SearchBox({ value, onSearch }: SearchBarProps) {
         <IconButton
           color="inherit" disabled={!isValid}
           aria-label="Search"
-          onClick={handleSearch}
+          type="submit"
           sx={{ flex: '0 0 auto', m: 0.5 }}
         >
           <SearchIcon />

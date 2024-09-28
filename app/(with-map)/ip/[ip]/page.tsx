@@ -19,6 +19,6 @@ export default async function WithMapIpPage({ params }: TotoIpPageProps) {
 
   return <>
     <MapboxMarker latitude={location.coordinates.latitude} longitude={location.coordinates.longitude} />
-    <MapboxFlyTo latitude={location.coordinates.latitude} longitude={location.coordinates.longitude} zoom={4} />
+    <MapboxFlyTo latitude={location.coordinates.latitude} longitude={location.coordinates.longitude} zoom={5} />
   </>;
 }

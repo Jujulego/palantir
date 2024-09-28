@@ -43,6 +43,7 @@ export default function LocateButton({ onLocate, sx }: LocateButtonProps) {
     <Tooltip title="Locate my ip">
       <IconButton
         color="inherit" aria-label="Locate my ip"
+        type="button"
         onClick={handleClick}
         sx={sx}
       >
