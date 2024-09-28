@@ -9,9 +9,11 @@ export async function searchIpInfo(ip: string): Promise<IpInfoResult> {
   const parsed = ipaddr.parse(ip);
 
   const url = new URL(`https://ipinfo.io/${parsed.toNormalizedString()}/json`);
-  url.searchParams.set('token', process.env.IP_INFO_TOKEN!);
 
   const res = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${process.env.IP_INFO_TOKEN}`
+    },
     next: {
       revalidate: ipCacheDuration(parsed),
       tags: [parsed.toNormalizedString()],

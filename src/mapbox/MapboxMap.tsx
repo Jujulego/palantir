@@ -17,6 +17,7 @@ export interface MapboxMapProps {
   readonly sx?: SxProps;
 }
 
+/** @deprecated */
 export default function MapboxMap({ initialFocusKey, children, sx }: MapboxMapProps) {
   // Create map
   const [map, setMap] = useState<mapboxgl.Map>();
