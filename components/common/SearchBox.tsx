@@ -40,7 +40,7 @@ export default function SearchBox({ value, onSearch }: SearchBarProps) {
 
   // Render
   return (
-    <Paper component="form" role="search" onSubmit={handleSearch} sx={{ display: 'flex', borderRadius: 9999 }}>
+    <Paper component="form" role="search" elevation={2} onSubmit={handleSearch} sx={{ display: 'flex', borderRadius: 9999 }}>
       <SearchInput
         type="search" placeholder="Adresse IP" required
         value={search} onChange={handleChange}
@@ -69,7 +69,7 @@ export default function SearchBox({ value, onSearch }: SearchBarProps) {
 
 // Utils
 const SearchInput = styled('input')(({ theme }) => ({
-  width: 246,
+  width: 288,
   flex: '0 0 auto',
   paddingLeft: theme.spacing(2.5),
   paddingTop: theme.spacing(0.5),

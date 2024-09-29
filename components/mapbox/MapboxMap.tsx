@@ -23,10 +23,11 @@ export const MapboxContext = createContext<MapboxMapState>(initialState);
 
 // Component
 export interface MapboxMapProps {
+  readonly padding?: mapboxgl.PaddingOptions;
   readonly children?: ReactNode;
 }
 
-export default function MapboxMap({ children }: MapboxMapProps) {
+export default function MapboxMap({ padding, children }: MapboxMapProps) {
   const container = useRef<HTMLDivElement>(null);
 
   // Initiate map
@@ -75,6 +76,12 @@ export default function MapboxMap({ children }: MapboxMapProps) {
     map.setConfigProperty('basemap', 'font', theme.typography.fontFamily);
     map.setConfigProperty('basemap', 'lightPreset', theme.map.light);
   }, [map, isStyleLoaded, theme.map.light, theme.typography.fontFamily]);
+
+  useEffect(() => {
+    if (!map) return;
+
+    map.setPadding(padding ?? {});
+  }, [map, padding]);
 
   // Render
   return (
