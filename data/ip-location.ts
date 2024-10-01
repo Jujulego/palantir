@@ -15,6 +15,7 @@ export interface ASN {
 
 export interface IpLocation {
   readonly ip: string;
+  readonly hostname?: string;
   readonly source: string;
   readonly asn?: ASN;
   readonly location?: Location;

@@ -59,6 +59,7 @@ export async function fetchIpInfo(ip: string): Promise<IpLocation> {
   if (!payload.bogon) {
     const [latitude, longitude] = payload.loc.split(',') as [string, string];
 
+    result.hostname = payload.hostname;
     result.location = {
       coordinates: {
         latitude: parseFloat(latitude),
