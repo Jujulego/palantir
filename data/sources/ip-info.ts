@@ -1,4 +1,5 @@
 import type { IpLocation } from '@/data/ip-location';
+import countries from 'i18n-iso-countries';
 import ipaddr from 'ipaddr.js';
 
 import 'server-only';
@@ -60,12 +61,16 @@ export async function fetchIpInfo(ip: string): Promise<IpLocation> {
     const [latitude, longitude] = payload.loc.split(',') as [string, string];
 
     result.hostname = payload.hostname;
-    result.location = {
-      coordinates: {
-        latitude: parseFloat(latitude),
-        longitude: parseFloat(longitude),
-      },
-      country: payload.country,
+    result.coordinates = {
+      latitude: parseFloat(latitude),
+      longitude: parseFloat(longitude),
+    };
+    result.address = {
+      city: payload.city,
+      postalCode: payload.postal,
+      region: payload.region,
+      country: countries.getName(payload.country, 'en') ?? '',
+      countryCode: payload.country,
     };
 
     if (payload.org) {

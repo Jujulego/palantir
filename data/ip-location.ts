@@ -3,9 +3,12 @@ export interface Coordinates {
   readonly longitude: number;
 }
 
-export interface Location {
+export interface Address {
+  readonly city?: string;
+  readonly postalCode?: string;
+  readonly region?: string;
   readonly country: string;
-  readonly coordinates?: Coordinates;
+  readonly countryCode: string;
 }
 
 export interface ASN {
@@ -18,5 +21,6 @@ export interface IpLocation {
   readonly hostname?: string;
   readonly source: string;
   readonly asn?: ASN;
-  readonly location?: Location;
+  readonly address?: Address;
+  readonly coordinates?: Coordinates;
 }

@@ -1,0 +1,18 @@
+import type { Address } from '@/data/ip-location';
+import addressFormatter from '@fragaria/address-formatter';
+import { Fragment } from 'react';
+
+export interface AddressTypographyProps {
+  readonly address: Address;
+}
+
+export default function AddressTypography({ address }: AddressTypographyProps) {
+  const lines = addressFormatter.format(address, { output: 'array' });
+
+  return <>{ lines.map((line, idx) => (
+    <Fragment key={line}>
+      { idx > 0 && <br />}
+      { line }
+    </Fragment>
+  )) }</>;
+}

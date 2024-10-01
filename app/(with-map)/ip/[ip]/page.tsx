@@ -1,4 +1,5 @@
 import computer from '@/assets/computer.png';
+import AddressTypography from '@/components/common/AddressTypography';
 import ColoredImage from '@/components/common/ColoredImage';
 import MapboxFlyTo from '@/components/mapbox/MapboxFlyTo';
 import MapboxMarker from '@/components/mapbox/MapboxMarker';
@@ -8,6 +9,7 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import LocationCityIcon from '@mui/icons-material/LocationCity';
 import ipaddr from 'ipaddr.js';
 
 // Page
@@ -20,7 +22,8 @@ export interface WithMapIpPageProps {
 export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
   const ip = decodeURIComponent(params.ip);
   const parsed = ipaddr.parse(ip);
-  const { hostname, location } = await fetchIpInfo(ip);
+
+  const { hostname, address, coordinates } = await fetchIpInfo(ip);
 
   // Render
   return <>
@@ -48,12 +51,22 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
       </Box>
 
       <Divider />
+
+      <Box sx={{ display: 'flex', alignItems: 'center', px: 2.5, py: 2, gap: 2 }}>
+        <LocationCityIcon color="primary" />
+
+        <Typography>
+          { address && (
+            <AddressTypography address={address} />
+          ) }
+        </Typography>
+      </Box>
     </Paper>
 
-    { location?.coordinates ? (
+    { coordinates ? (
       <>
-        <MapboxMarker latitude={location.coordinates.latitude} longitude={location.coordinates.longitude} />
-        <MapboxFlyTo latitude={location.coordinates.latitude} longitude={location.coordinates.longitude} zoom={5} />
+        <MapboxMarker latitude={coordinates.latitude} longitude={coordinates.longitude} />
+        <MapboxFlyTo latitude={coordinates.latitude} longitude={coordinates.longitude} zoom={5} />
       </>
     ) : (
       <MapboxSpin />
