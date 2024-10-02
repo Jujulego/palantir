@@ -1,6 +1,5 @@
 'use client';
 
-import LocateButton from '@/components/common/LocateButton';
 import SearchIcon from '@mui/icons-material/Search';
 import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton';
@@ -28,11 +27,6 @@ export default function SearchBox({ value, onSearch }: SearchBarProps) {
     setSearch(event.target.value);
   }, []);
 
-  const handleLocate = useCallback((value: string) => {
-    setSearch(value);
-    startSearch(() => onSearch(value));
-  }, [onSearch]);
-
   const handleSearch = useCallback((event: FormEvent) => {
     event.preventDefault();
     startSearch(() => onSearch(search));
@@ -44,11 +38,6 @@ export default function SearchBox({ value, onSearch }: SearchBarProps) {
       <SearchInput
         type="search" placeholder="Adresse IP" required
         value={search} onChange={handleChange}
-      />
-
-      <LocateButton
-        onLocate={handleLocate}
-        sx={{ flex: '0 0 auto', m: 0.5 }}
       />
 
       { isSearching ? (

@@ -52,15 +52,15 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
 
       <Divider />
 
-      <Box sx={{ display: 'flex', alignItems: 'center', px: 2.5, py: 2, gap: 2 }}>
-        <LocationCityIcon color="primary" />
+      { address && (
+        <Box sx={{ display: 'flex', alignItems: 'center', px: 2.5, py: 2, gap: 2 }}>
+          <LocationCityIcon color="primary" />
 
-        <Typography>
-          { address && (
+          <Typography>
             <AddressTypography address={address} />
-          ) }
-        </Typography>
-      </Box>
+          </Typography>
+        </Box>
+      ) }
     </Paper>
 
     { coordinates ? (

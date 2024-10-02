@@ -1,6 +1,7 @@
 'use client';
 
 import ColorModeToggle from '@/components/common/ColorModeToggle';
+import LocateButton from '@/components/common/LocateButton';
 import SearchBox from '@/components/common/SearchBox';
 import MapboxMap from '@/components/mapbox/MapboxMap';
 import { Toolbar } from '@mui/material';
@@ -52,6 +53,10 @@ export default function WithMapLayout({ children }: WithMapLayoutProps) {
       }}
     >
       <SearchBox value={value} onSearch={handleSearch} />
+
+      <Paper elevation={2} sx={{ ml: 1, p: 0.5, borderRadius: 9999 }}>
+        <LocateButton />
+      </Paper>
 
       <Paper elevation={2} sx={{ ml: 'auto', p: 0.5, borderRadius: 9999 }}>
         <ColorModeToggle />
