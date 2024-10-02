@@ -16,14 +16,14 @@ export default function MapboxFlyTo({ latitude, longitude, zoom }: MapboxFlyToPr
   useEffect(() => {
     if (!map || !isStyleLoaded) return;
 
-    console.log('flyTo', {
-      center: { lat: latitude, lng: longitude },
-      zoom: zoom
-    });
-    map.flyTo({
-      center: { lat: latitude, lng: longitude },
-      zoom: zoom
-    });
+    const id = setTimeout(() => {
+      map.flyTo({
+        center: { lat: latitude, lng: longitude },
+        zoom: zoom
+      });
+    }, 0);
+
+    return () => clearTimeout(id);
   }, [isStyleLoaded, latitude, longitude, map, zoom]);
 
   return null;
