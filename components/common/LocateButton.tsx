@@ -14,14 +14,14 @@ export interface LocateButtonProps {
 }
 
 export default function LocateButton({ sx }: LocateButtonProps) {
-  const [locating, startLocating] = useTransition();
+  const [isLocating, startLocate] = useTransition();
 
   const handleClick = useCallback(() => {
-    startLocating(() => locateIp());
+    startLocate(() => locateIp());
   }, []);
 
   // Render
-  if (locating) {
+  if (isLocating) {
     return (
       <Box sx={[...(Array.isArray(sx) ? sx : [sx]), { height: 40, p: 1 }]}>
         <CircularProgress size={24} />

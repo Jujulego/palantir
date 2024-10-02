@@ -24,6 +24,10 @@ export default function WithMapLayout({ children }: WithMapLayoutProps) {
   
   const value = useMemo(() => segments[1] && decodeURIComponent(segments[1]), [segments])
 
+  const handleClear = useCallback(() => {
+    router.push('/');
+  }, [router]);
+
   const handleSearch = useCallback((value: string) => {
     router.push(`/ip/${value}`);
   }, [router]);
@@ -52,9 +56,9 @@ export default function WithMapLayout({ children }: WithMapLayoutProps) {
         }
       }}
     >
-      <SearchBox value={value} onSearch={handleSearch} />
+      <SearchBox value={value} onClear={handleClear} onSearch={handleSearch} />
 
-      <Paper elevation={2} sx={{ ml: 1, p: 0.5, borderRadius: 9999 }}>
+      <Paper elevation={2} sx={{ ml: 3, p: 0.5, borderRadius: 9999 }}>
         <LocateButton />
       </Paper>
 
