@@ -34,6 +34,7 @@ export default function MapboxSpin() {
     // Pause animation
     function pauseAnimation() {
       pause = true;
+      console.log('stop');
       map!.stop();
     }
 
