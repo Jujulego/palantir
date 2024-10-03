@@ -54,7 +54,7 @@ export async function fetchIpInfo(ip: string): Promise<IpLocation> {
   const payload = await rawFetchIpInfo(ip);
   const result: Writeable<IpLocation> = {
     ip,
-    source: 'IPinfo',
+    source: 'IpInfo',
   };
 
   if (!payload.bogon) {
@@ -77,7 +77,7 @@ export async function fetchIpInfo(ip: string): Promise<IpLocation> {
       const idx = payload.org.indexOf(' ');
 
       result.asn = {
-        asn: payload.org.slice(0, idx),
+        asn: parseInt(payload.org.slice(2, idx), 10),
         name: payload.org.slice(idx + 1),
       };
     }

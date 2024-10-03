@@ -5,6 +5,7 @@ import MapboxFlyTo from '@/components/mapbox/MapboxFlyTo';
 import MapboxMarker from '@/components/mapbox/MapboxMarker';
 import MapboxSpin from '@/components/mapbox/MapboxSpin';
 import { fetchIpInfo } from '@/data/sources/ip-info';
+import { fetchIpQualityScore } from '@/data/sources/ip-quality-score';
 import HubIcon from '@mui/icons-material/Hub';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import Box from '@mui/material/Box';
@@ -25,6 +26,7 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
   const parsed = ipaddr.parse(ip);
 
   const { hostname, address, asn, coordinates } = await fetchIpInfo(ip);
+  // const { hostname, address, asn, coordinates } = await fetchIpQualityScore(ip);
 
   // Render
   return <>
@@ -67,7 +69,7 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
         <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', alignItems: 'center', px: 2.5, py: 1, columnGap: 2 }}>
           <HubIcon color="primary" sx={{ gridRow: 'span 2' }} />
 
-          <Typography>{ asn.asn }</Typography>
+          <Typography>AS{ asn.asn }</Typography>
           <Typography noWrap>{ asn.name }</Typography>
         </Box>
       ) }

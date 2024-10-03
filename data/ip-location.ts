@@ -12,7 +12,7 @@ export interface Address {
 }
 
 export interface ASN {
-  readonly asn: string;
+  readonly asn: number;
   readonly name: string;
 }
 
