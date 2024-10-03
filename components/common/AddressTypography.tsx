@@ -1,4 +1,4 @@
-import type { Address } from '@/data/ip-location';
+import type { Address } from '@/data/ip-metadata';
 import addressFormatter from '@fragaria/address-formatter';
 import { Fragment } from 'react';
 

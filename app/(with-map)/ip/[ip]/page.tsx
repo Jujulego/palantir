@@ -4,6 +4,7 @@ import ColoredImage from '@/components/common/ColoredImage';
 import MapboxFlyTo from '@/components/mapbox/MapboxFlyTo';
 import MapboxMarker from '@/components/mapbox/MapboxMarker';
 import MapboxSpin from '@/components/mapbox/MapboxSpin';
+import { mergeIpMetadata } from '@/data/ip-metadata';
 import { fetchIpInfo } from '@/data/sources/ip-info';
 import { fetchIpQualityScore } from '@/data/sources/ip-quality-score';
 import HubIcon from '@mui/icons-material/Hub';
@@ -13,6 +14,8 @@ import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import ipaddr from 'ipaddr.js';
+import LabelIcon from '@mui/icons-material/Label';
+import Chip from '@mui/material/Chip';
 
 // Page
 export interface WithMapIpPageProps {
@@ -25,8 +28,10 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
   const ip = decodeURIComponent(params.ip);
   const parsed = ipaddr.parse(ip);
 
-  const { hostname, address, asn, coordinates } = await fetchIpInfo(ip);
-  // const { hostname, address, asn, coordinates } = await fetchIpQualityScore(ip);
+  const { hostname, address, asn, coordinates, tags } = mergeIpMetadata(await Promise.all([
+    fetchIpInfo(ip),
+    fetchIpQualityScore(ip),
+  ]));
 
   // Render
   return <>
@@ -71,6 +76,18 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
 
           <Typography>AS{ asn.asn }</Typography>
           <Typography noWrap>{ asn.name }</Typography>
+        </Box>
+      ) }
+
+      { tags.length > 0 && (
+        <Box sx={{ display: 'flex', alignItems: 'center', px: 2.5, py: 1, gap: 2 }}>
+          <LabelIcon color="primary" />
+
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
+            { tags.map((tag) => (
+              <Chip key={tag} label={tag} size="small" />
+            )) }
+          </Box>
         </Box>
       ) }
     </Paper>

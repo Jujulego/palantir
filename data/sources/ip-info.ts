@@ -1,4 +1,4 @@
-import type { IpLocation } from '@/data/ip-location';
+import type { IpMetadata } from '@/data/ip-metadata';
 import countries from 'i18n-iso-countries';
 import ipaddr from 'ipaddr.js';
 
@@ -46,15 +46,16 @@ export async function rawFetchIpInfo(ip: string): Promise<IpInfoResult> {
       tags: [parsed.toNormalizedString()]
     }
   });
+  console.log(`Received IpInfo metadata for ${parsed.toNormalizedString()}`);
 
   return await res.json();
 }
 
-export async function fetchIpInfo(ip: string): Promise<IpLocation> {
+export async function fetchIpInfo(ip: string): Promise<IpMetadata> {
   const payload = await rawFetchIpInfo(ip);
-  const result: Writeable<IpLocation> = {
+  const result: Writeable<IpMetadata> = {
     ip,
-    source: 'IpInfo',
+    tags: [],
   };
 
   if (!payload.bogon) {
@@ -81,6 +82,8 @@ export async function fetchIpInfo(ip: string): Promise<IpLocation> {
         name: payload.org.slice(idx + 1),
       };
     }
+  } else {
+    result.tags = ['bogon'];
   }
 
   return result;

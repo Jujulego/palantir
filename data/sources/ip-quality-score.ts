@@ -1,4 +1,4 @@
-import type { IpLocation } from '@/data/ip-location';
+import type { IpMetadata } from '@/data/ip-metadata';
 import countries from 'i18n-iso-countries';
 import ipaddr from 'ipaddr.js';
 
@@ -61,15 +61,16 @@ export async function rawFetchIpQualityScore(ip: string): Promise<IpQualityResul
       tags: [parsed.toNormalizedString()]
     }
   });
+  console.log(`Received IpQualityScore metadata for ${parsed.toNormalizedString()}`);
 
   return await res.json();
 }
 
-export async function fetchIpQualityScore(ip: string): Promise<IpLocation> {
+export async function fetchIpQualityScore(ip: string): Promise<IpMetadata> {
   const payload = await rawFetchIpQualityScore(ip);
-  const result: Writeable<IpLocation> = {
+  const result: Writeable<IpMetadata> = {
     ip,
-    source: 'IpQualityScore',
+    tags: [],
   };
 
   if (payload.success) {
@@ -98,6 +99,30 @@ export async function fetchIpQualityScore(ip: string): Promise<IpLocation> {
         name: payload.ISP,
       };
     }
+
+    const tags: string[] = [];
+
+    if (payload.is_crawler) {
+      tags.push('bot');
+    }
+
+    if (payload.proxy) {
+      tags.push('proxy');
+    }
+
+    if (payload.active_vpn) {
+      tags.push('active vpn');
+    } else if (payload.vpn) {
+      tags.push('vpn');
+    }
+
+    if (payload.active_tor) {
+      tags.push('active tor');
+    } else if (payload.tor) {
+      tags.push('tor');
+    }
+
+    result.tags = tags;
   }
 
   return result;
