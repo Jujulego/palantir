@@ -17,13 +17,18 @@ export interface ASN {
   readonly name: string;
 }
 
+export interface Tag {
+  readonly label: string;
+  readonly color?: 'info' | 'success' | 'warning' | 'error';
+}
+
 export interface IpMetadata {
   readonly ip: string;
   readonly hostname?: string;
   readonly asn?: ASN;
   readonly address?: Address;
   readonly coordinates?: Coordinates;
-  readonly tags: readonly string[];
+  readonly tags: readonly Tag[];
 }
 
 // Utils
@@ -68,7 +73,7 @@ export function mergeIpMetadata(data: IpMetadata[]): IpMetadata {
     const tags = [...agg.tags];
 
     for (const tag of item.tags) {
-      if (!tags.includes(tag)) {
+      if (tags.every((t) => t.label !== tag.label)) {
         tags.push(tag);
       }
     }

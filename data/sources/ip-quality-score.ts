@@ -1,4 +1,4 @@
-import type { IpMetadata } from '@/data/ip-metadata';
+import type { IpMetadata, Tag } from '@/data/ip-metadata';
 import countries from 'i18n-iso-countries';
 import ipaddr from 'ipaddr.js';
 
@@ -100,26 +100,26 @@ export async function fetchIpQualityScore(ip: string): Promise<IpMetadata> {
       };
     }
 
-    const tags: string[] = [];
+    const tags: Tag[] = [];
 
     if (payload.is_crawler) {
-      tags.push('bot');
+      tags.push({ label: 'bot', color: 'info' });
     }
 
     if (payload.proxy) {
-      tags.push('proxy');
+      tags.push({ label: 'proxy' });
     }
 
     if (payload.active_vpn) {
-      tags.push('active vpn');
+      tags.push({ label: 'active vpn' });
     } else if (payload.vpn) {
-      tags.push('vpn');
+      tags.push({ label: 'vpn', color: 'warning' });
     }
 
     if (payload.active_tor) {
-      tags.push('active tor');
+      tags.push({ label: 'active tor', color: 'warning' });
     } else if (payload.tor) {
-      tags.push('tor');
+      tags.push({ label: 'tor', color: 'warning' });
     }
 
     result.tags = tags;

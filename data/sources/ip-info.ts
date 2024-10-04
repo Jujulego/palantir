@@ -83,7 +83,9 @@ export async function fetchIpInfo(ip: string): Promise<IpMetadata> {
       };
     }
   } else {
-    result.tags = ['bogon'];
+    result.tags = [
+      { label: 'bogon' }
+    ];
   }
 
   return result;

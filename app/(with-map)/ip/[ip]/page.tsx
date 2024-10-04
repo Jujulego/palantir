@@ -85,7 +85,7 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
 
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
             { tags.map((tag) => (
-              <Chip key={tag} label={tag} size="small" />
+              <Chip key={tag.label} label={tag.label} size="small" color={tag.color} />
             )) }
           </Box>
         </Box>
