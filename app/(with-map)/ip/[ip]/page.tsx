@@ -5,6 +5,7 @@ import MapboxFlyTo from '@/components/mapbox/MapboxFlyTo';
 import MapboxMarker from '@/components/mapbox/MapboxMarker';
 import MapboxSpin from '@/components/mapbox/MapboxSpin';
 import { mergeIpMetadata } from '@/data/ip-metadata';
+import { fetchIpGeolocation } from '@/data/sources/ip-geolocation';
 import { fetchIpInfo } from '@/data/sources/ip-info';
 import { fetchIpQualityScore } from '@/data/sources/ip-quality-score';
 import HubIcon from '@mui/icons-material/Hub';
@@ -31,6 +32,7 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
   const { hostname, address, asn, coordinates, tags } = mergeIpMetadata(await Promise.all([
     fetchIpInfo(ip),
     fetchIpQualityScore(ip),
+    fetchIpGeolocation(ip),
   ]));
 
   // Render

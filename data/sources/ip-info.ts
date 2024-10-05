@@ -46,7 +46,7 @@ export async function rawFetchIpInfo(ip: string): Promise<IpInfoResult> {
       tags: [parsed.toNormalizedString()]
     }
   });
-  console.log(`Received IpInfo metadata for ${parsed.toNormalizedString()}`);
+  console.log(`Received IpInfo metadata for ${parsed.toNormalizedString()} (status = ${res.status})`);
 
   return await res.json();
 }

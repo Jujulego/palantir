@@ -61,7 +61,7 @@ export async function rawFetchIpQualityScore(ip: string): Promise<IpQualityResul
       tags: [parsed.toNormalizedString()]
     }
   });
-  console.log(`Received IpQualityScore metadata for ${parsed.toNormalizedString()}`);
+  console.log(`Received IpQualityScore metadata for ${parsed.toNormalizedString()} (status = ${res.status})`);
 
   return await res.json();
 }
