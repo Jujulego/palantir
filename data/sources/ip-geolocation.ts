@@ -1,4 +1,5 @@
 import type { IpMetadata } from '@/data/ip-metadata';
+import { FetchError } from '@/utils/fetch';
 import ipaddr from 'ipaddr.js';
 
 // Types
@@ -47,13 +48,18 @@ export interface IpGeolocationResult {
   readonly time_zone: IpGeolocationTimezone;
 }
 
+export interface IpGeolocationBogon {
+  readonly ip: string;
+  readonly is_bogon: boolean;
+}
+
 // Utils
-export async function rawFetchIpGeolocation(ip: string): Promise<IpGeolocationResult | 'bogon'> {
+export async function rawFetchIpGeolocation(ip: string): Promise<IpGeolocationResult | IpGeolocationBogon> {
   const parsed = ipaddr.parse(ip);
 
   // Do not request for "bogon" ips
   if (['private', 'loopback'].includes(parsed.range())) {
-    return 'bogon';
+    return { ip, is_bogon: true };
   }
 
   // Make request
@@ -71,7 +77,11 @@ export async function rawFetchIpGeolocation(ip: string): Promise<IpGeolocationRe
   console.log(`Received IpGeolocation metadata for ${parsed.toNormalizedString()} (status = ${res.status})`);
 
   if (res.status === 423) {
-    return 'bogon';
+    return { ip, is_bogon: true };
+  }
+
+  if (!res.ok) {
+    throw new FetchError(res.status, await res.text());
   }
 
   return await res.json();
@@ -84,7 +94,7 @@ export async function fetchIpGeolocation(ip: string): Promise<IpMetadata> {
     tags: [],
   };
 
-  if (payload === 'bogon') {
+  if ('is_bogon' in payload) {
     result.tags = [{ label: 'bogon' }];
   } else {
     result.hostname = payload.hostname;

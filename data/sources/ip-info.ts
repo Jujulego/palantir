@@ -1,4 +1,5 @@
 import type { IpMetadata } from '@/data/ip-metadata';
+import { FetchError } from '@/utils/fetch';
 import countries from 'i18n-iso-countries';
 import ipaddr from 'ipaddr.js';
 
@@ -45,6 +46,10 @@ export async function rawFetchIpInfo(ip: string): Promise<IpInfoResult> {
     }
   });
   console.log(`Received IpInfo metadata for ${parsed.toNormalizedString()} (status = ${res.status})`);
+
+  if (!res.ok) {
+    throw new FetchError(res.status, await res.text());
+  }
 
   return await res.json();
 }

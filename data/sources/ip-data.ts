@@ -1,5 +1,5 @@
 import type { IpMetadata, Tag } from '@/data/ip-metadata';
-import { ipCacheDuration } from '@/src/utils/ip';
+import { FetchError } from '@/utils/fetch';
 import ipaddr from 'ipaddr.js';
 
 // Types
@@ -61,13 +61,18 @@ export interface IpDataBlocklist {
   readonly type: string;
 }
 
+export interface IpDataBogon {
+  readonly ip: string;
+  readonly is_bogon: boolean;
+}
+
 // Utils
-export async function rawFetchIpData(ip: string): Promise<IpDataResult | null> {
+export async function rawFetchIpData(ip: string): Promise<IpDataResult | IpDataBogon> {
   const parsed = ipaddr.parse(ip);
 
   // Do not request for "bogon" ips
   if (['private', 'loopback'].includes(parsed.range())) {
-    return null;
+    return { ip, is_bogon: true };
   }
 
   // Make request
@@ -77,14 +82,24 @@ export async function rawFetchIpData(ip: string): Promise<IpDataResult | null> {
 
   const res = await fetch(url, {
     next: {
-      revalidate: ipCacheDuration(parsed),
+      revalidate: 86400,
       tags: [parsed.toNormalizedString()],
     }
   });
   console.log(`Received IpData metadata for ${parsed.toNormalizedString()} (status = ${res.status})`);
 
-  if (res.status !== 200) {
-    return null;
+  if (res.status === 400) {
+    const { message } = await res.json() as { readonly message: string };
+
+    if (message.match(/is a (reserved|private) IP address\.$/)) {
+      return { ip, is_bogon: true };
+    }
+
+    throw new FetchError(res.status, JSON.stringify({ message }));
+  }
+
+  if (!res.ok) {
+    throw new FetchError(res.status, await res.text());
   }
 
   return await res.json();
@@ -97,7 +112,9 @@ export async function fetchIpData(ip: string): Promise<IpMetadata> {
     tags: [],
   };
 
-  if (payload) {
+  if ('is_bogon' in payload) {
+    result.tags = [{ label: 'bogon' }];
+  } else {
     result.coordinates = {
       latitude: payload.latitude,
       longitude: payload.longitude,
