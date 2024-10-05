@@ -2,8 +2,6 @@ import type { IpMetadata } from '@/data/ip-metadata';
 import countries from 'i18n-iso-countries';
 import ipaddr from 'ipaddr.js';
 
-import 'server-only';
-
 // Types
 export interface IpInfoFound {
   readonly ip: string;

@@ -51,6 +51,11 @@ export interface IpGeolocationResult {
 export async function rawFetchIpGeolocation(ip: string): Promise<IpGeolocationResult | 'bogon'> {
   const parsed = ipaddr.parse(ip);
 
+  // Do not request for "bogon" ips
+  if (['private', 'loopback'].includes(parsed.range())) {
+    return 'bogon';
+  }
+
   // Make request
   console.log(`Fetching IpGeolocation for ${parsed.toNormalizedString()}`);
   const url = new URL('https://api.ipgeolocation.io/ipgeo');
@@ -63,7 +68,7 @@ export async function rawFetchIpGeolocation(ip: string): Promise<IpGeolocationRe
       tags: [parsed.toNormalizedString()],
     }
   });
-  console.log(`Received IpGeolocation for ${parsed.toNormalizedString()} (status = ${res.status})`);
+  console.log(`Received IpGeolocation metadata for ${parsed.toNormalizedString()} (status = ${res.status})`);
 
   if (res.status === 423) {
     return 'bogon';

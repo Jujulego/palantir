@@ -5,6 +5,7 @@ import MapboxFlyTo from '@/components/mapbox/MapboxFlyTo';
 import MapboxMarker from '@/components/mapbox/MapboxMarker';
 import MapboxSpin from '@/components/mapbox/MapboxSpin';
 import { mergeIpMetadata } from '@/data/ip-metadata';
+import { fetchIpData } from '@/data/sources/ip-data';
 import { fetchIpGeolocation } from '@/data/sources/ip-geolocation';
 import { fetchIpInfo } from '@/data/sources/ip-info';
 import { fetchIpQualityScore } from '@/data/sources/ip-quality-score';
@@ -33,6 +34,7 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
     fetchIpInfo(ip),
     fetchIpQualityScore(ip),
     fetchIpGeolocation(ip),
+    fetchIpData(ip),
   ]));
 
   // Render
