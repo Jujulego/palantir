@@ -1,4 +1,6 @@
-import computer from '@/assets/computer.png';
+import botPng from '@/assets/bot.png';
+import computerPng from '@/assets/computer.png';
+import datacenterPng from '@/assets/datacenter.png';
 import AddressTypography from '@/components/common/AddressTypography';
 import ColoredImage from '@/components/common/ColoredImage';
 import MapboxFlyTo from '@/components/mapbox/MapboxFlyTo';
@@ -37,6 +39,9 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
     fetchIpData(ip),
   ]));
 
+  const is_bot = tags.some((tag) => tag.label === 'bot');
+  const is_datacenter = tags.some((tag) => tag.label === 'datacenter');
+
   // Render
   return <>
     <Box
@@ -47,11 +52,25 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
         color: 'action.selected',
       }}
     >
-      <ColoredImage
-        src={computer}
-        alt="computer"
-        style={{ position: 'absolute', bottom: 0, left: 'calc(50% - 75px)', height: 'auto', width: 150 }}
-      />
+      { is_bot ? (
+        <ColoredImage
+          src={botPng}
+          alt="bot"
+          style={{ position: 'absolute', bottom: 0, left: 'calc(50% - 75px)', height: 'auto', width: 150 }}
+        />
+      ) : is_datacenter ? (
+        <ColoredImage
+          src={datacenterPng}
+          alt="datacenter"
+          style={{ position: 'absolute', bottom: 0, left: 'calc(50% - 75px)', height: 'auto', width: 150 }}
+        />
+      ) : (
+        <ColoredImage
+          src={computerPng}
+          alt="computer"
+          style={{ position: 'absolute', bottom: 0, left: 'calc(50% - 75px)', height: 'auto', width: 150 }}
+        />
+      ) }
     </Box>
 
     <Paper component="main" square sx={{ flex: '1 0 auto', pb: 4 }}>

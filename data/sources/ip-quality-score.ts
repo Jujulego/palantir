@@ -107,7 +107,7 @@ export async function fetchIpQualityScore(ip: string): Promise<IpMetadata> {
 
     const tags: Tag[] = [];
 
-    if (payload.is_crawler) {
+    if (payload.bot_status || payload.is_crawler) {
       tags.push({ label: 'bot', color: 'info' });
     }
 
