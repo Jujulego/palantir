@@ -87,4 +87,7 @@ const SearchInput = styled('input')(({ theme }) => ({
   backgroundColor: 'transparent',
   border: 'none',
   outline: 'none',
+  '&::-webkit-search-cancel-button': {
+    '-webkit-appearance': 'none',
+  }
 }));
