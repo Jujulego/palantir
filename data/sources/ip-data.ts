@@ -131,7 +131,7 @@ export async function fetchIpData(ip: string): Promise<IpMetadata> {
     if (payload.asn) {
       result.asn = {
         asn: parseInt(payload.asn.asn.slice(2), 10),
-        name: payload.asn.name,
+        organisation: payload.asn.name,
       };
     }
 
@@ -150,19 +150,19 @@ export async function fetchIpData(ip: string): Promise<IpMetadata> {
     }
 
     if (payload.threat.is_vpn) {
-      tags.push({ label: 'vpn' });
+      tags.push({ label: 'vpn', color: 'warning' });
     }
 
     if (payload.threat.is_tor) {
-      tags.push({ label: 'tor' });
+      tags.push({ label: 'tor', color: 'warning' });
     }
 
     if (payload.threat.is_known_attacker) {
-      tags.push({ label: 'attacker' });
+      tags.push({ label: 'attacker', color: 'error' });
     }
 
     if (payload.threat.is_known_abuser) {
-      tags.push({ label: 'abuser' });
+      tags.push({ label: 'abuser', color: 'error' });
     }
 
     result.tags = tags;

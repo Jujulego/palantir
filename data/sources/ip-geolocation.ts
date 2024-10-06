@@ -113,7 +113,7 @@ export async function fetchIpGeolocation(ip: string): Promise<IpMetadata> {
     if (payload.asn && payload.organization) {
       result.asn = {
         asn: parseInt(payload.asn.slice(2), 10),
-        name: payload.organization,
+        organisation: payload.organization,
       };
     }
 

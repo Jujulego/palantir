@@ -82,13 +82,11 @@ export async function fetchIpInfo(ip: string): Promise<IpMetadata> {
 
       result.asn = {
         asn: parseInt(payload.org.slice(2, idx), 10),
-        name: payload.org.slice(idx + 1),
+        organisation: payload.org.slice(idx + 1),
       };
     }
   } else {
-    result.tags = [
-      { label: 'bogon' }
-    ];
+    result.tags = [{ label: 'bogon' }];
   }
 
   return result;

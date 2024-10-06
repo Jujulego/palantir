@@ -7,6 +7,7 @@ import MapboxFlyTo from '@/components/mapbox/MapboxFlyTo';
 import MapboxMarker from '@/components/mapbox/MapboxMarker';
 import MapboxSpin from '@/components/mapbox/MapboxSpin';
 import { mergeIpMetadata } from '@/data/ip-metadata';
+import { fetchBigDataCloud } from '@/data/sources/big-data-cloud';
 import { fetchIpData } from '@/data/sources/ip-data';
 import { fetchIpGeolocation } from '@/data/sources/ip-geolocation';
 import { fetchIpInfo } from '@/data/sources/ip-info';
@@ -37,6 +38,7 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
     fetchIpQualityScore(ip),
     fetchIpGeolocation(ip),
     fetchIpData(ip),
+    fetchBigDataCloud(ip),
   ]));
 
   const is_bot = tags.some((tag) => tag.label === 'bot');
@@ -98,7 +100,7 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
           <HubIcon color="primary" sx={{ gridRow: 'span 2' }} />
 
           <Typography>AS{ asn.asn }</Typography>
-          <Typography noWrap>{ asn.name }</Typography>
+          <Typography noWrap>{ asn.organisation }</Typography>
         </Box>
       ) }
 

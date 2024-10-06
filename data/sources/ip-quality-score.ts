@@ -101,7 +101,7 @@ export async function fetchIpQualityScore(ip: string): Promise<IpMetadata> {
     if (payload.ASN) {
       result.asn = {
         asn: payload.ASN,
-        name: payload.ISP,
+        organisation: payload.ISP,
       };
     }
 
@@ -115,15 +115,11 @@ export async function fetchIpQualityScore(ip: string): Promise<IpMetadata> {
       tags.push({ label: 'proxy' });
     }
 
-    if (payload.active_vpn) {
-      tags.push({ label: 'active vpn' });
-    } else if (payload.vpn) {
+    if (payload.active_vpn || payload.vpn) {
       tags.push({ label: 'vpn', color: 'warning' });
     }
 
-    if (payload.active_tor) {
-      tags.push({ label: 'active tor', color: 'warning' });
-    } else if (payload.tor) {
+    if (payload.active_tor || payload.tor) {
       tags.push({ label: 'tor', color: 'warning' });
     }
 

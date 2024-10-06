@@ -14,7 +14,7 @@ export interface Address {
 
 export interface ASN {
   readonly asn: number;
-  readonly name: string;
+  readonly organisation: string;
 }
 
 export interface Tag {
