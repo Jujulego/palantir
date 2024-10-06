@@ -1,8 +1,7 @@
 'use client';
 
-import { createTheme, extendTheme } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 import { Roboto } from 'next/font/google';
-import { defaultStyles, darkStyles } from 'react-json-view-lite';
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -27,10 +26,8 @@ const theme = createTheme({
       map: {
         light: 'night',
       },
-      jsonViewStyles: darkStyles,
     }
   },
-  jsonViewStyles: defaultStyles,
   map: {
     light: 'day',
   },
@@ -55,20 +52,17 @@ declare module '@mui/material/styles' {
     map: {
       light: 'dawn' | 'day' | 'dusk' | 'night';
     };
-    jsonViewStyles: typeof defaultStyles;
   }
 
   export interface ThemeOptions {
     map?: {
       light?: 'dawn' | 'day' | 'dusk' | 'night';
     };
-    jsonViewStyles?: typeof defaultStyles;
   }
 
   export interface ColorSystemOptions {
     map?: {
       light?: 'dawn' | 'day' | 'dusk' | 'night';
     };
-    jsonViewStyles?: typeof defaultStyles;
   }
 }

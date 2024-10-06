@@ -853,13 +853,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@repeaterjs/repeater@npm:^3.0.5":
-  version: 3.0.6
-  resolution: "@repeaterjs/repeater@npm:3.0.6"
-  checksum: 10c0/c3915e2603927c7d6a9eb09673bc28fc49ab3a86947ec191a74663b33deebee2fcc4b03c31cc663ff27bd6db9e6c9487639b6935e265d601ce71b8c497f5f4a8
-  languageName: node
-  linkType: hard
-
 "@rushstack/eslint-patch@npm:^1.3.3":
   version: 1.10.3
   resolution: "@rushstack/eslint-patch@npm:1.10.3"
@@ -904,15 +897,6 @@ __metadata:
     "@swc/counter": "npm:^0.1.3"
     tslib: "npm:^2.4.0"
   checksum: 10c0/21a9b9cfe7e00865f9c9f3eb4c1cc5b397143464f7abee76a2c5366e591e06b0155b5aac93fe8269ef8d548df253f6fd931e9ddfc0fd12efd405f90f45506e7d
-  languageName: node
-  linkType: hard
-
-"@swc/helpers@npm:^0.5.3":
-  version: 0.5.11
-  resolution: "@swc/helpers@npm:0.5.11"
-  dependencies:
-    tslib: "npm:^2.4.0"
-  checksum: 10c0/7d1987ee6b887277d373a9be8c445cd2259c3258c08b16908c06864121fd8eac8bb89b179c91b6c5395f38194a903b5772575947c7eb3ca23285152cb0f66caa
   languageName: node
   linkType: hard
 
@@ -3168,19 +3152,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"kyrielle@npm:1.0.0-beta.4":
-  version: 1.0.0-beta.4
-  resolution: "kyrielle@npm:1.0.0-beta.4"
-  dependencies:
-    "@repeaterjs/repeater": "npm:^3.0.5"
-    "@swc/helpers": "npm:^0.5.3"
-  dependenciesMeta:
-    vitest@2.1.1:
-      unplugged: true
-  checksum: 10c0/f91ed1622d862b3b6cfe3fb35fd54be53127f755fa4ebb4dbb2c3546663d229d874710f192c4ee5d6146bbd52a1bda30b8d0a19759520e0fa544156ceb6970a2
-  languageName: node
-  linkType: hard
-
 "language-subtag-registry@npm:^0.3.20":
   version: 0.3.23
   resolution: "language-subtag-registry@npm:0.3.23"
@@ -3667,14 +3638,11 @@ __metadata:
     eslint-config-next: "npm:14.2.14"
     i18n-iso-countries: "npm:7.12.0"
     ipaddr.js: "npm:2.2.0"
-    kyrielle: "npm:1.0.0-beta.4"
     mapbox-gl: "npm:3.7.0"
     next: "npm:14.2.14"
     next-connect: "npm:1.0.0"
     react: "npm:18.3.1"
     react-dom: "npm:18.3.1"
-    react-json-view-lite: "npm:1.5.0"
-    server-only: "npm:0.0.1"
     typescript: "npm:5.6.2"
   languageName: unknown
   linkType: soft
@@ -3865,15 +3833,6 @@ __metadata:
   version: 18.3.1
   resolution: "react-is@npm:18.3.1"
   checksum: 10c0/f2f1e60010c683479e74c63f96b09fb41603527cd131a9959e2aee1e5a8b0caf270b365e5ca77d4a6b18aae659b60a86150bb3979073528877029b35aecd2072
-  languageName: node
-  linkType: hard
-
-"react-json-view-lite@npm:1.5.0":
-  version: 1.5.0
-  resolution: "react-json-view-lite@npm:1.5.0"
-  peerDependencies:
-    react: ^16.13.1 || ^17.0.0 || ^18.0.0
-  checksum: 10c0/e707717cb6b9d6cca5b138cdfb066e35ee7e493d1c88d4497e3a3a42b7651c8ff924ff53ad2da142a12b23b11379d39f38d8eee278c98c46cd6bc8844864b285
   languageName: node
   linkType: hard
 
@@ -4101,7 +4060,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"server-only@npm:0.0.1, server-only@npm:^0.0.1":
+"server-only@npm:^0.0.1":
   version: 0.0.1
   resolution: "server-only@npm:0.0.1"
   checksum: 10c0/4704f0ef85da0be981af6d4ed8e739d39bcfd265b9c246a684060acda5642d0fdc6daffc2308e71e2682c5f508090978802eae0a77623c9b90a49f9ae68048d6
