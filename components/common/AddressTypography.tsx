@@ -7,11 +7,11 @@ export interface AddressTypographyProps {
 }
 
 export default function AddressTypography({ address }: AddressTypographyProps) {
-  const lines = addressFormatter.format(address, { output: 'array' });
+  const lines = addressFormatter.format({ ...address, country: undefined }, { output: 'array' });
 
   return <>{ lines.map((line, idx) => (
     <Fragment key={line}>
-      { idx > 0 && <br />}
+      { idx > 0 && <>,&nbsp;</> }
       { line }
     </Fragment>
   )) }</>;

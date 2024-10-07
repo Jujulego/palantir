@@ -142,7 +142,7 @@ export async function fetchIpData(ip: string): Promise<IpMetadata> {
     }
 
     if (payload.threat.is_datacenter) {
-      tags.push({ label: 'datacenter' });
+      tags.push({ label: 'datacenter', color: 'info' });
     }
 
     if (payload.threat.is_proxy) {

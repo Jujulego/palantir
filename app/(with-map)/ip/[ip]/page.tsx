@@ -14,6 +14,7 @@ import { fetchIpInfo } from '@/data/sources/ip-info';
 import { fetchIpQualityScore } from '@/data/sources/ip-quality-score';
 import HubIcon from '@mui/icons-material/Hub';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
+import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
@@ -85,36 +86,47 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
 
       <Divider sx={{ mb: 1 }} />
 
-      { address && (
-        <Box sx={{ display: 'flex', alignItems: 'center', px: 2.5, py: 1, gap: 2 }}>
-          <LocationCityIcon color="primary" />
+      <List>
+        { address && (
+          <ListItem>
+            <ListItemIcon sx={{ minWidth: 40 }}>
+              <LocationCityIcon color="primary" />
+            </ListItemIcon>
 
-          <Typography>
-            <AddressTypography address={address} />
-          </Typography>
-        </Box>
-      ) }
+            <ListItemText
+              primary={<AddressTypography address={address} />}
+              secondary={address.country}
+            />
+          </ListItem>
+        ) }
 
-      { asn && (
-        <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', alignItems: 'center', px: 2.5, py: 1, columnGap: 2 }}>
-          <HubIcon color="primary" sx={{ gridRow: 'span 2' }} />
+        { asn && (
+          <ListItem>
+            <ListItemIcon sx={{ minWidth: 40 }}>
+              <HubIcon color="primary" />
+            </ListItemIcon>
 
-          <Typography>AS{ asn.asn }</Typography>
-          <Typography noWrap>{ asn.organisation }</Typography>
-        </Box>
-      ) }
+            <ListItemText
+              primary={asn.organisation} primaryTypographyProps={{ noWrap: true }}
+              secondary={`AS${asn.asn}`}
+            />
+          </ListItem>
+        ) }
 
-      { tags.length > 0 && (
-        <Box sx={{ display: 'flex', alignItems: 'center', px: 2.5, py: 1, gap: 2 }}>
-          <LabelIcon color="primary" />
+        { tags.length > 0 && (
+          <ListItem>
+            <ListItemIcon sx={{ minWidth: 40 }}>
+              <LabelIcon color="primary" />
+            </ListItemIcon>
 
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
-            { tags.map((tag) => (
-              <Chip key={tag.label} label={tag.label} size="small" color={tag.color} />
-            )) }
-          </Box>
-        </Box>
-      ) }
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
+              { tags.map((tag) => (
+                <Chip key={tag.label} label={tag.label} size="small" color={tag.color} />
+              )) }
+            </Box>
+          </ListItem>
+        ) }
+      </List>
     </Paper>
 
     { coordinates ? (
