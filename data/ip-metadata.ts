@@ -46,27 +46,7 @@ export function mergeIpMetadata(data: IpMetadata[]): IpMetadata {
       agg.coordinates = item.coordinates;
     }
 
-    if (agg.address && item.address) {
-      const address: Writeable<Address> = { ...agg.address };
-
-      if (!address.city || !address.postalCode) {
-        if (item.address.city && item.address.postalCode) {
-          address.city = item.address.city;
-          address.postalCode = item.address.postalCode;
-        }
-
-        if (!address.region) {
-          address.region = item.address.region;
-
-          if ((!address.country || !address.countryCode) && !item.address.country || !item.address.countryCode) {
-            address.country = item.address.country;
-            address.countryCode = item.address.countryCode;
-          }
-        }
-      }
-
-      agg.address = address;
-    } else {
+    if (!agg.address) {
       agg.address = item.address;
     }
 

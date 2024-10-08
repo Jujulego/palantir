@@ -84,11 +84,11 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
         ) }
       </Box>
 
-      <Divider sx={{ mb: 1 }} />
+      <Divider />
 
       <List>
         { address && (
-          <ListItem>
+          <ListItem disablePadding sx={{ minHeight: 56, px: 2 }}>
             <ListItemIcon sx={{ minWidth: 40 }}>
               <LocationCityIcon color="primary" />
             </ListItemIcon>
@@ -101,7 +101,7 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
         ) }
 
         { asn && (
-          <ListItem>
+          <ListItem disablePadding sx={{ minHeight: 56, px: 2 }}>
             <ListItemIcon sx={{ minWidth: 40 }}>
               <HubIcon color="primary" />
             </ListItemIcon>
@@ -114,7 +114,7 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
         ) }
 
         { tags.length > 0 && (
-          <ListItem>
+          <ListItem disablePadding sx={{ minHeight: 56, px: 2 }}>
             <ListItemIcon sx={{ minWidth: 40 }}>
               <LabelIcon color="primary" />
             </ListItemIcon>
