@@ -74,6 +74,7 @@ export async function rawFetchIpQualityScore(ip: string): Promise<IpQualityResul
 export async function fetchIpQualityScore(ip: string): Promise<IpMetadata> {
   const payload = await rawFetchIpQualityScore(ip);
   const result: Writeable<IpMetadata> = {
+    source: 'IP Quality Score',
     ip,
     tags: [],
   };

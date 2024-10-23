@@ -90,6 +90,7 @@ export async function rawFetchIpGeolocation(ip: string): Promise<IpGeolocationRe
 export async function fetchIpGeolocation(ip: string): Promise<IpMetadata> {
   const payload = await rawFetchIpGeolocation(ip);
   const result: Writeable<IpMetadata> = {
+    source: 'IP Geolocation',
     ip,
     tags: [],
   };

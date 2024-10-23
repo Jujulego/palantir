@@ -1,3 +1,6 @@
+import ipaddr from 'ipaddr.js';
+import { collect$, filter$, map$, of$, pipe$ } from 'kyrielle';
+
 // Types
 export interface Coordinates {
   readonly latitude: number;
@@ -12,7 +15,7 @@ export interface Address {
   readonly countryCode: string;
 }
 
-export interface ASN {
+export interface Asn {
   readonly asn: number;
   readonly organisation: string;
 }
@@ -23,43 +26,51 @@ export interface Tag {
 }
 
 export interface IpMetadata {
+  readonly source: string;
   readonly ip: string;
   readonly hostname?: string;
-  readonly asn?: ASN;
+  readonly asn?: Asn;
   readonly address?: Address;
   readonly coordinates?: Coordinates;
   readonly tags: readonly Tag[];
 }
 
+export interface MergedIpLocation {
+  readonly source: string;
+  readonly address?: Address;
+  readonly coordinates?: Coordinates;
+}
+
+export interface MergedIpAsn extends Asn {
+  readonly source: readonly string[];
+}
+
+export interface MergedIpMetadata {
+  readonly ip: string;
+  readonly hostname?: string;
+  readonly location: readonly MergedIpLocation[];
+  readonly asn: readonly MergedIpAsn[];
+  readonly tags: readonly Tag[];
+}
+
 // Utils
-export function mergeIpMetadata(data: IpMetadata[]): IpMetadata {
-  return data.slice(1).reduce<Writeable<IpMetadata>>((agg, item) => {
-    if (!agg.hostname) {
-      agg.hostname = item.hostname;
-    }
-
-    if (!agg.asn) {
-      agg.asn = item.asn;
-    }
-
-    if (!agg.coordinates) {
-      agg.coordinates = item.coordinates;
-    }
-
-    if (!agg.address) {
-      agg.address = item.address;
-    }
-
-    const tags = [...agg.tags];
-
-    for (const tag of item.tags) {
-      if (tags.every((t) => t.label !== tag.label)) {
-        tags.push(tag);
-      }
-    }
-
-    agg.tags = tags;
-
-    return agg;
-  }, { ...data[0] });
+export async function mergeIpMetadata(metadata: [IpMetadata, ...IpMetadata[]]): Promise<MergedIpMetadata> {
+  return {
+    ip: metadata[0].ip,
+    hostname: metadata.find((item) => item.hostname && !ipaddr.isValid(item.hostname))?.hostname,
+    location: metadata.map((item) => ({
+      source: item.source,
+      coordinates: item.coordinates,
+      address: item.address,
+    })),
+    asn: await pipe$(
+      of$(metadata),
+      filter$((item) => !!item.asn),
+      map$((item) => ({ source: [item.source], ...item.asn! })),
+      collect$()
+    ),
+    tags: metadata
+      .map((item) => item.tags)
+      .flat(),
+  };
 }

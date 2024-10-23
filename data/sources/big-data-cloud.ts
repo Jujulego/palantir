@@ -130,6 +130,7 @@ export async function rawFetchBigDataCloud(ip: string): Promise<BigDataCloudResu
 export async function fetchBigDataCloud(ip: string): Promise<IpMetadata> {
   const payload = await rawFetchBigDataCloud(ip);
   const result: Writeable<IpMetadata> = {
+    source: 'Big Data Cloud',
     ip,
     tags: [],
   };

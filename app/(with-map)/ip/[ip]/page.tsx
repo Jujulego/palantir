@@ -34,7 +34,7 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
   const ip = decodeURIComponent(params.ip);
   const parsed = ipaddr.parse(ip);
 
-  const { hostname, address, asn, coordinates, tags } = mergeIpMetadata(await Promise.all([
+  const { asn, hostname, location, tags } = await mergeIpMetadata(await Promise.all([
     fetchIpInfo(ip),
     fetchIpQualityScore(ip),
     fetchIpGeolocation(ip),
@@ -87,28 +87,28 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
       <Divider />
 
       <List>
-        { address && (
+        { location[0]?.address && (
           <ListItem disablePadding sx={{ minHeight: 56, px: 2 }}>
             <ListItemIcon sx={{ minWidth: 40 }}>
               <LocationCityIcon color="primary" />
             </ListItemIcon>
 
             <ListItemText
-              primary={<AddressTypography address={address} />}
-              secondary={address.country}
+              primary={<AddressTypography address={location[0].address} />}
+              secondary={location[0].address.country}
             />
           </ListItem>
         ) }
 
-        { asn && (
+        { asn[0] && (
           <ListItem disablePadding sx={{ minHeight: 56, px: 2 }}>
             <ListItemIcon sx={{ minWidth: 40 }}>
               <HubIcon color="primary" />
             </ListItemIcon>
 
             <ListItemText
-              primary={asn.organisation} primaryTypographyProps={{ noWrap: true }}
-              secondary={`AS${asn.asn}`}
+              primary={asn[0].organisation} primaryTypographyProps={{ noWrap: true }}
+              secondary={`AS${asn[0].asn}`}
             />
           </ListItem>
         ) }
@@ -129,10 +129,10 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
       </List>
     </Paper>
 
-    { coordinates ? (
+    { location[0]?.coordinates ? (
       <>
-        <MapboxMarker latitude={coordinates.latitude} longitude={coordinates.longitude} />
-        <MapboxFlyTo latitude={coordinates.latitude} longitude={coordinates.longitude} zoom={5} />
+        <MapboxMarker latitude={location[0].coordinates.latitude} longitude={location[0].coordinates.longitude} />
+        <MapboxFlyTo latitude={location[0].coordinates.latitude} longitude={location[0].coordinates.longitude} zoom={5} />
       </>
     ) : (
       <MapboxSpin />

@@ -57,6 +57,7 @@ export async function rawFetchIpInfo(ip: string): Promise<IpInfoResult> {
 export async function fetchIpInfo(ip: string): Promise<IpMetadata> {
   const payload = await rawFetchIpInfo(ip);
   const result: Writeable<IpMetadata> = {
+    source: 'IP Info',
     ip,
     tags: [],
   };
