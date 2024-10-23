@@ -3143,16 +3143,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"kyrielle@npm:1.0.0-beta.4":
-  version: 1.0.0-beta.4
-  resolution: "kyrielle@npm:1.0.0-beta.4"
+"kyrielle@npm:1.0.0":
+  version: 1.0.0
+  resolution: "kyrielle@npm:1.0.0"
   dependencies:
     "@repeaterjs/repeater": "npm:^3.0.5"
     "@swc/helpers": "npm:^0.5.3"
   dependenciesMeta:
-    vitest@2.1.1:
+    vitest@2.1.2:
       unplugged: true
-  checksum: 10c0/f91ed1622d862b3b6cfe3fb35fd54be53127f755fa4ebb4dbb2c3546663d229d874710f192c4ee5d6146bbd52a1bda30b8d0a19759520e0fa544156ceb6970a2
+  checksum: 10c0/b0dbb68f0d28d89d0f450d2b3cec0abb0290ff4ab588c39a01794c8a69e53a56c1e4e193c7cd970b0454a6923c728e0a096a64cb5d628865e00cffca3daebfa6
   languageName: node
   linkType: hard
 
@@ -3631,7 +3631,7 @@ __metadata:
     eslint: "npm:8.57.1"
     eslint-config-next: "npm:14.2.14"
     ipaddr.js: "npm:2.2.0"
-    kyrielle: "npm:1.0.0-beta.4"
+    kyrielle: "npm:1.0.0"
     mapbox-gl: "npm:3.7.0"
     next: "npm:14.2.14"
     next-connect: "npm:1.0.0"
