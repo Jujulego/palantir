@@ -54,7 +54,7 @@ export interface MergedIpMetadata {
 }
 
 // Utils
-export async function mergeIpMetadata(metadata: [IpMetadata, ...IpMetadata[]]): Promise<MergedIpMetadata> {
+export function mergeIpMetadata(metadata: [IpMetadata, ...IpMetadata[]]): MergedIpMetadata {
   return {
     ip: metadata[0].ip,
     hostname: metadata.find((item) => item.hostname && !ipaddr.isValid(item.hostname))?.hostname,
@@ -63,8 +63,8 @@ export async function mergeIpMetadata(metadata: [IpMetadata, ...IpMetadata[]]): 
       coordinates: item.coordinates,
       address: item.address,
     })),
-    asn: await pipe$(
-      of$(metadata),
+    asn: pipe$(
+      metadata,
       filter$((item) => !!item.asn),
       map$((item) => ({ source: [item.source], ...item.asn! })),
       collect$()
