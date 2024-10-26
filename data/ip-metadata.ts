@@ -1,5 +1,5 @@
 import ipaddr from 'ipaddr.js';
-import { collect$, filter$, map$, of$, pipe$ } from 'kyrielle';
+import { collect$, filter$, flat$, map$, pipe$, tap$ } from 'kyrielle';
 
 // Types
 export interface Coordinates {
@@ -55,6 +55,8 @@ export interface MergedIpMetadata {
 
 // Utils
 export function mergeIpMetadata(metadata: [IpMetadata, ...IpMetadata[]]): MergedIpMetadata {
+  const tags = new Set<string>();
+
   return {
     ip: metadata[0].ip,
     hostname: metadata.find((item) => item.hostname && !ipaddr.isValid(item.hostname))?.hostname,
@@ -69,8 +71,13 @@ export function mergeIpMetadata(metadata: [IpMetadata, ...IpMetadata[]]): Merged
       map$((item) => ({ source: [item.source], ...item.asn! })),
       collect$()
     ),
-    tags: metadata
-      .map((item) => item.tags)
-      .flat(),
+    tags: pipe$(
+      metadata,
+      map$((item) => item.tags),
+      flat$(),
+      filter$((tag) => !tags.has(tag.label)),
+      tap$((tag) => tags.add(tag.label)),
+      collect$()
+    )
   };
 }

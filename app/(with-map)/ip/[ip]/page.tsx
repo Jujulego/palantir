@@ -1,8 +1,8 @@
 import botPng from '@/assets/bot.png';
 import computerPng from '@/assets/computer.png';
 import datacenterPng from '@/assets/datacenter.png';
-import AddressTypography from '@/components/common/AddressTypography';
 import ColoredImage from '@/components/common/ColoredImage';
+import { LocationItem } from '@/components/location/LocationItem';
 import MapboxFlyTo from '@/components/mapbox/MapboxFlyTo';
 import MapboxMarker from '@/components/mapbox/MapboxMarker';
 import MapboxSpin from '@/components/mapbox/MapboxSpin';
@@ -13,28 +13,30 @@ import { fetchIpGeolocation } from '@/data/sources/ip-geolocation';
 import { fetchIpInfo } from '@/data/sources/ip-info';
 import { fetchIpQualityScore } from '@/data/sources/ip-quality-score';
 import HubIcon from '@mui/icons-material/Hub';
-import LocationCityIcon from '@mui/icons-material/LocationCity';
+import LabelIcon from '@mui/icons-material/Label';
 import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import ipaddr from 'ipaddr.js';
-import LabelIcon from '@mui/icons-material/Label';
-import Chip from '@mui/material/Chip';
 
 // Page
 export interface WithMapIpPageProps {
   readonly params: {
     readonly ip: string;
   }
+  readonly searchParams: {
+    readonly location?: string;
+  }
 }
 
-export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
+export default async function WithMapIpPage({ params, searchParams }: WithMapIpPageProps) {
   const ip = decodeURIComponent(params.ip);
   const parsed = ipaddr.parse(ip);
 
-  const { asn, hostname, location, tags } = await mergeIpMetadata(await Promise.all([
+  const { asn, hostname, location, tags } = mergeIpMetadata(await Promise.all([
     fetchIpInfo(ip),
     fetchIpQualityScore(ip),
     fetchIpGeolocation(ip),
@@ -44,6 +46,10 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
 
   const is_bot = tags.some((tag) => tag.label === 'bot');
   const is_datacenter = tags.some((tag) => tag.label === 'datacenter');
+
+  const selectedLocation = searchParams.location
+    && location.find((l) => l.source === decodeURIComponent(searchParams.location!))
+    || location[0];
 
   // Render
   return <>
@@ -87,17 +93,8 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
       <Divider />
 
       <List>
-        { location[0]?.address && (
-          <ListItem disablePadding sx={{ minHeight: 56, px: 2 }}>
-            <ListItemIcon sx={{ minWidth: 40 }}>
-              <LocationCityIcon color="primary" />
-            </ListItemIcon>
-
-            <ListItemText
-              primary={<AddressTypography address={location[0].address} />}
-              secondary={location[0].address.country}
-            />
-          </ListItem>
+        { location.length && (
+          <LocationItem options={location} />
         ) }
 
         { asn[0] && (
@@ -129,10 +126,10 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
       </List>
     </Paper>
 
-    { location[0]?.coordinates ? (
+    { selectedLocation?.coordinates ? (
       <>
-        <MapboxMarker latitude={location[0].coordinates.latitude} longitude={location[0].coordinates.longitude} />
-        <MapboxFlyTo latitude={location[0].coordinates.latitude} longitude={location[0].coordinates.longitude} zoom={5} />
+        <MapboxMarker latitude={selectedLocation.coordinates.latitude} longitude={selectedLocation.coordinates.longitude} />
+        <MapboxFlyTo latitude={selectedLocation.coordinates.latitude} longitude={selectedLocation.coordinates.longitude} zoom={5} />
       </>
     ) : (
       <MapboxSpin />
