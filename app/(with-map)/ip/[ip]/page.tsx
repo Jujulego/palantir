@@ -3,9 +3,6 @@ import computerPng from '@/assets/computer.png';
 import datacenterPng from '@/assets/datacenter.png';
 import ColoredImage from '@/components/common/ColoredImage';
 import { LocationItem } from '@/components/location/LocationItem';
-import MapboxFlyTo from '@/components/mapbox/MapboxFlyTo';
-import MapboxMarker from '@/components/mapbox/MapboxMarker';
-import MapboxSpin from '@/components/mapbox/MapboxSpin';
 import { mergeIpMetadata } from '@/data/ip-metadata';
 import { fetchBigDataCloud } from '@/data/sources/big-data-cloud';
 import { fetchIpData } from '@/data/sources/ip-data';
@@ -27,12 +24,9 @@ export interface WithMapIpPageProps {
   readonly params: {
     readonly ip: string;
   }
-  readonly searchParams: {
-    readonly location?: string;
-  }
 }
 
-export default async function WithMapIpPage({ params, searchParams }: WithMapIpPageProps) {
+export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
   const ip = decodeURIComponent(params.ip);
   const parsed = ipaddr.parse(ip);
 
@@ -46,10 +40,6 @@ export default async function WithMapIpPage({ params, searchParams }: WithMapIpP
 
   const is_bot = tags.some((tag) => tag.label === 'bot');
   const is_datacenter = tags.some((tag) => tag.label === 'datacenter');
-
-  const selectedLocation = searchParams.location
-    && location.find((l) => l.source === decodeURIComponent(searchParams.location!))
-    || location[0];
 
   // Render
   return <>
@@ -125,14 +115,5 @@ export default async function WithMapIpPage({ params, searchParams }: WithMapIpP
         ) }
       </List>
     </Paper>
-
-    { selectedLocation?.coordinates ? (
-      <>
-        <MapboxMarker latitude={selectedLocation.coordinates.latitude} longitude={selectedLocation.coordinates.longitude} />
-        <MapboxFlyTo latitude={selectedLocation.coordinates.latitude} longitude={selectedLocation.coordinates.longitude} zoom={5} />
-      </>
-    ) : (
-      <MapboxSpin />
-    ) }
   </>;
 }
