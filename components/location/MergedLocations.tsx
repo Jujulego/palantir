@@ -20,10 +20,10 @@ import { ReadonlyURLSearchParams, usePathname, useSearchParams } from 'next/navi
 import { useCallback, useRef, useState } from 'react';
 
 export interface LocationItemProps {
-  readonly options: readonly MergedIpLocation[];
+  readonly locations: readonly MergedIpLocation[];
 }
 
-export function LocationItem({ options }: LocationItemProps) {
+export function MergedLocations({ locations }: LocationItemProps) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const theme = useTheme();
@@ -31,8 +31,8 @@ export function LocationItem({ options }: LocationItemProps) {
   // Extract selected location
   const selectedSource = searchParams.get('location');
   const selected = selectedSource
-    && options.find((location) => location.source === selectedSource)
-    || options[0];
+    && locations.find((location) => location.source === selectedSource)
+    || locations[0];
 
   // Menu anchor
   const anchorRef = useRef<HTMLDivElement>(null);
@@ -110,7 +110,7 @@ export function LocationItem({ options }: LocationItemProps) {
         onClose={handleClose}
       >
         <List dense>
-          { options.map((location) => (
+          { locations.map((location) => (
             <ListItemButton
               key={location.source}
               component={Link}

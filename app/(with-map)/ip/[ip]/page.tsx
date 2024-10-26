@@ -2,7 +2,7 @@ import botPng from '@/assets/bot.png';
 import computerPng from '@/assets/computer.png';
 import datacenterPng from '@/assets/datacenter.png';
 import ColoredImage from '@/components/common/ColoredImage';
-import { LocationItem } from '@/components/location/LocationItem';
+import { MergedLocations } from '@/components/location/MergedLocations';
 import { mergeIpMetadata } from '@/data/ip-metadata';
 import { fetchBigDataCloud } from '@/data/sources/big-data-cloud';
 import { fetchIpData } from '@/data/sources/ip-data';
@@ -84,7 +84,7 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
 
       <List>
         { location.length && (
-          <LocationItem options={location} />
+          <MergedLocations locations={location} />
         ) }
 
         { asn[0] && (
