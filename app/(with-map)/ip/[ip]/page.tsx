@@ -1,6 +1,7 @@
 import botPng from '@/assets/bot.png';
 import computerPng from '@/assets/computer.png';
 import datacenterPng from '@/assets/datacenter.png';
+import { MergedAsns } from '@/components/asn/MergedAsns';
 import ColoredImage from '@/components/common/ColoredImage';
 import { MergedLocations } from '@/components/location/MergedLocations';
 import { mergeIpMetadata } from '@/data/ip-metadata';
@@ -9,9 +10,8 @@ import { fetchIpData } from '@/data/sources/ip-data';
 import { fetchIpGeolocation } from '@/data/sources/ip-geolocation';
 import { fetchIpInfo } from '@/data/sources/ip-info';
 import { fetchIpQualityScore } from '@/data/sources/ip-quality-score';
-import HubIcon from '@mui/icons-material/Hub';
 import LabelIcon from '@mui/icons-material/Label';
-import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { List, ListItem, ListItemIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import Divider from '@mui/material/Divider';
@@ -87,17 +87,8 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
           <MergedLocations locations={location} />
         ) }
 
-        { asn[0] && (
-          <ListItem disablePadding sx={{ minHeight: 56, px: 2 }}>
-            <ListItemIcon sx={{ minWidth: 40 }}>
-              <HubIcon color="primary" />
-            </ListItemIcon>
-
-            <ListItemText
-              primary={asn[0].organisation} primaryTypographyProps={{ noWrap: true }}
-              secondary={`AS${asn[0].asn}`}
-            />
-          </ListItem>
+        { asn.length && (
+          <MergedAsns asns={asn} />
         ) }
 
         { tags.length > 0 && (
