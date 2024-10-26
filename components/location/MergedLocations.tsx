@@ -10,6 +10,7 @@ import LocationCityIcon from '@mui/icons-material/LocationCity';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -51,7 +52,7 @@ export function MergedLocations({ locations }: LocationItemProps) {
   const handleClose = useCallback(() => setIsOpen(false), []);
 
   return (
-    <>
+    <ListItem disablePadding>
       <ListItemButton
         ref={anchorRef}
         onClick={handleOpen}
@@ -109,7 +110,7 @@ export function MergedLocations({ locations }: LocationItemProps) {
         }}
         onClose={handleClose}
       >
-        <List dense>
+        <List component="nav" dense>
           { locations.map((location) => (
             <ListItemButton
               key={location.source}
@@ -143,7 +144,7 @@ export function MergedLocations({ locations }: LocationItemProps) {
           )) }
         </List>
       </Popover>
-    </>
+    </ListItem>
   )
 }
 

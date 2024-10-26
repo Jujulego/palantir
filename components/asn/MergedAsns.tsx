@@ -3,6 +3,7 @@
 import type { MergedIpAsn } from '@/data/ip-metadata';
 import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown';
 import HubIcon from '@mui/icons-material/Hub';
+import { ListItem } from '@mui/material';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import List from '@mui/material/List';
@@ -49,7 +50,7 @@ export function MergedAsns({ asns }: MergedAsnsProps) {
   }
 
   return (
-    <>
+    <ListItem disablePadding>
       <ListItemButton
         ref={anchorRef}
         onClick={handleOpen}
@@ -87,7 +88,7 @@ export function MergedAsns({ asns }: MergedAsnsProps) {
         }}
         onClose={handleClose}
       >
-        <List dense>
+        <List component="nav" dense>
           { asns.map((asn) => (
             <ListItemButton
               key={asn.asn}
@@ -109,7 +110,7 @@ export function MergedAsns({ asns }: MergedAsnsProps) {
           )) }
         </List>
       </Popover>
-    </>
+    </ListItem>
   );
 }
 
