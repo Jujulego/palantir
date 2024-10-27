@@ -1,6 +1,6 @@
 'use client';
 
-import AddressTypography from '@/components/location/AddressTypography';
+import LocationTypography from '@/components/location/LocationTypography';
 import MapboxFlyTo from '@/components/mapbox/MapboxFlyTo';
 import type { MergedIpLocation } from '@/data/ip-metadata';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
@@ -41,7 +41,7 @@ export function MergedLocationMenu({ options }: MergedLocationMenuProps) {
 
         { selected.address ? (
           <ListItemText
-            primary={<AddressTypography address={selected.address} />}
+            primary={<LocationTypography location={selected} />}
             secondary={selected.address.country}
           />
         ) : (
@@ -60,32 +60,20 @@ export function MergedLocationMenu({ options }: MergedLocationMenuProps) {
           replace
           selected={location.source === selected.source}
         >
-          { location.address ? (
-            <ListItemText
-              primary={
-                <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
-                  <span><AddressTypography address={location.address} /></span>
-                  <Chip label={location.source} size="small" sx={{ my: -0.5 }} />
-                </Box>
-              }
-              secondary={location.address.country}
-            />
-          ) : (
-            <ListItemText
-              primary={
-                <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
-                  <span>Unknown location</span>
-                  <Chip label={location.source} size="small" sx={{ my: -0.5 }} />
-                </Box>
-              }
-              sx={{ color: 'text.secondary' }}
-            />
-          ) }
+          <ListItemText
+            primary={
+              <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
+                <LocationTypography location={location} />
+                <Chip label={location.source} size="small" sx={{ my: -0.5 }} />
+              </Box>
+            }
+            secondary={location.address?.country}
+          />
         </ListItemButton>
       )) }
     </MergedMenu>
 
-    { selected?.coordinates ? (<>
+    { selected.coordinates ? (<>
       <MapboxMarker
         color={theme.palette.primary.main}
         latitude={selected.coordinates.latitude}
