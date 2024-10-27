@@ -1,9 +1,9 @@
 import botPng from '@/assets/bot.png';
 import computerPng from '@/assets/computer.png';
 import datacenterPng from '@/assets/datacenter.png';
-import { MergedAsns } from '@/components/asn/MergedAsns';
+import { MergedAsnMenu } from '@/components/asn/MergedAsnMenu';
 import ColoredImage from '@/components/common/ColoredImage';
-import { MergedLocations } from '@/components/location/MergedLocations';
+import { MergedLocationMenu } from '@/components/location/MergedLocationMenu';
 import { mergeIpMetadata } from '@/data/ip-metadata';
 import { fetchBigDataCloud } from '@/data/sources/big-data-cloud';
 import { fetchIpData } from '@/data/sources/ip-data';
@@ -84,11 +84,11 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
 
       <List>
         { location.length && (
-          <MergedLocations locations={location} />
+          <MergedLocationMenu options={location} />
         ) }
 
         { asn.length && (
-          <MergedAsns asns={asn} />
+          <MergedAsnMenu options={asn} />
         ) }
 
         { tags.length > 0 && (
