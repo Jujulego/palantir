@@ -4,7 +4,9 @@ import datacenterPng from '@/assets/datacenter.png';
 import { MergedAsnMenu } from '@/components/asn/MergedAsnMenu';
 import ColoredImage from '@/components/common/ColoredImage';
 import { MergedLocationMenu } from '@/components/location/MergedLocationMenu';
+import SourceChip from '@/components/source/SourceChip';
 import { mergeIpMetadata } from '@/data/ip-metadata';
+import { ipSources, validateSourceIdParam } from '@/data/sources';
 import { fetchBigDataCloud } from '@/data/sources/big-data-cloud';
 import { fetchIpData } from '@/data/sources/ip-data';
 import { fetchIpGeolocation } from '@/data/sources/ip-geolocation';
@@ -23,12 +25,17 @@ import ipaddr from 'ipaddr.js';
 export interface WithMapIpPageProps {
   readonly params: {
     readonly ip: string;
-  }
+  };
+  readonly searchParams: {
+    readonly source?: string;
+  };
 }
 
-export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
+export default async function WithMapIpPage({ params, searchParams }: WithMapIpPageProps) {
   const ip = decodeURIComponent(params.ip);
   const parsed = ipaddr.parse(ip);
+
+  const sourceId = validateSourceIdParam(searchParams.source);
 
   const { asn, hostname, location, tags } = mergeIpMetadata(await Promise.all([
     fetchIpInfo(ip),
@@ -81,6 +88,12 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
       </Box>
 
       <Divider />
+
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', px: 2, pt: 1, gap: 1 }}>
+        { Object.entries(ipSources).map(([id, { label }]) => (
+          <SourceChip key={id} id={id} label={label} />
+        )) }
+      </Box>
 
       <List>
         { location.length && (

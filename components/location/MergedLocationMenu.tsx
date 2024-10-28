@@ -28,7 +28,7 @@ export function MergedLocationMenu({ options }: MergedLocationMenuProps) {
   // Extract selected location
   const selectedSource = searchParams.get('location');
   const selected = selectedSource
-    && options.find((location) => location.source === selectedSource)
+    && options.find((location) => location.sourceId === selectedSource)
     || options[0];
 
   // Render
@@ -54,17 +54,17 @@ export function MergedLocationMenu({ options }: MergedLocationMenuProps) {
     >
       { options.map((location) => (
         <ListItemButton
-          key={location.source}
+          key={location.sourceId}
           component={Link}
-          href={changeSourceHref(pathname, searchParams, location.source)}
+          href={changeSourceHref(pathname, searchParams, location.sourceId)}
           replace
-          selected={location.source === selected.source}
+          selected={location.sourceId === selected.sourceId}
         >
           <ListItemText
             primary={
               <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
                 <LocationTypography location={location} />
-                <Chip label={location.source} size="small" sx={{ my: -0.5 }} />
+                <Chip label={location.sourceId} size="small" sx={{ my: -0.5 }} />
               </Box>
             }
             secondary={location.address?.country}

@@ -24,6 +24,10 @@ export interface IpInfoBogon {
 
 export type IpInfoResult = IpInfoFound | IpInfoBogon;
 
+// Constants
+export const sourceId = 'ip-info';
+export const sourceLabel = 'IP Info';
+
 // Utils
 export async function rawFetchIpInfo(ip: string): Promise<IpInfoResult> {
   const parsed = ipaddr.parse(ip);
@@ -34,7 +38,7 @@ export async function rawFetchIpInfo(ip: string): Promise<IpInfoResult> {
   }
 
   // Make request
-  console.log(`Fetching IpInfo for ${parsed.toNormalizedString()}`);
+  console.log(`Fetching ${sourceLabel} for ${parsed.toNormalizedString()}`);
   const url = new URL(`https://ipinfo.io/${parsed.toNormalizedString()}/json`);
   const res = await fetch(url, {
     headers: {
@@ -45,7 +49,7 @@ export async function rawFetchIpInfo(ip: string): Promise<IpInfoResult> {
       tags: [parsed.toNormalizedString()]
     }
   });
-  console.log(`Received IpInfo metadata for ${parsed.toNormalizedString()} (status = ${res.status})`);
+  console.log(`Received ${sourceLabel} metadata for ${parsed.toNormalizedString()} (status = ${res.status})`);
 
   if (!res.ok) {
     throw new FetchError(res.status, await res.text());
@@ -57,7 +61,7 @@ export async function rawFetchIpInfo(ip: string): Promise<IpInfoResult> {
 export async function fetchIpInfo(ip: string): Promise<IpMetadata> {
   const payload = await rawFetchIpInfo(ip);
   const result: Writeable<IpMetadata> = {
-    source: 'IP Info',
+    sourceId,
     ip,
     tags: [],
   };

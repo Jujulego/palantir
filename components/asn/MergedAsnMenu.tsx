@@ -22,7 +22,7 @@ export function MergedAsnMenu({ options }: MergedAsnMenuProps) {
   // Extract selected location
   const selectedSource = searchParams.get('asn');
   const selected = selectedSource
-    && options.find((asn) => asn.source.includes(selectedSource))
+    && options.find((asn) => asn.sourceId.includes(selectedSource))
     || options[0];
 
   // Render
@@ -47,15 +47,15 @@ export function MergedAsnMenu({ options }: MergedAsnMenuProps) {
         <ListItemButton
           key={asn.asn}
           component={Link}
-          href={changeSourceHref(pathname, searchParams, asn.source[0])}
+          href={changeSourceHref(pathname, searchParams, asn.sourceId[0])}
           replace
-          selected={selectedSource ? asn.source.includes(selectedSource) : false}
+          selected={selectedSource ? asn.sourceId.includes(selectedSource) : false}
         >
           <ListItemText
             primary={
               <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
                 <span>{ asn.organisation }</span>
-                <Chip label={asn.source[0]} size="small" sx={{ my: -0.5 }} />
+                <Chip label={asn.sourceId[0]} size="small" sx={{ my: -0.5 }} />
               </Box>
             }
             secondary={`AS${asn.asn}`}

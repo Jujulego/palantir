@@ -26,7 +26,7 @@ export interface Tag {
 }
 
 export interface IpMetadata {
-  readonly source: string;
+  readonly sourceId: string;
   readonly ip: string;
   readonly hostname?: string;
   readonly asn?: Asn;
@@ -36,13 +36,13 @@ export interface IpMetadata {
 }
 
 export interface MergedIpLocation {
-  readonly source: string;
+  readonly sourceId: string;
   readonly address?: Address;
   readonly coordinates?: Coordinates;
 }
 
 export interface MergedIpAsn extends Asn {
-  readonly source: readonly string[];
+  readonly sourceId: readonly string[];
 }
 
 export interface MergedIpMetadata {
@@ -61,14 +61,14 @@ export function mergeIpMetadata(metadata: [IpMetadata, ...IpMetadata[]]): Merged
     ip: metadata[0].ip,
     hostname: metadata.find((item) => item.hostname && !ipaddr.isValid(item.hostname))?.hostname,
     location: metadata.map((item) => ({
-      source: item.source,
+      sourceId: item.sourceId,
       coordinates: item.coordinates,
       address: item.address,
     })),
     asn: pipe$(
       metadata,
       filter$((item) => !!item.asn),
-      map$((item) => ({ source: [item.source], ...item.asn! })),
+      map$((item) => ({ sourceId: [item.sourceId], ...item.asn! })),
       collect$()
     ),
     tags: pipe$(

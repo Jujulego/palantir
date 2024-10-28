@@ -66,6 +66,10 @@ export interface IpDataBogon {
   readonly is_bogon: boolean;
 }
 
+// Constants
+export const sourceId = 'ip-data';
+export const sourceLabel = 'IP Data';
+
 // Utils
 export async function rawFetchIpData(ip: string): Promise<IpDataResult | IpDataBogon> {
   const parsed = ipaddr.parse(ip);
@@ -76,7 +80,7 @@ export async function rawFetchIpData(ip: string): Promise<IpDataResult | IpDataB
   }
 
   // Make request
-  console.log(`Fetching IpData for ${parsed.toNormalizedString()}`);
+  console.log(`Fetching ${sourceLabel} for ${parsed.toNormalizedString()}`);
   const url = new URL(`https://eu-api.ipdata.co/${parsed.toNormalizedString()}`);
   url.searchParams.set('api-key', process.env.IP_DATA_API_KEY!);
 
@@ -86,7 +90,7 @@ export async function rawFetchIpData(ip: string): Promise<IpDataResult | IpDataB
       tags: [parsed.toNormalizedString()],
     }
   });
-  console.log(`Received IpData metadata for ${parsed.toNormalizedString()} (status = ${res.status})`);
+  console.log(`Received ${sourceLabel} metadata for ${parsed.toNormalizedString()} (status = ${res.status})`);
 
   if (res.status === 400) {
     const { message } = await res.json() as { readonly message: string };
@@ -108,7 +112,7 @@ export async function rawFetchIpData(ip: string): Promise<IpDataResult | IpDataB
 export async function fetchIpData(ip: string): Promise<IpMetadata> {
   const payload = await rawFetchIpData(ip);
   const result: Writeable<IpMetadata> = {
-    source: 'IP Data',
+    sourceId,
     ip,
     tags: [],
   };
