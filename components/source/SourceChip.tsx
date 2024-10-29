@@ -1,3 +1,4 @@
+import IpDataChip from '@/components/source/IpDataChip';
 import IpInfoChip from '@/components/source/IpInfoChip';
 import IpQualityScoreChip from '@/components/source/IpQualityScoreChip';
 import Chip, { type ChipOwnProps } from '@mui/material/Chip';
@@ -9,6 +10,9 @@ export interface SourceChipProps extends Omit<ChipOwnProps, 'label' | 'icon'> {
 
 export default function SourceChip({ id, ...rest }: SourceChipProps) {
   switch (id) {
+    case 'ip-data':
+      return <IpDataChip {...rest} />;
+
     case 'ip-info':
       return <IpInfoChip {...rest} />;
 
