@@ -1,10 +1,10 @@
 'use client';
 
 import { MergedMenu } from '@/components/common/MergedMenu';
+import SourceChip from '@/components/source/SourceChip';
 import type { MergedIpAsn } from '@/data/ip-metadata';
 import HubIcon from '@mui/icons-material/Hub';
 import Box from '@mui/material/Box';
-import Chip from '@mui/material/Chip';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -55,7 +55,7 @@ export function MergedAsnMenu({ options }: MergedAsnMenuProps) {
             primary={
               <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
                 <span>{ asn.organisation }</span>
-                <Chip label={asn.sourceId[0]} size="small" sx={{ my: -0.5 }} />
+                <SourceChip id={asn.sourceId[0]} variant="outlined" size="small" sx={{ my: -0.5 }} />
               </Box>
             }
             secondary={`AS${asn.asn}`}

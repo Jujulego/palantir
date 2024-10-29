@@ -4,9 +4,8 @@ import datacenterPng from '@/assets/datacenter.png';
 import { MergedAsnMenu } from '@/components/asn/MergedAsnMenu';
 import ColoredImage from '@/components/common/ColoredImage';
 import { MergedLocationMenu } from '@/components/location/MergedLocationMenu';
-import SourceChip from '@/components/source/SourceChip';
 import { mergeIpMetadata } from '@/data/ip-metadata';
-import { ipSources, validateSourceIdParam } from '@/data/sources';
+import { validateSourceIdParam } from '@/data/sources';
 import { fetchBigDataCloud } from '@/data/sources/big-data-cloud';
 import { fetchIpData } from '@/data/sources/ip-data';
 import { fetchIpGeolocation } from '@/data/sources/ip-geolocation';
@@ -88,12 +87,6 @@ export default async function WithMapIpPage({ params, searchParams }: WithMapIpP
       </Box>
 
       <Divider />
-
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', px: 2, pt: 1, gap: 1 }}>
-        { Object.entries(ipSources).map(([id, { label }]) => (
-          <SourceChip key={id} id={id} label={label} />
-        )) }
-      </Box>
 
       <List>
         { location.length && (

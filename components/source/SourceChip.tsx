@@ -1,45 +1,17 @@
-'use client';
+import IpInfoChip from '@/components/source/IpInfoChip';
+import Chip, { type ChipOwnProps } from '@mui/material/Chip';
 
-import { validateSourceIdParam } from '@/data/sources';
-import Chip from '@mui/material/Chip';
-import { type ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useMemo } from 'react';
-
-export interface SourceChipProps {
+// Component
+export interface SourceChipProps extends Omit<ChipOwnProps, 'label' | 'icon'> {
   readonly id: string;
-  readonly label: string;
 }
 
-export default function SourceChip({ id, label }: SourceChipProps) {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const router = useRouter();
+export default function SourceChip({ id, ...rest }: SourceChipProps) {
+  switch (id) {
+    case 'ip-info':
+      return <IpInfoChip {...rest} />
 
-  const selectedId = useMemo(() => {
-    return validateSourceIdParam(searchParams.get('source'));
-  }, [searchParams]);
-
-  const handleClick = useCallback(() => {
-    const params = new URLSearchParams(searchParams);
-    params.set('source', id);
-    
-    router.replace(`${pathname}?${params}`);
-  }, [id, pathname, router, searchParams]);
-  
-  return (
-    <Chip
-      label={label}
-      size="small"
-      variant={id === selectedId ? 'filled' : 'outlined'}
-      onClick={handleClick}
-    />
-  );
-}
-
-// Utils
-function changeSourceHref(pathname: string, searchParams: ReadonlyURLSearchParams, source: string) {
-  const params = new URLSearchParams(searchParams);
-  params.set('source', source);
-
-  return `${pathname}?${params}`;
+    default:
+      return <Chip {...rest} label={id} />;
+  }
 }

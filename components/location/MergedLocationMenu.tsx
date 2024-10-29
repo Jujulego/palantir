@@ -2,10 +2,10 @@
 
 import LocationTypography from '@/components/location/LocationTypography';
 import MapboxFlyTo from '@/components/mapbox/MapboxFlyTo';
+import SourceChip from '@/components/source/SourceChip';
 import type { MergedIpLocation } from '@/data/ip-metadata';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import Box from '@mui/material/Box';
-import Chip from '@mui/material/Chip';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -64,7 +64,7 @@ export function MergedLocationMenu({ options }: MergedLocationMenuProps) {
             primary={
               <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
                 <LocationTypography location={location} />
-                <Chip label={location.sourceId} size="small" sx={{ my: -0.5 }} />
+                <SourceChip id={location.sourceId} variant="outlined" size="small" sx={{ my: -0.5 }} />
               </Box>
             }
             secondary={location.address?.country}
