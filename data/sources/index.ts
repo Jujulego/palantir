@@ -13,8 +13,10 @@ export const ipSources = {
   [ipQualityScore.sourceId]: { label: ipQualityScore.sourceLabel, fetch: ipQualityScore.fetchIpQualityScore },
 };
 
+export type SourceId = keyof typeof ipSources;
+
 // Utils
-export function validateSourceIdParam(sourceId?: string | null) {
+export function validateSourceIdParam(sourceId?: string | null): SourceId {
   if (sourceId && sourceId in ipSources) {
     return sourceId as keyof typeof ipSources;
   }

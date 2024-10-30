@@ -25,16 +25,11 @@ export interface WithMapIpPageProps {
   readonly params: {
     readonly ip: string;
   };
-  readonly searchParams: {
-    readonly source?: string;
-  };
 }
 
-export default async function WithMapIpPage({ params, searchParams }: WithMapIpPageProps) {
+export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
   const ip = decodeURIComponent(params.ip);
   const parsed = ipaddr.parse(ip);
-
-  const sourceId = validateSourceIdParam(searchParams.source);
 
   const { asn, hostname, location, tags } = mergeIpMetadata(await Promise.all([
     fetchIpInfo(ip),
