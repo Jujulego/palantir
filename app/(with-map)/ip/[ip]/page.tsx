@@ -1,7 +1,9 @@
-import computerPng from '@/assets/computer.png';
 import { MergedAsnMenu } from '@/components/asn/MergedAsnMenu';
-import ColoredImage from '@/components/common/ColoredImage';
 import { MergedLocationMenu } from '@/components/location/MergedLocationMenu';
+import IpDataChip from '@/components/source/IpDataChip';
+import IpInfoChip from '@/components/source/IpInfoChip';
+import IpQualityScoreChip from '@/components/source/IpQualityScoreChip';
+import { reverseDnsLookup } from '@/data/dns';
 import { mergeIpMetadata } from '@/data/ip-metadata';
 import { fetchBigDataCloud } from '@/data/sources/big-data-cloud';
 import { fetchIpData } from '@/data/sources/ip-data';
@@ -40,12 +42,18 @@ export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
   return <Paper component="main" square sx={{ flex: '1 0 auto', pb: 4 }}>
     <Box sx={{ px: 2.5, py: 2 }}>
       <Typography component="h1" variant="h5">{ parsed.toString() }</Typography>
-      { hostname && (
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>{ hostname }</Typography>
-      ) }
+      <Typography variant="body2" sx={{ color: 'text.secondary' }}>{ await reverseDnsLookup(ip) }</Typography>
     </Box>
 
     <Divider />
+
+    <Box component="nav" sx={{ display: 'flex', flexWrap: 'wrap', px: 2, pt: 1, gap: 1 }}>
+      <IpInfoChip size="small" />
+      <IpQualityScoreChip size="small" />
+      <Chip label="ipgeolocation" size="small" />
+      <IpDataChip size="small" />
+      <Chip label="BigDataCloud" size="small" />
+    </Box>
 
     <List>
       { location.length && (
