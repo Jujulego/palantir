@@ -14,14 +14,14 @@ export interface WithMapIpLayoutProps {
 }
 
 export default async function WithMapIpLayout({ children, params }: WithMapIpLayoutProps) {
-  if (!await auth0.getSession()) {
-    redirect('/auth/login');
-  }
-
   const ip = decodeURIComponent((await params).ip);
 
   if (!ipaddr.isValid(ip)) {
     redirect('/');
+  }
+
+  if (!await auth0.getSession()) {
+    redirect(`/auth/login?returnTo=${encodeURIComponent(`/ip/${ip}`)}`);
   }
 
   return (<>
