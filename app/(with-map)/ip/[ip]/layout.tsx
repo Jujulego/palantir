@@ -7,13 +7,13 @@ import type { ReactNode } from 'react';
 
 export interface WithMapIpLayoutProps {
   readonly children: ReactNode;
-  readonly params: {
+  readonly params: Promise<{
     readonly ip: string;
-  };
+  }>;
 }
 
-export default function WithMapIpLayout({ children, params }: WithMapIpLayoutProps) {
-  const ip = decodeURIComponent(params.ip);
+export default async function WithMapIpLayout({ children, params }: WithMapIpLayoutProps) {
+  const ip = decodeURIComponent((await params).ip);
 
   if (!ipaddr.isValid(ip)) {
     redirect('/');

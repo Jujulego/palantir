@@ -21,16 +21,16 @@ import ipaddr from 'ipaddr.js';
 
 // Page
 export interface WithMapIpPageProps {
-  readonly params: {
+  readonly params: Promise<{
     readonly ip: string;
-  };
+  }>;
 }
 
 export default async function WithMapIpPage({ params }: WithMapIpPageProps) {
-  const ip = decodeURIComponent(params.ip);
+  const ip = decodeURIComponent((await params).ip);
   const parsed = ipaddr.parse(ip);
 
-  const { asn, hostname, location, tags } = mergeIpMetadata(await Promise.all([
+  const { asn, location, tags } = mergeIpMetadata(await Promise.all([
     fetchIpInfo(ip),
     fetchIpQualityScore(ip),
     fetchIpGeolocation(ip),
