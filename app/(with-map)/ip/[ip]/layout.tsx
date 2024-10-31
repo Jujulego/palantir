@@ -1,4 +1,5 @@
 import computerPng from '@/assets/computer.png';
+import { auth0 } from '@/auth0';
 import ColoredImage from '@/components/common/ColoredImage';
 import Box from '@mui/material/Box';
 import ipaddr from 'ipaddr.js';
@@ -13,6 +14,10 @@ export interface WithMapIpLayoutProps {
 }
 
 export default async function WithMapIpLayout({ children, params }: WithMapIpLayoutProps) {
+  if (!await auth0.getSession()) {
+    redirect('/auth/login');
+  }
+
   const ip = decodeURIComponent((await params).ip);
 
   if (!ipaddr.isValid(ip)) {
