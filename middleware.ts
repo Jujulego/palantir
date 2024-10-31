@@ -1,11 +1,11 @@
-import { withMiddlewareAuthRequired } from '@auth0/nextjs-auth0/edge';
+import { auth0 } from '@/auth0';
 import { createEdgeRouter } from 'next-connect';
 import { NextFetchEvent, type NextRequest } from 'next/server';
 
 // Router
 const router = createEdgeRouter<NextRequest, NextFetchEvent>();
 
-router.all(withMiddlewareAuthRequired());
+router.all((request) => auth0.middleware(request));
 
 // Middleware
 export const config = {

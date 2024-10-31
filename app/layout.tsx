@@ -1,5 +1,4 @@
 import theme from '@/theme';
-import { UserProvider } from '@auth0/nextjs-auth0/client';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import CssBaseline from '@mui/material/CssBaseline';
 import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
@@ -27,9 +26,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <ThemeProvider theme={theme}>
           <CssBaseline enableColorScheme />
 
-          <UserProvider>
-            { children }
-          </UserProvider>
+          { children }
         </ThemeProvider>
       </AppRouterCacheProvider>
 
