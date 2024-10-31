@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation';
 
 // Utils
 export async function locateIp() {
-  const ip = headers().get('X-Forwarded-For');
+  const ip = (await headers()).get('X-Forwarded-For');
 
   if (ip) {
     const parsed = ipaddr.parse(ip);

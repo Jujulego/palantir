@@ -3,6 +3,7 @@
 import { MergedMenu } from '@/components/common/MergedMenu';
 import SourceChip from '@/components/source/SourceChip';
 import type { MergedIpAsn } from '@/data/ip-metadata';
+import type { SourceId } from '@/data/sources';
 import HubIcon from '@mui/icons-material/Hub';
 import Box from '@mui/material/Box';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -20,7 +21,7 @@ export function MergedAsnMenu({ options }: MergedAsnMenuProps) {
   const pathname = usePathname();
 
   // Extract selected location
-  const selectedSource = searchParams.get('asn');
+  const selectedSource = searchParams.get('asn') as SourceId;
   const selected = selectedSource
     && options.find((asn) => asn.sourceId.includes(selectedSource))
     || options[0];

@@ -1,3 +1,4 @@
+import type { SourceId } from '@/data/sources';
 import ipaddr from 'ipaddr.js';
 import { collect$, filter$, flat$, map$, pipe$, tap$ } from 'kyrielle';
 
@@ -26,7 +27,7 @@ export interface Tag {
 }
 
 export interface IpMetadata {
-  readonly sourceId: string;
+  readonly sourceId: SourceId;
   readonly ip: string;
   readonly hostname?: string;
   readonly asn?: Asn;
@@ -36,13 +37,13 @@ export interface IpMetadata {
 }
 
 export interface MergedIpLocation {
-  readonly sourceId: string;
+  readonly sourceId: SourceId;
   readonly address?: Address;
   readonly coordinates?: Coordinates;
 }
 
 export interface MergedIpAsn extends Asn {
-  readonly sourceId: readonly string[];
+  readonly sourceId: readonly SourceId[];
 }
 
 export interface MergedIpMetadata {
@@ -68,7 +69,7 @@ export function mergeIpMetadata(metadata: [IpMetadata, ...IpMetadata[]]): Merged
     asn: pipe$(
       metadata,
       filter$((item) => !!item.asn),
-      map$((item) => ({ sourceId: [item.sourceId], ...item.asn! })),
+      map$((item) => ({ sourceId: [item.sourceId], ...item.asn! } as MergedIpAsn)),
       collect$()
     ),
     tags: pipe$(
