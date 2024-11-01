@@ -22,7 +22,7 @@
 # misc
 .DS_Store
 *.pem
-ip2.php
+eslint-results.sarif
 
 # debug
 npm-debug.log*
