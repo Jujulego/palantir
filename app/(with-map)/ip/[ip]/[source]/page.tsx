@@ -1,4 +1,4 @@
-import LocationTypography from '@/components/location/LocationTypography';
+import LocationTypography from '@/components/LocationTypography';
 import MapboxFlyTo from '@/components/mapbox/MapboxFlyTo';
 import MapboxMarker from '@/components/mapbox/MapboxMarker';
 import MapboxSpin from '@/components/mapbox/MapboxSpin';

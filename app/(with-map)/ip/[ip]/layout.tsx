@@ -1,6 +1,6 @@
 import computerPng from '@/assets/computer.png';
-import ColoredImage from '@/components/common/ColoredImage';
-import SourcesNav from '@/components/sources/SourcesNav';
+import ColoredImage from '@/components/ColoredImage';
+import SourcesNav from '@/components/SourcesNav';
 import { reverseDnsLookup } from '@/data/dns';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
