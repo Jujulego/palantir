@@ -84,5 +84,5 @@ export default async function WithMapIpPage({ params }: WithMapIpSourcePageProps
     </>) : (
       <MapboxSpin />
     ) }
-  </List>
+  </List>;
 }

@@ -16,7 +16,7 @@ export default function SearchBox() {
   const router = useRouter();
 
   const segments = useSelectedLayoutSegments();
-  const value = useMemo(() => segments[1] && decodeURIComponent(segments[1]), [segments])
+  const value = useMemo(() => segments[1] && decodeURIComponent(segments[1]), [segments]);
 
   const [isSearching, startSearch] = useTransition();
   const [search, setSearch] = useState(value ?? '');

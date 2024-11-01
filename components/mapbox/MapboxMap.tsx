@@ -34,7 +34,7 @@ export default function MapboxMap({ children }: MapboxMapProps) {
 
   // Compute padding
   const segments = useSelectedLayoutSegments();
-  const value = useMemo(() => segments[1] && decodeURIComponent(segments[1]), [segments])
+  const value = useMemo(() => segments[1] && decodeURIComponent(segments[1]), [segments]);
 
   const padding = useMemo(() => {
     if (value) {

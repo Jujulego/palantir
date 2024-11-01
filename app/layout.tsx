@@ -9,8 +9,8 @@ import type { Metadata } from 'next';
 import { ReactNode } from 'react';
 
 export const metadata: Metadata = {
-  title: "Palantir",
-  description: "View location of others",
+  title: 'Palantir',
+  description: 'View location of others',
 };
 
 export interface RootLayoutProps {
