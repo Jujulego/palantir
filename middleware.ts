@@ -1,26 +1,37 @@
-import { withMiddlewareAuthRequired } from '@auth0/nextjs-auth0/edge';
+import { auth0 } from '@/auth0';
 import { createEdgeRouter } from 'next-connect';
-import { NextFetchEvent, type NextRequest } from 'next/server';
-
-// Router
-const router = createEdgeRouter<NextRequest, NextFetchEvent>();
-
-router.all(withMiddlewareAuthRequired());
+import { type NextFetchEvent, type NextRequest, NextResponse } from 'next/server';
 
 // Middleware
 export const config = {
   matcher: [
     /*
      * Match all request paths except for the ones starting with:
-     * - api (API routes)
      * - _next/static (static files)
      * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
+     * - favicon.ico, sitemap.xml, robots.txt (metadata files)
      */
-    "/((?!api|_next/static|_next/image|favicon.ico).*)",
+    "/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
   ]
 }
 
-export function middleware(request: NextRequest, event: NextFetchEvent) {
+export async function middleware(request: NextRequest, event: NextFetchEvent) {
   return router.run(request, event);
 }
+
+// Router
+const router = createEdgeRouter<NextRequest, NextFetchEvent>();
+
+router
+  .use('/ip/', async (request, event, next) => {
+    const session = await auth0.getSession();
+
+    if (!session) {
+      return NextResponse.redirect(`${request.nextUrl.origin}/auth/login?returnTo=${encodeURIComponent(request.nextUrl.pathname)}`);
+    } else {
+      return next();
+    }
+  })
+  .all(async (request, event) => {
+    return await auth0.middleware(request);
+  });
