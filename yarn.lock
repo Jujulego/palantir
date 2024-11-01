@@ -687,6 +687,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@microsoft/eslint-formatter-sarif@npm:3.1.0":
+  version: 3.1.0
+  resolution: "@microsoft/eslint-formatter-sarif@npm:3.1.0"
+  dependencies:
+    eslint: "npm:^8.9.0"
+    jschardet: "npm:latest"
+    lodash: "npm:^4.17.14"
+    utf8: "npm:^3.0.0"
+  checksum: 10c0/c4052ea4f728fd01932406468fa688582f843059786bfce1ef1d0f6d957f43871a1e888095af6d958b90e4380f179049c77f2058fd5ead3354aa73147e60c5b7
+  languageName: node
+  linkType: hard
+
 "@mui/core-downloads-tracker@npm:^6.1.6":
   version: 6.1.6
   resolution: "@mui/core-downloads-tracker@npm:6.1.6"
@@ -2309,7 +2321,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:8.57.1":
+"eslint@npm:8.57.1, eslint@npm:^8.9.0":
   version: 8.57.1
   resolution: "eslint@npm:8.57.1"
   dependencies:
@@ -3224,6 +3236,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jschardet@npm:latest":
+  version: 3.1.4
+  resolution: "jschardet@npm:3.1.4"
+  checksum: 10c0/d72c724ff60bc185d3962617ffda6849c6d632a935820841078c656a5247d73617a5df3b233e1fb1064de8683f7dae1b422b68186d1d6db22117b59edb5433dc
+  languageName: node
+  linkType: hard
+
 "jsesc@npm:^2.5.1":
   version: 2.5.2
   resolution: "jsesc@npm:2.5.2"
@@ -3346,6 +3365,13 @@ __metadata:
   version: 4.6.2
   resolution: "lodash.merge@npm:4.6.2"
   checksum: 10c0/402fa16a1edd7538de5b5903a90228aa48eb5533986ba7fa26606a49db2572bf414ff73a2c9f5d5fd36b31c46a5d5c7e1527749c07cbcf965ccff5fbdf32c506
+  languageName: node
+  linkType: hard
+
+"lodash@npm:^4.17.14":
+  version: 4.17.21
+  resolution: "lodash@npm:4.17.21"
+  checksum: 10c0/d8cbea072bb08655bb4c989da418994b073a608dffa608b09ac04b43a791b12aeae7cd7ad919aa4c925f33b48490b5cfe6c1f71d827956071dae2e7bb3a6b74c
   languageName: node
   linkType: hard
 
@@ -3716,6 +3742,7 @@ __metadata:
     "@emotion/react": "npm:11.13.3"
     "@emotion/styled": "npm:11.13.0"
     "@fragaria/address-formatter": "npm:6.3.0"
+    "@microsoft/eslint-formatter-sarif": "npm:3.1.0"
     "@mui/icons-material": "npm:6.1.6"
     "@mui/material": "npm:6.1.6"
     "@mui/material-nextjs": "npm:6.1.6"
@@ -4747,6 +4774,13 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
   checksum: 10c0/23b1597c10adf15b26ade9e8c318d8cc0abc9ec0ab5fc7ca7338da92e89c2536abd150a5891bf076836c352fdfa104fc7231fb48f806fd9960e0cbe03601abaf
+  languageName: node
+  linkType: hard
+
+"utf8@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "utf8@npm:3.0.0"
+  checksum: 10c0/675d008bab65fc463ce718d5cae8fd4c063540f269e4f25afebce643098439d53e7164bb1f193e0c3852825c7e3e32fbd8641163d19a618dbb53f1f09acb0d5a
   languageName: node
   linkType: hard
 
