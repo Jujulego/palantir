@@ -55,7 +55,6 @@ export interface IpGeolocationBogon {
 
 // Constants
 export const sourceId = 'ip-geolocation';
-export const sourceLabel = 'IP Geolocation';
 
 // Utils
 export async function rawFetchIpGeolocation(ip: string): Promise<IpGeolocationResult | IpGeolocationBogon> {
@@ -67,7 +66,7 @@ export async function rawFetchIpGeolocation(ip: string): Promise<IpGeolocationRe
   }
 
   // Make request
-  console.log(`Fetching ${sourceLabel} for ${parsed.toNormalizedString()}`);
+  console.log(`Fetching ${sourceId} for ${parsed.toNormalizedString()}`);
   const url = new URL('https://api.ipgeolocation.io/ipgeo');
   url.searchParams.set('apiKey', process.env.IP_GEOLOCATION_API_KEY!);
   url.searchParams.set('ip', parsed.toNormalizedString());
@@ -78,7 +77,7 @@ export async function rawFetchIpGeolocation(ip: string): Promise<IpGeolocationRe
       tags: [parsed.toNormalizedString()],
     }
   });
-  console.log(`Received ${sourceLabel} metadata for ${parsed.toNormalizedString()} (status = ${res.status})`);
+  console.log(`Received ${sourceId} metadata for ${parsed.toNormalizedString()} (status = ${res.status})`);
 
   if (res.status === 423) {
     return { ip, is_bogon: true };
@@ -97,6 +96,7 @@ export async function fetchIpGeolocation(ip: string): Promise<IpMetadata> {
     sourceId,
     ip,
     tags: [],
+    raw: payload,
   };
 
   if ('is_bogon' in payload) {

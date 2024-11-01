@@ -68,7 +68,6 @@ export interface IpDataBogon {
 
 // Constants
 export const sourceId = 'ip-data';
-export const sourceLabel = 'IP Data';
 
 // Utils
 export async function rawFetchIpData(ip: string): Promise<IpDataResult | IpDataBogon> {
@@ -80,7 +79,7 @@ export async function rawFetchIpData(ip: string): Promise<IpDataResult | IpDataB
   }
 
   // Make request
-  console.log(`Fetching ${sourceLabel} for ${parsed.toNormalizedString()}`);
+  console.log(`Fetching ${sourceId} for ${parsed.toNormalizedString()}`);
   const url = new URL(`https://eu-api.ipdata.co/${parsed.toNormalizedString()}`);
   url.searchParams.set('api-key', process.env.IP_DATA_API_KEY!);
 
@@ -90,7 +89,7 @@ export async function rawFetchIpData(ip: string): Promise<IpDataResult | IpDataB
       tags: [parsed.toNormalizedString()],
     }
   });
-  console.log(`Received ${sourceLabel} metadata for ${parsed.toNormalizedString()} (status = ${res.status})`);
+  console.log(`Received ${sourceId} metadata for ${parsed.toNormalizedString()} (status = ${res.status})`);
 
   if (res.status === 400) {
     const { message } = await res.json() as { readonly message: string };
@@ -115,6 +114,7 @@ export async function fetchIpData(ip: string): Promise<IpMetadata> {
     sourceId,
     ip,
     tags: [],
+    raw: payload,
   };
 
   if ('is_bogon' in payload) {

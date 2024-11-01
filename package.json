@@ -21,7 +21,6 @@
     "@vercel/speed-insights": "1.0.14",
     "i18n-iso-countries": "7.12.0",
     "ipaddr.js": "2.2.0",
-    "kyrielle": "2.2.0",
     "mapbox-gl": "3.7.0",
     "next": "15.0.2",
     "next-connect": "1.0.0",

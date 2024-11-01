@@ -6,11 +6,11 @@ import * as ipQualityScore from './ip-quality-score';
 
 // Source index
 export const ipSources = {
-  [bigDataCloud.sourceId]: { label: bigDataCloud.sourceLabel, fetch: bigDataCloud.fetchBigDataCloud },
-  [ipData.sourceId]: { label: ipData.sourceLabel, fetch: ipData.fetchIpData },
-  [ipGeolocation.sourceId]: { label: ipGeolocation.sourceLabel, fetch: ipGeolocation.fetchIpGeolocation },
-  [ipInfo.sourceId]: { label: ipInfo.sourceLabel, fetch: ipInfo.fetchIpInfo },
-  [ipQualityScore.sourceId]: { label: ipQualityScore.sourceLabel, fetch: ipQualityScore.fetchIpQualityScore },
+  [bigDataCloud.sourceId]: { fetch: bigDataCloud.fetchBigDataCloud, rawFetch: bigDataCloud.rawFetchBigDataCloud },
+  [ipData.sourceId]: { fetch: ipData.fetchIpData, rawFetch: ipData.rawFetchIpData },
+  [ipGeolocation.sourceId]: { fetch: ipGeolocation.fetchIpGeolocation, rawFetch: ipGeolocation.rawFetchIpGeolocation },
+  [ipInfo.sourceId]: { fetch: ipInfo.fetchIpInfo, rawFetch: ipInfo.rawFetchIpInfo },
+  [ipQualityScore.sourceId]: { fetch: ipQualityScore.fetchIpQualityScore, rawFetch: ipQualityScore.rawFetchIpQualityScore },
 };
 
 export type SourceId = keyof typeof ipSources;

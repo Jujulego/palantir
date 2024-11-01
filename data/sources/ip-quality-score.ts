@@ -46,14 +46,13 @@ export type IpQualityResult = IpQualitySuccess | IpQualityError;
 
 // Constants
 export const sourceId = 'ip-quality-score';
-export const sourceLabel = 'IP Quality Score';
 
 // Utils
 export async function rawFetchIpQualityScore(ip: string): Promise<IpQualityResult> {
   const parsed = ipaddr.parse(ip);
 
   // Make request
-  console.log(`Fetching ${sourceLabel} for ${parsed.toNormalizedString()}`);
+  console.log(`Fetching ${sourceId} for ${parsed.toNormalizedString()}`);
   const url = new URL('https://ipqualityscore.com/api/json/ip');
   url.searchParams.set('ip', parsed.toNormalizedString());
 
@@ -66,7 +65,7 @@ export async function rawFetchIpQualityScore(ip: string): Promise<IpQualityResul
       tags: [parsed.toNormalizedString()]
     }
   });
-  console.log(`Received ${sourceLabel} metadata for ${parsed.toNormalizedString()} (status = ${res.status})`);
+  console.log(`Received ${sourceId} metadata for ${parsed.toNormalizedString()} (status = ${res.status})`);
 
   if (!res.ok) {
     throw new FetchError(res.status, await res.text());
@@ -81,6 +80,7 @@ export async function fetchIpQualityScore(ip: string): Promise<IpMetadata> {
     sourceId,
     ip,
     tags: [],
+    raw: payload,
   };
 
   if (payload.success) {

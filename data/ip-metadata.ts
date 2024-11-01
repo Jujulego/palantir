@@ -1,6 +1,4 @@
 import type { SourceId } from '@/data/sources';
-import ipaddr from 'ipaddr.js';
-import { collect$, filter$, flat$, map$, pipe$, tap$ } from 'kyrielle';
 
 // Types
 export interface Coordinates {
@@ -34,51 +32,5 @@ export interface IpMetadata {
   readonly address?: Address;
   readonly coordinates?: Coordinates;
   readonly tags: readonly Tag[];
-}
-
-export interface MergedIpLocation {
-  readonly sourceId: SourceId;
-  readonly address?: Address;
-  readonly coordinates?: Coordinates;
-}
-
-export interface MergedIpAsn extends Asn {
-  readonly sourceId: readonly SourceId[];
-}
-
-export interface MergedIpMetadata {
-  readonly ip: string;
-  readonly hostname?: string;
-  readonly location: readonly MergedIpLocation[];
-  readonly asn: readonly MergedIpAsn[];
-  readonly tags: readonly Tag[];
-}
-
-// Utils
-export function mergeIpMetadata(metadata: [IpMetadata, ...IpMetadata[]]): MergedIpMetadata {
-  const tags = new Set<string>();
-
-  return {
-    ip: metadata[0].ip,
-    hostname: metadata.find((item) => item.hostname && !ipaddr.isValid(item.hostname))?.hostname,
-    location: metadata.map((item) => ({
-      sourceId: item.sourceId,
-      coordinates: item.coordinates,
-      address: item.address,
-    })),
-    asn: pipe$(
-      metadata,
-      filter$((item) => !!item.asn),
-      map$((item) => ({ sourceId: [item.sourceId], ...item.asn! } as MergedIpAsn)),
-      collect$()
-    ),
-    tags: pipe$(
-      metadata,
-      map$((item) => item.tags),
-      flat$(),
-      filter$((tag) => !tags.has(tag.label)),
-      tap$((tag) => tags.add(tag.label)),
-      collect$()
-    )
-  };
+  readonly raw: unknown;
 }

@@ -99,7 +99,6 @@ export interface BigDataCloudPoint {
 
 // Constants
 export const sourceId = 'big-data-cloud';
-export const sourceLabel = 'Big Data Cloud';
 
 // Utils
 export async function rawFetchBigDataCloud(ip: string): Promise<BigDataCloudResult> {
@@ -111,7 +110,7 @@ export async function rawFetchBigDataCloud(ip: string): Promise<BigDataCloudResu
   }
 
   // Make request
-  console.log(`Fetching ${sourceLabel} for ${parsed.toNormalizedString()}`);
+  console.log(`Fetching ${sourceId} for ${parsed.toNormalizedString()}`);
   const url = new URL(`https://api-bdc.net/data/ip-geolocation-full`);
   url.searchParams.set('ip', parsed.toNormalizedString());
   url.searchParams.set('key', process.env.BIG_DATA_CLOUD_KEY!);
@@ -122,7 +121,7 @@ export async function rawFetchBigDataCloud(ip: string): Promise<BigDataCloudResu
       tags: [parsed.toNormalizedString()]
     }
   });
-  console.log(`Received ${sourceLabel} metadata for ${parsed.toNormalizedString()} (status = ${res.status})`);
+  console.log(`Received ${sourceId} metadata for ${parsed.toNormalizedString()} (status = ${res.status})`);
 
   if (!res.ok) {
     throw new FetchError(res.status, await res.text());
@@ -137,6 +136,7 @@ export async function fetchBigDataCloud(ip: string): Promise<IpMetadata> {
     sourceId,
     ip,
     tags: [],
+    raw: payload,
   };
 
   if (payload.location) {

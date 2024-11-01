@@ -2,6 +2,7 @@ import LocationTypography from '@/components/LocationTypography';
 import MapboxFlyTo from '@/components/mapbox/MapboxFlyTo';
 import MapboxMarker from '@/components/mapbox/MapboxMarker';
 import MapboxSpin from '@/components/mapbox/MapboxSpin';
+import PayloadListItem from '@/components/PayloadListItem';
 import { ipSources, isIpSourceIdParam } from '@/data/sources';
 import HubIcon from '@mui/icons-material/Hub';
 import LabelIcon from '@mui/icons-material/Label';
@@ -30,7 +31,7 @@ export default async function WithMapIpPage({ params }: WithMapIpSourcePageProps
     notFound();
   }
 
-  const { address, asn, coordinates, tags } = await ipSources[source].fetch(ip);
+  const { address, asn, coordinates, tags, raw } = await ipSources[source].fetch(ip);
 
   // Render
   return <List>
@@ -71,6 +72,8 @@ export default async function WithMapIpPage({ params }: WithMapIpSourcePageProps
         </Box>
       </ListItem>
     ) }
+
+    <PayloadListItem payload={raw} />
 
     { coordinates ? (<>
       <MapboxMarker
