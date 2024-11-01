@@ -1,5 +1,4 @@
 import computerPng from '@/assets/computer.png';
-import { auth0 } from '@/auth0';
 import ColoredImage from '@/components/common/ColoredImage';
 import SourcesNav from '@/components/sources/SourcesNav';
 import { reverseDnsLookup } from '@/data/dns';
@@ -23,10 +22,6 @@ export default async function WithMapIpLayout({ children, params }: WithMapIpLay
 
   if (!ipaddr.isValid(ip)) {
     redirect('/');
-  }
-
-  if (!await auth0.getSession()) {
-    redirect(`/auth/login?returnTo=${encodeURIComponent(`/ip/${ip}`)}`);
   }
 
   return (<>

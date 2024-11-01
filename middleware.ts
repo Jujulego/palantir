@@ -1,5 +1,6 @@
 import { auth0 } from '@/auth0';
-import { type NextRequest } from 'next/server';
+import { createEdgeRouter } from 'next-connect';
+import { type NextFetchEvent, type NextRequest, NextResponse } from 'next/server';
 
 // Middleware
 export const config = {
@@ -14,7 +15,23 @@ export const config = {
   ]
 }
 
-export async function middleware(request: NextRequest) {
-  return await auth0.middleware(request);
+export async function middleware(request: NextRequest, event: NextFetchEvent) {
+  return router.run(request, event);
 }
 
+// Router
+const router = createEdgeRouter<NextRequest, NextFetchEvent>();
+
+router
+  .use('/ip/', async (request, event, next) => {
+    const session = await auth0.getSession();
+
+    if (!session) {
+      return NextResponse.redirect(`${request.nextUrl.origin}/auth/login?returnTo=${encodeURIComponent(request.nextUrl.pathname)}`);
+    } else {
+      return next();
+    }
+  })
+  .all(async (request, event) => {
+    return await auth0.middleware(request);
+  });
