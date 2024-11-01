@@ -29,7 +29,7 @@ export default function WithMapLayout({ children }: WithMapLayoutProps) {
   }, [router]);
 
   const handleSearch = useCallback((value: string) => {
-    router.push(`/ip/${value}`);
+    router.push(`/ip/${value}/ip-info`);
   }, [router]);
 
   const padding = useMemo(() => {

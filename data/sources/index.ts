@@ -23,3 +23,7 @@ export function validateSourceIdParam(sourceId?: string | null): SourceId {
 
   return ipInfo.sourceId;
 }
+
+export function isIpSourceIdParam(value?: string | null): value is SourceId {
+  return value ? value in ipSources : false;
+}

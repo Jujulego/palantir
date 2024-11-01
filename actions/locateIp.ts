@@ -10,7 +10,7 @@ export async function locateIp() {
 
   if (ip) {
     const parsed = ipaddr.parse(ip);
-    redirect(`/ip/${parsed.toString()}`);
+    redirect(`/ip/${parsed.toString()}/ip-info`);
   } else {
     redirect('/');
   }
