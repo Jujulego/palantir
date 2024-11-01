@@ -2,9 +2,12 @@
 
 import { styled, useTheme } from '@mui/material/styles';
 import mapboxgl from 'mapbox-gl';
-import { createContext, type ReactNode, useEffect, useRef, useState } from 'react';
+import { useSelectedLayoutSegments } from 'next/navigation';
+import { createContext, type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
+import Slide from '@mui/material/Slide';
+import Stack from '@mui/material/Stack';
 
 // Context
 export interface MapboxMapState {
@@ -23,12 +26,23 @@ export const MapboxContext = createContext<MapboxMapState>(initialState);
 
 // Component
 export interface MapboxMapProps {
-  readonly padding?: mapboxgl.PaddingOptions;
   readonly children?: ReactNode;
 }
 
-export default function MapboxMap({ padding, children }: MapboxMapProps) {
+export default function MapboxMap({ children }: MapboxMapProps) {
   const container = useRef<HTMLDivElement>(null);
+
+  // Compute padding
+  const segments = useSelectedLayoutSegments();
+  const value = useMemo(() => segments[1] && decodeURIComponent(segments[1]), [segments])
+
+  const padding = useMemo(() => {
+    if (value) {
+      return { top: 72, left: 408 };
+    } else {
+      return { top: 72, left: 0 };
+    }
+  }, [value]);
 
   // Initiate map
   const [map, setMap] = useState<mapboxgl.Map | null>(null);
@@ -87,7 +101,25 @@ export default function MapboxMap({ padding, children }: MapboxMapProps) {
   return (
     <MapboxContext.Provider value={{ map, isLoaded, isStyleLoaded }}>
       <Container ref={container} />
-      { children }
+
+      <Slide in={!!value} direction="right">
+        <Stack
+          sx={{
+            position: 'absolute',
+            top: 0, left: 0,
+            width: 408, height: '100vh',
+            overflow: 'auto',
+            bgcolor: 'grey.50',
+            borderRight: '1px solid',
+            borderRightColor: 'divider',
+            ...theme.applyStyles('dark', {
+              bgcolor: 'background.paper'
+            })
+          }}
+        >
+          { children }
+        </Stack>
+      </Slide>
     </MapboxContext.Provider>
   );
 }

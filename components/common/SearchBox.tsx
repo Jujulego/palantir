@@ -8,16 +8,16 @@ import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import ipaddr from 'ipaddr.js';
+import { useRouter, useSelectedLayoutSegments } from 'next/navigation';
 import { type ChangeEvent, type FormEvent, useCallback, useEffect, useMemo, useState, useTransition } from 'react';
 
 // Component
-export interface SearchBarProps {
-  readonly value?: string;
-  readonly onClear: () => void;
-  readonly onSearch: (value: string) => void;
-}
+export default function SearchBox() {
+  const router = useRouter();
 
-export default function SearchBox({ value, onClear, onSearch }: SearchBarProps) {
+  const segments = useSelectedLayoutSegments();
+  const value = useMemo(() => segments[1] && decodeURIComponent(segments[1]), [segments])
+
   const [isSearching, startSearch] = useTransition();
   const [search, setSearch] = useState(value ?? '');
   const isValid = useMemo(() => ipaddr.isValid(search), [search]);
@@ -31,14 +31,14 @@ export default function SearchBox({ value, onClear, onSearch }: SearchBarProps) 
   }, []);
 
   const handleClear = useCallback(() => {
-    onClear();
+    router.push('/');
     setSearch('');
-  }, [onClear]);
+  }, [router]);
 
   const handleSearch = useCallback((event: FormEvent) => {
     event.preventDefault();
-    startSearch(() => onSearch(search));
-  }, [search, onSearch]);
+    startSearch(() => router.push(`/ip/${search}/ip-info`));
+  }, [search, router]);
 
   // Render
   return (
