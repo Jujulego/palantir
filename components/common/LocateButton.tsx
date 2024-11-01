@@ -1,24 +1,33 @@
+'use client';
+
 import GpsNotFixedIcon from '@mui/icons-material/GpsNotFixed';
 import IconButton from '@mui/material/IconButton';
 import type { SxProps, Theme } from '@mui/material/styles';
 import Tooltip from '@mui/material/Tooltip';
-import ipaddr from 'ipaddr.js';
-import { headers } from 'next/headers';
 import Link from 'next/link';
+import { useSelectedLayoutSegments } from 'next/navigation';
+import { useMemo } from 'react';
 
 export interface LocateButtonProps {
+  readonly ip: string;
   readonly sx?: SxProps<Theme>;
 }
 
-export default async function LocateButton({ sx }: LocateButtonProps) {
-  const ip = (await headers()).get('X-Forwarded-For');
+export default function LocateButton({ ip, sx }: LocateButtonProps) {
+  const segments = useSelectedLayoutSegments();
+
+  const href = useMemo(() => {
+    const parts = segments.length ? [...segments] : ['ip', '', 'ip-info'];
+    parts[1] = encodeURIComponent(ip);
+
+    return `/${parts.join('/')}`;
+  }, [ip, segments]);
 
   return (
     <Tooltip title="Locate my ip">
       <IconButton
         color="inherit" aria-label="Locate my ip"
-        component={Link} href={ip ? `/ip/${ipaddr.parse(ip).toString()}/ip-info` : ''} prefetch
-        disabled={!ip}
+        component={Link} href={href} prefetch
         sx={sx}
       >
         <GpsNotFixedIcon />

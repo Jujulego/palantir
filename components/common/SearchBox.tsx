@@ -37,8 +37,13 @@ export default function SearchBox() {
 
   const handleSearch = useCallback((event: FormEvent) => {
     event.preventDefault();
-    startSearch(() => router.push(`/ip/${search}/ip-info`));
-  }, [search, router]);
+    startSearch(() => {
+      const parts = segments.length ? [...segments] : ['ip', '', 'ip-info'];
+      parts[1] = encodeURIComponent(search);
+
+      router.push(`/${parts.join('/')}`);
+    });
+  }, [segments, search, router]);
 
   // Render
   return (

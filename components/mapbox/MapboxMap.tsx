@@ -1,13 +1,13 @@
 'use client';
 
+import Slide from '@mui/material/Slide';
+import Stack from '@mui/material/Stack';
 import { styled, useTheme } from '@mui/material/styles';
 import mapboxgl from 'mapbox-gl';
 import { useSelectedLayoutSegments } from 'next/navigation';
 import { createContext, type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
-import Slide from '@mui/material/Slide';
-import Stack from '@mui/material/Stack';
 
 // Context
 export interface MapboxMapState {
