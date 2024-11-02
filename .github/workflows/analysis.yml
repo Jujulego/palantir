@@ -1,4 +1,4 @@
-name: CI
+name: Analysis
 
 on:
   push:
@@ -8,6 +8,31 @@ on:
     branches: [ main ]
 
 jobs:
+  bundle:
+    name: 'Bundle'
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v4.1.0
+        with:
+          node-version: 20.x
+          cache: yarn
+
+      - name: Install
+        run: yarn install --immutable
+
+      - name: Bundle analysis
+        run: yarn build
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
   lint:
     name: 'Lint'
     runs-on: ubuntu-latest
