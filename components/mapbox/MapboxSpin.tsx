@@ -28,8 +28,8 @@ export default function MapboxSpin() {
       });
     }
 
-    map.on('moveend', spinAnimation); // <= start again move when it ends
     spinAnimation();
+    map.on('moveend', spinAnimation); // <= start again move when it ends
 
     // Pause animation
     function pauseAnimation() {
