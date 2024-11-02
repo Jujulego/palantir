@@ -28,13 +28,15 @@ export default function MapboxSpin() {
       });
     }
 
-    map.on('moveend', spinAnimation); // <= start again move when it ends
     spinAnimation();
+    map.on('moveend', spinAnimation); // <= start again move when it ends
 
     // Pause animation
     function pauseAnimation() {
-      pause = true;
-      map!.stop();
+      if (!pause) {
+        pause = true;
+        map!.stop();
+      }
     }
 
     map.on('mousedown', pauseAnimation);
@@ -43,8 +45,10 @@ export default function MapboxSpin() {
 
     // Restart animation
     function restartAnimation() {
-      pause = false;
-      spinAnimation();
+      if (pause) {
+        pause = false;
+        spinAnimation();
+      }
     }
 
     map.on('mouseup', restartAnimation);
