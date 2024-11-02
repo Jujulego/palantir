@@ -1,0 +1,94 @@
+diff --git a/build/cjs/node.js b/build/cjs/node.js
+index 42c17acce0d6d4451eb5ece7f9aaf380d1be4cc9..cbf9c0c7f8efbeb2641fae9654c91b0b4e6904a9 100644
+--- a/build/cjs/node.js
++++ b/build/cjs/node.js
+@@ -49,17 +49,33 @@ function dynamicRequire(mod, request) {
+ function loadModule(moduleName) {
+   let mod;
+
+-  try {
+-    mod = dynamicRequire(module, moduleName);
+-  } catch (e) {
+-    // no-empty
++  const isYarnPnP = typeof require('pnpapi') !== 'undefined';
++
++  if (isYarnPnP) {
++    try {
++      const pnp = require('pnpapi');
++      const modulePath = pnp.resolveRequest(moduleName, __filename);
++      if (modulePath) {
++        mod = dynamicRequire(module, modulePath);
++      }
++    } catch (e) {
++      console.error(`Failed to load module ${moduleName} with Yarn PnP`, e);
++    }
+   }
+
+-  try {
+-    const { cwd } = dynamicRequire(module, 'process');
+-    mod = dynamicRequire(module, `${cwd()}/node_modules/${moduleName}`) ;
+-  } catch (e) {
+-    // no-empty
++  if (!mod) {
++    try {
++      mod = dynamicRequire(module, moduleName);
++    } catch (e) {
++      // no-empty
++    }
++
++    try {
++      const { cwd } = dynamicRequire(module, 'process');
++      mod = dynamicRequire(module, `${cwd()}/node_modules/${moduleName}`) ;
++    } catch (e) {
++      // no-empty
++    }
+   }
+
+   return mod;
+diff --git a/build/esm/node.js b/build/esm/node.js
+index 56936e06bb64149d1ed4fcca75c47135adaa228d..3fddc6e69e2b1c695268c88940c2b6d8cfe96873 100644
+--- a/build/esm/node.js
++++ b/build/esm/node.js
+@@ -47,17 +47,33 @@ function dynamicRequire(mod, request) {
+ function loadModule(moduleName) {
+   let mod;
+
+-  try {
+-    mod = dynamicRequire(module, moduleName);
+-  } catch (e) {
+-    // no-empty
++  const isYarnPnP = typeof require('pnpapi') !== 'undefined';
++
++  if (isYarnPnP) {
++    try {
++      const pnp = require('pnpapi');
++      const modulePath = pnp.resolveRequest(moduleName, __filename);
++      if (modulePath) {
++        mod = dynamicRequire(module, modulePath);
++      }
++    } catch (e) {
++      console.error(`Failed to load module ${moduleName} with Yarn PnP`, e);
++    }
+   }
+
+-  try {
+-    const { cwd } = dynamicRequire(module, 'process');
+-    mod = dynamicRequire(module, `${cwd()}/node_modules/${moduleName}`) ;
+-  } catch (e) {
+-    // no-empty
++  if (!mod) {
++    try {
++      mod = dynamicRequire(module, moduleName);
++    } catch (e) {
++      // no-empty
++    }
++
++    try {
++      const { cwd } = dynamicRequire(module, 'process');
++      mod = dynamicRequire(module, `${cwd()}/node_modules/${moduleName}`) ;
++    } catch (e) {
++      // no-empty
++    }
+   }
+
+   return mod;
