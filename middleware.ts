@@ -1,4 +1,5 @@
 import { auth0 } from '@/auth0';
+import * as Sentry from '@sentry/nextjs';
 import { createEdgeRouter } from 'next-connect';
 import { type NextFetchEvent, type NextRequest, NextResponse } from 'next/server';
 
@@ -24,7 +25,18 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
 const router = createEdgeRouter<NextRequest, NextFetchEvent>();
 
 router
-  .use('/ip/', async (request, event, next) => {
+  .use(async (request, _, next) => {
+    const session = await auth0.getSession();
+
+    Sentry.setUser({
+      id: session?.user?.sub,
+      email: session?.user?.email,
+      ip_address: request.headers.get('X-Forwarded-For') ?? undefined,
+    });
+
+    return next();
+  })
+  .use('/ip/', async (request, _, next) => {
     const session = await auth0.getSession();
 
     if (!session) {
