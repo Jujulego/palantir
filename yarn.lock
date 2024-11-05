@@ -63,19 +63,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@auth0/nextjs-auth0@npm:4.0.0-alpha.0":
-  version: 4.0.0-alpha.0
-  resolution: "@auth0/nextjs-auth0@npm:4.0.0-alpha.0"
+"@auth0/nextjs-auth0@npm:4.0.0-beta.0":
+  version: 4.0.0-beta.0
+  resolution: "@auth0/nextjs-auth0@npm:4.0.0-beta.0"
   dependencies:
-    "@edge-runtime/cookies": "npm:^5.0.0"
+    "@edge-runtime/cookies": "npm:^5.0.1"
     "@panva/hkdf": "npm:^1.2.1"
-    jose: "npm:^5.8.0"
-    oauth4webapi: "npm:^2.12.0"
+    jose: "npm:^5.9.6"
+    oauth4webapi: "npm:^3.1.2"
     swr: "npm:^2.2.5"
   peerDependencies:
     next: ">=14"
     react: ">=18"
-  checksum: 10c0/638f24642d011d37053768de0adae6daa0927c33da3b1f16f04f2fb52db0394a7b3e64c0ff22baea544bce82a2a02eea83a42c896e4a6ad7262cd78715d063f0
+  checksum: 10c0/e5ba45e8790ab89c93d445874068b851cfae3f628c25e8fdccb84dac47353dea522fe99e82661af1a4b25e0633b3f0d26c61c8d1b2225203ad0c8bb4644cd587
   languageName: node
   linkType: hard
 
@@ -303,7 +303,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@edge-runtime/cookies@npm:^5.0.0":
+"@edge-runtime/cookies@npm:^5.0.1":
   version: 5.0.1
   resolution: "@edge-runtime/cookies@npm:5.0.1"
   checksum: 10c0/48accd95f9047e1629706b62a743fb73298722384a90414bf534c6ee8d422a71ad504776ea74fc9b38dea1b4fe98761990b3801ae978cfd7a6cd3339ec1feb38
@@ -5002,7 +5002,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jose@npm:^5.8.0":
+"jose@npm:^5.9.6":
   version: 5.9.6
   resolution: "jose@npm:5.9.6"
   checksum: 10c0/d6bcd8c7d655b5cda8e182952a76f0c093347f5476d74795405bb91563f7ab676f61540310dd4b1531c60d685335ceb600571a409551d2cbd2ab3e9f9fbf1e4d
@@ -5634,10 +5634,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"oauth4webapi@npm:^2.12.0":
-  version: 2.17.0
-  resolution: "oauth4webapi@npm:2.17.0"
-  checksum: 10c0/a3be4f07f3050c982c9f47a899cb34eb4ce1b2072818eab37f241c7db932cf0dac31ed90b0913eaaaebfd7b23e8bf397ecef249a11aea699efb62c7657884ba5
+"oauth4webapi@npm:^3.1.2":
+  version: 3.1.2
+  resolution: "oauth4webapi@npm:3.1.2"
+  checksum: 10c0/9661df38aa1ad3c71d63831538277d877606c272dd76f5ba7c263d826d48521d62e678fe8dde5cbe6d1673457a1afbf3fbf44aa1adea480d25e37fd73ce01907
   languageName: node
   linkType: hard
 
@@ -5796,7 +5796,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "palantir@workspace:."
   dependencies:
-    "@auth0/nextjs-auth0": "npm:4.0.0-alpha.0"
+    "@auth0/nextjs-auth0": "npm:4.0.0-beta.0"
     "@codecov/nextjs-webpack-plugin": "npm:1.2.1"
     "@emotion/cache": "npm:11.13.1"
     "@emotion/react": "npm:11.13.3"
