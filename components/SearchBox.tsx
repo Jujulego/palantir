@@ -1,6 +1,7 @@
 'use client';
 
 import { DnsLookupItems } from '@/components/DnsLookupItems';
+import { useDebounced } from '@/hooks/useDebounced';
 import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
 import Box from '@mui/material/Box';
@@ -11,7 +12,6 @@ import IconButton from '@mui/material/IconButton';
 import MenuList from '@mui/material/MenuList';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
-import { useDebounce } from '@uidotdev/usehooks';
 import ipaddr from 'ipaddr.js';
 import { useRouter, useSelectedLayoutSegments } from 'next/navigation';
 import { type ChangeEvent, type FormEvent, useCallback, useEffect, useMemo, useState, useTransition } from 'react';
@@ -25,7 +25,7 @@ export default function SearchBox() {
   const [isSearching, startSearch] = useTransition();
 
   const [search, setSearch] = useState(value ?? '');
-  const dns = useDebounce(search, 300);
+  const dns = useDebounced(search, 300);
 
   const isValid = useMemo(() => ipaddr.isValid(search), [search]);
   const hasMenu = useMemo(() => !isValid && dns, [dns, isValid]);
