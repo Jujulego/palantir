@@ -4,12 +4,11 @@ import { DnsLookupItems } from '@/components/DnsLookupItems';
 import { useDebounced } from '@/hooks/useDebounced';
 import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
+import { Collapse } from '@mui/material';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
-import Divider from '@mui/material/Divider';
 import Grow from '@mui/material/Grow';
 import IconButton from '@mui/material/IconButton';
-import MenuList from '@mui/material/MenuList';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import ipaddr from 'ipaddr.js';
@@ -28,7 +27,7 @@ export default function SearchBox() {
   const dns = useDebounced(search, 300);
 
   const isValid = useMemo(() => ipaddr.isValid(search), [search]);
-  const hasMenu = useMemo(() => !isValid && dns, [dns, isValid]);
+  const hasMenu = useMemo(() => !isValid && dns.match(/.\../) !== null, [dns, isValid]);
 
   useEffect(() => {
     setSearch(value ?? '');
@@ -65,8 +64,18 @@ export default function SearchBox() {
   // Render
   return (
     <Box sx={{ position: 'relative', height: 48, width: 384 }}>
-      <Paper component="form" role="search" elevation={2} onSubmit={handleSubmit} sx={{ position: 'absolute', borderRadius: hasMenu ? 4 : 6, overflow: 'hidden' }}>
-        <Box sx={{ display: 'flex' }}>
+      <Paper
+        component="form" role="search"
+        elevation={2}
+        onSubmit={handleSubmit}
+        sx={{
+          position: 'absolute',
+          borderRadius: hasMenu ? 4 : 6,
+          overflow: 'hidden',
+          transition: ({ transitions }) => transitions.create('border-radius')
+        }}
+      >
+        <Box sx={{ display: 'flex', boxShadow: 1 }}>
           <SearchInput
             type="search" placeholder="Adresse IP" required
             value={search} onChange={handleChange}
@@ -98,11 +107,9 @@ export default function SearchBox() {
           ) }
         </Box>
 
-        { hasMenu && <>
-          <Divider />
-
+        <Collapse in={hasMenu} unmountOnExit>
           <DnsLookupItems dns={dns} onSelect={handleSelect} />
-        </> }
+        </Collapse>
       </Paper>
     </Box>
   );
