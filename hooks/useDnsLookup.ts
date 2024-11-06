@@ -14,12 +14,26 @@ export interface DnsLookupState {
 export function useDnsLookup(dns: string): DnsLookupState {
   const { data, isLoading, isValidating } = useSWR<DnsResponse>(`https://dns.google.com/resolve?type=1&name=${dns}`, jsonFetcher);
 
-  const ips = useMemo(() => pipe$(
+  return {
+    ips: useMemo(() => extractIps(data), [data]),
+    isLoading, isValidating
+  };
+}
+
+export function useDnsLookupV6(dns: string): DnsLookupState {
+  const { data, isLoading, isValidating } = useSWR<DnsResponse>(`https://dns.google.com/resolve?type=28&name=${dns}`, jsonFetcher);
+
+  return {
+    ips: useMemo(() => extractIps(data), [data]),
+    isLoading, isValidating
+  };
+}
+
+function extractIps(data?: DnsResponse): string[] {
+  return pipe$(
     data?.Answer ?? [],
     map$((ans) => ans.data),
     filter$((val) => ipaddr.isValid(val)),
     collect$()
-  ), [data]);
-
-  return { ips, isLoading, isValidating };
+  );
 }
