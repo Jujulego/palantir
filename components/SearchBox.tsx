@@ -101,9 +101,7 @@ export default function SearchBox() {
         { hasMenu && <>
           <Divider />
 
-          <MenuList>
-            <DnsLookupItems dns={dns} onSelect={handleSelect} />
-          </MenuList>
+          <DnsLookupItems dns={dns} onSelect={handleSelect} />
         </> }
       </Paper>
     </Box>
@@ -114,6 +112,8 @@ export default function SearchBox() {
 const SearchInput = styled('input')(({ theme }) => ({
   width: 288,
   flex: '0 0 auto',
+  fontFamily: theme.typography.fontFamily,
+  fontSize: theme.typography.fontSize,
   paddingLeft: theme.spacing(2.5),
   paddingTop: theme.spacing(0.5),
   paddingRight: 0,
