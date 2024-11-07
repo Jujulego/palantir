@@ -1,10 +1,11 @@
 'use client';
 
 import { useDnsLookup, useDnsLookupV6 } from '@/hooks/useDnsLookup';
-import { Box, Fade, LinearProgress } from '@mui/material';
+import { Box, Collapse, Fade, LinearProgress } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Typography from '@mui/material/Typography';
+import { TransitionGroup } from 'react-transition-group';
 
 export interface DnsLookupItemsProps {
   readonly dns: string;
@@ -19,33 +20,45 @@ export function DnsLookupItems({ dns, onSelect }: DnsLookupItemsProps) {
   const isValidating = isValidatingV4 && isValidatingV6;
   const ips = [...ipv4, ...ipv6];
 
-  return <Box sx={{ pb: 1 }}>
+  return <Box sx={{ position: 'relative', minHeight: 52, pb: 1 }}>
     <Fade in={isValidating}>
       <LinearProgress sx={{ mb: 0.5 }} />
     </Fade>
 
-    { isLoading ? (
+    <Fade in={isLoading} unmountOnExit>
       <Typography
         color="textSecondary"
-        sx={{ height: 36, px: 2, py: 0.75 }}
+        sx={{ position: 'absolute', top: 8, height: 36, px: 2, py: 0.75 }}
       >
         Resolving...
       </Typography>
-    ) : ips.length ? (
-      <MenuList disablePadding>
-        { ips.map((ip) => (
-          <MenuItem key={ip} onClick={() => onSelect(ip)}>
-            { ip }
-          </MenuItem>
-        )) }
-      </MenuList>
-    ) : (
+    </Fade>
+
+    <Fade in={!isLoading && ips.length === 0} unmountOnExit>
       <Typography
         color="textSecondary"
-        sx={{ height: 36, px: 2, py: 0.75 }}
+        sx={{ position: 'absolute', top: 8, height: 36, px: 2, py: 0.75 }}
       >
         No results
       </Typography>
-    ) }
+    </Fade>
+
+    <MenuList disablePadding>
+      <TransitionGroup>
+        { ips.map((ip, idx) => idx === 0 ? (
+          <Fade key={ip}>
+            <MenuItem onClick={() => onSelect(ip)}>
+              { ip }
+            </MenuItem>
+          </Fade>
+        ) : (
+          <Collapse key={ip}>
+            <MenuItem onClick={() => onSelect(ip)}>
+              { ip }
+            </MenuItem>
+          </Collapse>
+        )) }
+      </TransitionGroup>
+    </MenuList>
   </Box>;
 }

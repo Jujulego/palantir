@@ -27,7 +27,7 @@ export default function SearchBox() {
   const dns = useDebounced(search, 300);
 
   const isValid = useMemo(() => ipaddr.isValid(search), [search]);
-  const hasMenu = useMemo(() => !isValid && dns.match(/.\../) !== null, [dns, isValid]);
+  const hasMenu = useMemo(() => !isValid && !!search && dns.match(/[^.]\.[^.]/) !== null, [dns, isValid, search]);
 
   useEffect(() => {
     setSearch(value ?? '');
