@@ -9,10 +9,11 @@ import { TransitionGroup } from 'react-transition-group';
 
 export interface DnsLookupItemsProps {
   readonly name: string;
+  readonly selectedIp: string;
   readonly onSelect: (ip: string) => void;
 }
 
-export function SearchDnsItems({ name, onSelect }: DnsLookupItemsProps) {
+export function SearchDnsMenu({ name, selectedIp, onSelect }: DnsLookupItemsProps) {
   const { ips, isLoading, isValidating } = useDnsLookup(name);
 
   return <Box sx={{ position: 'relative', minHeight: 52, pb: 1 }}>
@@ -42,13 +43,13 @@ export function SearchDnsItems({ name, onSelect }: DnsLookupItemsProps) {
       <TransitionGroup>
         { ips.map((ip, idx) => idx === 0 ? (
           <Fade key={idx}>
-            <MenuItem onClick={() => onSelect(ip)}>
+            <MenuItem selected={ip === selectedIp} onClick={() => onSelect(ip)}>
               { ip }
             </MenuItem>
           </Fade>
         ) : (
           <Collapse key={idx}>
-            <MenuItem onClick={() => onSelect(ip)}>
+            <MenuItem selected={ip === selectedIp} onClick={() => onSelect(ip)}>
               { ip }
             </MenuItem>
           </Collapse>
