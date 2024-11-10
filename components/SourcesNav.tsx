@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import type { SxProps, Theme } from '@mui/material/styles';
 import Link from 'next/link';
-import { useSelectedLayoutSegment } from 'next/navigation';
+import { useSearchParams, useSelectedLayoutSegment } from 'next/navigation';
 import type { ReactElement, ReactNode } from 'react';
 
 // Component
@@ -61,9 +61,10 @@ interface LinkChipProps {
 
 function LinkChip({ sourceId, label, icon, sx }: LinkChipProps) {
   const selected = useSelectedLayoutSegment();
+  const searchParams = useSearchParams();
 
   return <Chip
-    component={Link} href={sourceId} prefetch
+    component={Link} href={`${sourceId}?${searchParams}`} prefetch
     label={label} icon={icon}
     clickable size="small"
     variant={selected === sourceId ? 'filled' : 'outlined'}
