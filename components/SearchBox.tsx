@@ -13,7 +13,16 @@ import { styled } from '@mui/material/styles';
 import { useFocusWithin } from '@react-aria/interactions';
 import ipaddr from 'ipaddr.js';
 import { useRouter, useSearchParams, useSelectedLayoutSegments } from 'next/navigation';
-import { type ChangeEvent, type FormEvent, useCallback, useEffect, useMemo, useState, useTransition } from 'react';
+import {
+  type ChangeEvent,
+  type FormEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useTransition
+} from 'react';
 
 // Component
 export default function SearchBox() {
@@ -36,6 +45,14 @@ export default function SearchBox() {
     onFocusWithin: () => setHasFocus(true),
     onBlurWithin: () => setHasFocus(false),
   });
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!hasFocus && isDns) {
+      inputRef.current!.focus();
+    }
+  }, [hasFocus, isDns, urlSearch]);
 
   useEffect(() => {
     setSearch(urlSearch ?? '');
@@ -88,6 +105,7 @@ export default function SearchBox() {
       >
         <Box sx={{ display: 'flex', boxShadow: 1 }}>
           <SearchInput
+            ref={inputRef}
             type="search" placeholder="Adresse IP" required
             value={search} onChange={handleChange}
           />
