@@ -1,6 +1,7 @@
+import { jsonFetch } from '@/utils/fetch';
 import ipaddr from 'ipaddr.js';
 
-export async function reverseDnsLookup(ip: string) {
+export async function reverseDnsLookup(ip: string): Promise<string | null> {
   const parsed = ipaddr.parse(ip);
   const url = new URL('https://dns.google/resolve');
   url.searchParams.set('type', '12');
@@ -12,8 +13,7 @@ export async function reverseDnsLookup(ip: string) {
     url.searchParams.set('name', `${digits.reverse().join('.')}.ip6.arpa`);
   }
 
-  const res = await fetch(url);
-  const response = (await res.json()) as DnsResponse;
+  const response = await jsonFetch<DnsResponse>(url);
 
   if (response.Answer) {
     return response.Answer[0].data.slice(0, -1);

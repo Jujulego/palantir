@@ -1,7 +1,6 @@
 'use client';
 
-import { DnsLookupItems } from '@/components/DnsLookupItems';
-import { useDebounced } from '@/hooks/useDebounced';
+import { SearchDnsItems } from '@/components/SearchDnsItems';
 import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
 import { Collapse } from '@mui/material';
@@ -24,10 +23,8 @@ export default function SearchBox() {
   const [isSearching, startSearch] = useTransition();
 
   const [search, setSearch] = useState(value ?? '');
-  const dns = useDebounced(search, 300);
-
-  const isValid = useMemo(() => ipaddr.isValid(search), [search]);
-  const hasMenu = useMemo(() => !isValid && !!search && dns.match(/[^.]\.[^.]/) !== null, [dns, isValid, search]);
+  const isIp = useMemo(() => ipaddr.isValid(search), [search]);
+  const isDns = useMemo(() => search.match(/^((?!-)[A-Za-z0-9-]{1,63}(?<!-)\.)+[A-Za-z]{2,6}$/) !== null, [search]);
 
   useEffect(() => {
     setSearch(value ?? '');
@@ -70,7 +67,7 @@ export default function SearchBox() {
         onSubmit={handleSubmit}
         sx={{
           position: 'absolute',
-          borderRadius: hasMenu ? 4 : 6,
+          borderRadius: isDns ? 4 : 6,
           overflow: 'hidden',
           transition: ({ transitions }) => transitions.create('border-radius')
         }}
@@ -97,7 +94,7 @@ export default function SearchBox() {
             <CircularProgress size={24} sx={{ m: 1.5, flex: '0 0 auto' }} />
           ) : (
             <IconButton
-              color="inherit" disabled={!isValid}
+              color="inherit" disabled={!isIp}
               aria-label="Search"
               type="submit"
               sx={{ flex: '0 0 auto', m: 0.5 }}
@@ -107,8 +104,8 @@ export default function SearchBox() {
           ) }
         </Box>
 
-        <Collapse in={hasMenu} unmountOnExit>
-          <DnsLookupItems dns={dns} onSelect={handleSelect} />
+        <Collapse in={isDns} unmountOnExit>
+          <SearchDnsItems name={search} onSelect={handleSelect} />
         </Collapse>
       </Paper>
     </Box>

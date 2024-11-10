@@ -1,7 +1,6 @@
 import type { DnsResponse } from '@/data/dns';
-import { jsonFetcher } from '@/utils/fetch';
-import ipaddr from 'ipaddr.js';
-import { collect$, filter$, map$, pipe$ } from 'kyrielle';
+import { jsonFetch } from '@/utils/fetch';
+import { filter$, map$, pipe$ } from 'kyrielle';
 import { useMemo } from 'react';
 import useSWR from 'swr';
 
@@ -11,29 +10,30 @@ export interface DnsLookupState {
   readonly isValidating: boolean;
 }
 
-export function useDnsLookup(dns: string): DnsLookupState {
-  const { data, isLoading, isValidating } = useSWR<DnsResponse>(`https://dns.google.com/resolve?type=1&name=${dns}`, jsonFetcher);
+export function useDnsLookup(name: string): DnsLookupState {
+  const v4 = useDnsQuery(name, 1);
+  const v6 = useDnsQuery(name, 28);
 
   return {
-    ips: useMemo(() => extractIps(data), [data]),
-    isLoading, isValidating
+    ips: useMemo(() => [...extractIps(1, v4.data), ...extractIps(28, v6.data)], [v4.data, v6.data]),
+
+    get isLoading() {
+      return v4.isLoading && v6.isLoading;
+    },
+    get isValidating() {
+      return v4.isValidating || v6.isValidating;
+    }
   };
 }
 
-export function useDnsLookupV6(dns: string): DnsLookupState {
-  const { data, isLoading, isValidating } = useSWR<DnsResponse>(`https://dns.google.com/resolve?type=28&name=${dns}`, jsonFetcher);
-
-  return {
-    ips: useMemo(() => extractIps(data), [data]),
-    isLoading, isValidating
-  };
+function useDnsQuery(name: string, type: number) {
+  return useSWR<DnsResponse>(`https://dns.google.com/resolve?type=${type}&name=${name}`, jsonFetch);
 }
 
-function extractIps(data?: DnsResponse): string[] {
+function extractIps(type: number, data?: DnsResponse) {
   return pipe$(
     data?.Answer ?? [],
+    filter$((ans) => ans.type === type),
     map$((ans) => ans.data),
-    filter$((val) => ipaddr.isValid(val)),
-    collect$()
   );
 }
