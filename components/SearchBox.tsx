@@ -6,7 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Collapse } from '@mui/material';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
-import Grow from '@mui/material/Grow';
+import Fade from '@mui/material/Fade';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
@@ -107,7 +107,7 @@ export default function SearchBox() {
             value={search} onChange={handleChange}
           />
 
-          <Grow in={!!search}>
+          <Fade in={!!search}>
             <IconButton
               color="inherit"
               aria-label="Clear"
@@ -117,7 +117,7 @@ export default function SearchBox() {
             >
               <ClearIcon />
             </IconButton>
-          </Grow>
+          </Fade>
 
           { isSearching ? (
             <CircularProgress size={24} sx={{ m: 1.5, flex: '0 0 auto' }} />
