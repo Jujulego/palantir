@@ -9,8 +9,11 @@ import type { Metadata } from 'next';
 import { ReactNode } from 'react';
 
 export const metadata: Metadata = {
-  title: 'Palantir',
-  description: 'View location of others',
+  title: {
+    default: 'Palantir',
+    template: 'Palantir - %s',
+  },
+  description: 'Locate websites in the world',
 };
 
 export interface RootLayoutProps {
