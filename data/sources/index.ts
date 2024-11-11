@@ -16,14 +16,28 @@ export const ipSources = {
 export type SourceId = keyof typeof ipSources;
 
 // Utils
-export function validateSourceIdParam(sourceId?: string | null): SourceId {
-  if (sourceId && sourceId in ipSources) {
-    return sourceId as keyof typeof ipSources;
-  }
-
-  return ipInfo.sourceId;
+export function isSourceId(value?: string | null): value is SourceId {
+  return value ? value in ipSources : false;
 }
 
-export function isIpSourceIdParam(value?: string | null): value is SourceId {
-  return value ? value in ipSources : false;
+export function parseSourceIdParam(values: string | string[] = []): SourceId[] {
+  if (!Array.isArray(values)) {
+    values = [values];
+  }
+
+  const result: SourceId[] = [];
+
+  for (const val of values) {
+    const param = decodeURIComponent(val);
+
+    if (isSourceId(param)) {
+      result.push(param);
+    }
+  }
+
+  if (result.length === 0) {
+    return ['ip-info'];
+  }
+
+  return result;
 }

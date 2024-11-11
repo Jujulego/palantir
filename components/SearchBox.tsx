@@ -69,10 +69,7 @@ export default function SearchBox() {
 
   const handleSearch = useCallback((ip: string, search?: string) => {
     startSearch(() => {
-      const parts = segments.length ? [...segments] : ['ip', '', 'ip-info'];
-      parts[1] = encodeURIComponent(ip);
-
-      const url = new URL(`/${parts.join('/')}`, window.location.origin);
+      const url = new URL(`/ip/${encodeURIComponent(ip)}?${searchParams}`, window.location.origin);
 
       if (search) {
         url.searchParams.set('search', search);
@@ -80,7 +77,7 @@ export default function SearchBox() {
 
       router.push(url.toString());
     });
-  }, [segments, router]);
+  }, [searchParams, router]);
 
   const handleSubmit = useCallback((event: FormEvent) => {
     event.preventDefault();

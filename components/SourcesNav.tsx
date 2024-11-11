@@ -3,14 +3,15 @@
 import IpDataIcon from '@/components/icons/IpDataIcon';
 import IpInfoIcon from '@/components/icons/IpInfoIcon';
 import IpQualityScoreIcon from '@/components/icons/IpQualityScoreIcon';
+import { parseSourceIdParam, type SourceId } from '@/data/sources';
 import CloudIcon from '@mui/icons-material/Cloud';
 import PlaceIcon from '@mui/icons-material/Place';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import type { SxProps, Theme } from '@mui/material/styles';
 import Link from 'next/link';
-import { useSearchParams, useSelectedLayoutSegment } from 'next/navigation';
-import type { ReactElement, ReactNode } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { type ReactElement, type ReactNode, useMemo } from 'react';
 
 // Component
 export default function SourcesNav() {
@@ -53,21 +54,29 @@ export default function SourcesNav() {
 
 // Utils
 interface LinkChipProps {
-  readonly sourceId: string;
+  readonly sourceId: SourceId;
   readonly label: ReactNode;
   readonly icon?: ReactElement;
   readonly sx?: SxProps<Theme>;
 }
 
 function LinkChip({ sourceId, label, icon, sx }: LinkChipProps) {
-  const selected = useSelectedLayoutSegment();
   const searchParams = useSearchParams();
+  
+  const href = useMemo(() => {
+    const next = new URLSearchParams(searchParams);
+    next.set('source', sourceId);
+    
+    return `?${next}`;
+  }, [searchParams, sourceId]);
+  
+  const selected = useMemo(() => parseSourceIdParam(searchParams.getAll('source')).includes(sourceId), [searchParams, sourceId]);
 
   return <Chip
-    component={Link} href={`${sourceId}?${searchParams}`} prefetch
+    component={Link} href={href} prefetch
     label={label} icon={icon}
     clickable size="small"
-    variant={selected === sourceId ? 'filled' : 'outlined'}
+    variant={selected ? 'filled' : 'outlined'}
     sx={sx}
   />;
 }
