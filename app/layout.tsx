@@ -1,3 +1,4 @@
+import MetaThemeColor from '@/components/MetaThemeColor';
 import theme from '@/theme';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <AppRouterCacheProvider>
         <ThemeProvider theme={theme}>
           <CssBaseline enableColorScheme />
+          <MetaThemeColor />
 
           { children }
         </ThemeProvider>
