@@ -62,9 +62,9 @@ export default async function WithMapIpPage({ params, searchParams }: WithMapIpP
           <LabelIcon color="primary" />
         </ListItemIcon>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
+        <Box component="ul" sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', p: 0, gap: 1 }}>
           { tags.map((tag) => (
-            <Chip key={tag.label} label={tag.label} size="small" color={tag.color} />
+            <Chip key={tag.label} component="li" label={tag.label} size="small" color={tag.color} />
           )) }
         </Box>
       </ListItem>
