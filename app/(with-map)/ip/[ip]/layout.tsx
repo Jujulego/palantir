@@ -8,6 +8,7 @@ import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import ipaddr from 'ipaddr.js';
+import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { type ReactNode, Suspense } from 'react';
 
@@ -16,6 +17,12 @@ export interface WithMapIpLayoutProps {
   readonly params: Promise<{
     readonly ip: string;
   }>;
+}
+
+export async function generateMetadata({ params }: WithMapIpLayoutProps): Promise<Metadata> {
+  return {
+    title: decodeURIComponent((await params).ip),
+  };
 }
 
 export default async function WithMapIpLayout({ children, params }: WithMapIpLayoutProps) {
