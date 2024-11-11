@@ -19,7 +19,10 @@ export function SearchDnsMenu({ name, selectedIp, onSelect }: DnsLookupItemsProp
 
   return <Box sx={{ position: 'relative', minHeight: 52, py: 1 }}>
     <Fade in={isValidating} unmountOnExit>
-      <LinearProgress sx={{ position: 'absolute', top: 0, left: 0, width: '100%' }} />
+      <LinearProgress
+        aria-label="Resolving"
+        sx={{ position: 'absolute', top: 0, left: 0, width: '100%' }}
+      />
     </Fade>
 
     <Fade in={isLoading} unmountOnExit>

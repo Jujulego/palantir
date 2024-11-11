@@ -43,7 +43,7 @@ export default function SearchBox() {
   const [hasFocus, setHasFocus] = useState(false);
   const { focusWithinProps } = useFocusWithin({
     onFocusWithin: () => setHasFocus(true),
-    //onBlurWithin: () => setHasFocus(false),
+    onBlurWithin: () => setHasFocus(false),
   });
 
   const inputRef = useRef<HTMLInputElement>(null);
