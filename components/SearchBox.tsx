@@ -6,7 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Collapse } from '@mui/material';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
-import Grow from '@mui/material/Grow';
+import Fade from '@mui/material/Fade';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
@@ -69,10 +69,7 @@ export default function SearchBox() {
 
   const handleSearch = useCallback((ip: string, search?: string) => {
     startSearch(() => {
-      const parts = segments.length ? [...segments] : ['ip', '', 'ip-info'];
-      parts[1] = encodeURIComponent(ip);
-
-      const url = new URL(`/${parts.join('/')}`, window.location.origin);
+      const url = new URL(`/ip/${encodeURIComponent(ip)}?${searchParams}`, window.location.origin);
 
       if (search) {
         url.searchParams.set('search', search);
@@ -80,7 +77,7 @@ export default function SearchBox() {
 
       router.push(url.toString());
     });
-  }, [segments, router]);
+  }, [searchParams, router]);
 
   const handleSubmit = useCallback((event: FormEvent) => {
     event.preventDefault();
@@ -110,7 +107,7 @@ export default function SearchBox() {
             value={search} onChange={handleChange}
           />
 
-          <Grow in={!!search}>
+          <Fade in={!!search}>
             <IconButton
               color="inherit"
               aria-label="Clear"
@@ -120,7 +117,7 @@ export default function SearchBox() {
             >
               <ClearIcon />
             </IconButton>
-          </Grow>
+          </Fade>
 
           { isSearching ? (
             <CircularProgress size={24} sx={{ m: 1.5, flex: '0 0 auto' }} />

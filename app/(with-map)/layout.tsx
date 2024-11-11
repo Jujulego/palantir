@@ -2,11 +2,12 @@ import ColorModeToggle from '@/components/ColorModeToggle';
 import LocateButton from '@/components/LocateButton';
 import SearchBox from '@/components/SearchBox';
 import MapboxMap from '@/components/mapbox/MapboxMap';
+import SearchBoxSkeleton from '@/components/SearchBoxSkeleton';
 import { Toolbar } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import ipaddr from 'ipaddr.js';
 import { headers } from 'next/headers';
-import { type ReactNode } from 'react';
+import { type ReactNode, Suspense } from 'react';
 
 // Layout
 export interface WithMapLayoutProps {
@@ -14,8 +15,6 @@ export interface WithMapLayoutProps {
 }
 
 export default async function WithMapLayout({ children }: WithMapLayoutProps) {
-  const ip = await clientIp();
-
   // Render
   return <>
     <Toolbar
@@ -32,13 +31,13 @@ export default async function WithMapLayout({ children }: WithMapLayoutProps) {
         }
       }}
     >
-      <SearchBox />
+      <Suspense fallback={<SearchBoxSkeleton />}>
+        <SearchBox />
+      </Suspense>
 
-      { ip && (
-        <Paper elevation={2} sx={{ ml: 3, p: 0.5, borderRadius: 9999 }}>
-          <LocateButton ip={ip} />
-        </Paper>
-      ) }
+      <Suspense>
+        <LocateButton ip={clientIp()} sx={{ ml: 3 }} />
+      </Suspense>
 
       <Paper elevation={2} sx={{ ml: 'auto', p: 0.5, borderRadius: 9999 }}>
         <ColorModeToggle />
