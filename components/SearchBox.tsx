@@ -1,7 +1,6 @@
 'use client';
 
-import { DnsLookupItems } from '@/components/DnsLookupItems';
-import { useDebounced } from '@/hooks/useDebounced';
+import { SearchDnsMenu } from '@/components/SearchDnsMenu';
 import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
 import { Collapse } from '@mui/material';
@@ -11,27 +10,53 @@ import Grow from '@mui/material/Grow';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
+import { useFocusWithin } from '@react-aria/interactions';
 import ipaddr from 'ipaddr.js';
-import { useRouter, useSelectedLayoutSegments } from 'next/navigation';
-import { type ChangeEvent, type FormEvent, useCallback, useEffect, useMemo, useState, useTransition } from 'react';
+import { useRouter, useSearchParams, useSelectedLayoutSegments } from 'next/navigation';
+import {
+  type ChangeEvent,
+  type FormEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useTransition
+} from 'react';
 
 // Component
 export default function SearchBox() {
   const router = useRouter();
 
   const segments = useSelectedLayoutSegments();
-  const value = useMemo(() => segments[1] && decodeURIComponent(segments[1]), [segments]);
+  const searchParams = useSearchParams();
+  const selectedIp = decodeURIComponent(segments[1] ?? '');
+
   const [isSearching, startSearch] = useTransition();
 
-  const [search, setSearch] = useState(value ?? '');
-  const dns = useDebounced(search, 300);
+  const urlSearch = searchParams.get('search') || selectedIp;
+  const [search, setSearch] = useState(urlSearch ?? '');
 
-  const isValid = useMemo(() => ipaddr.isValid(search), [search]);
-  const hasMenu = useMemo(() => !isValid && !!search && dns.match(/[^.]\.[^.]/) !== null, [dns, isValid, search]);
+  const isIp = useMemo(() => ipaddr.isValid(search), [search]);
+  const isDns = useMemo(() => search.match(/^((?!-)[A-Za-z0-9-]{1,63}(?<!-)\.)+[A-Za-z]{2,6}$/) !== null, [search]);
+
+  const [hasFocus, setHasFocus] = useState(false);
+  const { focusWithinProps } = useFocusWithin({
+    onFocusWithin: () => setHasFocus(true),
+    onBlurWithin: () => setHasFocus(false),
+  });
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    setSearch(value ?? '');
-  }, [value]);
+    if (!hasFocus && isDns) {
+      inputRef.current!.focus();
+    }
+  }, [hasFocus, isDns, urlSearch]);
+
+  useEffect(() => {
+    setSearch(urlSearch ?? '');
+  }, [urlSearch]);
 
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
@@ -42,12 +67,18 @@ export default function SearchBox() {
     setSearch('');
   }, [router]);
 
-  const handleSearch = useCallback((ip: string) => {
+  const handleSearch = useCallback((ip: string, search?: string) => {
     startSearch(() => {
       const parts = segments.length ? [...segments] : ['ip', '', 'ip-info'];
       parts[1] = encodeURIComponent(ip);
 
-      router.push(`/${parts.join('/')}`);
+      const url = new URL(`/${parts.join('/')}`, window.location.origin);
+
+      if (search) {
+        url.searchParams.set('search', search);
+      }
+
+      router.push(url.toString());
     });
   }, [segments, router]);
 
@@ -56,10 +87,7 @@ export default function SearchBox() {
     handleSearch(search);
   }, [handleSearch, search]);
 
-  const handleSelect = useCallback((ip: string) => {
-    setSearch(ip);
-    handleSearch(ip);
-  }, [handleSearch]);
+  const handleSelect = useCallback((ip: string) => handleSearch(ip, search), [handleSearch, search]);
 
   // Render
   return (
@@ -67,16 +95,17 @@ export default function SearchBox() {
       <Paper
         component="form" role="search"
         elevation={2}
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit} {...focusWithinProps}
         sx={{
           position: 'absolute',
-          borderRadius: hasMenu ? 4 : 6,
+          borderRadius: hasFocus && isDns ? 4 : 6,
           overflow: 'hidden',
           transition: ({ transitions }) => transitions.create('border-radius')
         }}
       >
         <Box sx={{ display: 'flex', boxShadow: 1 }}>
           <SearchInput
+            ref={inputRef}
             type="search" placeholder="Adresse IP" required
             value={search} onChange={handleChange}
           />
@@ -97,7 +126,7 @@ export default function SearchBox() {
             <CircularProgress size={24} sx={{ m: 1.5, flex: '0 0 auto' }} />
           ) : (
             <IconButton
-              color="inherit" disabled={!isValid}
+              color="inherit" disabled={!isIp}
               aria-label="Search"
               type="submit"
               sx={{ flex: '0 0 auto', m: 0.5 }}
@@ -107,8 +136,8 @@ export default function SearchBox() {
           ) }
         </Box>
 
-        <Collapse in={hasMenu} unmountOnExit>
-          <DnsLookupItems dns={dns} onSelect={handleSelect} />
+        <Collapse in={hasFocus && isDns} unmountOnExit>
+          <SearchDnsMenu name={search} selectedIp={selectedIp} onSelect={handleSelect} />
         </Collapse>
       </Paper>
     </Box>

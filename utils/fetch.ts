@@ -8,7 +8,7 @@ export class FetchError extends Error {
   }
 }
 
-export async function jsonFetcher<D>(url: string | URL): Promise<D> {
+export async function jsonFetch<D>(url: string | URL): Promise<D> {
   const res = await fetch(url);
 
   if (!res.ok) {
