@@ -256,9 +256,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codecov/bundler-plugin-core@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "@codecov/bundler-plugin-core@npm:1.2.1"
+"@codecov/bundler-plugin-core@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "@codecov/bundler-plugin-core@npm:1.3.0"
   dependencies:
     "@actions/core": "npm:^1.10.1"
     "@actions/github": "npm:^6.0.0"
@@ -266,33 +266,33 @@ __metadata:
     semver: "npm:^7.5.4"
     unplugin: "npm:^1.10.1"
     zod: "npm:^3.22.4"
-  checksum: 10c0/ec051dbfea8003b17676d0a0b24c006cfccaa9eb2a790357a5d504d214025d2b3209445d0c5889b56c4729259da4fd0845069ba6e08cd1e271706dd3da1788c6
+  checksum: 10c0/e375c13a8ea384c3a8c6bac36b4c86f1577e615f7c9456b5f186cb04aa5cd5e9767da3de9208933d72a4c4cee632a2e74aa54ba0cc44a82c07f4a159ab330da5
   languageName: node
   linkType: hard
 
-"@codecov/nextjs-webpack-plugin@npm:1.2.1":
-  version: 1.2.1
-  resolution: "@codecov/nextjs-webpack-plugin@npm:1.2.1"
+"@codecov/nextjs-webpack-plugin@npm:1.3.0":
+  version: 1.3.0
+  resolution: "@codecov/nextjs-webpack-plugin@npm:1.3.0"
   dependencies:
-    "@codecov/bundler-plugin-core": "npm:^1.2.1"
-    "@codecov/webpack-plugin": "npm:^1.2.1"
+    "@codecov/bundler-plugin-core": "npm:^1.3.0"
+    "@codecov/webpack-plugin": "npm:^1.3.0"
     unplugin: "npm:^1.10.1"
   peerDependencies:
     next: 14.x || 15.x
     webpack: 5.x
-  checksum: 10c0/c20dff24e2d0e428e9fc12d89c618591c3e8cfefb23162e4e621ab6e762359db3b2a0c4568af88503cb29b05d0e9ddcda8954cc6c713d9366bb2cfaeffd5a869
+  checksum: 10c0/204d0151134c79ac254de70274e626c77768e3164fad3393898ba6f2e0366502a63f931dcf03c7b7a9a44febe06cb3708427b4cfe770dd97f7ae9683c3964168
   languageName: node
   linkType: hard
 
-"@codecov/webpack-plugin@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "@codecov/webpack-plugin@npm:1.2.1"
+"@codecov/webpack-plugin@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "@codecov/webpack-plugin@npm:1.3.0"
   dependencies:
-    "@codecov/bundler-plugin-core": "npm:^1.2.1"
+    "@codecov/bundler-plugin-core": "npm:^1.3.0"
     unplugin: "npm:^1.10.1"
   peerDependencies:
     webpack: 5.x
-  checksum: 10c0/5d40d4c9f321d33027a570c040f80513751d5a1323a570cf8bc9bee2a6ef50ea2b1a25d4d95896c57b5068e8d71364bf1551ad773a543a7ce1794d4904efe496
+  checksum: 10c0/b1f98652fd326cc66bc7ed5006eb811057794d2fac45474c3dc81da9f09da1f06c382aafde5581247d533f5f402553a9d2192def0645a26ad1aa0903ee0640d3
   languageName: node
   linkType: hard
 
@@ -5926,7 +5926,7 @@ __metadata:
   resolution: "palantir@workspace:."
   dependencies:
     "@auth0/nextjs-auth0": "npm:4.0.0-beta.2"
-    "@codecov/nextjs-webpack-plugin": "npm:1.2.1"
+    "@codecov/nextjs-webpack-plugin": "npm:1.3.0"
     "@emotion/cache": "npm:11.13.1"
     "@emotion/react": "npm:11.13.3"
     "@emotion/styled": "npm:11.13.0"
