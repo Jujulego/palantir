@@ -10,7 +10,7 @@ export interface DnsLookupState {
   readonly isValidating: boolean;
 }
 
-export function useDnsLookup(name: string): DnsLookupState {
+export function useDnsLookup(name: string | null): DnsLookupState {
   const v4 = useDnsQuery(name, 1);
   const v6 = useDnsQuery(name, 28);
 
@@ -26,8 +26,8 @@ export function useDnsLookup(name: string): DnsLookupState {
   };
 }
 
-function useDnsQuery(name: string, type: number) {
-  return useSWR<DnsResponse>(`https://dns.google.com/resolve?type=${type}&name=${name}`, jsonFetch);
+function useDnsQuery(name: string | null, type: number) {
+  return useSWR<DnsResponse>(name ? `https://dns.google.com/resolve?type=${type}&name=${name}` : null, jsonFetch);
 }
 
 function extractIps(type: number, data?: DnsResponse) {

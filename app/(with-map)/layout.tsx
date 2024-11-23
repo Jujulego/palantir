@@ -1,7 +1,7 @@
 import ColorModeToggle from '@/components/ColorModeToggle';
 import LocateButton from '@/components/LocateButton';
-import SearchBox from '@/components/SearchBox';
 import MapboxMap from '@/components/mapbox/MapboxMap';
+import SearchBox from '@/components/SearchBox';
 import SearchBoxSkeleton from '@/components/SearchBoxSkeleton';
 import { Toolbar } from '@mui/material';
 import Paper from '@mui/material/Paper';

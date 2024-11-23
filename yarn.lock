@@ -6799,6 +6799,7 @@ __metadata:
     "@mui/material-nextjs": "npm:6.1.8"
     "@next/bundle-analyzer": "npm:^15.0.2"
     "@react-aria/interactions": "npm:3.22.5"
+    "@sentry/core": "npm:8.40.0"
     "@sentry/nextjs": "npm:8.40.0"
     "@sentry/utils": "npm:8.40.0"
     "@types/node": "npm:20.17.7"
