@@ -24,7 +24,7 @@ export default function LocateButton({ ip: _ip, sx }: LocateButtonProps) {
   }
 
   const locateParams = new URLSearchParams(searchParams);
-  locateParams.delete('search');
+  locateParams.delete('name');
 
   return (
     <Paper elevation={2} sx={mergeSx(sx, { p: 0.5, borderRadius: 9999 })}>

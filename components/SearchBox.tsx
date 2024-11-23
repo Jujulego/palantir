@@ -34,7 +34,7 @@ export default function SearchBox() {
       const url = new URL(`/ip/${encodeURIComponent(ip)}?${searchParams}`, window.location.origin);
 
       if (search) {
-        url.searchParams.set('search', search);
+        url.searchParams.set('name', search);
       }
 
       router.push(url.toString());
@@ -43,7 +43,7 @@ export default function SearchBox() {
 
   // Input value
   const selectedIp = decodeURIComponent(segments[1] ?? '');
-  const [inputValue, setInputValue] = useState(searchParams.get('search') || selectedIp);
+  const [inputValue, setInputValue] = useState(searchParams.get('name') || selectedIp);
 
   const isIp = useMemo(() => ipaddr.isValid(inputValue), [inputValue]);
   const isDns = useMemo(() => inputValue.match(/^((?!-)[A-Za-z0-9-]{1,63}(?<!-)\.)+[A-Za-z]{2,6}$/) !== null, [inputValue]);
@@ -77,7 +77,7 @@ export default function SearchBox() {
   const [value, setValue] = useState<Option | null>(null);
 
   useEffect(() => {
-    const search = searchParams.get('search');
+    const search = searchParams.get('name');
 
     if (search) {
       setValue({ type: 'resolved', name: search, ip: selectedIp });

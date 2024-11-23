@@ -18,7 +18,7 @@ export default function HostnameLink({ hostname: _hostname }: HostnameLinkProps)
   }
 
   const hostnameParams = new URLSearchParams(searchParams);
-  hostnameParams.set('search', hostname);
+  hostnameParams.set('name', hostname);
 
   return (
     <MuiLink
