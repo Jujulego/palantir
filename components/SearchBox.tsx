@@ -13,7 +13,6 @@ import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Paper from '@mui/material/Paper';
 import { styled, useTheme } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
 import useAutocomplete from '@mui/material/useAutocomplete';
 import ipaddr from 'ipaddr.js';
 import { useRouter, useSearchParams, useSelectedLayoutSegments } from 'next/navigation';
@@ -208,27 +207,9 @@ export default function SearchBox() {
               />
             </Fade>
 
-            <Fade in={isLoading} unmountOnExit>
-              <Typography
-                color="textSecondary"
-                sx={{ position: 'absolute', top: 8, height: 36, px: 2, py: 0.75 }}
-              >
-                Resolving...
-              </Typography>
-            </Fade>
-
-            <Fade in={!isLoading && ips.length === 0} unmountOnExit>
-              <Typography
-                color="textSecondary"
-                sx={{ position: 'absolute', top: 8, height: 36, px: 2, py: 0.75 }}
-              >
-                No results
-              </Typography>
-            </Fade>
-
             <MenuList {...getListboxProps()} disablePadding>
               <TransitionGroup component={null}>
-                { ips.map((option, index) => {
+                { options.map((option, index) => {
                   const { key, ...optionProps } = getOptionProps({ option, index });
 
                   return <MenuItem
@@ -242,7 +223,7 @@ export default function SearchBox() {
                       exit: theme.transitions.duration.leavingScreen
                     }}
                   >
-                    <Box sx={{ m: 0, px: 2, py: 0.75 }}>{ option }</Box>
+                    { renderOption(option) }
                   </MenuItem>;
                 }) }
               </TransitionGroup>
@@ -279,7 +260,7 @@ function getOptionKey(option: Option) {
   if (typeof option === 'string') {
     return option;
   } else if (option.type === 'resolved') {
-    return `resolved-${option}`;
+    return `resolved-${option.ip}`;
   } else {
     return option.type;
   }
@@ -307,6 +288,16 @@ function getOptionIp(option: Option): string {
 
 function isOptionEqualToValue(option: Option, value: Option): boolean {
   return getOptionIp(option) === getOptionIp(value);
+}
+
+function renderOption(option: Option) {
+  if (typeof option === 'string' || option.type === 'resolved') {
+    return <Box sx={{ m: 0, px: 2, py: 0.75 }}>{ getOptionIp(option) }</Box>;
+  } else if (option.type === 'loading') {
+    return <Box sx={{ color: 'text.secondary', m: 0, px: 2, py: 0.75 }}>Resolving...</Box>;
+  } else if (option.type === 'empty') {
+    return <Box sx={{ color: 'text.secondary', m: 0, px: 2, py: 0.75 }}>No results</Box>;
+  }
 }
 
 // Utils
