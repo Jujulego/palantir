@@ -11,6 +11,7 @@
 
 # testing
 /coverage
+/junit-report.xml
 
 # next.js
 /.next/
