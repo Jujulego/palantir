@@ -18,7 +18,7 @@
     "@mui/icons-material": "6.1.8",
     "@mui/material": "6.1.8",
     "@mui/material-nextjs": "6.1.8",
-    "@react-aria/interactions": "3.22.5",
+    "@sentry/core": "8.40.0",
     "@sentry/nextjs": "8.40.0",
     "@sentry/utils": "8.40.0",
     "@vercel/analytics": "1.4.1",
