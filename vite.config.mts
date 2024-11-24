@@ -6,6 +6,13 @@ export default defineConfig({
   cacheDir: '.vite',
   plugins: [tsconfigPaths(), react()],
   test: {
+    coverage: {
+      reporter: ['lcovonly']
+    },
     environment: 'jsdom',
+    reporters: ['default', 'junit'],
+    outputFile: {
+      junit: 'junit-report.xml'
+    }
   },
 });
