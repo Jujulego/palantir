@@ -63,9 +63,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@auth0/nextjs-auth0@npm:4.0.0-beta.8":
-  version: 4.0.0-beta.8
-  resolution: "@auth0/nextjs-auth0@npm:4.0.0-beta.8"
+"@auth0/nextjs-auth0@npm:4.0.0-beta.9":
+  version: 4.0.0-beta.9
+  resolution: "@auth0/nextjs-auth0@npm:4.0.0-beta.9"
   dependencies:
     "@edge-runtime/cookies": "npm:^5.0.1"
     "@panva/hkdf": "npm:^1.2.1"
@@ -76,7 +76,7 @@ __metadata:
     next: ^14.0.0 || ^15.0.0
     react: ^18 || ^19.0.0-0
     react-dom: ^18 || ^19.0.0-0
-  checksum: 10c0/d30b2302ff6ba3c315ed04b110fa6ce3b73c430884e4f3082236a44226a8cfbbeffd955a827defa15041ec7662f98c7dea020708249b57153764c23afc006123
+  checksum: 10c0/d2694dc0a6de9cc03bb8e6387ea5ca4ef3021211467b055932ecd1b7276427d29e2e2b3dad06f572593620abb34ed3fcf831be4cae0dab6a300296ee79432423
   languageName: node
   linkType: hard
 
@@ -7031,7 +7031,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "palantir@workspace:."
   dependencies:
-    "@auth0/nextjs-auth0": "npm:4.0.0-beta.8"
+    "@auth0/nextjs-auth0": "npm:4.0.0-beta.9"
     "@codecov/nextjs-webpack-plugin": "npm:1.5.0"
     "@emotion/cache": "npm:11.13.5"
     "@emotion/react": "npm:11.13.5"
