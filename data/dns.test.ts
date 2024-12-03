@@ -36,4 +36,12 @@ describe('reverseDnsLookup', () => {
 
     expect(jsonFetch).toHaveBeenCalledWith(new URL('https://dns.google/resolve?type=12&name=8.7.6.5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.4.3.2.1.ip6.arpa'));
   });
+
+  it('should return null if query as no answers', async () => {
+    vi.mocked(jsonFetch).mockResolvedValue({});
+
+    await expect(reverseDnsLookup('1.2.3.4')).resolves.toBeNull();
+
+    expect(jsonFetch).toHaveBeenCalledWith(new URL('https://dns.google/resolve?type=12&name=4.3.2.1.in-addr.arpa'));
+  });
 });
