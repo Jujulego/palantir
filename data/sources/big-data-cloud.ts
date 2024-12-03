@@ -1,5 +1,5 @@
 import type { IpMetadata, Tag } from '@/data/ip-metadata';
-import { FetchError } from '@/utils/fetch';
+import { jsonFetch } from '@/utils/fetch';
 import ipaddr from 'ipaddr.js';
 
 // Types
@@ -97,111 +97,110 @@ export interface BigDataCloudPoint {
   readonly longitude: number;
 }
 
-// Constants
-export const sourceId = 'big-data-cloud';
+// Service
+const sourceId = 'big-data-cloud' as const;
 
-// Utils
-export async function rawFetchBigDataCloud(ip: string): Promise<BigDataCloudResult> {
-  const parsed = ipaddr.parse(ip);
+const bigDataCloud = {
+  sourceId,
+  async rawFetch(ip: string): Promise<BigDataCloudResult> {
+    const parsed = ipaddr.parse(ip);
 
-  // Do not request for "bogon" ips
-  if (['private', 'loopback'].includes(parsed.range())) {
-    return {};
-  }
-
-  // Make request
-  console.log(`Fetching ${sourceId} for ${parsed.toNormalizedString()}`);
-  const url = new URL(`https://api-bdc.net/data/ip-geolocation-full`);
-  url.searchParams.set('ip', parsed.toNormalizedString());
-  url.searchParams.set('key', process.env.BIG_DATA_CLOUD_KEY!);
-
-  const res = await fetch(url, {
-    next: {
-      revalidate: 86400,
-      tags: [parsed.toNormalizedString()]
+    // Do not request for "bogon" ips
+    if (['private', 'loopback'].includes(parsed.range())) {
+      return {};
     }
-  });
-  console.log(`Received ${sourceId} metadata for ${parsed.toNormalizedString()} (status = ${res.status})`);
 
-  if (!res.ok) {
-    throw new FetchError(res.status, await res.text());
-  }
+    // Make request
+    console.log(`Fetching ${sourceId} for ${parsed.toNormalizedString()}`);
+    const url = new URL('https://api-bdc.net/data/ip-geolocation-full');
+    url.searchParams.set('ip', parsed.toNormalizedString());
+    url.searchParams.set('key', process.env.BIG_DATA_CLOUD_KEY!);
 
-  return await res.json();
-}
+    const res = await jsonFetch<BigDataCloudResult>(url, {
+      next: {
+        revalidate: 86400,
+        tags: [parsed.toNormalizedString()]
+      }
+    });
+    console.log(`Received ${sourceId} metadata for ${parsed.toNormalizedString()}`);
 
-export async function fetchBigDataCloud(ip: string): Promise<IpMetadata> {
-  const payload = await rawFetchBigDataCloud(ip);
-  const result: Writeable<IpMetadata> = {
-    sourceId,
-    ip,
-    tags: [],
-    raw: payload,
-  };
-
-  if (payload.location) {
-    result.coordinates = {
-      latitude: payload.location.latitude,
-      longitude: payload.location.longitude,
+    return res;
+  },
+  async fetch(ip: string): Promise<IpMetadata> {
+    const payload = await this.rawFetch(ip);
+    const result: Writeable<IpMetadata> = {
+      sourceId,
+      ip,
+      tags: [],
+      raw: payload,
     };
 
-    if (payload.country) {
-      result.address = {
-        city: payload.location.city,
-        postalCode: payload.location.postcode,
-        region: payload.location.principalSubdivision,
-        country: payload.country.name,
-        countryCode: payload.country.isoAlpha2,
+    if (payload.location) {
+      result.coordinates = {
+        latitude: payload.location.latitude,
+        longitude: payload.location.longitude,
+      };
+
+      if (payload.country) {
+        result.address = {
+          city: payload.location.city,
+          postalCode: payload.location.postcode,
+          region: payload.location.principalSubdivision,
+          country: payload.country.name,
+          countryCode: payload.country.isoAlpha2,
+        };
+      }
+    }
+
+    if (payload.network?.carriers?.length) {
+      result.asn = {
+        asn: payload.network.carriers[0].asnNumeric,
+        organisation: payload.network.carriers[0].organisation,
       };
     }
-  }
 
-  if (payload.network?.carriers?.length) {
-    result.asn = {
-      asn: payload.network.carriers[0].asnNumeric,
-      organisation: payload.network.carriers[0].organisation,
+    const tags: Tag[] = [];
+
+    if (payload.hazardReport?.isCellular) {
+      tags.push({ label: 'cellular', color: 'info' });
     }
+
+    if (payload.hazardReport?.isKnownAsPublicRouter) {
+      tags.push({ label: 'public router', color: 'info' });
+    }
+
+    if (payload.hazardReport?.iCloudPrivateRelay) {
+      tags.push({ label: 'iCloud relay', color: 'info' });
+    }
+
+    if (payload.network?.isBogon) {
+      tags.push({ label: 'bogon' });
+    }
+
+    if (payload.hazardReport?.isKnownAsMailServer) {
+      tags.push({ label: 'mail server' });
+    }
+
+    if (payload.hazardReport?.isKnownAsVpn) {
+      tags.push({ label: 'vpn', color: 'warning' });
+    }
+
+    if (payload.hazardReport?.isKnownAsTorServer) {
+      tags.push({ label: 'tor', color: 'warning' });
+    }
+
+    if (payload.hazardReport?.isBlacklistedBlocklistDe || payload.hazardReport?.isBlacklistedUceprotect) {
+      tags.push({ label: 'blacklisted', color: 'error' });
+    }
+
+    if (payload.hazardReport?.isSpamhausDrop || payload.hazardReport?.isSpamhausEdrop || payload.hazardReport?.isSpamhausAsnDrop) {
+      tags.push({ label: 'spamhaus', color: 'error' });
+    }
+
+    result.tags = tags;
+
+    return result;
   }
+};
 
-  const tags: Tag[] = [];
-
-  if (payload.hazardReport?.isCellular) {
-    tags.push({ label: 'cellular', color: 'info' });
-  }
-
-  if (payload.hazardReport?.isKnownAsPublicRouter) {
-    tags.push({ label: 'public router', color: 'info' });
-  }
-
-  if (payload.hazardReport?.iCloudPrivateRelay) {
-    tags.push({ label: 'iCloud relay', color: 'info' });
-  }
-
-  if (payload.network?.isBogon) {
-    tags.push({ label: 'bogon' });
-  }
-
-  if (payload.hazardReport?.isKnownAsMailServer) {
-    tags.push({ label: 'mail server' });
-  }
-
-  if (payload.hazardReport?.isKnownAsVpn) {
-    tags.push({ label: 'vpn', color: 'warning' });
-  }
-
-  if (payload.hazardReport?.isKnownAsTorServer) {
-    tags.push({ label: 'tor', color: 'warning' });
-  }
-
-  if (payload.hazardReport?.isBlacklistedBlocklistDe || payload.hazardReport?.isBlacklistedUceprotect) {
-    tags.push({ label: 'blacklisted', color: 'error' });
-  }
-
-  if (payload.hazardReport?.isSpamhausDrop || payload.hazardReport?.isSpamhausEdrop || payload.hazardReport?.isSpamhausAsnDrop) {
-    tags.push({ label: 'spamhaus', color: 'error' });
-  }
-
-  result.tags = tags;
-
-  return result;
-}
+export default bigDataCloud;
