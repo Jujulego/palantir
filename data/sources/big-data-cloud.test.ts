@@ -8,7 +8,7 @@ beforeEach(() => {
   vi.restoreAllMocks();
 });
 
-describe('bigDataCloud.rawFetchBig', () => {
+describe('bigDataCloud.rawFetch', () => {
   it('should not send a request for loopback or private ip address', async () => {
     await expect(bigDataCloud.rawFetch('10.0.0.1')).resolves.toStrictEqual({});
     await expect(bigDataCloud.rawFetch('127.0.0.1')).resolves.toStrictEqual({});
@@ -39,7 +39,7 @@ describe('bigDataCloud.rawFetchBig', () => {
   });
 });
 
-describe('fetchBigDataCloud', () => {
+describe('bigDataCloud.fetch', () => {
   beforeEach(() => {
     vi.spyOn(bigDataCloud, 'rawFetch');
   });
