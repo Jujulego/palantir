@@ -149,6 +149,10 @@ const ipData = {
         tags.push({ label: 'datacenter', color: 'info' });
       }
 
+      if (payload.threat.is_icloud_relay) {
+        tags.push({ label: 'iCloud relay', color: 'info' });
+      }
+
       if (payload.threat.is_proxy) {
         tags.push({ label: 'proxy' });
       }
