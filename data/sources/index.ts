@@ -1,6 +1,6 @@
 import bigDataCloud from './big-data-cloud';
 import ipData from './ip-data';
-import * as ipGeolocation from './ip-geolocation';
+import ipGeolocation from './ip-geolocation';
 import * as ipInfo from './ip-info';
 import * as ipQualityScore from './ip-quality-score';
 
@@ -8,7 +8,7 @@ import * as ipQualityScore from './ip-quality-score';
 export const ipSources = {
   [bigDataCloud.sourceId]: bigDataCloud,
   [ipData.sourceId]: ipData,
-  [ipGeolocation.sourceId]: { fetch: ipGeolocation.fetchIpGeolocation, rawFetch: ipGeolocation.rawFetchIpGeolocation },
+  [ipGeolocation.sourceId]: ipGeolocation,
   [ipInfo.sourceId]: { fetch: ipInfo.fetchIpInfo, rawFetch: ipInfo.rawFetchIpInfo },
   [ipQualityScore.sourceId]: { fetch: ipQualityScore.fetchIpQualityScore, rawFetch: ipQualityScore.rawFetchIpQualityScore },
 };
