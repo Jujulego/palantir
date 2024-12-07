@@ -1,16 +1,16 @@
-import * as bigDataCloud from './big-data-cloud';
-import * as ipData from './ip-data';
-import * as ipGeolocation from './ip-geolocation';
-import * as ipInfo from './ip-info';
-import * as ipQualityScore from './ip-quality-score';
+import bigDataCloud from './big-data-cloud';
+import ipData from './ip-data';
+import ipGeolocation from './ip-geolocation';
+import ipInfo from './ip-info';
+import ipQualityScore from './ip-quality-score';
 
 // Source index
 export const ipSources = {
-  [bigDataCloud.sourceId]: { fetch: bigDataCloud.fetchBigDataCloud, rawFetch: bigDataCloud.rawFetchBigDataCloud },
-  [ipData.sourceId]: { fetch: ipData.fetchIpData, rawFetch: ipData.rawFetchIpData },
-  [ipGeolocation.sourceId]: { fetch: ipGeolocation.fetchIpGeolocation, rawFetch: ipGeolocation.rawFetchIpGeolocation },
-  [ipInfo.sourceId]: { fetch: ipInfo.fetchIpInfo, rawFetch: ipInfo.rawFetchIpInfo },
-  [ipQualityScore.sourceId]: { fetch: ipQualityScore.fetchIpQualityScore, rawFetch: ipQualityScore.rawFetchIpQualityScore },
+  [bigDataCloud.sourceId]: bigDataCloud,
+  [ipData.sourceId]: ipData,
+  [ipGeolocation.sourceId]: ipGeolocation,
+  [ipInfo.sourceId]: ipInfo,
+  [ipQualityScore.sourceId]: ipQualityScore,
 };
 
 export type SourceId = keyof typeof ipSources;

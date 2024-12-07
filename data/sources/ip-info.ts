@@ -1,5 +1,5 @@
 import type { IpMetadata } from '@/data/ip-metadata';
-import { FetchError } from '@/utils/fetch';
+import { jsonFetch } from '@/utils/fetch';
 import countries from 'i18n-iso-countries';
 import ipaddr from 'ipaddr.js';
 
@@ -24,75 +24,74 @@ export interface IpInfoBogon {
 
 export type IpInfoResult = IpInfoFound | IpInfoBogon;
 
-// Constants
-export const sourceId = 'ip-info';
+// Service
+const sourceId = 'ip-info' as const;
 
-// Utils
-export async function rawFetchIpInfo(ip: string): Promise<IpInfoResult> {
-  const parsed = ipaddr.parse(ip);
+const ipInfo = {
+  sourceId,
+  async rawFetch(ip: string): Promise<IpInfoResult> {
+    const parsed = ipaddr.parse(ip);
 
-  // Do not request for "bogon" ips
-  if (['private', 'loopback'].includes(parsed.range())) {
-    return { ip, bogon: true };
-  }
-
-  // Make request
-  console.log(`Fetching ${sourceId} for ${parsed.toNormalizedString()}`);
-  const url = new URL(`https://ipinfo.io/${parsed.toNormalizedString()}/json`);
-  const res = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${process.env.IP_INFO_TOKEN}`
-    },
-    next: {
-      revalidate: 86400,
-      tags: [parsed.toNormalizedString()]
+    // Do not request for "bogon" ips
+    if (['private', 'loopback'].includes(parsed.range())) {
+      return { ip, bogon: true };
     }
-  });
-  console.log(`Received ${sourceId} metadata for ${parsed.toNormalizedString()} (status = ${res.status})`);
 
-  if (!res.ok) {
-    throw new FetchError(res.status, await res.text());
-  }
+    // Make request
+    console.log(`Fetching ${sourceId} for ${parsed.toNormalizedString()}`);
+    const url = new URL(`https://ipinfo.io/${parsed.toNormalizedString()}/json`);
+    const res = await jsonFetch<IpInfoResult>(url, {
+      headers: {
+        Authorization: `Bearer ${process.env.IP_INFO_TOKEN}`
+      },
+      next: {
+        revalidate: 86400,
+        tags: [parsed.toNormalizedString()]
+      }
+    });
+    console.log(`Received ${sourceId} metadata for ${parsed.toNormalizedString()}`);
 
-  return await res.json();
-}
-
-export async function fetchIpInfo(ip: string): Promise<IpMetadata> {
-  const payload = await rawFetchIpInfo(ip);
-  const result: Writeable<IpMetadata> = {
-    sourceId,
-    ip,
-    tags: [],
-    raw: payload,
-  };
-
-  if (!payload.bogon) {
-    const [latitude, longitude] = payload.loc.split(',') as [string, string];
-
-    result.hostname = payload.hostname;
-    result.coordinates = {
-      latitude: parseFloat(latitude),
-      longitude: parseFloat(longitude),
-    };
-    result.address = {
-      city: payload.city,
-      postalCode: payload.postal,
-      region: payload.region,
-      country: countries.getName(payload.country, 'en') ?? '',
-      countryCode: payload.country,
+    return res;
+  },
+  async fetch(ip: string): Promise<IpMetadata> {
+    const payload = await this.rawFetch(ip);
+    const result: Writeable<IpMetadata> = {
+      sourceId,
+      ip,
+      tags: [],
+      raw: payload,
     };
 
-    if (payload.org) {
-      const idx = payload.org.indexOf(' ');
+    if (!payload.bogon) {
+      const [latitude, longitude] = payload.loc.split(',');
 
-      result.asn = {
-        asn: parseInt(payload.org.slice(2, idx), 10),
-        organisation: payload.org.slice(idx + 1),
+      result.hostname = payload.hostname;
+      result.coordinates = {
+        latitude: parseFloat(latitude),
+        longitude: parseFloat(longitude),
       };
-    }
-  } else {
-    result.tags = [{ label: 'bogon' }];
-  }
+      result.address = {
+        city: payload.city,
+        postalCode: payload.postal,
+        region: payload.region,
+        country: countries.getName(payload.country, 'en') ?? '',
+        countryCode: payload.country,
+      };
 
-  return result;
-}
+      if (payload.org) {
+        const idx = payload.org.indexOf(' ');
+
+        result.asn = {
+          asn: parseInt(payload.org.slice(2, idx), 10),
+          organisation: payload.org.slice(idx + 1),
+        };
+      }
+    } else {
+      result.tags = [{ label: 'bogon' }];
+    }
+
+    return result;
+  }
+};
+
+export default ipInfo;

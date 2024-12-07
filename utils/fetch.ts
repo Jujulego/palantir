@@ -2,9 +2,9 @@ export class FetchError extends Error {
   // Constructor
   constructor(
     readonly status: number,
-    message: string,
+    readonly content: string,
   ) {
-    super(`${status}: ${message}`);
+    super(`${status}: ${content}`);
   }
 }
 

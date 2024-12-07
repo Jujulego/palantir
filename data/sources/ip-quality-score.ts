@@ -1,5 +1,5 @@
 import type { IpMetadata, Tag } from '@/data/ip-metadata';
-import { FetchError } from '@/utils/fetch';
+import { jsonFetch } from '@/utils/fetch';
 import countries from 'i18n-iso-countries';
 import ipaddr from 'ipaddr.js';
 
@@ -44,96 +44,96 @@ export interface IpQualityError extends IpQualityBase {
 
 export type IpQualityResult = IpQualitySuccess | IpQualityError;
 
-// Constants
-export const sourceId = 'ip-quality-score';
+// Service
+const sourceId = 'ip-quality-score' as const;
+
+const ipQualityScore = {
+  sourceId,
+  async rawFetch(ip: string): Promise<IpQualityResult> {
+    const parsed = ipaddr.parse(ip);
+
+    // Make request
+    console.log(`Fetching ${sourceId} for ${parsed.toNormalizedString()}`);
+    const url = new URL('https://ipqualityscore.com/api/json/ip');
+    url.searchParams.set('ip', parsed.toNormalizedString());
+
+    const res = await jsonFetch<IpQualityResult>(url, {
+      headers: {
+        'IPQS-KEY': process.env.IP_QUALITY_API_KEY!
+      },
+      next: {
+        revalidate: 86400,
+        tags: [parsed.toNormalizedString()]
+      }
+    });
+    console.log(`Received ${sourceId} metadata for ${parsed.toNormalizedString()} (success ${res.success})`);
+
+    return res;
+  },
+  async fetch(ip: string): Promise<IpMetadata> {
+    const payload = await this.rawFetch(ip);
+    const result: Writeable<IpMetadata> = {
+      sourceId,
+      ip,
+      tags: [],
+      raw: payload,
+    };
+
+    if (payload.success) {
+      result.hostname = payload.host;
+
+      if (payload.latitude && payload.longitude) {
+        result.coordinates = {
+          latitude: payload.latitude,
+          longitude: payload.longitude,
+        };
+      }
+
+      if (payload.country_code !== 'N/A') {
+        result.address = {
+          city: removeNA(payload.city),
+          postalCode: removeNA(payload.zip_code),
+          region: removeNA(payload.region),
+          country: countries.getName(payload.country_code, 'en') ?? '',
+          countryCode: payload.country_code
+        };
+      }
+
+      if (payload.ASN) {
+        result.asn = {
+          asn: payload.ASN,
+          organisation: payload.ISP,
+        };
+      }
+
+      const tags: Tag[] = [];
+
+      if (payload.bot_status || payload.is_crawler) {
+        tags.push({ label: 'bot', color: 'info' });
+      }
+
+      if (payload.proxy) {
+        tags.push({ label: 'proxy' });
+      }
+
+      if (payload.active_vpn || payload.vpn) {
+        tags.push({ label: 'vpn', color: 'warning' });
+      }
+
+      if (payload.active_tor || payload.tor) {
+        tags.push({ label: 'tor', color: 'warning' });
+      }
+
+      result.tags = tags;
+    }
+
+    return result;
+  }
+};
+
+export default ipQualityScore;
 
 // Utils
-export async function rawFetchIpQualityScore(ip: string): Promise<IpQualityResult> {
-  const parsed = ipaddr.parse(ip);
-
-  // Make request
-  console.log(`Fetching ${sourceId} for ${parsed.toNormalizedString()}`);
-  const url = new URL('https://ipqualityscore.com/api/json/ip');
-  url.searchParams.set('ip', parsed.toNormalizedString());
-
-  const res = await fetch(url, {
-    headers: {
-      'IPQS-KEY': process.env.IP_QUALITY_API_KEY!
-    },
-    next: {
-      revalidate: 86400,
-      tags: [parsed.toNormalizedString()]
-    }
-  });
-  console.log(`Received ${sourceId} metadata for ${parsed.toNormalizedString()} (status = ${res.status})`);
-
-  if (!res.ok) {
-    throw new FetchError(res.status, await res.text());
-  }
-
-  return await res.json();
-}
-
-export async function fetchIpQualityScore(ip: string): Promise<IpMetadata> {
-  const payload = await rawFetchIpQualityScore(ip);
-  const result: Writeable<IpMetadata> = {
-    sourceId,
-    ip,
-    tags: [],
-    raw: payload,
-  };
-
-  if (payload.success) {
-    result.hostname = payload.host;
-
-    if (payload.latitude && payload.longitude) {
-      result.coordinates = {
-        latitude: payload.latitude,
-        longitude: payload.longitude,
-      };
-    }
-
-    if (payload.country_code !== 'N/A') {
-      result.address = {
-        city: removeNA(payload.city),
-        postalCode: removeNA(payload.zip_code),
-        region: removeNA(payload.region),
-        country: countries.getName(payload.country_code, 'en') ?? '',
-        countryCode: payload.country_code
-      };
-    }
-
-    if (payload.ASN) {
-      result.asn = {
-        asn: payload.ASN,
-        organisation: payload.ISP,
-      };
-    }
-
-    const tags: Tag[] = [];
-
-    if (payload.bot_status || payload.is_crawler) {
-      tags.push({ label: 'bot', color: 'info' });
-    }
-
-    if (payload.proxy) {
-      tags.push({ label: 'proxy' });
-    }
-
-    if (payload.active_vpn || payload.vpn) {
-      tags.push({ label: 'vpn', color: 'warning' });
-    }
-
-    if (payload.active_tor || payload.tor) {
-      tags.push({ label: 'tor', color: 'warning' });
-    }
-
-    result.tags = tags;
-  }
-
-  return result;
-}
-
 function removeNA(value: string): string | undefined {
   return value !== 'N/A' ? value : undefined;
 }

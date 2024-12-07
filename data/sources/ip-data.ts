@@ -1,5 +1,5 @@
 import type { IpMetadata, Tag } from '@/data/ip-metadata';
-import { FetchError } from '@/utils/fetch';
+import { FetchError, jsonFetch } from '@/utils/fetch';
 import ipaddr from 'ipaddr.js';
 
 // Types
@@ -66,112 +66,118 @@ export interface IpDataBogon {
   readonly is_bogon: boolean;
 }
 
-// Constants
-export const sourceId = 'ip-data';
+// Service
+const sourceId = 'ip-data' as const;
 
-// Utils
-export async function rawFetchIpData(ip: string): Promise<IpDataResult | IpDataBogon> {
-  const parsed = ipaddr.parse(ip);
+const ipData = {
+  sourceId,
+  async rawFetch(ip: string): Promise<IpDataResult | IpDataBogon> {
+    const parsed = ipaddr.parse(ip);
 
-  // Do not request for "bogon" ips
-  if (['private', 'loopback'].includes(parsed.range())) {
-    return { ip, is_bogon: true };
-  }
-
-  // Make request
-  console.log(`Fetching ${sourceId} for ${parsed.toNormalizedString()}`);
-  const url = new URL(`https://eu-api.ipdata.co/${parsed.toNormalizedString()}`);
-  url.searchParams.set('api-key', process.env.IP_DATA_API_KEY!);
-
-  const res = await fetch(url, {
-    next: {
-      revalidate: 86400,
-      tags: [parsed.toNormalizedString()],
-    }
-  });
-  console.log(`Received ${sourceId} metadata for ${parsed.toNormalizedString()} (status = ${res.status})`);
-
-  if (res.status === 400) {
-    const { message } = await res.json() as { readonly message: string };
-
-    if (message.match(/is a (reserved|private) IP address\.$/)) {
+    // Do not request for "bogon" ips
+    if (['private', 'loopback'].includes(parsed.range())) {
       return { ip, is_bogon: true };
     }
 
-    throw new FetchError(res.status, JSON.stringify({ message }));
-  }
+    // Make request
+    console.log(`Fetching ${sourceId} for ${parsed.toNormalizedString()}`);
+    const url = new URL(`https://eu-api.ipdata.co/${parsed.toNormalizedString()}`);
+    url.searchParams.set('api-key', process.env.IP_DATA_API_KEY!);
 
-  if (!res.ok) {
-    throw new FetchError(res.status, await res.text());
-  }
+    try {
+      const res = await jsonFetch<IpDataResult>(url, {
+        next: {
+          revalidate: 86400,
+          tags: [parsed.toNormalizedString()],
+        }
+      });
+      console.log(`Received ${sourceId} metadata for ${parsed.toNormalizedString()}`);
 
-  return await res.json();
-}
+      return res;
+    } catch (err) {
+      if (err instanceof FetchError && err.status === 400) {
+        const { message } = JSON.parse(err.content) as { readonly message: string };
 
-export async function fetchIpData(ip: string): Promise<IpMetadata> {
-  const payload = await rawFetchIpData(ip);
-  const result: Writeable<IpMetadata> = {
-    sourceId,
-    ip,
-    tags: [],
-    raw: payload,
-  };
+        if (message.match(/is a (reserved|private) IP address\.$/)) {
+          console.log(`Received ${sourceId} metadata for ${parsed.toNormalizedString()} (reserved or private)`);
+          return { ip, is_bogon: true };
+        }
+      }
 
-  if ('is_bogon' in payload) {
-    result.tags = [{ label: 'bogon' }];
-  } else {
-    result.coordinates = {
-      latitude: payload.latitude,
-      longitude: payload.longitude,
+      throw err;
+    }
+  },
+  async fetch(ip: string): Promise<IpMetadata> {
+    const payload = await this.rawFetch(ip);
+    const result: Writeable<IpMetadata> = {
+      sourceId,
+      ip,
+      tags: [],
+      raw: payload,
     };
 
-    result.address = {
-      city: payload.city,
-      postalCode: payload.postal,
-      region: payload.region,
-      country: payload.country_name,
-      countryCode: payload.country_code,
-    };
-
-    if (payload.asn) {
-      result.asn = {
-        asn: parseInt(payload.asn.asn.slice(2), 10),
-        organisation: payload.asn.name,
+    if ('is_bogon' in payload) {
+      result.tags = [{ label: 'bogon' }];
+    } else {
+      result.coordinates = {
+        latitude: payload.latitude,
+        longitude: payload.longitude,
       };
+
+      result.address = {
+        city: payload.city,
+        postalCode: payload.postal,
+        region: payload.region,
+        country: payload.country_name,
+        countryCode: payload.country_code,
+      };
+
+      if (payload.asn) {
+        result.asn = {
+          asn: parseInt(payload.asn.asn.slice(2), 10),
+          organisation: payload.asn.name,
+        };
+      }
+
+      const tags: Tag[] = [];
+
+      if (payload.threat.is_bogon) {
+        tags.push({ label: 'bogon' });
+      }
+
+      if (payload.threat.is_datacenter) {
+        tags.push({ label: 'datacenter', color: 'info' });
+      }
+
+      if (payload.threat.is_icloud_relay) {
+        tags.push({ label: 'iCloud relay', color: 'info' });
+      }
+
+      if (payload.threat.is_proxy) {
+        tags.push({ label: 'proxy' });
+      }
+
+      if (payload.threat.is_vpn) {
+        tags.push({ label: 'vpn', color: 'warning' });
+      }
+
+      if (payload.threat.is_tor) {
+        tags.push({ label: 'tor', color: 'warning' });
+      }
+
+      if (payload.threat.is_known_attacker) {
+        tags.push({ label: 'attacker', color: 'error' });
+      }
+
+      if (payload.threat.is_known_abuser) {
+        tags.push({ label: 'abuser', color: 'error' });
+      }
+
+      result.tags = tags;
     }
 
-    const tags: Tag[] = [];
+    return result;
+  },
+};
 
-    if (payload.threat.is_bogon) {
-      tags.push({ label: 'bogon' });
-    }
-
-    if (payload.threat.is_datacenter) {
-      tags.push({ label: 'datacenter', color: 'info' });
-    }
-
-    if (payload.threat.is_proxy) {
-      tags.push({ label: 'proxy' });
-    }
-
-    if (payload.threat.is_vpn) {
-      tags.push({ label: 'vpn', color: 'warning' });
-    }
-
-    if (payload.threat.is_tor) {
-      tags.push({ label: 'tor', color: 'warning' });
-    }
-
-    if (payload.threat.is_known_attacker) {
-      tags.push({ label: 'attacker', color: 'error' });
-    }
-
-    if (payload.threat.is_known_abuser) {
-      tags.push({ label: 'abuser', color: 'error' });
-    }
-
-    result.tags = tags;
-  }
-
-  return result;
-}
+export default ipData;

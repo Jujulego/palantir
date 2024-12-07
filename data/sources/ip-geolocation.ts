@@ -1,5 +1,5 @@
 import type { IpMetadata } from '@/data/ip-metadata';
-import { FetchError } from '@/utils/fetch';
+import { FetchError, jsonFetch } from '@/utils/fetch';
 import ipaddr from 'ipaddr.js';
 
 // Types
@@ -53,79 +53,83 @@ export interface IpGeolocationBogon {
   readonly is_bogon: boolean;
 }
 
-// Constants
-export const sourceId = 'ip-geolocation';
+// Service
+const sourceId = 'ip-geolocation' as const;
 
-// Utils
-export async function rawFetchIpGeolocation(ip: string): Promise<IpGeolocationResult | IpGeolocationBogon> {
-  const parsed = ipaddr.parse(ip);
+const ipGeolocation = {
+  sourceId,
+  async rawFetch(ip: string): Promise<IpGeolocationResult | IpGeolocationBogon> {
+    const parsed = ipaddr.parse(ip);
 
-  // Do not request for "bogon" ips
-  if (['private', 'loopback'].includes(parsed.range())) {
-    return { ip, is_bogon: true };
-  }
-
-  // Make request
-  console.log(`Fetching ${sourceId} for ${parsed.toNormalizedString()}`);
-  const url = new URL('https://api.ipgeolocation.io/ipgeo');
-  url.searchParams.set('apiKey', process.env.IP_GEOLOCATION_API_KEY!);
-  url.searchParams.set('ip', parsed.toNormalizedString());
-
-  const res = await fetch(url, {
-    next: {
-      revalidate: 86400,
-      tags: [parsed.toNormalizedString()],
+    // Do not request for "bogon" ips
+    if (['private', 'loopback'].includes(parsed.range())) {
+      return { ip, is_bogon: true };
     }
-  });
-  console.log(`Received ${sourceId} metadata for ${parsed.toNormalizedString()} (status = ${res.status})`);
 
-  if (res.status === 423) {
-    return { ip, is_bogon: true };
-  }
+    // Make request
+    console.log(`Fetching ${sourceId} for ${parsed.toNormalizedString()}`);
+    const url = new URL('https://api.ipgeolocation.io/ipgeo');
+    url.searchParams.set('apiKey', process.env.IP_GEOLOCATION_API_KEY!);
+    url.searchParams.set('ip', parsed.toNormalizedString());
 
-  if (!res.ok) {
-    throw new FetchError(res.status, await res.text());
-  }
+    try {
+      const res = await jsonFetch<IpGeolocationResult>(url, {
+        next: {
+          revalidate: 86400,
+          tags: [parsed.toNormalizedString()],
+        }
+      });
+      console.log(`Received ${sourceId} metadata for ${parsed.toNormalizedString()}`);
 
-  return await res.json();
-}
+      return res;
+    } catch (err) {
+      if (err instanceof FetchError && err.status === 423) {
+        console.log(`Received ${sourceId} metadata for ${parsed.toNormalizedString()} (bogon)`);
+        return { ip, is_bogon: true };
+      }
 
-export async function fetchIpGeolocation(ip: string): Promise<IpMetadata> {
-  const payload = await rawFetchIpGeolocation(ip);
-  const result: Writeable<IpMetadata> = {
-    sourceId,
-    ip,
-    tags: [],
-    raw: payload,
-  };
-
-  if ('is_bogon' in payload) {
-    result.tags = [{ label: 'bogon' }];
-  } else {
-    result.hostname = payload.hostname;
-    result.coordinates = {
-      latitude: parseFloat(payload.latitude),
-      longitude: parseFloat(payload.longitude),
-    };
-    result.address = {
-      city: payload.city,
-      postalCode: payload.zipcode,
-      region: payload.state_prov,
-      country: payload.country_name,
-      countryCode: payload.country_code2,
+      throw err;
+    }
+  },
+  async fetch(ip: string): Promise<IpMetadata> {
+    const payload = await this.rawFetch(ip);
+    const result: Writeable<IpMetadata> = {
+      sourceId,
+      ip,
+      tags: [],
+      raw: payload,
     };
 
-    if (payload.asn && payload.organization) {
-      result.asn = {
-        asn: parseInt(payload.asn.slice(2), 10),
-        organisation: payload.organization,
+    if ('is_bogon' in payload) {
+      result.tags = [{ label: 'bogon' }];
+    } else {
+      result.hostname = payload.hostname;
+      result.coordinates = {
+        latitude: parseFloat(payload.latitude),
+        longitude: parseFloat(payload.longitude),
       };
+      result.address = {
+        city: payload.city,
+        postalCode: payload.zipcode,
+        region: payload.state_prov,
+        country: payload.country_name,
+        countryCode: payload.country_code2,
+      };
+
+      if (payload.asn && payload.organization) {
+        result.asn = {
+          asn: parseInt(payload.asn.slice(2), 10),
+          organisation: payload.organization,
+        };
+      }
+
+      if (payload.connection_type) {
+        result.tags = [{ label: payload.connection_type }];
+      }
     }
 
-    if (payload.connection_type) {
-      result.tags = [{ label: payload.connection_type }];
-    }
+    return result;
   }
+};
 
-  return result;
-}
+export default ipGeolocation;
