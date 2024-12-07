@@ -2,7 +2,7 @@ import bigDataCloud from './big-data-cloud';
 import ipData from './ip-data';
 import ipGeolocation from './ip-geolocation';
 import ipInfo from './ip-info';
-import * as ipQualityScore from './ip-quality-score';
+import ipQualityScore from './ip-quality-score';
 
 // Source index
 export const ipSources = {
@@ -10,7 +10,7 @@ export const ipSources = {
   [ipData.sourceId]: ipData,
   [ipGeolocation.sourceId]: ipGeolocation,
   [ipInfo.sourceId]: ipInfo,
-  [ipQualityScore.sourceId]: { fetch: ipQualityScore.fetchIpQualityScore, rawFetch: ipQualityScore.rawFetchIpQualityScore },
+  [ipQualityScore.sourceId]: ipQualityScore,
 };
 
 export type SourceId = keyof typeof ipSources;

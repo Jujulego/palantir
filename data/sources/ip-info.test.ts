@@ -76,7 +76,6 @@ describe('ipInfo.fetch', () => {
 
     vi.mocked(ipInfo.rawFetch).mockResolvedValue(raw);
 
-    await ipInfo.fetch('1.2.3.4');
     await expect(ipInfo.fetch('1.2.3.4')).resolves.toStrictEqual({
       address: {
         city: 'city',
@@ -105,7 +104,6 @@ describe('ipInfo.fetch', () => {
 
     vi.mocked(ipInfo.rawFetch).mockResolvedValue(raw);
 
-    await ipInfo.fetch('1.2.3.4');
     await expect(ipInfo.fetch('1.2.3.4')).resolves.toStrictEqual({
       address: {
         city: 'city',

@@ -103,7 +103,6 @@ describe('ipGeolocation.fetch', () => {
 
     vi.mocked(ipGeolocation.rawFetch).mockResolvedValue(raw);
 
-    await ipGeolocation.fetch('1.2.3.4');
     await expect(ipGeolocation.fetch('1.2.3.4')).resolves.toStrictEqual({
       address: {
         city: 'city',
@@ -133,7 +132,6 @@ describe('ipGeolocation.fetch', () => {
 
     vi.mocked(ipGeolocation.rawFetch).mockResolvedValue(raw);
 
-    await ipGeolocation.fetch('1.2.3.4');
     await expect(ipGeolocation.fetch('1.2.3.4')).resolves.toStrictEqual({
       address: {
         city: 'city',
@@ -166,7 +164,6 @@ describe('ipGeolocation.fetch', () => {
 
     vi.mocked(ipGeolocation.rawFetch).mockResolvedValue(raw);
 
-    await ipGeolocation.fetch('1.2.3.4');
     await expect(ipGeolocation.fetch('1.2.3.4')).resolves.toStrictEqual({
       address: {
         city: 'city',
