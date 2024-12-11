@@ -46,7 +46,7 @@
     "@types/react": "19.0.1",
     "@types/react-dom": "19.0.2",
     "@types/react-syntax-highlighter": "15.5.13",
-    "@types/react-transition-group": "4.4.11",
+    "@types/react-transition-group": "4.4.12",
     "@vitejs/plugin-react": "4.3.4",
     "@vitest/coverage-v8": "2.1.8",
     "eslint": "9.16.0",
