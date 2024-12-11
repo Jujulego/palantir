@@ -42,7 +42,7 @@
     "@next/bundle-analyzer": "15.0.4",
     "@testing-library/dom": "10.4.0",
     "@testing-library/react": "16.1.0",
-    "@types/node": "20.17.9",
+    "@types/node": "20.17.10",
     "@types/react": "19.0.1",
     "@types/react-dom": "19.0.2",
     "@types/react-syntax-highlighter": "15.5.13",
