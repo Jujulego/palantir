@@ -2916,12 +2916,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:20.17.9":
-  version: 20.17.9
-  resolution: "@types/node@npm:20.17.9"
+"@types/node@npm:20.17.10":
+  version: 20.17.10
+  resolution: "@types/node@npm:20.17.10"
   dependencies:
     undici-types: "npm:~6.19.2"
-  checksum: 10c0/1c37c3618407d56b76301578edabcb4c6a7ef093d0811c50fc4df8df68fc546797a294cafac0e50789f4e0e485cd1d6871964d8e6222fd420658bdae89c1fb4a
+  checksum: 10c0/458ec725319e57d4692cbb56d81f1a90f9074cef9ec185c59e6f6c557a3d2ded57c5e443b1e82eba923d53dda4db18797fb131ee6e46fdb3d7d2f54d54aaebe3
   languageName: node
   linkType: hard
 
@@ -7046,7 +7046,7 @@ __metadata:
     "@sentry/utils": "npm:8.42.0"
     "@testing-library/dom": "npm:10.4.0"
     "@testing-library/react": "npm:16.1.0"
-    "@types/node": "npm:20.17.9"
+    "@types/node": "npm:20.17.10"
     "@types/react": "npm:19.0.1"
     "@types/react-dom": "npm:19.0.2"
     "@types/react-syntax-highlighter": "npm:15.5.13"
