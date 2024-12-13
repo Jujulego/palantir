@@ -1,7 +1,7 @@
 'use client';
 
 import { MapboxContext } from '@/components/mapbox/MapboxMap';
-import { Marker } from 'mapbox-gl';
+import type { Marker } from 'mapbox-gl';
 import { use, useEffect } from 'react';
 
 // Component
@@ -17,13 +17,25 @@ export default function MapboxMarker({ color, latitude, longitude }: MapboxMarke
   useEffect(() => {
     if (!map || !isLoaded) return;
 
-    const marker = new Marker({ color });
+    let marker: Marker;
+    let cleaned = false;
 
-    marker
-      .setLngLat({ lat: latitude, lng: longitude })
-      .addTo(map);
+    (async () => {
+      const { Marker } = await import('mapbox-gl');
+      if (cleaned) return;
 
-    return () => { marker.remove(); };
+      marker = new Marker({ color });
+
+      marker
+        .setLngLat({ lat: latitude, lng: longitude })
+        .addTo(map);
+    })();
+
+    return () => {
+      cleaned = true;
+
+      marker?.remove();
+    };
   }, [map, isLoaded, color, latitude, longitude]);
 
   return null;
