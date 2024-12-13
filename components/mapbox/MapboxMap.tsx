@@ -3,7 +3,7 @@
 import Slide from '@mui/material/Slide';
 import Stack from '@mui/material/Stack';
 import { styled, useTheme } from '@mui/material/styles';
-import mapboxgl from 'mapbox-gl';
+import type { Map as MapboxGLMap } from 'mapbox-gl';
 import { useSelectedLayoutSegments } from 'next/navigation';
 import { createContext, type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 
@@ -11,7 +11,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 // Context
 export interface MapboxMapState {
-  readonly map: mapboxgl.Map | null;
+  readonly map: MapboxGLMap | null;
   readonly isLoaded: boolean;
   readonly isStyleLoaded: boolean;
 }
@@ -45,34 +45,48 @@ export default function MapboxMap({ children }: MapboxMapProps) {
   }, [value]);
 
   // Initiate map
-  const [map, setMap] = useState<mapboxgl.Map | null>(null);
+  const [map, setMap] = useState<MapboxGLMap | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isStyleLoaded, setIsStyleLoaded] = useState(false);
 
   useEffect(() => {
-    const map = new mapboxgl.Map({
-      accessToken: process.env.NEXT_PUBLIC_MAPBOX_PK!,
-      container: container.current!,
-      zoom: 1,
-    });
-
-    setMap(map);
     setIsLoaded(false);
     setIsStyleLoaded(false);
 
-    // load event
-    const loadListener = () => setIsLoaded(true);
-    map.once('load', loadListener);
+    // Load mapbox gl
+    let map: MapboxGLMap;
+    let cleaned = false;
 
-    // style.load event
+    const loadListener = () => setIsLoaded(true);
     const styleLoadListener = () => setIsStyleLoaded(true);
-    map.once('style.load', styleLoadListener);
+
+    (async () => {
+      const { Map: MapboxGLMap } = await import('mapbox-gl');
+      if (cleaned) return;
+
+      map = new MapboxGLMap({
+        accessToken: process.env.NEXT_PUBLIC_MAPBOX_PK!,
+        container: container.current!,
+        style: 'mapbox://styles/mapbox/standard?optimize=true',
+        zoom: 1,
+      });
+
+      setMap(map);
+
+      // load event
+      map.once('load', loadListener);
+
+      // style.load event
+      map.once('style.load', styleLoadListener);
+    })();
 
     // Cleanup
     return () => {
-      map.off('load', loadListener);
-      map.off('style.load', styleLoadListener);
-      map.remove();
+      cleaned = true;
+
+      map?.off('load', loadListener);
+      map?.off('style.load', styleLoadListener);
+      map?.remove();
 
       setMap(null);
       setIsLoaded(false);
