@@ -1,7 +1,7 @@
 'use client';
 
 import { MapboxContext } from '@/components/mapbox/MapboxMap';
-import mapboxgl from 'mapbox-gl';
+import { Marker } from 'mapbox-gl';
 import { use, useEffect } from 'react';
 
 // Component
@@ -17,7 +17,7 @@ export default function MapboxMarker({ color, latitude, longitude }: MapboxMarke
   useEffect(() => {
     if (!map || !isLoaded) return;
 
-    const marker = new mapboxgl.Marker({ color });
+    const marker = new Marker({ color });
 
     marker
       .setLngLat({ lat: latitude, lng: longitude })
