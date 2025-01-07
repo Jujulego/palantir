@@ -4,8 +4,7 @@ import Slide from '@mui/material/Slide';
 import Stack from '@mui/material/Stack';
 import { styled, useTheme } from '@mui/material/styles';
 import type { Map as MapboxGLMap } from 'mapbox-gl';
-import { useSelectedLayoutSegments } from 'next/navigation';
-import { createContext, type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import { createContext, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -14,12 +13,18 @@ export interface MapboxMapState {
   readonly map: MapboxGLMap | null;
   readonly isLoaded: boolean;
   readonly isStyleLoaded: boolean;
+  readonly drawerRef: HTMLDivElement | null;
+  readonly openDrawer: () => void;
+  readonly closeDrawer: () => void;
 }
 
 const initialState: MapboxMapState = {
   map: null,
   isLoaded: false,
   isStyleLoaded: false,
+  drawerRef: null,
+  openDrawer: () => null,
+  closeDrawer: () => null,
 };
 
 export const MapboxContext = createContext<MapboxMapState>(initialState);
@@ -32,17 +37,18 @@ export interface MapboxMapProps {
 export default function MapboxMap({ children }: MapboxMapProps) {
   const container = useRef<HTMLDivElement>(null);
 
-  // Compute padding
-  const segments = useSelectedLayoutSegments();
-  const value = useMemo(() => segments[1] && decodeURIComponent(segments[1]), [segments]);
+  // Drawer state
+  const [drawerRef, setDrawerRef] = useState<HTMLDivElement | null>(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
+  // Compute padding
   const padding = useMemo(() => {
-    if (value) {
+    if (isDrawerOpen) {
       return { top: 72, left: 408 };
     } else {
       return { top: 72, left: 0 };
     }
-  }, [value]);
+  }, [isDrawerOpen]);
 
   // Initiate map
   const [map, setMap] = useState<MapboxGLMap | null>(null);
@@ -113,11 +119,19 @@ export default function MapboxMap({ children }: MapboxMapProps) {
 
   // Render
   return (
-    <MapboxContext.Provider value={{ map, isLoaded, isStyleLoaded }}>
+    <MapboxContext.Provider
+      value={{
+        map, isLoaded, isStyleLoaded,
+        drawerRef,
+        openDrawer: useCallback(() => setIsDrawerOpen(true), []),
+        closeDrawer: useCallback(() => setIsDrawerOpen(false), []),
+      }}
+    >
       <Container ref={container} />
 
-      <Slide in={!!value} direction="right">
+      <Slide in={isDrawerOpen} direction="right">
         <Stack
+          ref={setDrawerRef}
           sx={{
             position: 'absolute',
             top: 0, left: 0,
@@ -130,10 +144,10 @@ export default function MapboxMap({ children }: MapboxMapProps) {
               bgcolor: 'background.paper'
             })
           }}
-        >
-          { children }
-        </Stack>
+        />
       </Slide>
+
+      { children }
     </MapboxContext.Provider>
   );
 }

@@ -1,6 +1,7 @@
 import computerPng from '@/assets/computer.png';
 import ColoredImage from '@/components/ColoredImage';
 import HostnameLink from '@/components/HostnameLink';
+import { MapboxDrawer } from '@/components/mapbox/MapboxDrawer';
 import SourcesNav from '@/components/SourcesNav';
 import { reverseDnsLookup } from '@/data/dns';
 import Box from '@mui/material/Box';
@@ -32,7 +33,7 @@ export default async function WithMapIpLayout({ children, params }: WithMapIpLay
     redirect('/');
   }
 
-  return (<>
+  return <MapboxDrawer>
     <Box
       sx={{
         position: 'relative',
@@ -62,5 +63,5 @@ export default async function WithMapIpLayout({ children, params }: WithMapIpLay
 
       { children }
     </Paper>
-  </>);
+  </MapboxDrawer>;
 }
