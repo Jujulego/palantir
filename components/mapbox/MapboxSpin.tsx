@@ -1,79 +1,29 @@
 'use client';
 
 import { MapboxContext } from '@/components/mapbox/MapboxMap';
+import { stopAll } from '@/utils/motion';
+import { animate } from 'motion/react';
 import { use, useEffect } from 'react';
 
 // Component
 export default function MapboxSpin() {
-  const { map, isLoaded } = use(MapboxContext);
+  const ctx = use(MapboxContext);
 
   useEffect(() => {
-    if (!map || !isLoaded) return;
+    if (!ctx.map || !ctx.isLoaded) return;
 
-    // Make map spin
-    let pause = false;
+    const startLat = ctx.map.getCenter().lat;
 
-    function spinAnimation() {
-      if (pause) return;
+    if (typeof ctx.lat !== 'number') ctx.lat.set(startLat);
+    if (typeof ctx.lng !== 'number') ctx.lng.set(ctx.map.getCenter().lng);
+    if (typeof ctx.zoom !== 'number') ctx.zoom.set(ctx.map.getZoom());
 
-      const center = map!.getCenter();
-      center.lng += 360 / 240; // <= 1 revolution every 4 minutes
-
-      map!.easeTo({
-        center,
-        zoom: Math.min(3, map!.getZoom()),
-        maxZoom: 3,
-        duration: 1000,
-        easing: (n) => n
-      });
-    }
-
-    spinAnimation();
-    map.on('moveend', spinAnimation); // <= start again move when it ends
-
-    // Pause animation
-    function pauseAnimation() {
-      if (!pause) {
-        pause = true;
-        map!.stop();
-      }
-    }
-
-    map.on('mousedown', pauseAnimation);
-    map.on('touchstart', pauseAnimation);
-    map.on('zoomstart', pauseAnimation);
-
-    // Restart animation
-    function restartAnimation() {
-      if (pause) {
-        pause = false;
-        spinAnimation();
-      }
-    }
-
-    map.on('mouseup', restartAnimation);
-    map.on('dragend', restartAnimation);
-    map.on('pitchend', restartAnimation);
-    map.on('rotateend', restartAnimation);
-    map.on('touchend', restartAnimation);
-    map.on('zoomend', restartAnimation);
-
-    return () => {
-      // Clear events
-      map.off('moveend', spinAnimation);
-
-      map.off('mousedown', pauseAnimation);
-      map.off('touchstart', pauseAnimation);
-      map.off('zoomstart', pauseAnimation);
-
-      map.off('mouseup', restartAnimation);
-      map.off('dragend', restartAnimation);
-      map.off('pitchend', restartAnimation);
-      map.off('rotateend', restartAnimation);
-      map.off('touchend', restartAnimation);
-      map.off('zoomend', restartAnimation);
-    };
-  }, [map, isLoaded]);
+    return stopAll(
+      animate(ctx.zoom, Math.min(ctx.map.getZoom(), 3), { duration: 1 }),
+      animate(ctx.lat, 0, { ease: 'linear', duration: 1 }),
+      animate(ctx.lng, [startLat, startLat + 360 / 2, startLat + 360], { ease: 'linear', duration: 300, repeat: Infinity }),
+    );
+  }, [ctx]);
 
   return null;
 }

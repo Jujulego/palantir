@@ -1,15 +1,18 @@
 'use client';
 
-import Slide from '@mui/material/Slide';
 import Stack from '@mui/material/Stack';
 import { styled, useTheme } from '@mui/material/styles';
-import type { Map as MapboxGLMap } from 'mapbox-gl';
-import { createContext, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type { CameraOptions, Map as MapboxGLMap } from 'mapbox-gl';
+import { animate, motion, useMotionValue, useTransform, type MotionValue } from 'motion/react';
+import { createContext, type ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 // Context
 export interface MapboxMapState {
+  readonly lat: number | MotionValue<number>;
+  readonly lng: number | MotionValue<number>;
+  readonly zoom: number | MotionValue<number>;
   readonly map: MapboxGLMap | null;
   readonly isLoaded: boolean;
   readonly isStyleLoaded: boolean;
@@ -19,6 +22,9 @@ export interface MapboxMapState {
 }
 
 const initialState: MapboxMapState = {
+  lat: 0,
+  lng: 0,
+  zoom: 0,
   map: null,
   isLoaded: false,
   isStyleLoaded: false,
@@ -40,15 +46,6 @@ export default function MapboxMap({ children }: MapboxMapProps) {
   // Drawer state
   const [drawerRef, setDrawerRef] = useState<HTMLDivElement | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
-  // Compute padding
-  const padding = useMemo(() => {
-    if (isDrawerOpen) {
-      return { top: 72, left: 408 };
-    } else {
-      return { top: 72, left: 0 };
-    }
-  }, [isDrawerOpen]);
 
   // Initiate map
   const [map, setMap] = useState<MapboxGLMap | null>(null);
@@ -111,17 +108,41 @@ export default function MapboxMap({ children }: MapboxMapProps) {
     map.setConfigProperty('basemap', 'lightPreset', theme.map.light);
   }, [map, isStyleLoaded, theme.map.light, theme.typography.fontFamily]);
 
+  // Map camera
+  const lat = useMotionValue(0);
+  const lng = useMotionValue(0);
+  const zoom = useMotionValue(1);
+  const leftPadding = useMotionValue(0);
+
+  const camera = useTransform((): CameraOptions => ({
+    center: {
+      lat: lat.get(),
+      lng: lng.get(),
+    },
+    padding: {
+      top: 72,
+      left: leftPadding.get(),
+    },
+    zoom: zoom.get()
+  }));
+
+  useEffect(() => {
+    animate(leftPadding, isDrawerOpen ? 408 : 0);
+  }, [isDrawerOpen, leftPadding]);
+
   useEffect(() => {
     if (!map) return;
 
-    map.setPadding(padding ?? {});
-  }, [map, padding]);
+    map.jumpTo(camera.get());
+    return camera.on('change', (opts) => map.jumpTo(opts));
+  }, [camera, map]);
 
   // Render
   return (
     <MapboxContext.Provider
       value={{
         map, isLoaded, isStyleLoaded,
+        lat, lng, zoom,
         drawerRef,
         openDrawer: useCallback(() => setIsDrawerOpen(true), []),
         closeDrawer: useCallback(() => setIsDrawerOpen(false), []),
@@ -129,23 +150,24 @@ export default function MapboxMap({ children }: MapboxMapProps) {
     >
       <Container ref={container} />
 
-      <Slide in={isDrawerOpen} direction="right">
-        <Stack
-          ref={setDrawerRef}
-          sx={{
-            position: 'absolute',
-            top: 0, left: 0,
-            width: 408, height: '100vh',
-            overflow: 'auto',
-            bgcolor: 'grey.50',
-            borderRight: '1px solid',
-            borderRightColor: 'divider',
-            ...theme.applyStyles('dark', {
-              bgcolor: 'background.paper'
-            })
-          }}
-        />
-      </Slide>
+      <MotionStack
+        ref={setDrawerRef}
+        style={{
+          x: useTransform(leftPadding, (v) => v - 408),
+        }}
+        sx={{
+          position: 'absolute',
+          top: 0, left: 0,
+          width: 408, height: '100vh',
+          overflow: 'auto',
+          bgcolor: 'grey.50',
+          borderRight: '1px solid',
+          borderRightColor: 'divider',
+          ...theme.applyStyles('dark', {
+            bgcolor: 'background.paper'
+          })
+        }}
+      />
 
       { children }
     </MapboxContext.Provider>
@@ -153,6 +175,7 @@ export default function MapboxMap({ children }: MapboxMapProps) {
 }
 
 // Utils
+const MotionStack = motion.create(Stack);
 const Container = styled('div')({
   position: 'absolute',
   top: 0,
