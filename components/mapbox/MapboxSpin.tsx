@@ -1,7 +1,7 @@
 'use client';
 
 import { MapboxContext } from '@/components/mapbox/MapboxMap';
-import { cancelAll } from '@/utils/motion';
+import { stopAll } from '@/utils/motion';
 import { animate } from 'motion/react';
 import { use, useEffect } from 'react';
 
@@ -14,7 +14,7 @@ export default function MapboxSpin() {
 
     const startLng = ctx.map.getCenter().lng;
 
-    return cancelAll(
+    return stopAll(
       animate(ctx.lat, 0, { duration: 300 }),
       animate(ctx.lng, [startLng, startLng + 360 / 2, startLng + 360], { ease: 'linear', duration: 300, repeat: Infinity }),
       animate(ctx.zoom, Math.min(ctx.map.getZoom(), 3), { duration: 1 }),

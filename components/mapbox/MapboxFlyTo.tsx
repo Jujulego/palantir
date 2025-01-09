@@ -1,7 +1,7 @@
 'use client';
 
 import { MapboxContext } from '@/components/mapbox/MapboxMap';
-import { cancelAll } from '@/utils/motion';
+import { stopAll } from '@/utils/motion';
 import { LngLat } from 'mapbox-gl';
 import { animate } from 'motion/react';
 import { use, useEffect } from 'react';
@@ -52,7 +52,7 @@ export default function MapboxFlyTo({ latitude, longitude, zoom: _zoom }: Mapbox
 
     if (Math.abs(u1) < 1e-6 || !isFinite(S)) {
       if (Math.abs(w0 - w1) < 1e-6) {
-        return cancelAll(
+        return stopAll(
           animate(ctx.lat, center.lat, { duration: 0.5 }),
           animate(ctx.lng, center.lng, { duration: 0.5 }),
           animate(ctx.zoom, zoom, { duration: 0.5 }),
@@ -67,7 +67,7 @@ export default function MapboxFlyTo({ latitude, longitude, zoom: _zoom }: Mapbox
 
     const duration = S / SPEED;
 
-    return cancelAll(
+    return stopAll(
       animate(ctx.lat, center.lat, { duration, ease: (k) => u(k * S) }),
       animate(ctx.lng, center.lng, { duration, ease: (k) => u(k * S) }),
       animate(ctx.zoom, [0, zoom], { duration, ease: (k) => (startZoom + tr.scaleZoom(1 / w(k * S))) / zoom }),
