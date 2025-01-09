@@ -1,7 +1,7 @@
 'use client';
 
 import { MapboxContext } from '@/components/mapbox/MapboxMap';
-import { stopAll } from '@/utils/motion';
+import { cancelAll } from '@/utils/motion';
 import { LngLat } from 'mapbox-gl';
 import { animate } from 'motion/react';
 import { use, useEffect } from 'react';
@@ -50,13 +50,9 @@ export default function MapboxFlyTo({ latitude, longitude, zoom: _zoom }: Mapbox
     let u = (s: number) => w0 * ((cosh(r0) * tanh(r0 + rho * s) - sinh(r0)) / rho2) / u1;
     let S = (r(1) - r0) / rho;
 
-    if (typeof ctx.lat !== 'number') ctx.lat.set(tr.center.lat);
-    if (typeof ctx.lng !== 'number') ctx.lng.set(tr.center.lng);
-    if (typeof ctx.zoom !== 'number') ctx.zoom.set(startZoom);
-
     if (Math.abs(u1) < 1e-6 || !isFinite(S)) {
       if (Math.abs(w0 - w1) < 1e-6) {
-        return stopAll(
+        return cancelAll(
           animate(ctx.lat, center.lat, { duration: 0.5 }),
           animate(ctx.lng, center.lng, { duration: 0.5 }),
           animate(ctx.zoom, zoom, { duration: 0.5 }),
@@ -71,7 +67,7 @@ export default function MapboxFlyTo({ latitude, longitude, zoom: _zoom }: Mapbox
 
     const duration = S / SPEED;
 
-    return stopAll(
+    return cancelAll(
       animate(ctx.lat, center.lat, { duration, ease: (k) => u(k * S) }),
       animate(ctx.lng, center.lng, { duration, ease: (k) => u(k * S) }),
       animate(ctx.zoom, [0, zoom], { duration, ease: (k) => (startZoom + tr.scaleZoom(1 / w(k * S))) / zoom }),

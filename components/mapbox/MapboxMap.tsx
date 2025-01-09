@@ -2,17 +2,17 @@
 
 import Stack from '@mui/material/Stack';
 import { styled, useTheme } from '@mui/material/styles';
-import type { CameraOptions, Map as MapboxGLMap } from 'mapbox-gl';
-import { animate, motion, useMotionValue, useTransform, type MotionValue } from 'motion/react';
+import { type CameraOptions, Event, type Map as MapboxGLMap } from 'mapbox-gl';
+import { animate, motion, motionValue, type MotionValue, useMotionValue, useTransform } from 'motion/react';
 import { createContext, type ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 // Context
 export interface MapboxMapState {
-  readonly lat: number | MotionValue<number>;
-  readonly lng: number | MotionValue<number>;
-  readonly zoom: number | MotionValue<number>;
+  readonly lat: MotionValue<number>;
+  readonly lng: MotionValue<number>;
+  readonly zoom: MotionValue<number>;
   readonly map: MapboxGLMap | null;
   readonly isLoaded: boolean;
   readonly isStyleLoaded: boolean;
@@ -22,9 +22,9 @@ export interface MapboxMapState {
 }
 
 const initialState: MapboxMapState = {
-  lat: 0,
-  lng: 0,
-  zoom: 0,
+  lat: motionValue(0),
+  lng: motionValue(0),
+  zoom: motionValue(0),
   map: null,
   isLoaded: false,
   isStyleLoaded: false,
@@ -114,16 +114,16 @@ export default function MapboxMap({ children }: MapboxMapProps) {
   const zoom = useMotionValue(1);
   const leftPadding = useMotionValue(0);
 
-  const camera = useTransform((): CameraOptions => ({
+  const camera = useTransform([lat, lng, zoom, leftPadding], ([lat, lng, zoom, leftPadding]: number[]): CameraOptions => ({
     center: {
-      lat: lat.get(),
-      lng: lng.get(),
+      lat: lat,
+      lng: lng,
     },
     padding: {
       top: 72,
-      left: leftPadding.get(),
+      left: leftPadding,
     },
-    zoom: zoom.get()
+    zoom: zoom
   }));
 
   useEffect(() => {
@@ -133,9 +133,30 @@ export default function MapboxMap({ children }: MapboxMapProps) {
   useEffect(() => {
     if (!map) return;
 
-    map.jumpTo(camera.get());
-    return camera.on('change', (opts) => map.jumpTo(opts));
+    return camera.on('change', (opts) => {
+      map.jumpTo(opts, { ignore: true });
+    });
   }, [camera, map]);
+
+  useEffect(() => {
+    if (!map) return;
+
+    const updateValues = (event: Event & { ignore?: number }) => {
+      if (!event.ignore) {
+        lat.set(map.getCenter().lat, false);
+        lng.set(map.getCenter().lng, false);
+        zoom.set(map.getZoom(), false);
+      }
+    };
+
+    map.on('moveend', updateValues);
+    map.on('zoomend', updateValues);
+
+    return () => {
+      map.off('moveend', updateValues);
+      map.off('zoomend', updateValues);
+    };
+  }, [lat, lng, map, zoom]);
 
   // Render
   return (
