@@ -7,7 +7,7 @@ import PlaceIcon from '@mui/icons-material/Place';
 import { type SxProps, type Theme } from '@mui/material/styles';
 import Tooltip from '@mui/material/Tooltip';
 import type * as mapboxgl from 'mapbox-gl';
-import { type ReactNode, use, useCallback, useEffect, useRef } from 'react';
+import { type ReactNode, use, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 // Component
@@ -19,19 +19,23 @@ export interface MapMarkerProps {
 }
 
 export default function MapMarker({ latitude, longitude, tooltip, sx }: MapMarkerProps) {
+  const { mapboxRef, isLoaded: isMapboxLoaded } = useLazyMapbox();
   const { map, isLoaded } = use(MapContext);
 
   const elementRef = useRef(document.createElement('div'));
   const markerRef = useRef<mapboxgl.Marker>(null);
 
-  useLazyMapbox(useCallback(({ Marker }) => {
+  useEffect(() => {
+    if (!mapboxRef.current) return;
+
+    const { Marker } = mapboxRef.current;
     markerRef.current = new Marker({ element: elementRef.current })
       .setLngLat({ lat: latitude, lng: longitude });
 
     if (map && isLoaded) {
       markerRef.current.addTo(map);
     }
-  }, [])); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [isMapboxLoaded, isLoaded, latitude, longitude, map, mapboxRef]);
 
   useEffect(() => {
     const marker = markerRef.current;

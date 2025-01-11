@@ -2,7 +2,7 @@ import { useLazyMapbox } from '@/hooks/useLazyMapbox';
 import { styled } from '@mui/material';
 import type * as mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { useCallback, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 // Component
 export interface MapboxMapProps {
@@ -17,10 +17,13 @@ export default function MapboxMap(props: MapboxMapProps) {
   const { zoom, onMapCreated, onMapLoaded, onMapStyleLoaded, onMapRemoved } = props;
 
   // Initiate map
+  const { mapboxRef, isLoaded: isMapboxLoaded } = useLazyMapbox();
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useLazyMapbox(useCallback((mapbox) => {
-    const map = new mapbox.Map({
+  useEffect(() => {
+    if (!mapboxRef.current) return;
+
+    const map = new mapboxRef.current.Map({
       accessToken: process.env.NEXT_PUBLIC_MAPBOX_PK!,
       container: containerRef.current!,
       style: 'mapbox://styles/mapbox/standard?optimize=true',
@@ -38,7 +41,7 @@ export default function MapboxMap(props: MapboxMapProps) {
 
       onMapRemoved();
     };
-  }, [onMapCreated, onMapLoaded, onMapRemoved, onMapStyleLoaded, zoom]));
+  }, [isMapboxLoaded, mapboxRef, onMapCreated, onMapLoaded, onMapRemoved, onMapStyleLoaded, zoom]);
 
   // Render
   return <Container ref={containerRef} />;

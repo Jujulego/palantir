@@ -1,8 +1,8 @@
 import { MapContext } from '@/components/map/map.context';
+import { useLazyMapbox } from '@/hooks/useLazyMapbox';
 import type { LngLat } from 'mapbox-gl';
 import { useAnimate } from 'motion/react';
-import { use, useCallback, useEffect, useRef, useState } from 'react';
-import type * as mapboxgl from 'mapbox-gl';
+import { use, useCallback } from 'react';
 
 // Constants
 const CURVE = 1.42;
@@ -17,26 +17,9 @@ export interface FlyToOptions {
 
 // Hook
 export function useMapFlyTo() {
+  const { mapboxRef, isLoaded: isMapboxLoaded } = useLazyMapbox();
   const { map, isLoaded, camera } = use(MapContext);
   const [,animate] = useAnimate();
-
-  const [isMapboxLoaded, setIsMapboxLoaded] = useState(false);
-  const mapboxRef = useRef<typeof mapboxgl>(null);
-
-  useEffect(() => {
-    let cleaned = false;
-
-    import('mapbox-gl').then((mapbox) => {
-      if (!cleaned) {
-        mapboxRef.current = mapbox;
-        setIsMapboxLoaded(true);
-      }
-    });
-
-    return () => {
-      cleaned = true;
-    };
-  }, []);
 
   const flyTo = useCallback((opts: FlyToOptions) => {
     if (!map || !isLoaded || !mapboxRef.current) return;
