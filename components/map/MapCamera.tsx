@@ -1,15 +1,6 @@
-import { useMapEvent } from '@/hooks/useMapEvent';
 import type * as mapboxgl from 'mapbox-gl';
 import { type MotionValue, useTransform } from 'motion/react';
-import { useCallback, useEffect } from 'react';
-
-// Constants
-const MapCameraIgnore = Symbol('MapCamera:ignore');
-
-// Types
-interface MapEvent extends mapboxgl.Event {
-  [MapCameraIgnore]?: true,
-}
+import { useEffect } from 'react';
 
 // Component
 export interface MapCameraProps {
@@ -34,28 +25,7 @@ export default function MapCamera({ map, lat, lng, zoom, leftPadding }: MapCamer
     zoom: zoom
   } as mapboxgl.CameraOptions));
   
-  useEffect(() => camera.on('change', (opts) => map.jumpTo(opts, { [MapCameraIgnore]: true })), [camera, map]);
-
-  // Reflect moves to motion values
-  const handleMove = useCallback((event: MapEvent) => {
-    if (event[MapCameraIgnore]) return;
-
-    const center = map.getCenter();
-    lat.set(center.lat, false);
-    lng.set(center.lng, false);
-  }, [lat, lng, map]);
-
-  useMapEvent(map, 'moveend', handleMove);
-
-  // Reflect zoom to motion values
-  const handleZoom = useCallback((event: MapEvent) => {
-    if (event[MapCameraIgnore]) return;
-
-    zoom.set(map.getZoom(), false);
-  }, [map, zoom]);
-
-  useMapEvent(map, 'zoomend', handleZoom);
-  useMapEvent(map, 'boxzoomend', handleZoom);
+  useEffect(() => camera.on('change', (opts) => map.jumpTo(opts)), [camera, map]);
 
   // Render
   return null;

@@ -27,6 +27,7 @@ export function useMapFlyTo() {
     const { LngLat } = mapboxRef.current!;
     const tr = map.transform;
 
+    const startCenter = map.getCenter();
     const startZoom = map.getZoom();
     const zoom = opts.zoom ?? startZoom;
     const scale = tr.zoomScale(zoom - startZoom);
@@ -54,9 +55,9 @@ export function useMapFlyTo() {
 
     if (Math.abs(u1) < 1e-6 || !isFinite(S)) {
       if (Math.abs(w0 - w1) < 1e-6) {
-        animate(camera.lat, center.lat, { duration: 0.5 });
-        animate(camera.lng, center.lng, { duration: 0.5 });
-        animate(camera.zoom, zoom, { duration: 0.5 });
+        animate(camera.lat, [startCenter.lat, center.lat], { duration: 0.5 });
+        animate(camera.lng, [startCenter.lng, center.lng], { duration: 0.5 });
+        animate(camera.zoom, [startZoom, zoom], { duration: 0.5 });
 
         return;
       }
@@ -69,8 +70,8 @@ export function useMapFlyTo() {
 
     const duration = S / SPEED;
 
-    animate(camera.lat, center.lat, { duration, ease: (k) => u(k * S) });
-    animate(camera.lng, center.lng, { duration, ease: (k) => u(k * S) });
+    animate(camera.lat, [startCenter.lat, center.lat], { duration, ease: (k) => u(k * S) });
+    animate(camera.lng, [startCenter.lng, center.lng], { duration, ease: (k) => u(k * S) });
     animate(camera.zoom, [0, zoom], { duration, ease: (k) => (startZoom + tr.scaleZoom(1 / w(k * S))) / zoom });
   }, [animate, camera.lat, camera.lng, camera.zoom, isLoaded, map]);
 
