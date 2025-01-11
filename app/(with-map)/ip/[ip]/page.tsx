@@ -1,4 +1,4 @@
-import LocationTypography from '@/components/LocationTypography';
+import LocationListItem from '@/components/LocationListItem';
 import MapFlyTo from '@/components/map/MapFlyTo';
 import MapMarker from '@/components/map/MapMarker';
 import MapSpin from '@/components/map/MapSpin';
@@ -6,7 +6,6 @@ import PayloadListItem from '@/components/PayloadListItem';
 import { ipSources, parseSourceIdParam } from '@/data/sources';
 import HubIcon from '@mui/icons-material/Hub';
 import LabelIcon from '@mui/icons-material/Label';
-import LocationCityIcon from '@mui/icons-material/LocationCity';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import List from '@mui/material/List';
@@ -32,16 +31,7 @@ export default async function WithMapIpPage({ params, searchParams }: WithMapIpP
 
   // Render
   return <List>
-    <ListItem sx={{ minHeight: 56, px: 2, py: 0 }}>
-      <ListItemIcon sx={{ minWidth: 40 }}>
-        <LocationCityIcon color="primary" />
-      </ListItemIcon>
-
-      <ListItemText
-        primary={<LocationTypography address={address} coordinates={coordinates} />}
-        secondary={address?.country}
-      />
-    </ListItem>
+    <LocationListItem address={address} coordinates={coordinates} />
 
     { asn && (
       <ListItem sx={{ minHeight: 56, px: 2, py: 0 }}>
@@ -79,6 +69,7 @@ export default async function WithMapIpPage({ params, searchParams }: WithMapIpP
       <MapMarker
         latitude={coordinates.latitude}
         longitude={coordinates.longitude}
+        tooltip={ipSources[source].name}
       />
       <MapFlyTo latitude={coordinates.latitude} longitude={coordinates.longitude} zoom={5} />
     </> : <MapSpin /> }

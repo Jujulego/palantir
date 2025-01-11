@@ -101,6 +101,7 @@ export interface BigDataCloudPoint {
 const sourceId = 'big-data-cloud' as const;
 
 const bigDataCloud = {
+  name: 'Big Data Cloud',
   sourceId,
   async rawFetch(ip: string): Promise<BigDataCloudResult> {
     const parsed = ipaddr.parse(ip);

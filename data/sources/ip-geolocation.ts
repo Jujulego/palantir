@@ -57,6 +57,7 @@ export interface IpGeolocationBogon {
 const sourceId = 'ip-geolocation' as const;
 
 const ipGeolocation = {
+  name: 'ipgeolocation',
   sourceId,
   async rawFetch(ip: string): Promise<IpGeolocationResult | IpGeolocationBogon> {
     const parsed = ipaddr.parse(ip);

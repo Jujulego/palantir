@@ -70,6 +70,7 @@ export interface IpDataBogon {
 const sourceId = 'ip-data' as const;
 
 const ipData = {
+  name: 'ipdata',
   sourceId,
   async rawFetch(ip: string): Promise<IpDataResult | IpDataBogon> {
     const parsed = ipaddr.parse(ip);

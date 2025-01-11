@@ -48,6 +48,7 @@ export type IpQualityResult = IpQualitySuccess | IpQualityError;
 const sourceId = 'ip-quality-score' as const;
 
 const ipQualityScore = {
+  name: 'IPQS',
   sourceId,
   async rawFetch(ip: string): Promise<IpQualityResult> {
     const parsed = ipaddr.parse(ip);

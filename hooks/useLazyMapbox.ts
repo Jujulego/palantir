@@ -1,25 +1,24 @@
 import type * as mapboxgl from 'mapbox-gl';
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-export type LazyMapboxCallback = (mapbox: typeof mapboxgl) => void | LazyMapboxCleanup;
-export type LazyMapboxCleanup = () => void;
+export function useLazyMapbox() {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const mapboxRef = useRef<typeof mapboxgl>(null);
 
-export function useLazyMapbox(cb: LazyMapboxCallback) {
   useEffect(() => {
     let cleaned = false;
-    let cleanup: LazyMapboxCleanup | void;
 
-    (async () => {
-      const mapbox = await import('mapbox-gl');
-
+    import('mapbox-gl').then((mapbox) => {
       if (!cleaned) {
-        cleanup = cb(mapbox);
+        mapboxRef.current = mapbox;
+        setIsLoaded(true);
       }
-    })();
+    });
 
     return () => {
       cleaned = true;
-      if (cleanup) cleanup();
     };
-  }, [cb]);
+  }, []);
+
+  return { isLoaded, mapboxRef };
 }

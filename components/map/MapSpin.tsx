@@ -12,11 +12,13 @@ export default function MapSpin() {
   useEffect(() => {
     if (!map || !isLoaded) return;
 
-    const startLng = map.getCenter().lng;
+    const center = map.getCenter();
+    const zoom = map.getZoom();
+    const zoomDuration = (zoom - Math.min(zoom, 3)) * 0.5;
 
-    animate(camera.lat, 0, { duration: 300 });
-    animate(camera.lng, [startLng, startLng + 360 / 2, startLng + 360], { ease: 'linear', duration: 300, repeat: Infinity });
-    animate(camera.zoom, Math.min(map.getZoom(), 3), { duration: 1 });
+    animate(camera.lat, [center.lat, 0], { ease: 'easeInOut', duration: 300, delay: zoomDuration * 0.75 });
+    animate(camera.lng, [center.lng, center.lng + 360 / 2, center.lng + 360], { ease: 'linear', duration: 300, delay: zoomDuration * 0.75, repeat: Infinity });
+    animate(camera.zoom, [zoom, Math.min(zoom, 3)], { duration: zoomDuration });
   }, [animate, camera.lat, camera.lng, camera.zoom, isLoaded, map]);
 
   return null;
