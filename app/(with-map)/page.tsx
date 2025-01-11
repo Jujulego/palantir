@@ -1,8 +1,6 @@
-import MapboxSpin from '@/components/mapbox/MapboxSpin';
+import MapSpin from '@/components/map/MapSpin';
 
 // Page
-export default function RootPage() {
-  return <>
-    <MapboxSpin />
-  </>;
+export default function WithMapPage() {
+  return <MapSpin />;
 }
