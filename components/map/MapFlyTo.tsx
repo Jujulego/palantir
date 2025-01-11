@@ -1,31 +1,31 @@
 'use client';
 
-import { MapboxContext } from '@/components/mapbox/MapboxMap';
-import { stopAll } from '@/utils/motion';
 import { LngLat } from 'mapbox-gl';
-import { animate } from 'motion/react';
+import { useAnimate } from 'motion/react';
 import { use, useEffect } from 'react';
+import { MapContext } from './map.context';
 
 // Constants
 const CURVE = 1.42;
 const SPEED = 1.2;
 
 // Component
-export interface MapboxFlyToProps {
+export interface MapFlyToProps {
   readonly latitude: number;
   readonly longitude: number;
   readonly zoom?: number;
 }
 
-export default function MapboxFlyTo({ latitude, longitude, zoom: _zoom }: MapboxFlyToProps) {
-  const ctx = use(MapboxContext);
+export default function MapFlyTo({ latitude, longitude, zoom: _zoom }: MapFlyToProps) {
+  const { map, isLoaded, camera } = use(MapContext);
+  const [,animate] = useAnimate();
 
   useEffect(() => {
-    if (!ctx.map || !ctx.isLoaded) return;
+    if (!map || !isLoaded) return;
 
-    const tr = ctx.map.transform;
+    const tr = map.transform;
 
-    const startZoom = ctx.map.getZoom();
+    const startZoom = map.getZoom();
     const zoom = _zoom ?? startZoom;
     const scale = tr.zoomScale(zoom - startZoom);
     const center = LngLat.convert({ lat: latitude, lng: longitude });
@@ -52,11 +52,11 @@ export default function MapboxFlyTo({ latitude, longitude, zoom: _zoom }: Mapbox
 
     if (Math.abs(u1) < 1e-6 || !isFinite(S)) {
       if (Math.abs(w0 - w1) < 1e-6) {
-        return stopAll(
-          animate(ctx.lat, center.lat, { duration: 0.5 }),
-          animate(ctx.lng, center.lng, { duration: 0.5 }),
-          animate(ctx.zoom, zoom, { duration: 0.5 }),
-        );
+        animate(camera.lat, center.lat, { duration: 0.5 });
+        animate(camera.lng, center.lng, { duration: 0.5 });
+        animate(camera.zoom, zoom, { duration: 0.5 });
+
+        return;
       }
 
       const k = w1 < w0 ? -1 : 1;
@@ -67,12 +67,10 @@ export default function MapboxFlyTo({ latitude, longitude, zoom: _zoom }: Mapbox
 
     const duration = S / SPEED;
 
-    return stopAll(
-      animate(ctx.lat, center.lat, { duration, ease: (k) => u(k * S) }),
-      animate(ctx.lng, center.lng, { duration, ease: (k) => u(k * S) }),
-      animate(ctx.zoom, [0, zoom], { duration, ease: (k) => (startZoom + tr.scaleZoom(1 / w(k * S))) / zoom }),
-    );
-  }, [latitude, longitude, ctx.isLoaded, ctx.lat, ctx.lng, ctx.zoom, _zoom, ctx.map]);
+    animate(camera.lat, center.lat, { duration, ease: (k) => u(k * S) });
+    animate(camera.lng, center.lng, { duration, ease: (k) => u(k * S) });
+    animate(camera.zoom, [0, zoom], { duration, ease: (k) => (startZoom + tr.scaleZoom(1 / w(k * S))) / zoom });
+  }, [latitude, longitude, _zoom, map, isLoaded, camera.lat, camera.lng, camera.zoom, animate]);
 
   return null;
 }

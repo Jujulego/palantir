@@ -1,6 +1,6 @@
-import MapboxSpin from '@/components/mapbox/MapboxSpin';
+import MapSpin from '@/components/map/MapSpin';
 
 // Page
 export default function WithMapPage() {
-  return <MapboxSpin />;
+  return <MapSpin />;
 }

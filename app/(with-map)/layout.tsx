@@ -1,11 +1,12 @@
 import ColorModeToggle from '@/components/ColorModeToggle';
 import LocateButton from '@/components/LocateButton';
-import MapboxMap from '@/components/mapbox/MapboxMap';
+import MapLayout from '@/components/map/MapLayout';
 import SearchBox from '@/components/SearchBox';
 import SearchBoxSkeleton from '@/components/SearchBoxSkeleton';
 import { Toolbar } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import ipaddr from 'ipaddr.js';
+import { domAnimation, LazyMotion } from 'motion/react';
 import { headers } from 'next/headers';
 import { type ReactNode, Suspense } from 'react';
 
@@ -44,9 +45,11 @@ export default async function WithMapLayout({ children }: WithMapLayoutProps) {
       </Paper>
     </Toolbar>
 
-    <MapboxMap>
-      { children }
-    </MapboxMap>
+    <LazyMotion features={domAnimation} strict>
+      <MapLayout>
+        { children }
+      </MapLayout>
+    </LazyMotion>
   </>;
 }
 

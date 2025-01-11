@@ -1,7 +1,7 @@
 import LocationTypography from '@/components/LocationTypography';
-import MapboxFlyTo from '@/components/mapbox/MapboxFlyTo';
-import MapboxMarker from '@/components/mapbox/MapboxMarker';
-import MapboxSpin from '@/components/mapbox/MapboxSpin';
+import MapFlyTo from '@/components/map/MapFlyTo';
+import MapMarker from '@/components/map/MapMarker';
+import MapSpin from '@/components/map/MapSpin';
 import PayloadListItem from '@/components/PayloadListItem';
 import { ipSources, parseSourceIdParam } from '@/data/sources';
 import HubIcon from '@mui/icons-material/Hub';
@@ -50,8 +50,11 @@ export default async function WithMapIpPage({ params, searchParams }: WithMapIpP
         </ListItemIcon>
 
         <ListItemText
-          primary={asn.organisation} primaryTypographyProps={{ noWrap: true }}
+          primary={asn.organisation}
           secondary={`AS${asn.asn}`}
+          slotProps={{
+             primary: { noWrap: true },
+          }}
         />
       </ListItem>
     ) }
@@ -72,14 +75,12 @@ export default async function WithMapIpPage({ params, searchParams }: WithMapIpP
 
     <PayloadListItem payload={raw} />
 
-    { coordinates ? (<>
-      <MapboxMarker
+    { coordinates ? <>
+      <MapMarker
         latitude={coordinates.latitude}
         longitude={coordinates.longitude}
       />
-      <MapboxFlyTo latitude={coordinates.latitude} longitude={coordinates.longitude} zoom={5} />
-    </>) : (
-      <MapboxSpin />
-    ) }
+      <MapFlyTo latitude={coordinates.latitude} longitude={coordinates.longitude} zoom={5} />
+    </> : <MapSpin /> }
   </List>;
 }
