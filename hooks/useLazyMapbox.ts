@@ -10,8 +10,11 @@ export function useLazyMapbox(cb: LazyMapboxCallback) {
     let cleanup: LazyMapboxCleanup | void;
 
     (async () => {
-      if (cleaned) return;
-      cleanup = cb(await import('mapbox-gl'));
+      const mapbox = await import('mapbox-gl');
+
+      if (!cleaned) {
+        cleanup = cb(mapbox);
+      }
     })();
 
     return () => {
