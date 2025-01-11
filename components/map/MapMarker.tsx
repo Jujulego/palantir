@@ -16,15 +16,13 @@ export default function MapMarker({ color, latitude, longitude }: MapMarkerProps
 
   useLazyMapbox(useCallback(({ Marker }) => {
     if (!map || !isLoaded) return;
-    console.log('cool');
 
     const marker = new Marker({ color })
       .setLngLat({ lat: latitude, lng: longitude })
       .addTo(map);
 
     return () => {
-      console.log('toto');
-      return marker.remove();
+      marker.remove();
     };
   }, [map, isLoaded, color, latitude, longitude]));
 
