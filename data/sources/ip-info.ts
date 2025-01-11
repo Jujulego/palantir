@@ -28,6 +28,7 @@ export type IpInfoResult = IpInfoFound | IpInfoBogon;
 const sourceId = 'ip-info' as const;
 
 const ipInfo = {
+  name: 'IPinfo',
   sourceId,
   async rawFetch(ip: string): Promise<IpInfoResult> {
     const parsed = ipaddr.parse(ip);

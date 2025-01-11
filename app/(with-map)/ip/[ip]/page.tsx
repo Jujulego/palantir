@@ -79,6 +79,7 @@ export default async function WithMapIpPage({ params, searchParams }: WithMapIpP
       <MapMarker
         latitude={coordinates.latitude}
         longitude={coordinates.longitude}
+        tooltip={ipSources[source].name}
       />
       <MapFlyTo latitude={coordinates.latitude} longitude={coordinates.longitude} zoom={5} />
     </> : <MapSpin /> }
