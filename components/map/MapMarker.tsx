@@ -31,14 +31,20 @@ export default function MapMarker({ latitude, longitude, tooltip, selected, sx }
     if (!mapboxRef.current) return;
 
     const { Marker } = mapboxRef.current;
-    markerRef.current = new Marker({
+    const marker = new Marker({
       anchor: 'bottom',
       element: elementRef.current,
       occludedOpacity: 0.75
     }).setLngLat({ lat: latitude, lng: longitude });
 
+    markerRef.current = marker;
+
     if (map && isLoaded) {
-      markerRef.current.addTo(map);
+      marker.addTo(map);
+
+      return () => {
+        marker.remove();
+      };
     }
   }, [isMapboxLoaded, isLoaded, latitude, longitude, map, mapboxRef]);
 
