@@ -54,11 +54,13 @@ export interface IpGeolocationBogon {
 }
 
 // Service
-const sourceId = 'ip-geolocation' as const;
+export const ipGeolocationColor = '#6c63fd';
+export const ipGeolocationSourceId = 'ip-geolocation' as const;
 
 const ipGeolocation = {
   name: 'ipgeolocation',
-  sourceId,
+  color: ipGeolocationColor,
+  sourceId: ipGeolocationSourceId,
   async rawFetch(ip: string): Promise<IpGeolocationResult | IpGeolocationBogon> {
     const parsed = ipaddr.parse(ip);
 
@@ -68,7 +70,7 @@ const ipGeolocation = {
     }
 
     // Make request
-    console.log(`Fetching ${sourceId} for ${parsed.toNormalizedString()}`);
+    console.log(`Fetching ${ipGeolocationSourceId} for ${parsed.toNormalizedString()}`);
     const url = new URL('https://api.ipgeolocation.io/ipgeo');
     url.searchParams.set('apiKey', process.env.IP_GEOLOCATION_API_KEY!);
     url.searchParams.set('ip', parsed.toNormalizedString());
@@ -80,12 +82,12 @@ const ipGeolocation = {
           tags: [parsed.toNormalizedString()],
         }
       });
-      console.log(`Received ${sourceId} metadata for ${parsed.toNormalizedString()}`);
+      console.log(`Received ${ipGeolocationSourceId} metadata for ${parsed.toNormalizedString()}`);
 
       return res;
     } catch (err) {
       if (err instanceof FetchError && err.status === 423) {
-        console.log(`Received ${sourceId} metadata for ${parsed.toNormalizedString()} (bogon)`);
+        console.log(`Received ${ipGeolocationSourceId} metadata for ${parsed.toNormalizedString()} (bogon)`);
         return { ip, is_bogon: true };
       }
 
@@ -95,7 +97,7 @@ const ipGeolocation = {
   async fetch(ip: string): Promise<IpMetadata> {
     const payload = await this.rawFetch(ip);
     const result: Writeable<IpMetadata> = {
-      sourceId,
+      sourceId: ipGeolocationSourceId,
       ip,
       tags: [],
       raw: payload,

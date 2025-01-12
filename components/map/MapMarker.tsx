@@ -7,6 +7,7 @@ import PlaceIcon from '@mui/icons-material/Place';
 import { type SxProps, type Theme } from '@mui/material/styles';
 import Tooltip from '@mui/material/Tooltip';
 import type * as mapboxgl from 'mapbox-gl';
+import { m } from 'motion/react';
 import { type ReactNode, use, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -15,10 +16,11 @@ export interface MapMarkerProps {
   readonly latitude: number;
   readonly longitude: number;
   readonly tooltip?: ReactNode;
+  readonly selected?: boolean;
   readonly sx?: SxProps<Theme>;
 }
 
-export default function MapMarker({ latitude, longitude, tooltip, sx }: MapMarkerProps) {
+export default function MapMarker({ latitude, longitude, tooltip, selected, sx }: MapMarkerProps) {
   const { mapboxRef, isLoaded: isMapboxLoaded } = useLazyMapbox();
   const { map, isLoaded } = use(MapContext);
 
@@ -29,11 +31,20 @@ export default function MapMarker({ latitude, longitude, tooltip, sx }: MapMarke
     if (!mapboxRef.current) return;
 
     const { Marker } = mapboxRef.current;
-    markerRef.current = new Marker({ element: elementRef.current })
-      .setLngLat({ lat: latitude, lng: longitude });
+    const marker = new Marker({
+      anchor: 'bottom',
+      element: elementRef.current,
+      occludedOpacity: 0.75
+    }).setLngLat({ lat: latitude, lng: longitude });
+
+    markerRef.current = marker;
 
     if (map && isLoaded) {
-      markerRef.current.addTo(map);
+      marker.addTo(map);
+
+      return () => {
+        marker.remove();
+      };
     }
   }, [isMapboxLoaded, isLoaded, latitude, longitude, map, mapboxRef]);
 
@@ -56,30 +67,44 @@ export default function MapMarker({ latitude, longitude, tooltip, sx }: MapMarke
 
   // Render
   return createPortal(
-    <Tooltip
-      title={tooltip}
-      placement="top"
-      slotProps={{
-        popper: {
-          modifiers: [
-            {
-              name: 'offset',
-              options: {
-                offset: [0, -8],
-              }
-            }
-          ]
-        }
+    <m.div
+      initial={{ scale: 0 }}
+      style={{
+        transformOrigin: 'bottom center',
+      }}
+      animate={{
+        scale: selected ? 1.325 : 0.8,
+        opacity: selected ? 1 : 0.75,
+      }}
+      transition={{
+        duration: 0.5,
       }}
     >
-      <PlaceIcon
-        sx={mergeSx(
-          { color: 'primary.main', filter: 'drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.2))' },
-          sx,
-          { position: 'absolute', bottom: -3, left: -18, fontSize: 36 }
-        )}
-      />
-    </Tooltip>,
+      <Tooltip
+        title={tooltip}
+        placement="top"
+        slotProps={{
+          popper: {
+            modifiers: [
+              {
+                name: 'offset',
+                options: {
+                  offset: [0, -8],
+                }
+              }
+            ]
+          }
+        }}
+      >
+        <PlaceIcon
+          sx={mergeSx(
+            { color: 'primary.main', filter: 'drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.2))', fontSize: 36 },
+            sx,
+            { verticalAlign: 'bottom' },
+          )}
+        />
+      </Tooltip>
+    </m.div>,
     elementRef.current,
   );
 }

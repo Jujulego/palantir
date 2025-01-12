@@ -4,6 +4,9 @@ import IpDataIcon from '@/components/icons/IpDataIcon';
 import IpInfoIcon from '@/components/icons/IpInfoIcon';
 import IpQualityScoreIcon from '@/components/icons/IpQualityScoreIcon';
 import { parseSourceIdParam, type SourceId } from '@/data/sources';
+import { bigDataCloudColor } from '@/data/sources/big-data-cloud';
+import { ipGeolocationColor } from '@/data/sources/ip-geolocation';
+import { ipQualityScoreColor } from '@/data/sources/ip-quality-score';
 import CloudIcon from '@mui/icons-material/Cloud';
 import PlaceIcon from '@mui/icons-material/Place';
 import Box from '@mui/material/Box';
@@ -57,7 +60,7 @@ export default function SourcesNav() {
         onSelect={handleSelect}
         sx={{
           em: {
-            color: '#F43A3A',
+            color: ipQualityScoreColor,
             fontStyle: 'normal',
           }
         }}
@@ -68,7 +71,7 @@ export default function SourcesNav() {
         selected={selected.includes('ip-geolocation')}
         icon={<PlaceIcon />}
         onSelect={handleSelect}
-        sx={{ '.MuiChip-icon': { color: '#6C63FD' } }}
+        sx={{ '.MuiChip-icon': { color: ipGeolocationColor } }}
       />
       <LinkChip
         sourceId="big-data-cloud"
@@ -76,7 +79,7 @@ export default function SourcesNav() {
         selected={selected.includes('big-data-cloud')}
         icon={<CloudIcon />}
         onSelect={handleSelect}
-        sx={{ '.MuiChip-icon': { color: '#E36327' } }}
+        sx={{ '.MuiChip-icon': { color: bigDataCloudColor } }}
       />
       <LinkChip
         sourceId="ip-data"

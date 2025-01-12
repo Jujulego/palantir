@@ -1,6 +1,6 @@
+import IpMapMarkers from '@/components/IpMapMarkers';
 import LocationListItem from '@/components/LocationListItem';
 import MapFlyTo from '@/components/map/MapFlyTo';
-import MapMarker from '@/components/map/MapMarker';
 import MapSpin from '@/components/map/MapSpin';
 import PayloadListItem from '@/components/PayloadListItem';
 import { ipSources, parseSourceIdParam } from '@/data/sources';
@@ -65,13 +65,10 @@ export default async function WithMapIpPage({ params, searchParams }: WithMapIpP
 
     <PayloadListItem payload={raw} />
 
-    { coordinates ? <>
-      <MapMarker
-        latitude={coordinates.latitude}
-        longitude={coordinates.longitude}
-        tooltip={ipSources[source].name}
-      />
-      <MapFlyTo latitude={coordinates.latitude} longitude={coordinates.longitude} zoom={5} />
-    </> : <MapSpin /> }
+    <IpMapMarkers sourceId={source} coordinates={coordinates} />
+
+    { coordinates
+      ? <MapFlyTo latitude={coordinates.latitude} longitude={coordinates.longitude} zoom={5} />
+      : <MapSpin /> }
   </List>;
 }
