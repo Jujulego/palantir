@@ -67,11 +67,13 @@ export interface IpDataBogon {
 }
 
 // Service
-const sourceId = 'ip-data' as const;
+export const ipDataColor = '#3598d4';
+export const ipDataSourceId = 'ip-data' as const;
 
 const ipData = {
   name: 'ipdata',
-  sourceId,
+  color: ipDataColor,
+  sourceId: ipDataSourceId,
   async rawFetch(ip: string): Promise<IpDataResult | IpDataBogon> {
     const parsed = ipaddr.parse(ip);
 
@@ -81,7 +83,7 @@ const ipData = {
     }
 
     // Make request
-    console.log(`Fetching ${sourceId} for ${parsed.toNormalizedString()}`);
+    console.log(`Fetching ${ipDataSourceId} for ${parsed.toNormalizedString()}`);
     const url = new URL(`https://eu-api.ipdata.co/${parsed.toNormalizedString()}`);
     url.searchParams.set('api-key', process.env.IP_DATA_API_KEY!);
 
@@ -92,7 +94,7 @@ const ipData = {
           tags: [parsed.toNormalizedString()],
         }
       });
-      console.log(`Received ${sourceId} metadata for ${parsed.toNormalizedString()}`);
+      console.log(`Received ${ipDataSourceId} metadata for ${parsed.toNormalizedString()}`);
 
       return res;
     } catch (err) {
@@ -100,7 +102,7 @@ const ipData = {
         const { message } = JSON.parse(err.content) as { readonly message: string };
 
         if (message.match(/is a (reserved|private) IP address\.$/)) {
-          console.log(`Received ${sourceId} metadata for ${parsed.toNormalizedString()} (reserved or private)`);
+          console.log(`Received ${ipDataSourceId} metadata for ${parsed.toNormalizedString()} (reserved or private)`);
           return { ip, is_bogon: true };
         }
       }
@@ -111,7 +113,7 @@ const ipData = {
   async fetch(ip: string): Promise<IpMetadata> {
     const payload = await this.rawFetch(ip);
     const result: Writeable<IpMetadata> = {
-      sourceId,
+      sourceId: ipDataSourceId,
       ip,
       tags: [],
       raw: payload,

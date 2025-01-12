@@ -25,11 +25,13 @@ export interface IpInfoBogon {
 export type IpInfoResult = IpInfoFound | IpInfoBogon;
 
 // Service
-const sourceId = 'ip-info' as const;
+export const ipInfoColor = '#3091cf';
+export const ipInfoSourceId = 'ip-info' as const;
 
 const ipInfo = {
   name: 'IPinfo',
-  sourceId,
+  color: ipInfoColor,
+  sourceId: ipInfoSourceId,
   async rawFetch(ip: string): Promise<IpInfoResult> {
     const parsed = ipaddr.parse(ip);
 
@@ -39,7 +41,7 @@ const ipInfo = {
     }
 
     // Make request
-    console.log(`Fetching ${sourceId} for ${parsed.toNormalizedString()}`);
+    console.log(`Fetching ${ipInfoSourceId} for ${parsed.toNormalizedString()}`);
     const url = new URL(`https://ipinfo.io/${parsed.toNormalizedString()}/json`);
     const res = await jsonFetch<IpInfoResult>(url, {
       headers: {
@@ -50,14 +52,14 @@ const ipInfo = {
         tags: [parsed.toNormalizedString()]
       }
     });
-    console.log(`Received ${sourceId} metadata for ${parsed.toNormalizedString()}`);
+    console.log(`Received ${ipInfoSourceId} metadata for ${parsed.toNormalizedString()}`);
 
     return res;
   },
   async fetch(ip: string): Promise<IpMetadata> {
     const payload = await this.rawFetch(ip);
     const result: Writeable<IpMetadata> = {
-      sourceId,
+      sourceId: ipInfoSourceId,
       ip,
       tags: [],
       raw: payload,

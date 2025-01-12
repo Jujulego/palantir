@@ -98,11 +98,13 @@ export interface BigDataCloudPoint {
 }
 
 // Service
-const sourceId = 'big-data-cloud' as const;
+export const bigDataCloudColor = '#e36327';
+export const bigDataCloudSourceId = 'big-data-cloud' as const;
 
 const bigDataCloud = {
   name: 'Big Data Cloud',
-  sourceId,
+  color: bigDataCloudColor,
+  sourceId: bigDataCloudSourceId,
   async rawFetch(ip: string): Promise<BigDataCloudResult> {
     const parsed = ipaddr.parse(ip);
 
@@ -112,7 +114,7 @@ const bigDataCloud = {
     }
 
     // Make request
-    console.log(`Fetching ${sourceId} for ${parsed.toNormalizedString()}`);
+    console.log(`Fetching ${bigDataCloudSourceId} for ${parsed.toNormalizedString()}`);
     const url = new URL('https://api-bdc.net/data/ip-geolocation-full');
     url.searchParams.set('ip', parsed.toNormalizedString());
     url.searchParams.set('key', process.env.BIG_DATA_CLOUD_KEY!);
@@ -123,14 +125,14 @@ const bigDataCloud = {
         tags: [parsed.toNormalizedString()]
       }
     });
-    console.log(`Received ${sourceId} metadata for ${parsed.toNormalizedString()}`);
+    console.log(`Received ${bigDataCloudSourceId} metadata for ${parsed.toNormalizedString()}`);
 
     return res;
   },
   async fetch(ip: string): Promise<IpMetadata> {
     const payload = await this.rawFetch(ip);
     const result: Writeable<IpMetadata> = {
-      sourceId,
+      sourceId: bigDataCloudSourceId,
       ip,
       tags: [],
       raw: payload,
