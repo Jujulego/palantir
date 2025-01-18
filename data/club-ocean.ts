@@ -10,7 +10,7 @@ export interface ClubOceanAnimal {
   readonly name: string;
   readonly species?: string;
   readonly gender?: string;
-  readonly height?: string;
+  readonly size?: string;
   readonly coordinates: readonly ClubOceanTrackingCoordinates[];
 }
 
@@ -60,7 +60,7 @@ export async function fetchAnimalTracking(name: string): Promise<ClubOceanAnimal
         break;
 
       case 'Taille':
-        animal.height = value;
+        animal.size = value;
         break;
     }
   }
