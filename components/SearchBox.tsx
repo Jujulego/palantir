@@ -2,6 +2,7 @@
 
 import { useDnsLookup } from '@/hooks/useDnsLookup';
 import ClearIcon from '@mui/icons-material/Clear';
+import PetsIcon from '@mui/icons-material/Pets';
 import SearchIcon from '@mui/icons-material/Search';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -29,7 +30,13 @@ export default function SearchBox() {
   // Search
   const [isSearching, startSearch] = useTransition();
 
-  const handleSearch = useCallback((ip: string, search?: string) => {
+  const handleSearchAnimal = useCallback((name: string) => {
+    startSearch(() => {
+      router.push(`/animal/${encodeURIComponent(name)}`);
+    });
+  }, [router]);
+
+  const handleSearchIp = useCallback((ip: string, search?: string) => {
     startSearch(() => {
       const url = new URL(`/ip/${encodeURIComponent(ip)}?${searchParams}`, window.location.origin);
 
@@ -42,10 +49,11 @@ export default function SearchBox() {
   }, [searchParams, router]);
 
   // Input value
-  const selectedIp = decodeURIComponent(segments[1] ?? '');
-  const [inputValue, setInputValue] = useState(searchParams.get('name') || selectedIp);
+  const selectedValue = decodeURIComponent(segments[1] ?? '');
+  const [inputValue, setInputValue] = useState(searchParams.get('name') || selectedValue);
 
   const isIp = useMemo(() => ipaddr.isValid(inputValue), [inputValue]);
+  const isAnimal = useMemo(() => inputValue.match(/^[A-Za-z]{3,}$/) !== null, [inputValue]);
   const isDns = useMemo(() => inputValue.match(/^((?!-)[A-Za-z0-9-]{1,63}(?<!-)\.)+[A-Za-z]{2,6}$/) !== null, [inputValue]);
 
   const handleInputChange = useCallback((event: unknown, value: string) => {
@@ -61,17 +69,26 @@ export default function SearchBox() {
   // Load options
   const { ips, isLoading, isValidating } = useDnsLookup(isDns ? inputValue : null);
 
-  const options: Option[] = useMemo(() => {
+  const dnsOptions: Exclude<Option, string>[] = useMemo(() => {
     if (isLoading) {
       return [{ type: 'loading' }];
     }
 
-    if (ips.length) {
-      return ips.map((ip) => ({ type: 'resolved', name: inputValue, ip }));
-    } else {
-      return [{ type: 'empty' }];
-    }
+    return ips.map((ip) => ({ type: 'dns', name: inputValue, ip }));
   }, [isLoading, ips, inputValue]);
+
+  const options: Option[] = useMemo(() => {
+    if (isAnimal) {
+      const options = [...dnsOptions];
+      options.push({ type: 'animal', name: inputValue });
+
+      return options;
+    } else if (dnsOptions.length === 0) {
+      return [{ type: 'empty' }];
+    } else {
+      return dnsOptions;
+    }
+  }, [dnsOptions, inputValue, isAnimal]);
 
   // Selected value
   const [value, setValue] = useState<Option | null>(null);
@@ -80,11 +97,11 @@ export default function SearchBox() {
     const search = searchParams.get('name');
 
     if (search) {
-      setValue({ type: 'resolved', name: search, ip: selectedIp });
+      setValue({ type: 'dns', name: search, ip: selectedValue });
     } else {
-      setValue(selectedIp);
+      setValue(selectedValue);
     }
-  }, [searchParams, selectedIp]);
+  }, [searchParams, selectedValue]);
 
   const handleChange = useCallback((event: SyntheticEvent, option: Option | null) => {
     if (typeof option === 'string' && !ipaddr.isValid(inputValue)) {
@@ -99,10 +116,18 @@ export default function SearchBox() {
 
     if (option) {
       if (typeof option === 'string') {
-        handleSearch(option);
+        if (isIp) {
+          handleSearchIp(option);
+          setOpen(false);
+        } else if (isAnimal) {
+          handleSearchAnimal(option);
+          setOpen(false);
+        }
+      } else if (option.type === 'dns') {
+        handleSearchIp(option.ip, option.name);
         setOpen(false);
-      } else if (option.type === 'resolved') {
-        handleSearch(option.ip, option.name);
+      } else if (option.type === 'animal') {
+        handleSearchAnimal(option.name);
         setOpen(false);
       }
     } else {
@@ -110,7 +135,7 @@ export default function SearchBox() {
       setInputValue('');
       setOpen(false);
     }
-  }, [handleSearch, inputValue, options, router]);
+  }, [handleSearchAnimal, handleSearchIp, inputValue, isAnimal, isIp, options, router]);
 
   // Autocomplete
   const {
@@ -135,7 +160,7 @@ export default function SearchBox() {
     onClose: handleClose,
     onInputChange: handleInputChange,
     onOpen: handleOpen,
-    open: open && isDns,
+    open: open && (isDns || isAnimal),
     options,
     selectOnFocus: true,
     value,
@@ -144,14 +169,20 @@ export default function SearchBox() {
   const handleSubmit = useCallback((event: FormEvent) => {
     event.preventDefault();
 
-    if (isIp) {
-      handleSearch(inputValue);
-    } else if (typeof value === 'string') {
-      handleSearch(value);
-    } else if (typeof value === 'object' && value?.type === 'resolved') {
-      handleSearch(value.ip);
+    if (typeof value === 'string') {
+      if (isIp) {
+        handleSearchIp(inputValue);
+      } else if (isAnimal) {
+        handleSearchAnimal(inputValue);
+      }
+    } else if (typeof value === 'object') {
+      if (value?.type === 'dns') {
+        handleSearchIp(value.ip, value.name);
+      } else if (value?.type === 'animal') {
+        handleSearchAnimal(value.name);
+      }
     }
-  }, [handleSearch, inputValue, isIp, value]);
+  }, [handleSearchAnimal, handleSearchIp, inputValue, isAnimal, isIp, value]);
 
   // Render
   return (
@@ -170,7 +201,7 @@ export default function SearchBox() {
         <Box {...getRootProps()} sx={{ display: 'flex', boxShadow: 1 }}>
           <SearchInput
             {...getInputProps()}
-            type="search" placeholder="Adresse IP" required
+            type="search" placeholder="Search" required
           />
 
           <Fade in={!!inputValue}>
@@ -244,23 +275,28 @@ interface EmptyOption {
   type: 'empty';
 }
 
-interface ResolvedOption {
-  type: 'resolved';
+interface AnimalOption {
+  type: 'animal';
+  name: string;
+}
+
+interface DnsOption {
+  type: 'dns';
   name: string;
   ip: string;
 }
 
-type Option = LoadingOption | EmptyOption | ResolvedOption | string;
+type Option = LoadingOption | EmptyOption | AnimalOption | DnsOption | string;
 
 function getOptionDisabled(option: Option) {
-  return typeof option === 'object' && option.type !== 'resolved';
+  return typeof option === 'object' && option.type !== 'dns';
 }
 
 function getOptionKey(option: Option) {
   if (typeof option === 'string') {
-    return option;
-  } else if (option.type === 'resolved') {
-    return `resolved-${option.ip}`;
+    return 'input';
+  } else if (option.type === 'dns') {
+    return `dns-${option.ip}`;
   } else {
     return option.type;
   }
@@ -269,30 +305,39 @@ function getOptionKey(option: Option) {
 function getOptionLabel(option: Option) {
   if (typeof option === 'string') {
     return option;
-  } else if (option.type === 'resolved') {
+  } else if (option.type === 'dns' || option.type === 'animal') {
     return option.name;
   } else {
     return option.type;
   }
 }
 
-function getOptionIp(option: Option): string {
+function getOptionValue(option: Option): string {
   if (typeof option === 'string') {
     return option;
-  } else if (option.type === 'resolved') {
+  } else if (option.type === 'dns') {
     return option.ip;
+  } else if (option.type === 'animal') {
+    return option.name;
   } else {
     return option.type;
   }
 }
 
 function isOptionEqualToValue(option: Option, value: Option): boolean {
-  return getOptionIp(option) === getOptionIp(value);
+  return getOptionValue(option) === getOptionValue(value);
 }
 
 function renderOption(option: Option) {
-  if (typeof option === 'string' || option.type === 'resolved') {
-    return <Box sx={{ m: 0, px: 2, py: 0.75 }}>{ getOptionIp(option) }</Box>;
+  if (typeof option === 'string' || option.type === 'dns') {
+    return <Box sx={{ m: 0, px: 2, py: 0.75 }}>{ getOptionValue(option) }</Box>;
+  } else if (option.type === 'animal') {
+    return <Box sx={{ display: 'flex', m: 0, px: 2, py: 0.75, gap: 1 }}>
+      <PetsIcon color="inherit" />
+      <Box sx={{ textTransform: 'capitalize' }}>
+        { option.name }
+      </Box>
+    </Box>;
   } else if (option.type === 'loading') {
     return <Box sx={{ color: 'text.secondary', m: 0, px: 2, py: 0.75 }}>Resolving...</Box>;
   } else if (option.type === 'empty') {

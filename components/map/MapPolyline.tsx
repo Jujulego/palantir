@@ -19,7 +19,6 @@ export default function MapPolyline({ coordinates }: MapPolylineProps) {
   useEffect(() => {
     if (!map || !isLoaded) return;
 
-    console.log('addSource');
     map.addSource(id, {
       type: 'geojson',
       data: {
@@ -39,7 +38,6 @@ export default function MapPolyline({ coordinates }: MapPolylineProps) {
     });
 
     return () => {
-      console.log('removeSource');
       map.removeLayer(`${id}-line`);
       map.removeSource(id);
     };
