@@ -23,7 +23,7 @@ const ATTRIBUTES_REGEX = /<p class="m-0">(\S+) : ([^<]+)<\/p>/g;
 const COORDINATES_REGEX = /\['([^']+)', (-?[0-9.]+), (-?[0-9.]+)],/g;
 
 // Utils
-export async function rawAnimalTracking(name: string): Promise<string> {
+export async function rawAnimalTracking(name: string): Promise<string | null> {
   const res = await fetch(`https://tracking.clubocean.org/animal/${name}`, {
     next: {
       revalidate: 86400,
@@ -32,14 +32,23 @@ export async function rawAnimalTracking(name: string): Promise<string> {
   });
 
   if (!res.ok) {
+    if (res.status === 404) {
+      return null;
+    }
+
     throw new FetchError(res.status, await res.text());
   }
 
   return await res.text();
 }
 
-export async function fetchAnimalTracking(name: string): Promise<ClubOceanAnimal> {
+export async function fetchAnimalTracking(name: string): Promise<ClubOceanAnimal | null> {
   const raw = await rawAnimalTracking(name);
+
+  if (!raw) {
+    return null;
+  }
+
   const animal: Writeable<ClubOceanAnimal> = {
     name,
     coordinates: []
