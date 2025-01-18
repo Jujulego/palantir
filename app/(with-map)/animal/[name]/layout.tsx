@@ -1,17 +1,12 @@
-import computerPng from '@/assets/computer.png';
+import seaTurtlePng from '@/assets/sea-turtle.png';
 import ColoredImage from '@/components/ColoredImage';
-import HostnameLink from '@/components/HostnameLink';
 import MapDrawer from '@/components/map/MapDrawer';
-import SourcesNav from '@/components/SourcesNav';
-import { reverseDnsLookup } from '@/data/dns';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import ipaddr from 'ipaddr.js';
 import type { Metadata } from 'next';
-import { redirect } from 'next/navigation';
-import { type ReactNode, Suspense } from 'react';
+import { type ReactNode } from 'react';
 
 export interface WithMapNameLayoutProps {
   readonly children: ReactNode;
@@ -39,7 +34,7 @@ export default async function WithMapNameLayout({ children, params }: WithMapNam
       }}
     >
       <ColoredImage
-        src={computerPng}
+        src={seaTurtlePng}
         alt="computer"
         style={{ position: 'absolute', bottom: 0, left: 'calc(50% - 75px)', height: 'auto', width: 150 }}
       />
