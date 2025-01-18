@@ -91,7 +91,7 @@ const ipData = {
       const res = await jsonFetch<IpDataResult>(url, {
         next: {
           revalidate: 86400,
-          tags: [parsed.toNormalizedString()],
+          tags: [`ip-${parsed.toNormalizedString()}`]
         }
       });
       console.log(`Received ${ipDataSourceId} metadata for ${parsed.toNormalizedString()}`);
