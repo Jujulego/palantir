@@ -1,4 +1,4 @@
-import { rawAnimalTracking } from '@/data/club-ocean';
+import { fetchAnimalTracking } from '@/data/club-ocean';
 
 // Page
 export interface WithMapAnimalPageProps {
@@ -9,8 +9,8 @@ export interface WithMapAnimalPageProps {
 
 export default async function WithMapAnimalPage({ params }: WithMapAnimalPageProps) {
   const name = decodeURIComponent((await params).name);
-  const data = await rawAnimalTracking(name);
+  const data = await fetchAnimalTracking(name);
 
   // Render
-  return <code style={{ whiteSpace: 'pre' }}>{ data }</code>;
+  return <code style={{ whiteSpace: 'pre' }}>{ JSON.stringify(data, null, 2) }</code>;
 }
