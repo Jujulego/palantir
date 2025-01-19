@@ -30,23 +30,25 @@ export default function SearchBox() {
   // Search
   const [isSearching, startSearch] = useTransition();
 
-  const handleSearchAnimal = useCallback((name: string) => {
+  const handleSearch = useCallback((url: string) => {
     startSearch(() => {
-      router.push(`/animal/${encodeURIComponent(name)}`);
+      router.push(url);
     });
   }, [router]);
 
+  const handleSearchAnimal = useCallback((name: string) => {
+    handleSearch(`/animal/${encodeURIComponent(name)}`);
+  }, [handleSearch]);
+
   const handleSearchIp = useCallback((ip: string, search?: string) => {
-    startSearch(() => {
-      const url = new URL(`/ip/${encodeURIComponent(ip)}?${searchParams}`, window.location.origin);
+    const url = new URL(`/ip/${encodeURIComponent(ip)}?${searchParams}`, window.location.origin);
 
-      if (search) {
-        url.searchParams.set('name', search);
-      }
+    if (search) {
+      url.searchParams.set('name', search);
+    }
 
-      router.push(url.toString());
-    });
-  }, [searchParams, router]);
+    handleSearch(url.toString());
+  }, [searchParams, handleSearch]);
 
   // Input value
   const selectedValue = decodeURIComponent(segments[1] ?? '');
@@ -176,13 +178,15 @@ export default function SearchBox() {
         handleSearchAnimal(inputValue);
       }
     } else if (typeof value === 'object') {
-      if (value?.type === 'dns') {
+      if (value?.type === 'option') {
+        handleSearch(value.url);
+      } else if (value?.type === 'dns') {
         handleSearchIp(value.ip, value.name);
       } else if (value?.type === 'animal') {
         handleSearchAnimal(value.name);
       }
     }
-  }, [handleSearchAnimal, handleSearchIp, inputValue, isAnimal, isIp, value]);
+  }, [handleSearch, handleSearchAnimal, handleSearchIp, inputValue, isAnimal, isIp, value]);
 
   // Render
   return (
@@ -267,6 +271,13 @@ export default function SearchBox() {
 }
 
 // Options
+export interface SearchOption {
+  type: 'option';
+  key: string;
+  label: string;
+  url: string;
+}
+
 interface LoadingOption {
   type: 'loading';
 }
@@ -275,18 +286,20 @@ interface EmptyOption {
   type: 'empty';
 }
 
+/** @deprecated */
 interface AnimalOption {
   type: 'animal';
   name: string;
 }
 
+/** @deprecated */
 interface DnsOption {
   type: 'dns';
   name: string;
   ip: string;
 }
 
-type Option = LoadingOption | EmptyOption | AnimalOption | DnsOption | string;
+type Option = LoadingOption | EmptyOption | AnimalOption | DnsOption | SearchOption | string;
 
 function getOptionDisabled(option: Option) {
   return typeof option === 'object' && option.type !== 'dns';
@@ -295,32 +308,55 @@ function getOptionDisabled(option: Option) {
 function getOptionKey(option: Option) {
   if (typeof option === 'string') {
     return 'input';
-  } else if (option.type === 'dns') {
-    return `dns-${option.ip}`;
-  } else {
-    return option.type;
+  }
+
+  switch (option.type) {
+    case 'option':
+      return option.key;
+
+    case 'dns':
+      return `dns-${option.ip}`;
+
+    default:
+      return option.type;
   }
 }
 
 function getOptionLabel(option: Option) {
   if (typeof option === 'string') {
     return option;
-  } else if (option.type === 'dns' || option.type === 'animal') {
-    return option.name;
-  } else {
-    return option.type;
+  }
+
+  switch (option.type) {
+    case 'option':
+      return option.label;
+
+    case 'dns':
+    case 'animal':
+      return option.name;
+
+    default:
+      return option.type;
   }
 }
 
 function getOptionValue(option: Option): string {
   if (typeof option === 'string') {
     return option;
-  } else if (option.type === 'dns') {
-    return option.ip;
-  } else if (option.type === 'animal') {
-    return option.name;
-  } else {
-    return option.type;
+  }
+
+  switch (option.type) {
+    case 'dns':
+      return option.ip;
+
+    case 'animal':
+      return option.name;
+
+    case 'option':
+      return option.url;
+
+    default:
+      return option.type;
   }
 }
 
@@ -329,19 +365,30 @@ function isOptionEqualToValue(option: Option, value: Option): boolean {
 }
 
 function renderOption(option: Option) {
-  if (typeof option === 'string' || option.type === 'dns') {
-    return <Box sx={{ m: 0, px: 2, py: 0.75 }}>{ getOptionValue(option) }</Box>;
-  } else if (option.type === 'animal') {
-    return <Box sx={{ display: 'flex', m: 0, px: 2, py: 0.75, gap: 1 }}>
-      <PetsIcon color="inherit" />
-      <Box sx={{ textTransform: 'capitalize' }}>
-        { option.name }
-      </Box>
-    </Box>;
-  } else if (option.type === 'loading') {
-    return <Box sx={{ color: 'text.secondary', m: 0, px: 2, py: 0.75 }}>Resolving...</Box>;
-  } else if (option.type === 'empty') {
-    return <Box sx={{ color: 'text.secondary', m: 0, px: 2, py: 0.75 }}>No results</Box>;
+  if (typeof option === 'string') {
+    return <Box sx={{ m: 0, px: 2, py: 0.75 }}>{ option }</Box>;
+  }
+
+  switch (option.type) {
+    case 'option':
+      return <Box sx={{ m: 0, px: 2, py: 0.75 }}>{ option.label }</Box>;
+
+    case 'dns':
+      return <Box sx={{ m: 0, px: 2, py: 0.75 }}>{ option.name }</Box>;
+
+    case 'animal':
+      return <Box sx={{ display: 'flex', m: 0, px: 2, py: 0.75, gap: 1 }}>
+        <PetsIcon color="inherit"/>
+        <Box sx={{ textTransform: 'capitalize' }}>
+          {option.name}
+        </Box>
+      </Box>;
+
+    case 'loading':
+      return <Box sx={{ color: 'text.secondary', m: 0, px: 2, py: 0.75 }}>Resolving...</Box>;
+
+    case 'empty':
+      return <Box sx={{ color: 'text.secondary', m: 0, px: 2, py: 0.75 }}>No results</Box>;
   }
 }
 
