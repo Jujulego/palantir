@@ -36,8 +36,6 @@ export default function SearchBox() {
   const [inputValue, setInputValue] = useState(searchParams.get('name') || selectedValue);
 
   const isIp = useMemo(() => ipaddr.isValid(inputValue), [inputValue]);
-  const isAnimal = useMemo(() => inputValue.match(/^[A-Za-z]{3,}$/) !== null, [inputValue]);
-  const isDns = useMemo(() => inputValue.match(/^((?!-)[A-Za-z0-9-]{1,63}(?<!-)\.)+[A-Za-z]{2,6}$/) !== null, [inputValue]);
 
   const handleInputChange = useCallback((event: unknown, value: string) => {
     setInputValue(value);
@@ -52,24 +50,13 @@ export default function SearchBox() {
   // Load options
   const animalOptions = useAnimalSearchOptions(inputValue);
   const dnsOptions = useDnsSearchOptions(inputValue);
+  const isLoading = animalOptions.isLoading || dnsOptions.isLoading;
   const isValidating = animalOptions.isValidating || dnsOptions.isValidating;
 
-  const options = useMemo(() => {
-    const options: Option[] = [
-      ...animalOptions.options,
-      ...dnsOptions.options,
-    ];
-
-    if (animalOptions.isLoading || dnsOptions.isLoading) {
-      options.unshift({ type: 'loading' });
-    }
-
-    if (options.length === 0 && (animalOptions.isSearching || dnsOptions.isSearching)) {
-      options.push({ type: 'empty' });
-    }
-
-    return options;
-  }, [animalOptions.isLoading, animalOptions.isSearching, animalOptions.options, dnsOptions.isLoading, dnsOptions.isSearching, dnsOptions.options]);
+  const options = useMemo(() => [
+    ...animalOptions.options,
+    ...dnsOptions.options,
+  ], [animalOptions.options, dnsOptions.options]);
 
   // Selected value
   const [value, setValue] = useState<Option | null>(null);
@@ -125,7 +112,7 @@ export default function SearchBox() {
     onClose: handleClose,
     onInputChange: handleInputChange,
     onOpen: handleOpen,
-    open: open && (isDns || isAnimal),
+    open: open && (animalOptions.isSearching || dnsOptions.isSearching),
     options,
     selectOnFocus: true,
     value,
@@ -203,6 +190,21 @@ export default function SearchBox() {
 
             <MenuList {...getListboxProps()} disablePadding>
               <TransitionGroup component={null}>
+                { (isLoading || options.length === 0) && (
+                  <MenuItem
+                    component={Collapse}
+                    disabled
+                    sx={{ color: 'text.secondary', px:2, py: 0.75 }}
+                    timeout={{
+                      enter: theme.transitions.duration.enteringScreen,
+                      exit: theme.transitions.duration.leavingScreen
+                    }}
+                  >
+                    { isLoading && 'Loading...' }
+                    { (!isLoading && options.length === 0) && 'No options found.' }
+                  </MenuItem>
+                ) }
+
                 { options.map((option, index) => {
                   const { key, ...optionProps } = getOptionProps({ option, index });
 
@@ -244,18 +246,10 @@ export interface SearchHookState {
   isSearching: boolean;
 }
 
-interface LoadingOption {
-  type: 'loading';
-}
-
-interface EmptyOption {
-  type: 'empty';
-}
-
-type Option = LoadingOption | EmptyOption | SearchOption | string;
+type Option = SearchOption | string;
 
 function getOptionDisabled(option: Option) {
-  return typeof option === 'object' && ['loading', 'empty'].includes(option.type);
+  return typeof option === 'object' && ['empty'].includes(option.type);
 }
 
 function getOptionKey(option: Option) {
@@ -317,12 +311,6 @@ function renderOption(option: Option) {
           {option.name}
         </Box>
       </Box>;*/
-
-    case 'loading':
-      return <Box sx={{ color: 'text.secondary', m: 0, px: 2, py: 0.75 }}>Resolving...</Box>;
-
-    case 'empty':
-      return <Box sx={{ color: 'text.secondary', m: 0, px: 2, py: 0.75 }}>No results</Box>;
   }
 }
 
