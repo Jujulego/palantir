@@ -66,7 +66,7 @@ const ipQualityScore = {
       },
       next: {
         revalidate: 86400,
-        tags: [parsed.toNormalizedString()]
+        tags: [`ip-${parsed.toNormalizedString()}`]
       }
     });
     console.log(`Received ${ipQualityScoreSourceId} metadata for ${parsed.toNormalizedString()} (success ${res.success})`);

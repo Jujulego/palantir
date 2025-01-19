@@ -49,7 +49,7 @@ const ipInfo = {
       },
       next: {
         revalidate: 86400,
-        tags: [parsed.toNormalizedString()]
+        tags: [`ip-${parsed.toNormalizedString()}`]
       }
     });
     console.log(`Received ${ipInfoSourceId} metadata for ${parsed.toNormalizedString()}`);

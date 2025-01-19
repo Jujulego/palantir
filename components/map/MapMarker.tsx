@@ -67,44 +67,46 @@ export default function MapMarker({ latitude, longitude, tooltip, selected, sx }
 
   // Render
   return createPortal(
-    <m.div
-      initial={{ scale: 0 }}
-      style={{
-        transformOrigin: 'bottom center',
-      }}
-      animate={{
-        scale: selected ? 1.325 : 0.8,
-        opacity: selected ? 1 : 0.75,
-      }}
-      transition={{
-        duration: 0.5,
-      }}
-    >
-      <Tooltip
-        title={tooltip}
-        placement="top"
-        slotProps={{
-          popper: {
-            modifiers: [
-              {
-                name: 'offset',
-                options: {
-                  offset: [0, -8],
-                }
-              }
-            ]
-          }
+    <>
+      <m.div
+        initial={{ scale: 0, translateY: '8.33%' }}
+        style={{
+          transformOrigin: 'bottom center',
+        }}
+        animate={{
+          scale: selected ? 1.325 : 0.8,
+          opacity: selected ? 1 : 0.75,
+        }}
+        transition={{
+          duration: 0.5,
         }}
       >
-        <PlaceIcon
-          sx={mergeSx(
-            { color: 'primary.main', filter: 'drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.2))', fontSize: 36 },
-            sx,
-            { verticalAlign: 'bottom' },
-          )}
-        />
-      </Tooltip>
-    </m.div>,
+        <Tooltip
+          title={tooltip}
+          placement="top"
+          slotProps={{
+            popper: {
+              modifiers: [
+                {
+                  name: 'offset',
+                  options: {
+                    offset: [0, -8],
+                  }
+                }
+              ]
+            }
+          }}
+        >
+          <PlaceIcon
+            sx={mergeSx(
+              { color: 'primary.main', filter: 'drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.2))', fontSize: 36 },
+              sx,
+              { verticalAlign: 'bottom' },
+            )}
+          />
+        </Tooltip>
+      </m.div>
+    </>,
     elementRef.current,
   );
 }

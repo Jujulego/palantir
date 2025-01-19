@@ -122,7 +122,7 @@ const bigDataCloud = {
     const res = await jsonFetch<BigDataCloudResult>(url, {
       next: {
         revalidate: 86400,
-        tags: [parsed.toNormalizedString()]
+        tags: [`ip-${parsed.toNormalizedString()}`]
       }
     });
     console.log(`Received ${bigDataCloudSourceId} metadata for ${parsed.toNormalizedString()}`);

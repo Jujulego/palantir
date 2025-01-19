@@ -33,7 +33,7 @@ describe('bigDataCloud.rawFetch', () => {
     expect(jsonFetch).toHaveBeenCalledWith(new URL('https://api-bdc.net/data/ip-geolocation-full?ip=1.2.3.4&key=undefined'), {
       next: {
         revalidate: 86400,
-        tags: ['1.2.3.4']
+        tags: ['ip-1.2.3.4']
       }
     });
   });

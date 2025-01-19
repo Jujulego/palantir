@@ -79,7 +79,7 @@ const ipGeolocation = {
       const res = await jsonFetch<IpGeolocationResult>(url, {
         next: {
           revalidate: 86400,
-          tags: [parsed.toNormalizedString()],
+          tags: [`ip-${parsed.toNormalizedString()}`]
         }
       });
       console.log(`Received ${ipGeolocationSourceId} metadata for ${parsed.toNormalizedString()}`);
