@@ -36,7 +36,7 @@ describe('ipInfo.rawFetch', () => {
       },
       next: {
         revalidate: 86400,
-        tags: ['1.2.3.4']
+        tags: ['ip-1.2.3.4']
       }
     });
   });

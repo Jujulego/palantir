@@ -33,7 +33,7 @@ describe('ipData.rawFetch', () => {
     expect(jsonFetch).toHaveBeenCalledWith(new URL('https://eu-api.ipdata.co/1.2.3.4?api-key=undefined'), {
       next: {
         revalidate: 86400,
-        tags: ['1.2.3.4']
+        tags: ['ip-1.2.3.4']
       }
     });
   });
@@ -51,7 +51,7 @@ describe('ipData.rawFetch', () => {
     expect(jsonFetch).toHaveBeenCalledWith(new URL('https://eu-api.ipdata.co/1.2.3.4?api-key=undefined'), {
       next: {
         revalidate: 86400,
-        tags: ['1.2.3.4']
+        tags: ['ip-1.2.3.4']
       }
     });
   });
@@ -69,7 +69,7 @@ describe('ipData.rawFetch', () => {
     expect(jsonFetch).toHaveBeenCalledWith(new URL('https://eu-api.ipdata.co/1.2.3.4?api-key=undefined'), {
       next: {
         revalidate: 86400,
-        tags: ['1.2.3.4']
+        tags: ['ip-1.2.3.4']
       }
     });
   });
@@ -82,7 +82,7 @@ describe('ipData.rawFetch', () => {
     expect(jsonFetch).toHaveBeenCalledWith(new URL('https://eu-api.ipdata.co/1.2.3.4?api-key=undefined'), {
       next: {
         revalidate: 86400,
-        tags: ['1.2.3.4']
+        tags: ['ip-1.2.3.4']
       }
     });
   });
