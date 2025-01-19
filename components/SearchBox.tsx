@@ -278,6 +278,13 @@ export interface SearchOption {
   url: string;
 }
 
+export interface SearchHookState {
+  options: readonly SearchOption[];
+  isLoading: boolean;
+  isValidating: boolean;
+  isSearching: boolean;
+}
+
 interface LoadingOption {
   type: 'loading';
 }
