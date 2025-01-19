@@ -1,8 +1,8 @@
 'use client';
 
-import { useDnsLookup } from '@/hooks/useDnsLookup';
+import { useAnimalSearchOptions } from '@/hooks/useAnimalSearchOptions';
+import { useDnsSearchOptions } from '@/hooks/useDnsSearchOptions';
 import ClearIcon from '@mui/icons-material/Clear';
-import PetsIcon from '@mui/icons-material/Pets';
 import SearchIcon from '@mui/icons-material/Search';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -17,7 +17,7 @@ import { styled, useTheme } from '@mui/material/styles';
 import useAutocomplete from '@mui/material/useAutocomplete';
 import ipaddr from 'ipaddr.js';
 import { useRouter, useSearchParams, useSelectedLayoutSegments } from 'next/navigation';
-import { type FormEvent, type SyntheticEvent, useCallback, useEffect, useMemo, useState, useTransition } from 'react';
+import { type FormEvent, type SyntheticEvent, useCallback, useMemo, useState, useTransition } from 'react';
 import { TransitionGroup } from 'react-transition-group';
 
 // Component
@@ -29,26 +29,7 @@ export default function SearchBox() {
 
   // Search
   const [isSearching, startSearch] = useTransition();
-
-  const handleSearch = useCallback((url: string) => {
-    startSearch(() => {
-      router.push(url);
-    });
-  }, [router]);
-
-  const handleSearchAnimal = useCallback((name: string) => {
-    handleSearch(`/animal/${encodeURIComponent(name)}`);
-  }, [handleSearch]);
-
-  const handleSearchIp = useCallback((ip: string, search?: string) => {
-    const url = new URL(`/ip/${encodeURIComponent(ip)}?${searchParams}`, window.location.origin);
-
-    if (search) {
-      url.searchParams.set('name', search);
-    }
-
-    handleSearch(url.toString());
-  }, [searchParams, handleSearch]);
+  const handleSearch = useCallback((url: string) => startSearch(() => router.push(url)), [router]);
 
   // Input value
   const selectedValue = decodeURIComponent(segments[1] ?? '');
@@ -69,41 +50,29 @@ export default function SearchBox() {
   const handleClose = useCallback(() => setOpen(false), []);
 
   // Load options
-  const { ips, isLoading, isValidating } = useDnsLookup(isDns ? inputValue : null);
+  const animalOptions = useAnimalSearchOptions(inputValue);
+  const dnsOptions = useDnsSearchOptions(inputValue);
+  const isValidating = animalOptions.isValidating || dnsOptions.isValidating;
 
-  const dnsOptions: Exclude<Option, string>[] = useMemo(() => {
-    if (isLoading) {
-      return [{ type: 'loading' }];
+  const options = useMemo(() => {
+    const options: Option[] = [
+      ...animalOptions.options,
+      ...dnsOptions.options,
+    ];
+
+    if (animalOptions.isLoading || dnsOptions.isLoading) {
+      options.unshift({ type: 'loading' });
     }
 
-    return ips.map((ip) => ({ type: 'dns', name: inputValue, ip }));
-  }, [isLoading, ips, inputValue]);
-
-  const options: Option[] = useMemo(() => {
-    if (isAnimal) {
-      const options = [...dnsOptions];
-      options.push({ type: 'animal', name: inputValue });
-
-      return options;
-    } else if (dnsOptions.length === 0) {
-      return [{ type: 'empty' }];
-    } else {
-      return dnsOptions;
+    if (options.length === 0 && (animalOptions.isSearching || dnsOptions.isSearching)) {
+      options.push({ type: 'empty' });
     }
-  }, [dnsOptions, inputValue, isAnimal]);
+
+    return options;
+  }, [animalOptions.isLoading, animalOptions.isSearching, animalOptions.options, dnsOptions.isLoading, dnsOptions.isSearching, dnsOptions.options]);
 
   // Selected value
   const [value, setValue] = useState<Option | null>(null);
-
-  useEffect(() => {
-    const search = searchParams.get('name');
-
-    if (search) {
-      setValue({ type: 'dns', name: search, ip: selectedValue });
-    } else {
-      setValue(selectedValue);
-    }
-  }, [searchParams, selectedValue]);
 
   const handleChange = useCallback((event: SyntheticEvent, option: Option | null) => {
     if (typeof option === 'string' && !ipaddr.isValid(inputValue)) {
@@ -118,26 +87,20 @@ export default function SearchBox() {
 
     if (option) {
       if (typeof option === 'string') {
-        if (isIp) {
-          handleSearchIp(option);
-          setOpen(false);
-        } else if (isAnimal) {
-          handleSearchAnimal(option);
-          setOpen(false);
+        const option = options.find((opt) => typeof opt === 'object' && opt?.type === 'option');
+
+        if (option) {
+          handleSearch(option.url);
         }
-      } else if (option.type === 'dns') {
-        handleSearchIp(option.ip, option.name);
-        setOpen(false);
-      } else if (option.type === 'animal') {
-        handleSearchAnimal(option.name);
-        setOpen(false);
+      } else if (option.type === 'option') {
+        handleSearch(option.url);
       }
     } else {
       router.push('/');
       setInputValue('');
       setOpen(false);
     }
-  }, [handleSearchAnimal, handleSearchIp, inputValue, isAnimal, isIp, options, router]);
+  }, [handleSearch, inputValue, options, router]);
 
   // Autocomplete
   const {
@@ -172,21 +135,17 @@ export default function SearchBox() {
     event.preventDefault();
 
     if (typeof value === 'string') {
-      if (isIp) {
-        handleSearchIp(inputValue);
-      } else if (isAnimal) {
-        handleSearchAnimal(inputValue);
+      const option = options.find((opt) => typeof opt === 'object' && opt?.type === 'option');
+
+      if (option) {
+        handleSearch(option.url);
       }
     } else if (typeof value === 'object') {
       if (value?.type === 'option') {
         handleSearch(value.url);
-      } else if (value?.type === 'dns') {
-        handleSearchIp(value.ip, value.name);
-      } else if (value?.type === 'animal') {
-        handleSearchAnimal(value.name);
       }
     }
-  }, [handleSearch, handleSearchAnimal, handleSearchIp, inputValue, isAnimal, isIp, value]);
+  }, [handleSearch, options, value]);
 
   // Render
   return (
@@ -293,23 +252,10 @@ interface EmptyOption {
   type: 'empty';
 }
 
-/** @deprecated */
-interface AnimalOption {
-  type: 'animal';
-  name: string;
-}
-
-/** @deprecated */
-interface DnsOption {
-  type: 'dns';
-  name: string;
-  ip: string;
-}
-
-type Option = LoadingOption | EmptyOption | AnimalOption | DnsOption | SearchOption | string;
+type Option = LoadingOption | EmptyOption | SearchOption | string;
 
 function getOptionDisabled(option: Option) {
-  return typeof option === 'object' && option.type !== 'dns';
+  return typeof option === 'object' && ['loading', 'empty'].includes(option.type);
 }
 
 function getOptionKey(option: Option) {
@@ -317,16 +263,11 @@ function getOptionKey(option: Option) {
     return 'input';
   }
 
-  switch (option.type) {
-    case 'option':
-      return option.key;
-
-    case 'dns':
-      return `dns-${option.ip}`;
-
-    default:
-      return option.type;
+  if (option.type === 'option') {
+    return option.key;
   }
+
+  return option.type;
 }
 
 function getOptionLabel(option: Option) {
@@ -334,17 +275,11 @@ function getOptionLabel(option: Option) {
     return option;
   }
 
-  switch (option.type) {
-    case 'option':
-      return option.label;
-
-    case 'dns':
-    case 'animal':
-      return option.name;
-
-    default:
-      return option.type;
+  if (option.type === 'option') {
+    return option.label;
   }
+
+  return option.type;
 }
 
 function getOptionValue(option: Option): string {
@@ -352,19 +287,11 @@ function getOptionValue(option: Option): string {
     return option;
   }
 
-  switch (option.type) {
-    case 'dns':
-      return option.ip;
-
-    case 'animal':
-      return option.name;
-
-    case 'option':
-      return option.url;
-
-    default:
-      return option.type;
+  if (option.type === 'option') {
+    return option.url;
   }
+
+  return option.type;
 }
 
 function isOptionEqualToValue(option: Option, value: Option): boolean {
@@ -380,7 +307,7 @@ function renderOption(option: Option) {
     case 'option':
       return <Box sx={{ m: 0, px: 2, py: 0.75 }}>{ option.label }</Box>;
 
-    case 'dns':
+    /*case 'dns':
       return <Box sx={{ m: 0, px: 2, py: 0.75 }}>{ option.name }</Box>;
 
     case 'animal':
@@ -389,7 +316,7 @@ function renderOption(option: Option) {
         <Box sx={{ textTransform: 'capitalize' }}>
           {option.name}
         </Box>
-      </Box>;
+      </Box>;*/
 
     case 'loading':
       return <Box sx={{ color: 'text.secondary', m: 0, px: 2, py: 0.75 }}>Resolving...</Box>;
