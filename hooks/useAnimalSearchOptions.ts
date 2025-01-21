@@ -22,7 +22,7 @@ export function useAnimalSearchOptions(inputValue: string): SearchHookState {
     options,
     isLoading,
     isValidating,
-    isSearching: isName,
+    isActive: isName,
   };
 }
 

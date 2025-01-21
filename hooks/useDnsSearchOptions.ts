@@ -19,7 +19,7 @@ export function useDnsSearchOptions(inputValue: string): SearchHookState {
     options,
     isLoading,
     isValidating,
-    isSearching: isDns,
+    isActive: isDns,
   };
 }
 

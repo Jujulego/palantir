@@ -2,6 +2,7 @@
 
 import { useAnimalSearchOptions } from '@/hooks/useAnimalSearchOptions';
 import { useDnsSearchOptions } from '@/hooks/useDnsSearchOptions';
+import { useSearchOptions } from '@/hooks/useSearchOptions';
 import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
 import Box from '@mui/material/Box';
@@ -48,15 +49,10 @@ export default function SearchBox() {
   const handleClose = useCallback(() => setOpen(false), []);
 
   // Load options
-  const animalOptions = useAnimalSearchOptions(inputValue);
-  const dnsOptions = useDnsSearchOptions(inputValue);
-  const isLoading = animalOptions.isLoading || dnsOptions.isLoading;
-  const isValidating = animalOptions.isValidating || dnsOptions.isValidating;
-
-  const options = useMemo(() => [
-    ...animalOptions.options,
-    ...dnsOptions.options,
-  ], [animalOptions.options, dnsOptions.options]);
+  const { options, isActive, isLoading, isValidating } = useSearchOptions(
+    useAnimalSearchOptions(inputValue),
+    useDnsSearchOptions(inputValue),
+  );
 
   // Selected value
   const [value, setValue] = useState<Option | null>(null);
@@ -112,7 +108,7 @@ export default function SearchBox() {
     onClose: handleClose,
     onInputChange: handleInputChange,
     onOpen: handleOpen,
-    open: open && (animalOptions.isSearching || dnsOptions.isSearching),
+    open: open && isActive,
     options,
     selectOnFocus: true,
     value,
@@ -241,9 +237,9 @@ export interface SearchOption {
 
 export interface SearchHookState {
   options: readonly SearchOption[];
+  isActive: boolean;
   isLoading: boolean;
   isValidating: boolean;
-  isSearching: boolean;
 }
 
 type Option = SearchOption | string;
