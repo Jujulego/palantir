@@ -2,6 +2,7 @@
 
 import { useAnimalSearchOptions } from '@/hooks/useAnimalSearchOptions';
 import { useDnsSearchOptions } from '@/hooks/useDnsSearchOptions';
+import { useIpSearchOptions } from '@/hooks/useIpSearchOptions';
 import { useSearchOptions } from '@/hooks/useSearchOptions';
 import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
@@ -18,7 +19,7 @@ import { styled, useTheme } from '@mui/material/styles';
 import useAutocomplete from '@mui/material/useAutocomplete';
 import ipaddr from 'ipaddr.js';
 import { useRouter, useSearchParams, useSelectedLayoutSegments } from 'next/navigation';
-import { type FormEvent, type SyntheticEvent, useCallback, useMemo, useState, useTransition } from 'react';
+import { type FormEvent, type SyntheticEvent, useCallback, useState, useTransition } from 'react';
 import { TransitionGroup } from 'react-transition-group';
 
 // Component
@@ -36,8 +37,6 @@ export default function SearchBox() {
   const selectedValue = decodeURIComponent(segments[1] ?? '');
   const [inputValue, setInputValue] = useState(searchParams.get('name') || selectedValue);
 
-  const isIp = useMemo(() => ipaddr.isValid(inputValue), [inputValue]);
-
   const handleInputChange = useCallback((event: unknown, value: string) => {
     setInputValue(value);
   }, []);
@@ -51,6 +50,7 @@ export default function SearchBox() {
   // Load options
   const { options, isActive, isLoading, isValidating } = useSearchOptions(
     useAnimalSearchOptions(inputValue),
+    useIpSearchOptions(inputValue),
     useDnsSearchOptions(inputValue),
   );
 
@@ -165,7 +165,7 @@ export default function SearchBox() {
             <CircularProgress size={24} sx={{ m: 1.5, flex: '0 0 auto' }} />
           ) : (
             <IconButton
-              color="inherit" disabled={!isIp}
+              color="inherit" disabled={options.length === 0}
               aria-label="Search"
               type="submit"
               sx={{ flex: '0 0 auto', m: 0.5 }}
