@@ -3,6 +3,7 @@ import { styled } from '@mui/material';
 import type * as mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useEffect, useRef } from 'react';
+import { prefetchDNS } from 'react-dom';
 
 // Component
 export interface MapboxMapProps {
@@ -15,6 +16,7 @@ export interface MapboxMapProps {
 
 export default function MapboxMap(props: MapboxMapProps) {
   const { zoom, onMapCreated, onMapLoaded, onMapStyleLoaded, onMapRemoved } = props;
+  prefetchDNS('https://api.mapbox.com');
 
   // Initiate map
   const { mapboxRef, isLoaded: isMapboxLoaded } = useLazyMapbox();
