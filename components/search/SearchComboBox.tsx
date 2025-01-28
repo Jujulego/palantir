@@ -1,18 +1,27 @@
+import type { SearchOption } from '@/components/search/search.context';
 import Paper from '@mui/material/Paper';
 import { styled, type SxProps, type Theme } from '@mui/material/styles';
+import { useComboBoxState } from '@react-stately/combobox';
 import { m } from 'motion/react';
-import { useState } from 'react';
 
 // Component
 export interface SearchComboBoxProps {
+  readonly inputValue: string;
+  readonly onInputChange: (value: string) => void;
+  readonly options: readonly SearchOption[];
   readonly sx?: SxProps<Theme>;
 }
 
-export function SearchComboBox({ sx }: SearchComboBoxProps) {
-  const [isOpen, setIsOpen] = useState(false);
+export function SearchComboBox({ inputValue, onInputChange, options, sx }: SearchComboBoxProps) {
+  // Combo box state
+  const state = useComboBoxState({
+    items: options,
+    inputValue,
+    onInputChange
+  });
 
   // Render
-  const borderRadius = isOpen ? 16 : 24;
+  const borderRadius = state.isOpen ? 16 : 24;
 
   return (
     <SearchComboBoxPlaceholder

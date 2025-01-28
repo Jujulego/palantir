@@ -21,7 +21,12 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
 
   return (
     <SearchContext value={{ inputValue, options }}>
-      <SearchComboBox sx={sx} />
+      <SearchComboBox
+        inputValue={inputValue}
+        onInputChange={setInputValue}
+        options={options.items}
+        sx={sx}
+      />
       {children}
     </SearchContext>
   );
