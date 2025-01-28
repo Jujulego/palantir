@@ -1,8 +1,11 @@
 import type { SearchOption } from '@/components/search/search.context';
-import Paper from '@mui/material/Paper';
-import { styled, type SxProps, type Theme } from '@mui/material/styles';
+import SearchInputBar from '@/components/search/SearchInputBar';
+import SearchSurface from '@/components/search/SearchSurface';
+import { mergeSx } from '@/utils/mui';
+import { type SxProps, type Theme } from '@mui/material/styles';
+import { useComboBox } from '@react-aria/combobox';
 import { useComboBoxState } from '@react-stately/combobox';
-import { m } from 'motion/react';
+import { useRef } from 'react';
 
 // Component
 export interface SearchComboBoxProps {
@@ -13,6 +16,10 @@ export interface SearchComboBoxProps {
 }
 
 export function SearchComboBox({ inputValue, onInputChange, options, sx }: SearchComboBoxProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const listBoxRef = useRef<HTMLElement>(null);
+  const popoverRef = useRef<HTMLElement>(null);
+
   // Combo box state
   const state = useComboBoxState({
     items: options,
@@ -20,33 +27,24 @@ export function SearchComboBox({ inputValue, onInputChange, options, sx }: Searc
     onInputChange
   });
 
-  // Render
-  const borderRadius = state.isOpen ? 16 : 24;
+  const { inputProps } = useComboBox({
+    inputRef,
+    listBoxRef,
+    popoverRef,
+    'aria-label': 'Search'
+  }, state);
 
+  // Render
   return (
-    <SearchComboBoxPlaceholder
-      initial={{ borderRadius }}
-      animate={{ borderRadius }}
-      sx={sx}
+    <SearchSurface
+      isOpen={state.isOpen}
+      sx={mergeSx(sx, { height: 48 })}
     >
-      <SearchComboBoxSurface
-        elevation={2}
-        initial={{ borderRadius }}
-        animate={{ borderRadius }}
-        sx={sx}
+      <SearchInputBar
+        inputRef={inputRef}
+        inputProps={inputProps}
+        sx={{ height: 48 }}
       />
-    </SearchComboBoxPlaceholder>
+    </SearchSurface>
   );
 }
-
-// UI
-const SearchComboBoxPlaceholder = styled(m.div)({
-  position: 'relative',
-  height: 48,
-});
-
-const SearchComboBoxSurface = styled(m.create(Paper))({
-  position: 'absolute',
-  minHeight: '100%',
-  width: '100%',
-});
