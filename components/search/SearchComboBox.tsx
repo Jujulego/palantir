@@ -18,7 +18,7 @@ export interface SearchComboBoxProps {
 export function SearchComboBox({ inputValue, onInputChange, options, sx }: SearchComboBoxProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const listBoxRef = useRef<HTMLElement>(null);
-  const popoverRef = useRef<HTMLElement>(null);
+  const popoverRef = useRef<HTMLDivElement>(null);
 
   // Combo box state
   const state = useComboBoxState({
@@ -31,13 +31,17 @@ export function SearchComboBox({ inputValue, onInputChange, options, sx }: Searc
     inputRef,
     listBoxRef,
     popoverRef,
-    'aria-label': 'Search'
+
+    'aria-label': 'Search',
+    placeholder: 'Search',
   }, state);
 
   // Render
   return (
     <SearchSurface
       isOpen={state.isOpen}
+      onClose={state.close}
+      paperRef={popoverRef}
       sx={mergeSx(sx, { height: 48 })}
     >
       <SearchInputBar

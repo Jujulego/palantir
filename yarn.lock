@@ -2377,7 +2377,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-aria/overlays@npm:^3.25.0":
+"@react-aria/overlays@npm:3.25.0, @react-aria/overlays@npm:^3.25.0":
   version: 3.25.0
   resolution: "@react-aria/overlays@npm:3.25.0"
   dependencies:
@@ -7587,6 +7587,7 @@ __metadata:
     "@mui/system": "npm:6.4.1"
     "@next/bundle-analyzer": "npm:15.1.6"
     "@react-aria/combobox": "npm:3.11.1"
+    "@react-aria/overlays": "npm:3.25.0"
     "@react-stately/combobox": "npm:3.10.2"
     "@react-stately/data": "npm:3.12.1"
     "@sentry/core": "npm:8.51.0"
