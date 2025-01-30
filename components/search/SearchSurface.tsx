@@ -26,21 +26,26 @@ export default function SearchSurface({ isOpen, onClose, children, sx }: SearchS
   }, [onClose]);
 
   // Render
-  const borderRadius = isOpen ? 16 : 24;
+  const borderRadius = isOpen ? '16px' : '24px';
 
   return (
     <SearchPlaceholder
-      initial={{ borderRadius }}
-      animate={{ borderRadius }}
+      initial={{ '--SearchSurface-shape': borderRadius }}
+      animate={{ '--SearchSurface-shape': borderRadius }}
       sx={sx}
     >
       <Paper
-        component={SearchPaper}
-        initial={{ borderRadius }}
-        animate={{ borderRadius }}
-
         {...focusProps}
         onKeyDown={handleKeyDown}
+
+        sx={{
+          position: 'absolute',
+          minHeight: '100%',
+          width: '100%',
+          overflow: 'auto',
+
+          borderRadius: 'var(--SearchSurface-shape)'
+        }}
       >
         {children}
       </Paper>
@@ -51,11 +56,6 @@ export default function SearchSurface({ isOpen, onClose, children, sx }: SearchS
 // Elements
 const SearchPlaceholder = styled(m.div)({
   position: 'relative',
-});
 
-const SearchPaper = styled(m.div)({
-  position: 'absolute',
-  minHeight: '100%',
-  width: '100%',
-  overflow: 'auto',
+  borderRadius: 'var(--SearchSurface-shape)',
 });

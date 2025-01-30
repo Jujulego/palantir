@@ -1,5 +1,6 @@
 'use client';
 
+import type {} from '@mui/material/themeCssVarsAugmentation';
 import { createTheme } from '@mui/material/styles';
 import { Roboto } from 'next/font/google';
 

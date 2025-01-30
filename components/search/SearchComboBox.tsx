@@ -47,6 +47,7 @@ export function SearchComboBox({ inputValue, onInputChange, options, sx }: Searc
       <SearchInputBar
         inputRef={inputRef}
         inputProps={inputProps}
+
         sx={{ height: 48 }}
       />
     </SearchSurface>
