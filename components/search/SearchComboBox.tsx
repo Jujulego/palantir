@@ -22,6 +22,7 @@ export function SearchComboBox({ inputValue, onInputChange, options, sx }: Searc
 
   // Combo box state
   const state = useComboBoxState({
+    allowsEmptyCollection: true,
     items: options,
     inputValue,
     onInputChange
@@ -41,7 +42,6 @@ export function SearchComboBox({ inputValue, onInputChange, options, sx }: Searc
     <SearchSurface
       isOpen={state.isOpen}
       onClose={state.close}
-      paperRef={popoverRef}
       sx={mergeSx(sx, { height: 48 })}
     >
       <SearchInputBar

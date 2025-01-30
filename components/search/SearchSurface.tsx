@@ -1,31 +1,29 @@
+import { useFocusWithin } from '@/hooks/useFocusWithin';
 import Paper from '@mui/material/Paper';
 import { styled, type SxProps, type Theme } from '@mui/material/styles';
-import { useOverlay } from '@react-aria/overlays';
 import { m } from 'motion/react';
-import { type ReactNode, type RefObject, useRef } from 'react';
+import { type KeyboardEvent, type ReactNode, useCallback } from 'react';
 
 // Component
 export interface SearchSurfaceProps {
   readonly isOpen: boolean;
   readonly onClose: () => void;
 
-  readonly paperRef?: RefObject<HTMLDivElement | null>;
-
   readonly children?: ReactNode;
   readonly sx?: SxProps<Theme>;
 }
 
-export default function SearchSurface(props: SearchSurfaceProps) {
-  const _paperRef = useRef<HTMLDivElement>(null);
-  const { isOpen, onClose, paperRef = _paperRef, children, sx } = props;
+export default function SearchSurface({ isOpen, onClose, children, sx }: SearchSurfaceProps) {
+  // Track focus
+  const focusProps = useFocusWithin({
+    onBlur: onClose,
+  });
 
-  // Overlay state
-  const { overlayProps } = useOverlay({
-    isOpen,
-    onClose,
-    shouldCloseOnBlur: true,
-    isDismissable: false,
-  }, paperRef);
+  const handleKeyDown = useCallback((event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      onClose();
+    }
+  }, [onClose]);
 
   // Render
   const borderRadius = isOpen ? 16 : 24;
@@ -36,14 +34,16 @@ export default function SearchSurface(props: SearchSurfaceProps) {
       animate={{ borderRadius }}
       sx={sx}
     >
-      <SearchPaper
-        ref={paperRef} {...(overlayProps as object)}
+      <Paper
+        component={SearchPaper}
         initial={{ borderRadius }}
         animate={{ borderRadius }}
-        sx={sx}
+
+        {...focusProps}
+        onKeyDown={handleKeyDown}
       >
         {children}
-      </SearchPaper>
+      </Paper>
     </SearchPlaceholder>
   );
 }
@@ -53,7 +53,7 @@ const SearchPlaceholder = styled(m.div)({
   position: 'relative',
 });
 
-const SearchPaper = styled(m.create(Paper))({
+const SearchPaper = styled(m.div)({
   position: 'absolute',
   minHeight: '100%',
   width: '100%',
