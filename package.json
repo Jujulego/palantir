@@ -19,7 +19,6 @@
     "@mui/material": "6.4.1",
     "@mui/material-nextjs": "6.3.1",
     "@mui/system": "6.4.1",
-    "@react-stately/data": "3.12.1",
     "@sentry/core": "8.51.0",
     "@sentry/nextjs": "8.51.0",
     "@sentry/utils": "8.51.0",

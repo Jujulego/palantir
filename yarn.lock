@@ -2129,27 +2129,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-stately/data@npm:3.12.1":
-  version: 3.12.1
-  resolution: "@react-stately/data@npm:3.12.1"
-  dependencies:
-    "@react-types/shared": "npm:^3.27.0"
-    "@swc/helpers": "npm:^0.5.0"
-  peerDependencies:
-    react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
-  checksum: 10c0/fba7d562879aebfe780a214ecc199954b909556e269e5712f98b3fc7674524f310a04229bbb95155f2e3cb153c9b46ee252c6a0b54d1e371cc2276c5f57774b7
-  languageName: node
-  linkType: hard
-
-"@react-types/shared@npm:^3.27.0":
-  version: 3.27.0
-  resolution: "@react-types/shared@npm:3.27.0"
-  peerDependencies:
-    react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
-  checksum: 10c0/7d710d776dcb6a832d3dc5ec281a81cd00a5b5aec1ecfcf7799c73bdb62c8739e574e29dafe04f7710a0ea568e4e11621091658a9c73d3191e1b0f5f3ff21f95
-  languageName: node
-  linkType: hard
-
 "@repeaterjs/repeater@npm:^3.0.5":
   version: 3.0.6
   resolution: "@repeaterjs/repeater@npm:3.0.6"
@@ -2634,7 +2613,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/helpers@npm:0.5.15, @swc/helpers@npm:^0.5.0, @swc/helpers@npm:^0.5.3":
+"@swc/helpers@npm:0.5.15, @swc/helpers@npm:^0.5.3":
   version: 0.5.15
   resolution: "@swc/helpers@npm:0.5.15"
   dependencies:
@@ -6998,7 +6977,6 @@ __metadata:
     "@mui/material-nextjs": "npm:6.3.1"
     "@mui/system": "npm:6.4.1"
     "@next/bundle-analyzer": "npm:15.1.6"
-    "@react-stately/data": "npm:3.12.1"
     "@sentry/core": "npm:8.51.0"
     "@sentry/nextjs": "npm:8.51.0"
     "@sentry/utils": "npm:8.51.0"

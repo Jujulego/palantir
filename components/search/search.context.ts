@@ -1,4 +1,3 @@
-import type { ListData } from '@react-stately/data';
 import { createContext, type ReactNode, use } from 'react';
 
 // Context
@@ -25,5 +24,5 @@ export interface SearchOption {
 
 export interface SearchContextProps {
   readonly inputValue: string;
-  readonly options?: ListData<SearchOption>;
+  readonly options?: SearchOption[];
 }

@@ -2,9 +2,10 @@
 
 import { SearchContext, type SearchOption } from '@/components/search/search.context';
 import { SearchComboBox } from '@/components/search/SearchComboBox';
+import SearchSurface from '@/components/search/SearchSurface';
+import { mergeSx } from '@/utils/mui';
 import type { SxProps, Theme } from '@mui/material/styles';
-import { useListData } from '@react-stately/data';
-import { type ReactNode, useState } from 'react';
+import { type ReactNode, useCallback, useState } from 'react';
 
 // Component
 export interface SearchProviderProps {
@@ -14,21 +15,26 @@ export interface SearchProviderProps {
 
 export default function SearchBox({ children, sx }: SearchProviderProps) {
   const [inputValue, setInputValue] = useState('');
-  const options = useListData<SearchOption>({
-    initialItems: [],
-    getKey: getOptionKey
-  });
+
+  const [isOpen, setIsOpen] = useState(false);
+  const handleClose = useCallback(() => setIsOpen(false), []);
 
   return (
-    <SearchContext value={{ inputValue, options }}>
+    <SearchSurface
+      isOpen={isOpen}
+      onClose={handleClose}
+      sx={mergeSx(sx, { height: 48 })}
+    >
       <SearchComboBox
         inputValue={inputValue}
         onInputChange={setInputValue}
-        options={options.items}
-        sx={sx}
+        sx={{ height: 48 }}
       />
-      {children}
-    </SearchContext>
+
+      <SearchContext value={{ inputValue, options: [] }}>
+        {children}
+      </SearchContext>
+    </SearchSurface>
   );
 }
 
