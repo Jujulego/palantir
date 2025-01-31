@@ -1,4 +1,5 @@
 import ClearIcon from '@mui/icons-material/Clear';
+import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import { styled, type SxProps, type Theme } from '@mui/material/styles';
@@ -30,8 +31,12 @@ export default function SearchInputBar({ inputRef, inputProps, sx }: SearchInput
         role="combobox"
       />
 
-      <IconButton color="inherit" size="small" type="button" tabIndex={-1} aria-label="Clear" sx={{ my: 'auto' }}>
+      <IconButton color="inherit" size="small" type="button" tabIndex={-1} aria-label="Clear" sx={{ position: 'absolute', right: 44, top: 8 }}>
         <ClearIcon fontSize="inherit" />
+      </IconButton>
+
+      <IconButton color="inherit" type="button" aria-label="Search" sx={{ my: 'auto' }}>
+        <SearchIcon />
       </IconButton>
     </Stack>
   );
@@ -57,7 +62,7 @@ const SearchInput = styled('input')(({ theme }) => ({
   flex: '0 1 100%',
 
   paddingLeft: theme.spacing(2),
-  paddingRight: theme.spacing(0.5),
+  paddingRight: 30,
 
   background: 'none',
   border: 'none',
