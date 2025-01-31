@@ -3,9 +3,7 @@ import SearchInputBar from '@/components/search/SearchInputBar';
 import SearchSurface from '@/components/search/SearchSurface';
 import { mergeSx } from '@/utils/mui';
 import { type SxProps, type Theme } from '@mui/material/styles';
-import { useComboBox } from '@react-aria/combobox';
-import { useComboBoxState } from '@react-stately/combobox';
-import { useRef } from 'react';
+import { useCallback, useState } from 'react';
 
 // Component
 export interface SearchComboBoxProps {
@@ -16,38 +14,19 @@ export interface SearchComboBoxProps {
 }
 
 export function SearchComboBox({ inputValue, onInputChange, options, sx }: SearchComboBoxProps) {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const listBoxRef = useRef<HTMLElement>(null);
-  const popoverRef = useRef<HTMLDivElement>(null);
-
-  // Combo box state
-  const state = useComboBoxState({
-    allowsEmptyCollection: true,
-    items: options,
-    inputValue,
-    onInputChange
-  });
-
-  const { inputProps } = useComboBox({
-    inputRef,
-    listBoxRef,
-    popoverRef,
-
-    'aria-label': 'Search',
-    placeholder: 'Search',
-  }, state);
+  const [isOpen, setIsOpen] = useState(false);
+  const handleClose = useCallback(() => setIsOpen(false), []);
 
   // Render
   return (
     <SearchSurface
-      isOpen={state.isOpen}
-      onClose={state.close}
+      isOpen={isOpen}
+      onClose={handleClose}
       sx={mergeSx(sx, { height: 48 })}
     >
       <SearchInputBar
-        inputRef={inputRef}
-        inputProps={inputProps}
-
+        inputValue={inputValue}
+        onInputChange={onInputChange}
         sx={{ height: 48 }}
       />
     </SearchSurface>

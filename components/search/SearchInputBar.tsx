@@ -3,26 +3,30 @@ import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import { styled, type SxProps, type Theme } from '@mui/material/styles';
-import { type HTMLAttributes, Ref } from 'react';
+import { type ChangeEvent, useCallback } from 'react';
 
 // Components
 export interface SearchInputBarProps {
-  readonly inputRef?: Ref<HTMLInputElement>;
-  readonly inputProps?: HTMLAttributes<HTMLInputElement>;
+  readonly inputValue: string;
+  readonly onInputChange: (value: string) => void;
 
   readonly sx?: SxProps<Theme>;
 }
 
-export default function SearchInputBar({ inputRef, inputProps, sx }: SearchInputBarProps) {
+export default function SearchInputBar({ inputValue, onInputChange, sx }: SearchInputBarProps) {
+  const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => onInputChange(event.currentTarget.value), [onInputChange]);
+  
+  // Render
   return (
     <Stack component={SearchInputContainer} direction="row" useFlexGap sx={sx}>
       <SearchInput
-        ref={inputRef}
-        {...inputProps}
-
+        value={inputValue}
+        onChange={handleChange}
+        
         autoCorrect="off"
         autoComplete="off"
         placeholder="Search..."
+        spellCheck={false}
         type="search"
 
         aria-autocomplete="list"
