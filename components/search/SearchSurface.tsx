@@ -7,15 +7,17 @@ import { type KeyboardEvent, type ReactNode, useCallback } from 'react';
 // Component
 export interface SearchSurfaceProps {
   readonly isOpen: boolean;
+  readonly onOpen: () => void;
   readonly onClose: () => void;
 
   readonly children?: ReactNode;
   readonly sx?: SxProps<Theme>;
 }
 
-export default function SearchSurface({ isOpen, onClose, children, sx }: SearchSurfaceProps) {
+export default function SearchSurface({ isOpen, onOpen, onClose, children, sx }: SearchSurfaceProps) {
   // Track focus
   const focusProps = useFocusWithin({
+    onFocus: onOpen,
     onBlur: onClose,
   });
 
@@ -47,7 +49,7 @@ export default function SearchSurface({ isOpen, onClose, children, sx }: SearchS
           borderRadius: 'var(--SearchSurface-shape)'
         }}
       >
-        {children}
+        { children }
       </Paper>
     </SearchPlaceholder>
   );

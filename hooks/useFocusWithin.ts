@@ -15,7 +15,7 @@ export function useFocusWithin({ onFocus, onBlur } : FocusWithinOpts): FocusWith
 
   return {
     onFocus: useCallback((event: FocusEvent) => {
-      if (!isFocusWithin.current && document.activeElement === event.currentTarget) {
+      if (!isFocusWithin.current && document.activeElement === event.target) {
         isFocusWithin.current = true;
 
         if (onFocus) {

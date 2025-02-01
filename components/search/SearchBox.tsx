@@ -17,11 +17,13 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
   const [inputValue, setInputValue] = useState('');
 
   const [isOpen, setIsOpen] = useState(false);
+  const handleOpen = useCallback(() => setIsOpen(true), []);
   const handleClose = useCallback(() => setIsOpen(false), []);
 
   return (
     <SearchSurface
       isOpen={isOpen}
+      onOpen={handleOpen}
       onClose={handleClose}
       sx={mergeSx(sx, { height: 48 })}
     >

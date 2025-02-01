@@ -24,7 +24,7 @@ export function SearchComboBox({ inputValue, onInputChange, sx }: SearchComboBox
 
   // Render
   return (
-    <Stack component={SearchInputContainer} direction="row" useFlexGap sx={sx}>
+    <Stack component={SearchInputBox} direction="row" useFlexGap sx={sx}>
       <SearchInput
         value={inputValue}
         onChange={handleChange}
@@ -65,18 +65,19 @@ export function SearchComboBox({ inputValue, onInputChange, sx }: SearchComboBox
 }
 
 // Elements
-const SearchInputContainer = styled('div')(({ theme }) => ({
+const SearchInputBox = styled('div')(({ theme }) => ({
   position: 'relative',
 
-  padding: `calc(${theme.spacing(0.5)} - 2px)`,
-
-  border: '2px solid transparent',
+  padding: theme.spacing(0.5),
   borderRadius: 'var(--SearchSurface-shape)',
+  outline: '0px solid transparent',
+  outlineOffset: '-2.5px',
 
-  transition: theme.transitions.create('border-color', { duration: theme.transitions.duration.shortest }),
+  transition: theme.transitions.create(['outline-color', 'outline-width'], { duration: theme.transitions.duration.shortest }),
 
   '&:focus-within': {
-    borderColor: theme.vars.palette.primary.main,
+    outlineColor: theme.vars.palette.primary.main,
+    outlineWidth: '1.5px',
   },
 }));
 
