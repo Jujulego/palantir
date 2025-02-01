@@ -2,10 +2,11 @@
 
 import { SearchContext } from '@/components/search/search.context';
 import { SearchComboBox } from '@/components/search/SearchComboBox';
+import SearchListBox from '@/components/search/SearchListBox';
 import SearchSurface from '@/components/search/SearchSurface';
 import { mergeSx } from '@/utils/mui';
 import type { SxProps, Theme } from '@mui/material/styles';
-import { type ReactNode, useCallback, useState } from 'react';
+import { type ReactNode, useCallback, useId, useState } from 'react';
 
 // Component
 export interface SearchProviderProps {
@@ -14,11 +15,14 @@ export interface SearchProviderProps {
 }
 
 export default function SearchBox({ children, sx }: SearchProviderProps) {
-  const [inputValue, setInputValue] = useState('');
+  const id = useId();
+  const listBoxId = `${id}-listbox`;
 
   const [isOpen, setIsOpen] = useState(false);
   const handleOpen = useCallback(() => setIsOpen(true), []);
   const handleClose = useCallback(() => setIsOpen(false), []);
+
+  const [inputValue, setInputValue] = useState('');
 
   return (
     <SearchSurface
@@ -28,13 +32,17 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
       sx={mergeSx(sx, { height: 48 })}
     >
       <SearchComboBox
+        isOpen={isOpen}
         inputValue={inputValue}
+        listBoxId={listBoxId}
         onInputChange={setInputValue}
         sx={{ height: 48 }}
       />
 
       <SearchContext value={{ inputValue }}>
-        { children }
+        <SearchListBox isOpen={isOpen} listBoxId={listBoxId}>
+          { children }
+        </SearchListBox>
       </SearchContext>
     </SearchSurface>
   );

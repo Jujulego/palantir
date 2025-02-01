@@ -8,12 +8,14 @@ import { ChangeEvent, useCallback } from 'react';
 
 // Component
 export interface SearchComboBoxProps {
+  readonly isOpen: boolean;
   readonly inputValue: string;
+  readonly listBoxId: string;
   readonly onInputChange: (value: string) => void;
   readonly sx?: SxProps<Theme>;
 }
 
-export function SearchComboBox({ inputValue, onInputChange, sx }: SearchComboBoxProps) {
+export function SearchComboBox({ isOpen, inputValue, listBoxId, onInputChange, sx }: SearchComboBoxProps) {
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     onInputChange(event.currentTarget.value);
   }, [onInputChange]);
@@ -36,12 +38,13 @@ export function SearchComboBox({ inputValue, onInputChange, sx }: SearchComboBox
         type="search"
 
         aria-autocomplete="list"
-        aria-expanded="false"
+        aria-controls={listBoxId}
+        aria-expanded={isOpen}
         aria-label="Search"
         role="combobox"
       />
 
-      <Fade in={!!inputValue}>
+      <Fade in={!!inputValue} unmountOnExit>
         <IconButton
           type="button"
           tabIndex={-1}
@@ -70,6 +73,7 @@ const SearchInputBox = styled('div')(({ theme }) => ({
 
   padding: theme.spacing(0.5),
   borderRadius: 'var(--SearchSurface-shape)',
+  boxShadow: theme.vars.shadows[1],
   outline: '0px solid transparent',
   outlineOffset: '-2.5px',
 
