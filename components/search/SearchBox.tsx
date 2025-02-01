@@ -1,6 +1,6 @@
 'use client';
 
-import { SearchContext, type SearchOption } from '@/components/search/search.context';
+import { SearchContext } from '@/components/search/search.context';
 import { SearchComboBox } from '@/components/search/SearchComboBox';
 import SearchSurface from '@/components/search/SearchSurface';
 import { mergeSx } from '@/utils/mui';
@@ -31,14 +31,9 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
         sx={{ height: 48 }}
       />
 
-      <SearchContext value={{ inputValue, options: [] }}>
-        {children}
+      <SearchContext value={{ inputValue }}>
+        { children }
       </SearchContext>
     </SearchSurface>
   );
-}
-
-// Utils
-export function getOptionKey(option: SearchOption) {
-  return option.key;
 }

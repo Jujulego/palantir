@@ -1,5 +1,6 @@
 import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
+import Fade from '@mui/material/Fade';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import { styled, type SxProps, type Theme } from '@mui/material/styles';
@@ -13,7 +14,13 @@ export interface SearchComboBoxProps {
 }
 
 export function SearchComboBox({ inputValue, onInputChange, sx }: SearchComboBoxProps) {
-  const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => onInputChange(event.currentTarget.value), [onInputChange]);
+  const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    onInputChange(event.currentTarget.value);
+  }, [onInputChange]);
+
+  const handleClear = useCallback(() => {
+    onInputChange('');
+  }, [onInputChange]);
 
   // Render
   return (
@@ -34,9 +41,21 @@ export function SearchComboBox({ inputValue, onInputChange, sx }: SearchComboBox
         role="combobox"
       />
 
-      <IconButton color="inherit" size="small" type="button" tabIndex={-1} aria-label="Clear" sx={{ position: 'absolute', right: 44, top: 8 }}>
-        <ClearIcon fontSize="inherit" />
-      </IconButton>
+      <Fade in={!!inputValue}>
+        <IconButton
+          type="button"
+          tabIndex={-1}
+          onClick={handleClear}
+
+          color="inherit"
+          size="small"
+          sx={{ position: 'absolute', right: 44, top: 8 }}
+
+          aria-label="Clear"
+        >
+          <ClearIcon fontSize="inherit" />
+        </IconButton>
+      </Fade>
 
       <IconButton color="inherit" type="button" aria-label="Search" sx={{ my: 'auto' }}>
         <SearchIcon />

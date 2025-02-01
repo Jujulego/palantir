@@ -1,19 +1,9 @@
-import { createContext, type ReactNode, use } from 'react';
+import { createContext, type ReactNode } from 'react';
 
 // Context
 export const SearchContext = createContext<SearchContextProps>({
   inputValue: '',
 });
-
-export function useSearchOptions() {
-  const { options } = use(SearchContext);
-
-  if (!options) {
-    throw new Error('useSearchOptions must be used inside a SearchContext.');
-  }
-
-  return options;
-}
 
 // Types
 export interface SearchOption {
