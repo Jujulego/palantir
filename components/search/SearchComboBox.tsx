@@ -52,7 +52,7 @@ export function SearchComboBox({ isOpen, inputValue, listBoxId, onInputChange, s
 
           color="inherit"
           size="small"
-          sx={{ position: 'absolute', right: 44, top: 8 }}
+          sx={{ position: 'absolute', right: 44, top: 10 }}
 
           aria-label="Clear"
         >
