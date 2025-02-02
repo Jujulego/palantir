@@ -6,6 +6,7 @@ import SearchListBox from '@/components/search/SearchListBox';
 import SearchSurface from '@/components/search/SearchSurface';
 import { mergeSx } from '@/utils/mui';
 import type { SxProps, Theme } from '@mui/material/styles';
+import { useSearchParams } from 'next/navigation';
 import { type ReactNode, useCallback, useId, useState } from 'react';
 
 // Component
@@ -22,7 +23,8 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
   const handleOpen = useCallback(() => setIsOpen(true), []);
   const handleClose = useCallback(() => setIsOpen(false), []);
 
-  const [inputValue, setInputValue] = useState('');
+  const searchParams = useSearchParams();
+  const [inputValue, setInputValue] = useState(searchParams.get('search') ?? '');
   const isOpen = _isOpen && !!inputValue;
 
   return (

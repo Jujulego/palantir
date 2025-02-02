@@ -3,7 +3,7 @@
 import { SearchContext } from '@/components/search/search.context';
 import SearchOption from '@/components/search/SearchOption';
 import { useDnsLookup } from '@/hooks/useDnsLookup';
-import ComputerIcon from '@mui/icons-material/Computer';
+import WebIcon from '@mui/icons-material/Web';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { use } from 'react';
@@ -14,9 +14,9 @@ export default function DnsSearchOptions() {
   const { ips } = useDnsLookup(inputValue);
 
   return ips.map((ip) => (
-    <SearchOption key={ip} href={`/ip/${ip}?name=${inputValue}`}>
+    <SearchOption key={ip} href={`/ip/${ip}`}>
       <ListItemIcon sx={{ minWidth: 40 }}>
-        <ComputerIcon color="inherit" />
+        <WebIcon color="inherit" />
       </ListItemIcon>
       <ListItemText primary={ip} />
     </SearchOption>

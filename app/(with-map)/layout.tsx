@@ -35,11 +35,13 @@ export default async function WithMapLayout({ children }: WithMapLayoutProps) {
           }
         }}
       >
-        <SearchBox sx={{ width: 384 }}>
-          <AnimalSearchOptions />
-          <DnsSearchOptions />
-          <IpSearchOptions />
-        </SearchBox>
+        <Suspense>
+          <SearchBox sx={{ width: 384 }}>
+            <AnimalSearchOptions />
+            <DnsSearchOptions />
+            <IpSearchOptions />
+          </SearchBox>
+        </Suspense>
 
         <Suspense>
           <LocateButton ip={clientIp()} sx={{ ml: 3 }} />
