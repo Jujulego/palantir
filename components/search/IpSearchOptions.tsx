@@ -19,7 +19,7 @@ export default function IpSearchOptions() {
   return (
     <SearchOption href={`/ip/${ip.toNormalizedString()}`}>
       <ListItemIcon sx={{ minWidth: 40 }}>
-        <ComputerIcon />
+        <ComputerIcon color="inherit" />
       </ListItemIcon>
       <ListItemText primary={ip.toNormalizedString()} />
     </SearchOption>
