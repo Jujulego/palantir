@@ -2,6 +2,7 @@ import ColorModeToggle from '@/components/ColorModeToggle';
 import LocateButton from '@/components/LocateButton';
 import MapLayout from '@/components/map/MapLayout';
 import AnimalSearchOptions from '@/components/search/AnimalSearchOptions';
+import DnsSearchOptions from '@/components/search/DnsSearchOptions';
 import IpSearchOptions from '@/components/search/IpSearchOptions';
 import SearchBox from '@/components/search/SearchBox';
 import { Toolbar } from '@mui/material';
@@ -36,6 +37,7 @@ export default async function WithMapLayout({ children }: WithMapLayoutProps) {
       >
         <SearchBox sx={{ width: 384 }}>
           <AnimalSearchOptions />
+          <DnsSearchOptions />
           <IpSearchOptions />
         </SearchBox>
 
