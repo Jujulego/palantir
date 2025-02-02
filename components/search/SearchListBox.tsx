@@ -1,4 +1,5 @@
 import Collapse from '@mui/material/Collapse';
+import List from '@mui/material/List';
 import type { ReactNode } from 'react';
 
 // Component
@@ -11,9 +12,9 @@ export interface SearchListBoxProps {
 export default function SearchListBox({ isOpen, listBoxId, children }: SearchListBoxProps) {
   return (
     <Collapse in={isOpen} unmountOnExit>
-      <ul id={listBoxId} role="listbox">
+      <List id={listBoxId} role="listbox" disablePadding>
         { children }
-      </ul>
+      </List>
     </Collapse>
   );
 }

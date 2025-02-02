@@ -1,6 +1,7 @@
 import ColorModeToggle from '@/components/ColorModeToggle';
 import LocateButton from '@/components/LocateButton';
 import MapLayout from '@/components/map/MapLayout';
+import IpSearchOptions from '@/components/search/IpSearchOptions';
 import SearchBox from '@/components/search/SearchBox';
 import { Toolbar } from '@mui/material';
 import Paper from '@mui/material/Paper';
@@ -32,7 +33,9 @@ export default async function WithMapLayout({ children }: WithMapLayoutProps) {
           }
         }}
       >
-        <SearchBox sx={{ width: 384 }} />
+        <SearchBox sx={{ width: 384 }}>
+          <IpSearchOptions />
+        </SearchBox>
 
         <Suspense>
           <LocateButton ip={clientIp()} sx={{ ml: 3 }} />
