@@ -4,10 +4,10 @@ import { SearchContext } from '@/components/search/search.context';
 import { SearchComboBox } from '@/components/search/SearchComboBox';
 import SearchListBox from '@/components/search/SearchListBox';
 import SearchSurface from '@/components/search/SearchSurface';
+import { useSearchParam } from '@/hooks/useSearchParam';
 import { mergeSx } from '@/utils/mui';
 import type { SxProps, Theme } from '@mui/material/styles';
-import { useSearchParams } from 'next/navigation';
-import { type ReactNode, useCallback, useId, useState } from 'react';
+import { type ReactNode, useCallback, useEffect, useId, useState } from 'react';
 
 // Component
 export interface SearchProviderProps {
@@ -19,12 +19,25 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
   const id = useId();
   const listBoxId = `${id}-listbox`;
 
+  // Open state
   const [_isOpen, setIsOpen] = useState(false);
   const handleOpen = useCallback(() => setIsOpen(true), []);
   const handleClose = useCallback(() => setIsOpen(false), []);
 
-  const searchParams = useSearchParams();
-  const [inputValue, setInputValue] = useState(searchParams.get('search') ?? '');
+  // Input state
+  const [searchParam, setSearchParam] = useSearchParam('search');
+  const [inputValue, setInputValue] = useState(searchParam ?? '');
+
+  useEffect(() => {
+    setInputValue(searchParam ?? '');
+  }, [searchParam]);
+
+  useEffect(() => {
+    const id = setTimeout(() => setSearchParam(inputValue), 250);
+    return () => clearTimeout(id);
+  }, [inputValue, setSearchParam]);
+
+  // Render
   const isOpen = _isOpen && !!inputValue;
 
   return (
