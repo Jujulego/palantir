@@ -18,11 +18,12 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
   const id = useId();
   const listBoxId = `${id}-listbox`;
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [_isOpen, setIsOpen] = useState(false);
   const handleOpen = useCallback(() => setIsOpen(true), []);
   const handleClose = useCallback(() => setIsOpen(false), []);
 
   const [inputValue, setInputValue] = useState('');
+  const isOpen = _isOpen && !!inputValue;
 
   return (
     <SearchSurface
