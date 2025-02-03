@@ -1,18 +1,15 @@
-import { createContext, type ReactNode } from 'react';
+import { createContext } from 'react';
 
 // Context
 export const SearchContext = createContext<SearchContextProps>({
   inputValue: '',
+  registerOption: () => null,
+  unregisterOption: () => null,
 });
 
 // Types
-export interface SearchOption {
-  readonly key: string;
-  readonly render: ReactNode;
-  readonly url: string;
-}
-
 export interface SearchContextProps {
   readonly inputValue: string;
-  readonly options?: SearchOption[];
+  readonly registerOption: (id: string, target: URL) => void;
+  readonly unregisterOption: (id: string) => void;
 }
