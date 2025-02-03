@@ -1,4 +1,3 @@
-import Collapse from '@mui/material/Collapse';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -14,15 +13,15 @@ export interface SearchListBoxProps {
 
 export default function SearchListBox({ isOpen, listBoxId, children }: SearchListBoxProps) {
   return (
-    <Collapse in={isOpen} unmountOnExit>
-      <List id={listBoxId} role="listbox" disablePadding>
-        <EmptyOption>
+    <List id={listBoxId} role="listbox" disablePadding>
+      { isOpen && (
+        <EmptyOption role="option" aria-disabled="true">
           <ListItemText primary="No options" sx={{ color: 'text.disabled' }} />
         </EmptyOption>
+      ) }
 
-        { children }
-      </List>
-    </Collapse>
+      { children }
+    </List>
   );
 }
 
