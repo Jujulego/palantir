@@ -7,7 +7,8 @@ import SearchSurface from '@/components/search/SearchSurface';
 import { useSearchParam } from '@/hooks/useSearchParam';
 import { mergeSx } from '@/utils/mui';
 import type { SxProps, Theme } from '@mui/material/styles';
-import { type ReactNode, useCallback, useEffect, useId, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { type ReactNode, useCallback, useEffect, useId, useRef, useState } from 'react';
 
 // Component
 export interface SearchProviderProps {
@@ -37,6 +38,20 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
     return () => clearTimeout(id);
   }, [inputValue, setSearchParam]);
 
+  // Options
+  const router = useRouter();
+  const listBoxRef = useRef<HTMLUListElement>(null);
+
+  const handleSearch = useCallback(() => {
+    if (!listBoxRef.current) return;
+
+    const option = listBoxRef.current.querySelector('li[role="option"]:not([aria-disabled])');
+    if (!option) return;
+
+    console.log(option);
+    router.push(option.getAttribute('data-target')!);
+  }, [router]);
+
   // Render
   const isOpen = _isOpen && !!inputValue;
 
@@ -52,11 +67,12 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
         inputValue={inputValue}
         listBoxId={listBoxId}
         onInputChange={setInputValue}
+        onSearch={handleSearch}
         sx={{ height: 48 }}
       />
 
       <SearchContext value={{ inputValue }}>
-        <SearchListBox isOpen={isOpen} listBoxId={listBoxId}>
+        <SearchListBox ref={listBoxRef} isOpen={isOpen} listBoxId={listBoxId}>
           { children }
         </SearchListBox>
       </SearchContext>

@@ -4,7 +4,7 @@ import Fade from '@mui/material/Fade';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import { styled, type SxProps, type Theme } from '@mui/material/styles';
-import { ChangeEvent, useCallback } from 'react';
+import { ChangeEvent, KeyboardEvent, useCallback } from 'react';
 
 // Component
 export interface SearchComboBoxProps {
@@ -12,24 +12,40 @@ export interface SearchComboBoxProps {
   readonly inputValue: string;
   readonly listBoxId: string;
   readonly onInputChange: (value: string) => void;
+  readonly onSearch?: () => void;
   readonly sx?: SxProps<Theme>;
 }
 
-export function SearchComboBox({ isOpen, inputValue, listBoxId, onInputChange, sx }: SearchComboBoxProps) {
+export function SearchComboBox(props: SearchComboBoxProps) {
+  const { isOpen, inputValue, listBoxId, onInputChange, onSearch, sx } = props;
+  
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     onInputChange(event.currentTarget.value);
   }, [onInputChange]);
+  
+  const handleKeyDown = useCallback((event: KeyboardEvent) => {
+    switch (event.key) {
+      case 'Enter':
+        if (onSearch) onSearch();
+        break;
+    }
+  }, [onSearch]);
 
+  const handleSearch = useCallback(() => {
+    if (onSearch) onSearch();
+  }, [onSearch]);
+  
   const handleClear = useCallback(() => {
     onInputChange('');
   }, [onInputChange]);
-
+  
   // Render
   return (
     <Stack component={SearchInputBox} direction="row" useFlexGap sx={sx}>
       <SearchInput
         value={inputValue}
         onChange={handleChange}
+        onKeyDown={handleKeyDown}
 
         autoCorrect="off"
         autoComplete="off"
@@ -60,7 +76,15 @@ export function SearchComboBox({ isOpen, inputValue, listBoxId, onInputChange, s
         </IconButton>
       </Fade>
 
-      <IconButton color="inherit" type="button" aria-label="Search" sx={{ my: 'auto' }}>
+      <IconButton
+        type="button"
+        onClick={handleSearch}
+
+        color="inherit"
+        sx={{ my: 'auto' }}
+
+        aria-label="Search"
+      >
         <SearchIcon />
       </IconButton>
     </Stack>

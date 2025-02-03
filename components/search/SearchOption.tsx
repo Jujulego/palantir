@@ -27,7 +27,7 @@ export default function SearchOption({ href, children }: SearchOptionProps) {
   }, [href, inputValue, pathname]);
 
   return (
-    <ListItem id={id} disablePadding role="option" aria-selected={isSelected}>
+    <ListItem id={id} disablePadding role="option" aria-selected={isSelected} data-target={url}>
       <ListItemButton component={Link} href={url} tabIndex={-1} selected={isSelected}>
         { children }
       </ListItemButton>
