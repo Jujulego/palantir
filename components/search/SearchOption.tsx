@@ -5,7 +5,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { type ReactNode, use, useEffect, useId, useMemo } from 'react';
+import { type ReactNode, use, useCallback, useEffect, useId, useMemo } from 'react';
 
 export interface SearchOptionProps {
   readonly href: string;
@@ -15,7 +15,7 @@ export interface SearchOptionProps {
 export default function SearchOption({ href, children }: SearchOptionProps) {
   const id = useId();
 
-  const { inputValue, registerOption, unregisterOption } = use(SearchContext);
+  const { activeOption, inputValue, setActiveOption, registerOption, unregisterOption } = use(SearchContext);
   const pathname = usePathname();
   const isSelected = pathname === href;
 
@@ -32,9 +32,26 @@ export default function SearchOption({ href, children }: SearchOptionProps) {
     return () => unregisterOption(id);
   }, [id, registerOption, unregisterOption, url]);
 
+  const handleActivate = useCallback(() => {
+    setActiveOption(id);
+  }, [id, setActiveOption]);
+
   return (
-    <ListItem id={id} disablePadding role="option" aria-selected={isSelected}>
-      <ListItemButton component={Link} href={url.toString()} tabIndex={-1} selected={isSelected}>
+    <ListItem
+      id={id}
+      disablePadding
+      onMouseEnter={handleActivate}
+      onTouchStart={handleActivate}
+
+      aria-selected={isSelected}
+      role="option"
+    >
+      <ListItemButton
+        classes={activeOption === id ? 'Mui-focusVisible' : ''}
+        component={Link} href={url.toString()}
+        tabIndex={-1}
+        selected={isSelected}
+      >
         { children }
       </ListItemButton>
     </ListItem>

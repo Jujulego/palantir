@@ -39,6 +39,7 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
 
   // Options
   const optionsRef = useRef<OptionsRecord>({});
+  const [activeOption, setActiveOption] = useState<string | null>(null);
   const [isEmpty, setIsEmpty] = useState(false);
 
   const registerOption = useCallback((id: string, target: URL) => {
@@ -48,6 +49,7 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
 
   const unregisterOption = useCallback((id: string) => {
     delete optionsRef.current[id];
+    setActiveOption((old) => old === id ? null : old);
     setIsEmpty(Object.keys(optionsRef.current).length === 0);
   }, []);
 
@@ -72,15 +74,19 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
       sx={mergeSx(sx, { height: 48 })}
     >
       <SearchComboBox
-        isOpen={isOpen}
         inputValue={inputValue}
+        isOpen={isOpen}
+
+        activeOptionId={activeOption}
         listBoxId={listBoxId}
+
         onInputChange={setInputValue}
         onSearch={handleSearch}
+
         sx={{ height: 48 }}
       />
 
-      <SearchContext value={{ inputValue, registerOption, unregisterOption }}>
+      <SearchContext value={{ activeOption, inputValue, setActiveOption, registerOption, unregisterOption }}>
         <SearchListBox ref={listBoxRef} listBoxId={listBoxId}>
           { isOpen && isEmpty && <SearchEmptyOption /> }
           { isOpen && children }

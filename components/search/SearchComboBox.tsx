@@ -8,8 +8,9 @@ import { ChangeEvent, KeyboardEvent, useCallback } from 'react';
 
 // Component
 export interface SearchComboBoxProps {
-  readonly isOpen: boolean;
+  readonly activeOptionId: string | null;
   readonly inputValue: string;
+  readonly isOpen: boolean;
   readonly listBoxId: string;
   readonly onInputChange: (value: string) => void;
   readonly onSearch?: () => void;
@@ -17,7 +18,7 @@ export interface SearchComboBoxProps {
 }
 
 export function SearchComboBox(props: SearchComboBoxProps) {
-  const { isOpen, inputValue, listBoxId, onInputChange, onSearch, sx } = props;
+  const { activeOptionId, isOpen, inputValue, listBoxId, onInputChange, onSearch, sx } = props;
   
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     onInputChange(event.currentTarget.value);
@@ -53,6 +54,7 @@ export function SearchComboBox(props: SearchComboBoxProps) {
         spellCheck={false}
         type="search"
 
+        aria-activedescendant={activeOptionId || undefined}
         aria-autocomplete="list"
         aria-controls={listBoxId}
         aria-expanded={isOpen}
