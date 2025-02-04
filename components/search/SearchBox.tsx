@@ -54,10 +54,10 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
   const handleSearch = useCallback(() => {
     if (!listBoxRef.current) return;
 
-    const element = listBoxRef.current.querySelector('li[role="option"]:not([aria-disabled])');
-    if (!element) return;
+    const option = getFirstOption(listBoxRef.current);
+    if (!option) return;
 
-    const target = optionsRef.current[element.id];
+    const target = optionsRef.current[option.id];
     if (target) router.push(target.toString());
   }, [router]);
 
@@ -92,3 +92,17 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
 
 // Utils
 type OptionsRecord = Partial<Record<string, URL>>;
+
+function isEnabledOption(element: Element): boolean {
+  return element.role === 'option' && element.ariaDisabled !== 'false';
+}
+
+function getFirstOption(listBox: HTMLUListElement): Element | null {
+  for (const child of listBox.children) {
+    if (isEnabledOption(child)) {
+      return child;
+    }
+  }
+
+  return null;
+}
