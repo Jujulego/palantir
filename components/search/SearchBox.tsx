@@ -18,8 +18,11 @@ export interface SearchProviderProps {
 }
 
 export default function SearchBox({ children, sx }: SearchProviderProps) {
+  const router = useRouter();
+
   const id = useId();
   const listBoxId = `${id}-listbox`;
+  const listBoxRef = useRef<HTMLUListElement>(null);
 
   // Open state
   const [_isOpen, setIsOpen] = useState(false);
@@ -35,16 +38,17 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
   }, [searchParam]);
 
   // Options
-  const router = useRouter();
-  const listBoxRef = useRef<HTMLUListElement>(null);
-  const [options, setOptions] = useState<OptionTargetRecord>({});
+  const optionsRef = useRef<OptionsRecord>({});
+  const [isEmpty, setIsEmpty] = useState(false);
 
   const registerOption = useCallback((id: string, target: URL) => {
-    setOptions((old) => ({ ...old, [id]: target }));
+    optionsRef.current[id] = target;
+    setIsEmpty(false);
   }, []);
 
   const unregisterOption = useCallback((id: string) => {
-    setOptions(({ [id]: _, ...rest }) => rest);
+    delete optionsRef.current[id];
+    setIsEmpty(Object.keys(optionsRef.current).length === 0);
   }, []);
 
   const handleSearch = useCallback(() => {
@@ -53,13 +57,12 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
     const element = listBoxRef.current.querySelector('li[role="option"]:not([aria-disabled])');
     if (!element) return;
 
-    const target = options[element.id];
+    const target = optionsRef.current[element.id];
     if (target) router.push(target.toString());
-  }, [options, router]);
+  }, [router]);
 
   // Render
   const isOpen = _isOpen && !!inputValue;
-  const hasOptions = Object.keys(options).length > 0;
 
   return (
     <SearchSurface
@@ -79,7 +82,7 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
 
       <SearchContext value={{ inputValue, registerOption, unregisterOption }}>
         <SearchListBox ref={listBoxRef} listBoxId={listBoxId}>
-          { (isOpen && !hasOptions) && <SearchEmptyOption /> }
+          { isOpen && isEmpty && <SearchEmptyOption /> }
           { isOpen && children }
         </SearchListBox>
       </SearchContext>
@@ -88,4 +91,4 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
 }
 
 // Utils
-type OptionTargetRecord = Partial<Record<string, URL>>;
+type OptionsRecord = Partial<Record<string, URL>>;
