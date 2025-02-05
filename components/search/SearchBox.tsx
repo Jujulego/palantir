@@ -12,7 +12,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import { styled, type SxProps, type Theme } from '@mui/material/styles';
 import { AnimatePresence } from 'motion/react';
 import { useRouter } from 'next/navigation';
-import { type ReactNode, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
+import { type ReactNode, useCallback, useEffect, useId, useRef, useState } from 'react';
 
 // Component
 export interface SearchProviderProps {
@@ -71,6 +71,7 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
   }, []);
 
   const handleFocusDown = useCallback(() => {
+    setIsOpen(true);
     setActiveOption((activeOption) => {
       let option: Element | null = null;
 
@@ -87,6 +88,7 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
   }, []);
 
   const handleFocusUp = useCallback(() => {
+    setIsOpen(true);
     setActiveOption((activeOption) => {
       let option: Element | null = null;
 
@@ -103,14 +105,21 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
   }, []);
 
   const handleSearch = useCallback(() => {
-    if (!listBoxRef.current) return;
+    let optionId = activeOption;
 
-    const option = getFirstOption(listBoxRef.current);
-    if (!option) return;
+    if (!optionId && listBoxRef.current) {
+      optionId = getFirstOption(listBoxRef.current)?.id ?? null;
+    }
 
-    const target = optionsRef.current[option.id];
-    if (target) router.push(target.toString());
-  }, [router]);
+    if (optionId) {
+      const target = optionsRef.current[optionId];
+
+      if (target) {
+        setIsOpen(false);
+        router.push(target.toString());
+      }
+    }
+  }, [activeOption, router]);
 
   // Render
   const isOpen = _isOpen && !!inputValue;

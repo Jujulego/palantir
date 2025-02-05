@@ -38,6 +38,8 @@ export default function SearchSurface({ isOpen, onOpen, onClose, children, sx }:
     >
       <Paper
         {...focusProps}
+        onClick={onOpen}
+        onTouchStart={onOpen}
         onKeyDown={handleKeyDown}
 
         sx={{
