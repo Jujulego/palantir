@@ -53,6 +53,38 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
     setIsEmpty(Object.keys(optionsRef.current).length === 0);
   }, []);
 
+  const handleFocusDown = useCallback(() => {
+    setActiveOption((activeOption) => {
+      let option: Element | null = null;
+
+      if (activeOption) {
+        option = getNextOption(activeOption);
+      }
+
+      if (!option && listBoxRef.current) {
+        option = getFirstOption(listBoxRef.current);
+      }
+
+      return option?.id ?? null;
+    });
+  }, []);
+
+  const handleFocusUp = useCallback(() => {
+    setActiveOption((activeOption) => {
+      let option: Element | null = null;
+
+      if (activeOption) {
+        option = getPreviousOption(activeOption);
+      }
+
+      if (!option && listBoxRef.current) {
+        option = getLastOption(listBoxRef.current);
+      }
+
+      return option?.id ?? null;
+    });
+  }, []);
+
   const handleSearch = useCallback(() => {
     if (!listBoxRef.current) return;
 
@@ -80,6 +112,8 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
         activeOptionId={activeOption}
         listBoxId={listBoxId}
 
+        onFocusDown={handleFocusDown}
+        onFocusUp={handleFocusUp}
         onInputChange={setInputValue}
         onSearch={handleSearch}
 
@@ -104,10 +138,28 @@ function isEnabledOption(element: Element): boolean {
 }
 
 function getFirstOption(listBox: HTMLUListElement): Element | null {
-  for (const child of listBox.children) {
-    if (isEnabledOption(child)) {
-      return child;
+  return findOption(listBox.firstElementChild, 'previousElementSibling');
+}
+
+function getLastOption(listBox: HTMLUListElement): Element | null {
+  return findOption(listBox.lastElementChild, 'previousElementSibling');
+}
+
+function getNextOption(activeId: string): Element | null {
+  return findOption(document.getElementById(activeId)?.nextElementSibling ?? null, 'nextElementSibling');
+}
+
+function getPreviousOption(activeId: string): Element | null {
+  return findOption(document.getElementById(activeId)?.previousElementSibling ?? null, 'previousElementSibling');
+}
+
+function findOption(element: Element | null, nextKey: 'nextElementSibling' | 'previousElementSibling') {
+  while (element) {
+    if (isEnabledOption(element)) {
+      return element;
     }
+
+    element = element[nextKey];
   }
 
   return null;

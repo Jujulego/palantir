@@ -47,7 +47,7 @@ export default function SearchOption({ href, children }: SearchOptionProps) {
       role="option"
     >
       <ListItemButton
-        classes={activeOption === id ? 'Mui-focusVisible' : ''}
+        className={activeOption === id ? 'Mui-focusVisible' : ''}
         component={Link} href={url.toString()}
         tabIndex={-1}
         selected={isSelected}
