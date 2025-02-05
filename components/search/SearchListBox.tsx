@@ -10,7 +10,7 @@ export interface SearchListBoxProps {
 
 export default function SearchListBox({ ref, listBoxId, children }: SearchListBoxProps) {
   return (
-    <List id={listBoxId} ref={ref} role="listbox" disablePadding>
+    <List id={listBoxId} ref={ref} role="listbox" disablePadding sx={{ maxHeight: 226, overflowY: 'auto' }}>
       { children }
     </List>
   );
