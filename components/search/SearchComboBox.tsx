@@ -1,10 +1,11 @@
 import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
+import { CircularProgress } from '@mui/material';
 import Fade from '@mui/material/Fade';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import { styled, type SxProps, type Theme } from '@mui/material/styles';
-import { ChangeEvent, KeyboardEvent, useCallback } from 'react';
+import { ChangeEvent, KeyboardEvent, useCallback, useTransition } from 'react';
 
 // Component
 export interface SearchComboBoxProps {
@@ -35,7 +36,13 @@ export function SearchComboBox(props: SearchComboBoxProps) {
     onOpen,
     sx
   } = props;
-  
+
+  const [isSearching, startSearch] = useTransition();
+
+  const handleSearch = useCallback(() => {
+    onSearch && startSearch(() => onSearch());
+  }, [onSearch]);
+
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     onInputChange(event.currentTarget.value);
   }, [onInputChange]);
@@ -43,7 +50,7 @@ export function SearchComboBox(props: SearchComboBoxProps) {
   const handleKeyDown = useCallback((event: KeyboardEvent) => {
     switch (event.key) {
       case 'Enter':
-        if (onSearch) onSearch();
+        if (onSearch) handleSearch();
         break;
 
       case 'ArrowDown':
@@ -64,12 +71,8 @@ export function SearchComboBox(props: SearchComboBoxProps) {
         
         break;
     }
-  }, [onClose, onFocusDown, onFocusUp, onOpen, onSearch]);
+  }, [onClose, onFocusDown, onFocusUp, onOpen, handleSearch]);
 
-  const handleSearch = useCallback(() => {
-    if (onSearch) onSearch();
-  }, [onSearch]);
-  
   const handleClear = useCallback(() => {
     onInputChange('');
   }, [onInputChange]);
@@ -114,6 +117,8 @@ export function SearchComboBox(props: SearchComboBoxProps) {
 
       <IconButton
         type="button"
+        loading={isSearching}
+        loadingIndicator={<CircularProgress size={20} />}
         onClick={handleSearch}
 
         color="inherit"
