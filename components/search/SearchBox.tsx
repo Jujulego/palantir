@@ -8,6 +8,7 @@ import SearchSurface from '@/components/search/SearchSurface';
 import { useSearchParam } from '@/hooks/useSearchParam';
 import { mergeSx } from '@/utils/mui';
 import type { SxProps, Theme } from '@mui/material/styles';
+import { AnimatePresence } from 'motion/react';
 import { useRouter } from 'next/navigation';
 import { type ReactNode, useCallback, useEffect, useId, useRef, useState } from 'react';
 
@@ -40,7 +41,7 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
   // Options
   const optionsRef = useRef<OptionsRecord>({});
   const [activeOption, setActiveOption] = useState<string | null>(null);
-  const [isEmpty, setIsEmpty] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(true);
 
   const registerOption = useCallback((id: string, target: URL) => {
     optionsRef.current[id] = target;
@@ -124,7 +125,10 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
 
       <SearchContext value={{ activeOption, inputValue, isOpen, setActiveOption, registerOption, unregisterOption }}>
         <SearchListBox ref={listBoxRef} listBoxId={listBoxId}>
-          { isOpen && isEmpty && <SearchEmptyOption /> }
+          <AnimatePresence>
+            { isOpen && isEmpty && <SearchEmptyOption /> }
+          </AnimatePresence>
+
           { children }
         </SearchListBox>
       </SearchContext>

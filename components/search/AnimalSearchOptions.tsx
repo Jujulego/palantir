@@ -8,6 +8,7 @@ import ListItemText from '@mui/material/ListItemText';
 import PetsIcon from '@mui/icons-material/Pets';
 import { use, useMemo } from 'react';
 import useSWR from 'swr';
+import { AnimatePresence } from 'motion/react';
 
 export default function AnimalSearchOptions() {
   const { inputValue } = use(SearchContext);
@@ -17,17 +18,17 @@ export default function AnimalSearchOptions() {
 
   const { data } = useSWR(key, { fetcher: animalFetcher });
 
-  if (!data) {
-    return null;
-  }
-
   return (
-    <SearchOption href={`/animal/${inputValue}`}>
-      <ListItemIcon sx={{ minWidth: 40 }}>
-        <PetsIcon color="inherit" />
-      </ListItemIcon>
-      <ListItemText primary={inputValue} />
-    </SearchOption>
+    <AnimatePresence>
+      { data && (
+        <SearchOption href={`/animal/${inputValue}`}>
+          <ListItemIcon sx={{ minWidth: 40 }}>
+            <PetsIcon color="inherit" />
+          </ListItemIcon>
+          <ListItemText primary={inputValue} />
+        </SearchOption>
+      ) }
+    </AnimatePresence>
   );
 }
 
