@@ -1,20 +1,19 @@
 'use client';
 
 import { SearchContext } from '@/components/search/search.context';
-import ListItem from '@mui/material/ListItem';
+import SearchListItem from '@/components/search/SearchListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import { AnimatePresence, m, usePresence } from 'motion/react';
+import { AnimatePresence, usePresence } from 'motion/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { type ReactNode, type Ref, use, useCallback, useEffect, useId, useMemo } from 'react';
+import { type ReactNode, use, useCallback, useEffect, useId, useMemo } from 'react';
 
 export interface SearchOptionProps {
-  readonly ref?: Ref<HTMLLIElement>;
   readonly href: string;
   readonly children?: ReactNode;
 }
 
-function SearchOption({ ref, href, children }: SearchOptionProps) {
+export default function SearchOption({ href, children }: SearchOptionProps) {
   const id = useId();
   const [isPresent, safeToRemove] = usePresence();
 
@@ -49,22 +48,12 @@ function SearchOption({ ref, href, children }: SearchOptionProps) {
   return (
     <AnimatePresence onExitComplete={safeToRemove!}>
       { isOpen && isPresent && (
-        <ListItem
+        <SearchListItem
           id={id}
-          ref={ref}
-          component={m.li}
           disablePadding
-          sx={{ overflow: 'hidden' }}
+          selected={isSelected}
           onMouseEnter={handleActivate}
           onTouchStart={handleActivate}
-
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: 48, opacity: 1 }}
-          exit={{ height: 0, opacity: 0 }}
-          transition={{ ease: 'easeOut' }}
-
-          aria-selected={isSelected}
-          role="option"
         >
           <ListItemButton
             className={activeOption === id ? 'Mui-focusVisible' : ''}
@@ -74,13 +63,8 @@ function SearchOption({ ref, href, children }: SearchOptionProps) {
           >
             {children}
           </ListItemButton>
-        </ListItem>
+        </SearchListItem>
       ) }
     </AnimatePresence>
   );
 }
-
-export default SearchOption;
-
-// Elements
-const MListItem = m.create(ListItem);
