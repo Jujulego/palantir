@@ -1,8 +1,10 @@
 import ColorModeToggle from '@/components/ColorModeToggle';
 import LocateButton from '@/components/LocateButton';
 import MapLayout from '@/components/map/MapLayout';
-import SearchBox from '@/components/SearchBox';
-import SearchBoxSkeleton from '@/components/SearchBoxSkeleton';
+import AnimalSearchOptions from '@/components/search/AnimalSearchOptions';
+import DnsSearchOptions from '@/components/search/DnsSearchOptions';
+import IpSearchOptions from '@/components/search/IpSearchOptions';
+import SearchBox from '@/components/search/SearchBox';
 import { Toolbar } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import ipaddr from 'ipaddr.js';
@@ -17,40 +19,44 @@ export interface WithMapLayoutProps {
 
 export default async function WithMapLayout({ children }: WithMapLayoutProps) {
   // Render
-  return <>
-    <Toolbar
-      component="header"
-      disableGutters
-      sx={{
-        flexShrink: 0,
-        zIndex: 'appBar',
-        p: 1.5,
-        pointerEvents: 'none',
-
-        '& > *': {
-          pointerEvents: 'auto',
-        }
-      }}
-    >
-      <Suspense fallback={<SearchBoxSkeleton />}>
-        <SearchBox />
-      </Suspense>
-
-      <Suspense>
-        <LocateButton ip={clientIp()} sx={{ ml: 3 }} />
-      </Suspense>
-
-      <Paper elevation={2} sx={{ ml: 'auto', p: 0.5, borderRadius: 9999 }}>
-        <ColorModeToggle />
-      </Paper>
-    </Toolbar>
-
+  return (
     <LazyMotion features={domAnimation} strict>
+      <Toolbar
+        component="header"
+        disableGutters
+        sx={{
+          flexShrink: 0,
+          zIndex: 'appBar',
+          p: 1.5,
+          pointerEvents: 'none',
+
+          '& > *': {
+            pointerEvents: 'auto',
+          }
+        }}
+      >
+        <Suspense>
+          <SearchBox sx={{ width: 384 }}>
+            <AnimalSearchOptions />
+            <DnsSearchOptions />
+            <IpSearchOptions />
+          </SearchBox>
+        </Suspense>
+
+        <Suspense>
+          <LocateButton ip={clientIp()} sx={{ ml: 3 }} />
+        </Suspense>
+
+        <Paper elevation={2} sx={{ ml: 'auto', p: 0.5, borderRadius: 9999 }}>
+          <ColorModeToggle />
+        </Paper>
+      </Toolbar>
+
       <MapLayout>
         { children }
       </MapLayout>
     </LazyMotion>
-  </>;
+  );
 }
 
 // Utils

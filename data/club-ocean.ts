@@ -1,3 +1,5 @@
+'use server';
+
 import type { Coordinates } from '@/data/ip-metadata';
 import { FetchError } from '@/utils/fetch';
 import dayjs from 'dayjs';
