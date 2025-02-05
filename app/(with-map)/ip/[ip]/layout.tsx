@@ -51,7 +51,7 @@ export default async function WithMapIpLayout({ children, params }: WithMapIpLay
 
     <Paper component="main" square sx={{ flex: '1 0 auto', pb: 4 }}>
       <Box sx={{ px: 2.5, py: 2 }}>
-        <Typography component="h1" variant="h5">{ ipaddr.parse(ip).toString() }</Typography>
+        <Typography component="h1" variant="h5" noWrap>{ ipaddr.parse(ip).toString() }</Typography>
         <Suspense>
           <HostnameLink hostname={reverseDnsLookup(ip)} />
         </Suspense>
