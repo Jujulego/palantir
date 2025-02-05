@@ -112,18 +112,20 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
         activeOptionId={activeOption}
         listBoxId={listBoxId}
 
+        onClose={handleClose}
         onFocusDown={handleFocusDown}
         onFocusUp={handleFocusUp}
         onInputChange={setInputValue}
         onSearch={handleSearch}
+        onOpen={handleOpen}
 
         sx={{ height: 48 }}
       />
 
-      <SearchContext value={{ activeOption, inputValue, setActiveOption, registerOption, unregisterOption }}>
+      <SearchContext value={{ activeOption, inputValue, isOpen, setActiveOption, registerOption, unregisterOption }}>
         <SearchListBox ref={listBoxRef} listBoxId={listBoxId}>
           { isOpen && isEmpty && <SearchEmptyOption /> }
-          { isOpen && children }
+          { children }
         </SearchListBox>
       </SearchContext>
     </SearchSurface>

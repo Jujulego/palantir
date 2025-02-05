@@ -12,10 +12,12 @@ export interface SearchComboBoxProps {
   readonly inputValue: string;
   readonly isOpen: boolean;
   readonly listBoxId: string;
+  readonly onClose?: () => void;
   readonly onFocusDown: () => void;
   readonly onFocusUp?: () => void;
   readonly onInputChange: (value: string) => void;
   readonly onSearch?: () => void;
+  readonly onOpen?: () => void;
   readonly sx?: SxProps<Theme>;
 }
 
@@ -25,10 +27,12 @@ export function SearchComboBox(props: SearchComboBoxProps) {
     isOpen,
     inputValue,
     listBoxId,
+    onClose,
     onFocusDown,
     onFocusUp,
     onInputChange,
     onSearch,
+    onOpen,
     sx
   } = props;
   
@@ -43,14 +47,24 @@ export function SearchComboBox(props: SearchComboBoxProps) {
         break;
 
       case 'ArrowDown':
-        onFocusDown();
+        if (event.altKey) {
+          if (onOpen) onOpen();
+        } else {
+          onFocusDown();
+        }
+        
         break;
 
       case 'ArrowUp':
-        if (onFocusUp) onFocusUp();
+        if (event.altKey) {
+          if (onClose) onClose();
+        } else {
+          if (onFocusUp) onFocusUp();
+        }
+        
         break;
     }
-  }, [onFocusDown, onFocusUp, onSearch]);
+  }, [onClose, onFocusDown, onFocusUp, onOpen, onSearch]);
 
   const handleSearch = useCallback(() => {
     if (onSearch) onSearch();

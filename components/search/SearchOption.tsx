@@ -15,7 +15,7 @@ export interface SearchOptionProps {
 export default function SearchOption({ href, children }: SearchOptionProps) {
   const id = useId();
 
-  const { activeOption, inputValue, setActiveOption, registerOption, unregisterOption } = use(SearchContext);
+  const { activeOption, inputValue, isOpen, setActiveOption, registerOption, unregisterOption } = use(SearchContext);
   const pathname = usePathname();
   const isSelected = pathname === href;
 
@@ -35,6 +35,9 @@ export default function SearchOption({ href, children }: SearchOptionProps) {
   const handleActivate = useCallback(() => {
     setActiveOption(id);
   }, [id, setActiveOption]);
+
+  // Render
+  if (!isOpen) return null;
 
   return (
     <ListItem
