@@ -83,6 +83,10 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
         option = getFirstOption(listBoxRef.current);
       }
 
+      if (option) {
+        option.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      }
+
       return option?.id ?? null;
     });
   }, []);
@@ -98,6 +102,10 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
 
       if (!option && listBoxRef.current) {
         option = getLastOption(listBoxRef.current);
+      }
+
+      if (option) {
+        option.scrollIntoView({ block: 'center', behavior: 'smooth' });
       }
 
       return option?.id ?? null;
