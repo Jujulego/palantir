@@ -1,6 +1,6 @@
 'use client';
 
-import { SearchContext } from '@/components/search/search.context';
+import { SearchContext, useLoadingSearchOptions } from '@/components/search/search.context';
 import SearchOption from '@/components/search/SearchOption';
 import { fetchAnimalTracking } from '@/data/club-ocean';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -16,7 +16,8 @@ export default function AnimalSearchOptions() {
   const isAnimal = useMemo(() => ANIMAL_RE.test(inputValue), [inputValue]);
   const key = isAnimal ? `animal:${inputValue.toLowerCase()}` : null;
 
-  const { data } = useSWR(key, { fetcher: animalFetcher });
+  const { data, isValidating } = useSWR(key, { fetcher: animalFetcher });
+  useLoadingSearchOptions(isValidating);
 
   return (
     <AnimatePresence>

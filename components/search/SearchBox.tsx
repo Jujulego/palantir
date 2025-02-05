@@ -7,10 +7,12 @@ import SearchListBox from '@/components/search/SearchListBox';
 import SearchSurface from '@/components/search/SearchSurface';
 import { useSearchParam } from '@/hooks/useSearchParam';
 import { mergeSx } from '@/utils/mui';
-import type { SxProps, Theme } from '@mui/material/styles';
+import Fade from '@mui/material/Fade';
+import LinearProgress from '@mui/material/LinearProgress';
+import { styled, type SxProps, type Theme } from '@mui/material/styles';
 import { AnimatePresence } from 'motion/react';
 import { useRouter } from 'next/navigation';
-import { type ReactNode, useCallback, useEffect, useId, useRef, useState } from 'react';
+import { type ReactNode, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 
 // Component
 export interface SearchProviderProps {
@@ -22,7 +24,7 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
   const router = useRouter();
 
   const id = useId();
-  const listBoxId = `${id}-listbox`;
+  const listBoxId = `${id}listbox`;
   const listBoxRef = useRef<HTMLUListElement>(null);
 
   // Open state
@@ -37,6 +39,20 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
   useEffect(() => {
     setInputValue(searchParam ?? '');
   }, [searchParam]);
+
+  // Loading state
+  const loadingKeys = useRef(new Set<string>());
+  const [isLoading, setIsLoading] = useState(false);
+
+  const markLoading = useCallback((id: string) => {
+    loadingKeys.current.add(id);
+    setIsLoading(true);
+  }, []);
+
+  const markLoaded = useCallback((id: string) => {
+    loadingKeys.current.delete(id);
+    setIsLoading(loadingKeys.current.size > 0);
+  }, []);
 
   // Options
   const optionsRef = useRef<OptionsRecord>({});
@@ -120,21 +136,45 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
         onSearch={handleSearch}
         onOpen={handleOpen}
 
-        sx={{ height: 48 }}
+        sx={{ height: 48, zIndex: 10 }}
       />
 
-      <SearchContext value={{ activeOption, inputValue, isOpen, setActiveOption, registerOption, unregisterOption }}>
-        <SearchListBox ref={listBoxRef} listBoxId={listBoxId}>
-          <AnimatePresence>
-            { isOpen && isEmpty && <SearchEmptyOption /> }
-          </AnimatePresence>
+      <SearchListBoxContainer>
+        { isOpen && (
+          <Fade in={isLoading}>
+            <LinearProgress color="primary" sx={{ position: 'absolute', top: 0, left: 0, width: '100%', height: 4 }} />
+          </Fade>
+        ) }
 
-          { children }
-        </SearchListBox>
-      </SearchContext>
+        <SearchContext
+          value={{
+            activeOption,
+            inputValue,
+            isOpen,
+            markLoading,
+            markLoaded,
+            registerOption,
+            setActiveOption,
+            unregisterOption,
+          }}
+        >
+          <SearchListBox ref={listBoxRef} listBoxId={listBoxId}>
+            <AnimatePresence>
+              { isOpen && isEmpty && <SearchEmptyOption /> }
+            </AnimatePresence>
+
+            { children }
+          </SearchListBox>
+        </SearchContext>
+      </SearchListBoxContainer>
     </SearchSurface>
   );
 }
+
+// Elements
+const SearchListBoxContainer = styled('div')({
+  position: 'relative',
+});
 
 // Utils
 type OptionsRecord = Partial<Record<string, URL>>;

@@ -50,7 +50,7 @@ export function SearchComboBox(props: SearchComboBoxProps) {
   const handleKeyDown = useCallback((event: KeyboardEvent) => {
     switch (event.key) {
       case 'Enter':
-        if (onSearch) handleSearch();
+        handleSearch();
         break;
 
       case 'ArrowDown':
@@ -71,7 +71,7 @@ export function SearchComboBox(props: SearchComboBoxProps) {
         
         break;
     }
-  }, [onClose, onFocusDown, onFocusUp, onOpen, handleSearch]);
+  }, [handleSearch, onOpen, onFocusDown, onClose, onFocusUp]);
 
   const handleClear = useCallback(() => {
     onInputChange('');

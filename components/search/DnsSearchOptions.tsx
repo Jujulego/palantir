@@ -1,6 +1,6 @@
 'use client';
 
-import { SearchContext } from '@/components/search/search.context';
+import { SearchContext, useLoadingSearchOptions } from '@/components/search/search.context';
 import SearchOption from '@/components/search/SearchOption';
 import { useDnsLookup } from '@/hooks/useDnsLookup';
 import WebIcon from '@mui/icons-material/Web';
@@ -12,7 +12,8 @@ import { use } from 'react';
 // Component
 export default function DnsSearchOptions() {
   const { inputValue } = use(SearchContext);
-  const { ips } = useDnsLookup(inputValue);
+  const { ips, isValidating } = useDnsLookup(inputValue);
+  useLoadingSearchOptions(isValidating);
 
   return (
     <AnimatePresence>
