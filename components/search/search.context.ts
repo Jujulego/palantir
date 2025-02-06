@@ -8,6 +8,7 @@ export const SearchContext = createContext<SearchContextProps>({
   markLoading: () => null,
   markLoaded: () => null,
   registerOption: () => null,
+  search: () => null,
   setActiveOption: () => null,
   unregisterOption: () => null,
 });
@@ -20,6 +21,7 @@ export interface SearchContextProps {
   readonly markLoading: (id: string) => void;
   readonly markLoaded: (id: string) => void;
   readonly registerOption: (id: string, target: URL) => void;
+  readonly search: (url: URL) => void;
   readonly setActiveOption: (id: string | null) => void;
   readonly unregisterOption: (id: string) => void;
 }

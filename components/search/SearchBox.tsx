@@ -12,7 +12,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import { styled, type SxProps, type Theme } from '@mui/material/styles';
 import { AnimatePresence } from 'motion/react';
 import { useRouter } from 'next/navigation';
-import { type ReactNode, useCallback, useEffect, useId, useRef, useState } from 'react';
+import { type ReactNode, useCallback, useEffect, useId, useRef, useState, useTransition } from 'react';
 
 // Component
 export interface SearchProviderProps {
@@ -35,6 +35,8 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
   // Input state
   const [searchParam, _] = useSearchParam('search');
   const [inputValue, setInputValue] = useState(searchParam ?? '');
+  const inputValueRef = useRef(inputValue);
+  inputValueRef.current = inputValue;
 
   useEffect(() => {
     setInputValue(searchParam ?? '');
@@ -53,6 +55,15 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
     loadingKeys.current.delete(id);
     setIsLoading(loadingKeys.current.size > 0);
   }, []);
+
+  // Searching state
+  const [isSearching, startSearch] = useTransition();
+  const search = useCallback((url: URL) => {
+    url.searchParams.set('search', inputValueRef.current);
+
+    setIsOpen(false);
+    startSearch(() => router.push(url.toString()));
+  }, [router]);
 
   // Options
   const optionsRef = useRef<OptionsRecord>({});
@@ -123,11 +134,10 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
       const target = optionsRef.current[optionId];
 
       if (target) {
-        setIsOpen(false);
-        router.push(target.toString());
+        search(target);
       }
     }
-  }, [activeOption, router]);
+  }, [activeOption, search]);
 
   // Render
   const isOpen = _isOpen && !!inputValue;
@@ -142,6 +152,7 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
       <SearchComboBox
         inputValue={inputValue}
         isOpen={isOpen}
+        isSearching={isSearching}
 
         activeOptionId={activeOption}
         listBoxId={listBoxId}
@@ -171,6 +182,7 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
             markLoading,
             markLoaded,
             registerOption,
+            search,
             setActiveOption,
             unregisterOption,
           }}
