@@ -5,20 +5,21 @@ import Fade from '@mui/material/Fade';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import { styled, type SxProps, type Theme } from '@mui/material/styles';
-import { ChangeEvent, KeyboardEvent, useCallback, useTransition } from 'react';
+import { ChangeEvent, KeyboardEvent, useCallback } from 'react';
 
 // Component
 export interface SearchComboBoxProps {
   readonly activeOptionId: string | null;
   readonly inputValue: string;
   readonly isOpen: boolean;
+  readonly isSearching: boolean;
   readonly listBoxId: string;
-  readonly onClose?: () => void;
+  readonly onClose: () => void;
   readonly onFocusDown: () => void;
-  readonly onFocusUp?: () => void;
+  readonly onFocusUp: () => void;
   readonly onInputChange: (value: string) => void;
-  readonly onSearch?: () => void;
-  readonly onOpen?: () => void;
+  readonly onSearch: () => void;
+  readonly onOpen: () => void;
   readonly sx?: SxProps<Theme>;
 }
 
@@ -26,6 +27,7 @@ export function SearchComboBox(props: SearchComboBoxProps) {
   const {
     activeOptionId,
     isOpen,
+    isSearching,
     inputValue,
     listBoxId,
     onClose,
@@ -37,12 +39,6 @@ export function SearchComboBox(props: SearchComboBoxProps) {
     sx
   } = props;
 
-  const [isSearching, startSearch] = useTransition();
-
-  const handleSearch = useCallback(() => {
-    onSearch && startSearch(() => onSearch());
-  }, [onSearch]);
-
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     onInputChange(event.currentTarget.value);
   }, [onInputChange]);
@@ -50,12 +46,12 @@ export function SearchComboBox(props: SearchComboBoxProps) {
   const handleKeyDown = useCallback((event: KeyboardEvent) => {
     switch (event.key) {
       case 'Enter':
-        handleSearch();
+        onSearch();
         break;
 
       case 'ArrowDown':
         if (event.altKey) {
-          if (onOpen) onOpen();
+          onOpen();
         } else {
           onFocusDown();
         }
@@ -64,14 +60,14 @@ export function SearchComboBox(props: SearchComboBoxProps) {
 
       case 'ArrowUp':
         if (event.altKey) {
-          if (onClose) onClose();
+          onClose();
         } else {
-          if (onFocusUp) onFocusUp();
+          onFocusUp();
         }
         
         break;
     }
-  }, [handleSearch, onOpen, onFocusDown, onClose, onFocusUp]);
+  }, [onSearch, onOpen, onFocusDown, onClose, onFocusUp]);
 
   const handleClear = useCallback(() => {
     onInputChange('');
@@ -119,7 +115,7 @@ export function SearchComboBox(props: SearchComboBoxProps) {
         type="button"
         loading={isSearching}
         loadingIndicator={<CircularProgress size={20} />}
-        onClick={handleSearch}
+        onClick={onSearch}
 
         color="inherit"
         sx={{ my: 'auto' }}

@@ -4,9 +4,8 @@ import { SearchContext } from '@/components/search/search.context';
 import SearchListItem from '@/components/search/SearchListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import { AnimatePresence, usePresence } from 'motion/react';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { type ReactNode, use, useCallback, useEffect, useId, useMemo } from 'react';
+import { type MouseEvent, type ReactNode, use, useCallback, useEffect, useId, useMemo } from 'react';
 
 export interface SearchOptionProps {
   readonly href: string;
@@ -17,16 +16,11 @@ export default function SearchOption({ href, children }: SearchOptionProps) {
   const id = useId();
   const [isPresent, safeToRemove] = usePresence();
 
-  const { activeOption, inputValue, isOpen, setActiveOption, registerOption, unregisterOption } = use(SearchContext);
+  const { activeOption, isOpen, search, setActiveOption, registerOption, unregisterOption } = use(SearchContext);
   const pathname = usePathname();
   const isSelected = pathname === href;
 
-  const url = useMemo(() => {
-    const url = new URL(href, location.origin + pathname);
-    url.searchParams.set('search', inputValue);
-    
-    return url;
-  }, [href, inputValue, pathname]);
+  const url = useMemo(() => new URL(href, location.origin + pathname), [href, pathname]);
 
   useEffect(() => {
     registerOption(id, url);
@@ -44,6 +38,10 @@ export default function SearchOption({ href, children }: SearchOptionProps) {
     setActiveOption(id);
   }, [id, setActiveOption]);
 
+  const handleClick = useCallback((event: MouseEvent) => {
+    search(url);
+  }, [url, search]);
+
   // Render
   return (
     <AnimatePresence onExitComplete={safeToRemove!}>
@@ -57,7 +55,8 @@ export default function SearchOption({ href, children }: SearchOptionProps) {
         >
           <ListItemButton
             className={activeOption === id ? 'Mui-focusVisible' : ''}
-            component={Link} href={url.toString()}
+            component="a" href={url.toString()}
+            onClick={handleClick}
             tabIndex={-1}
             selected={isSelected}
           >
