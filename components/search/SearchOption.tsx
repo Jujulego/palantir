@@ -4,6 +4,7 @@ import { SearchContext } from '@/components/search/search.context';
 import SearchListItem from '@/components/search/SearchListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import { AnimatePresence, usePresence } from 'motion/react';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { type MouseEvent, type ReactNode, use, useCallback, useEffect, useId, useMemo } from 'react';
 
@@ -16,11 +17,16 @@ export default function SearchOption({ href, children }: SearchOptionProps) {
   const id = useId();
   const [isPresent, safeToRemove] = usePresence();
 
-  const { activeOption, isOpen, search, setActiveOption, registerOption, unregisterOption } = use(SearchContext);
+  const { activeOption, isOpen, inputValue, search, setActiveOption, registerOption, unregisterOption } = use(SearchContext);
   const pathname = usePathname();
   const isSelected = pathname === href;
 
-  const url = useMemo(() => new URL(href, location.origin + pathname), [href, pathname]);
+  const url = useMemo(() => {
+    const url = new URL(href, location.origin + pathname);
+    url.searchParams.set('search', inputValue);
+
+    return url;
+  }, [href, inputValue, pathname]);
 
   useEffect(() => {
     registerOption(id, url);
@@ -39,6 +45,7 @@ export default function SearchOption({ href, children }: SearchOptionProps) {
   }, [id, setActiveOption]);
 
   const handleClick = useCallback((event: MouseEvent) => {
+    event.preventDefault();
     search(url);
   }, [url, search]);
 
@@ -55,7 +62,7 @@ export default function SearchOption({ href, children }: SearchOptionProps) {
         >
           <ListItemButton
             className={activeOption === id ? 'Mui-focusVisible' : ''}
-            component="a" href={url.toString()}
+            component={Link} href={url.toString()} prefetch
             onClick={handleClick}
             tabIndex={-1}
             selected={isSelected}

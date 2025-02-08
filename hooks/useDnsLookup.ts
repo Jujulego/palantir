@@ -2,6 +2,7 @@ import type { DnsResponse } from '@/data/dns';
 import { jsonFetch } from '@/utils/fetch';
 import { filter$, map$, pipe$ } from 'kyrielle';
 import { useMemo } from 'react';
+import { preload } from 'react-dom';
 import useSWR from 'swr';
 
 export interface DnsLookupState {
@@ -27,7 +28,13 @@ export function useDnsLookup(name: string | null): DnsLookupState {
 }
 
 function useDnsQuery(name: string | null, type: number) {
-  return useSWR<DnsResponse>(name ? `https://dns.google.com/resolve?type=${type}&name=${name}` : null, jsonFetch);
+  const url = `https://dns.google.com/resolve?type=${type}&name=${name}`;
+
+  if (name) {
+    preload(url, { as: 'fetch', crossOrigin: 'anonymous' });
+  }
+
+  return useSWR<DnsResponse>(name ? url : null, jsonFetch);
 }
 
 function extractIps(type: number, data?: DnsResponse) {
