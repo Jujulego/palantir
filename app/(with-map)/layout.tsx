@@ -5,11 +5,9 @@ import AnimalSearchOptions from '@/components/search/AnimalSearchOptions';
 import DnsSearchOptions from '@/components/search/DnsSearchOptions';
 import IpSearchOptions from '@/components/search/IpSearchOptions';
 import SearchBox from '@/components/search/SearchBox';
-import { Toolbar } from '@mui/material';
 import Paper from '@mui/material/Paper';
-import ipaddr from 'ipaddr.js';
+import Toolbar from '@mui/material/Toolbar';
 import { domAnimation, LazyMotion } from 'motion/react';
-import { headers } from 'next/headers';
 import { type ReactNode, Suspense } from 'react';
 
 // Layout
@@ -43,9 +41,7 @@ export default async function WithMapLayout({ children }: WithMapLayoutProps) {
           </SearchBox>
         </Suspense>
 
-        <Suspense>
-          <LocateButton ip={clientIp()} sx={{ ml: 3 }} />
-        </Suspense>
+        <LocateButton sx={{ ml: 3 }} />
 
         <Paper elevation={2} sx={{ ml: 'auto', p: 0.5, borderRadius: 9999 }}>
           <ColorModeToggle />
@@ -57,15 +53,4 @@ export default async function WithMapLayout({ children }: WithMapLayoutProps) {
       </MapLayout>
     </LazyMotion>
   );
-}
-
-// Utils
-async function clientIp() {
-  const ip = (await headers()).get('X-Forwarded-For');
-
-  if (ip !== null) {
-    return ipaddr.parse(ip).toString();
-  }
-
-  return null;
 }
