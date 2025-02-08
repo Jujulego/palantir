@@ -3,8 +3,12 @@ import { styled } from '@mui/material';
 import type * as mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useEffect, useRef } from 'react';
+import { preconnect, prefetchDNS } from 'react-dom';
 
 // Component
+preconnect('https://api.mapbox.com');
+prefetchDNS('https://events.mapbox.com');
+
 export interface MapboxMapProps {
   readonly zoom: number;
   readonly onMapCreated: (map: mapboxgl.Map) => void;
