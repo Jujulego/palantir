@@ -16,11 +16,16 @@ export default function SearchOption({ href, children }: SearchOptionProps) {
   const id = useId();
   const [isPresent, safeToRemove] = usePresence();
 
-  const { activeOption, isOpen, search, setActiveOption, registerOption, unregisterOption } = use(SearchContext);
+  const { activeOption, isOpen, inputValue, search, setActiveOption, registerOption, unregisterOption } = use(SearchContext);
   const pathname = usePathname();
   const isSelected = pathname === href;
 
-  const url = useMemo(() => new URL(href, location.origin + pathname), [href, pathname]);
+  const url = useMemo(() => {
+    const url = new URL(href, location.origin + pathname);
+    url.searchParams.set('search', inputValue);
+
+    return url;
+  }, [href, inputValue, pathname]);
 
   useEffect(() => {
     registerOption(id, url);

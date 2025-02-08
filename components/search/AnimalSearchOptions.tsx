@@ -16,7 +16,7 @@ export default function AnimalSearchOptions() {
 
   const { data, isValidating } = useSWR(
     ANIMAL_RE.test(inputValue)
-      ? ['animal', inputValue.toLowerCase()] as const
+      ? ['animal', inputValue.toLowerCase()]
       : null,
     { fetcher: animalFetcher }
   );
@@ -39,6 +39,8 @@ export default function AnimalSearchOptions() {
 // Utils
 const ANIMAL_RE = /^[a-z]{3,}$/i;
 
-function animalFetcher([, name]: ['animal', string]) {
+type AnimalKey = readonly ['animal', string];
+
+function animalFetcher([, name]: AnimalKey) {
   return fetchAnimalTracking(name);
 }
