@@ -36,12 +36,13 @@ const Container = m.create(styled('div')(({ theme }) => [
   {
     position: 'absolute',
     top: 0,
+    zIndex: theme.vars.zIndex.drawer,
     height: '100%',
     width: DRAWER_WIDTH,
     backgroundColor: grey[50],
-    borderRight: `1px solid ${theme.palette.divider}`,
+    borderRight: `1px solid ${theme.vars.palette.divider}`,
   },
   theme.applyStyles('dark', {
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.vars.palette.background.paper,
   })
 ]));

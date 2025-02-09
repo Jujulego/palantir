@@ -56,6 +56,8 @@ export default function MapLayout({ children }: MapLayoutProps) {
 
   return (
     <MapContext value={value}>
+      <MapDrawerContainer ref={setDrawerRef} isOpen={isDrawerOpen} leftPadding={leftPadding} />
+
       <MapboxMap
         zoom={INITIAL_ZOOM}
         onMapCreated={setMap}
@@ -68,8 +70,6 @@ export default function MapLayout({ children }: MapLayoutProps) {
         <MapCamera map={map} lat={lat} lng={lng} zoom={zoom} leftPadding={leftPadding} />
         { isStyleLoaded && <MapStyle map={map} /> }
       </> }
-
-      <MapDrawerContainer ref={setDrawerRef} isOpen={isDrawerOpen} leftPadding={leftPadding} />
 
       { children }
     </MapContext>

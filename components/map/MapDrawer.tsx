@@ -11,23 +11,23 @@ export interface MapDrawerProps {
 }
 
 export default function MapDrawer({ children }: MapDrawerProps) {
-  const { drawer } = use(MapContext);
+  const { drawer: { openDrawer, closeDrawer, containerRef } } = use(MapContext);
 
   // Open drawer !
   useEffect(() => {
-    drawer.openDrawer();
-    return drawer.closeDrawer;
-  }, [drawer.openDrawer, drawer.closeDrawer]);
+    openDrawer();
+    return () => closeDrawer();
+  }, [openDrawer, closeDrawer]);
 
   // Render
-  if (!drawer.containerRef) {
+  if (!containerRef) {
     return null;
   }
 
   return createPortal(
-    <Stack sx={{ height: '100%', overflow: 'auto' }}>
+    <Stack component="main" sx={{ height: '100%', overflow: 'auto' }}>
       { children }
     </Stack>,
-    drawer.containerRef
+    containerRef
   );
 }

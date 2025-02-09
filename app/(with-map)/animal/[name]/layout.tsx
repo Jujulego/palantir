@@ -30,7 +30,6 @@ export default async function WithMapNameLayout({ children, params }: WithMapNam
   return (
     <MapDrawer>
       <Box
-        component="main"
         sx={{
           position: 'relative',
           height: 230,

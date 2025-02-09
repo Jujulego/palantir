@@ -38,7 +38,6 @@ export default async function WithMapIpLayout({ children, params }: WithMapIpLay
 
   return <MapDrawer>
     <Box
-      component="main"
       sx={{
         position: 'relative',
         height: 230,
