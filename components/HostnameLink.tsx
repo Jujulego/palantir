@@ -1,7 +1,9 @@
 'use client';
 
+import { mergeSx } from '@/utils/mui';
 import MuiLink from '@mui/material/Link';
 import type { SxProps, Theme } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { use } from 'react';
@@ -16,7 +18,14 @@ export default function HostnameLink({ hostname: _hostname, sx }: HostnameLinkPr
   const hostname = use(_hostname);
 
   if (!hostname) {
-    return null;
+    return (
+      <Typography
+        variant="body2"
+        sx={mergeSx({ color: 'text.disabled' }, sx)}
+      >
+        No hostname found
+      </Typography>
+    );
   }
 
   const hostnameParams = new URLSearchParams(searchParams);
@@ -27,7 +36,7 @@ export default function HostnameLink({ hostname: _hostname, sx }: HostnameLinkPr
       component={Link}
       href={`?${hostnameParams}`}
       variant="body2"
-      sx={sx}
+      sx={mergeSx({ color: 'text.secondary' }, sx)}
     >
       { hostname }
     </MuiLink>
