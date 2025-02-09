@@ -20,7 +20,6 @@ export default async function WithMapLayout({ children }: WithMapLayoutProps) {
   return (
     <LazyMotion features={domAnimation} strict>
       <Toolbar
-        component="header"
         disableGutters
         sx={{
           flexShrink: 0,
