@@ -1,11 +1,14 @@
 import seaTurtlePng from '@/assets/sea-turtle.png';
 import ColoredImage from '@/components/ColoredImage';
 import MapDrawer from '@/components/map/MapDrawer';
+import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { type ReactNode } from 'react';
 
 export interface WithMapNameLayoutProps {
@@ -41,8 +44,18 @@ export default async function WithMapNameLayout({ children, params }: WithMapNam
     </Box>
 
     <Paper component="main" square sx={{ flex: '1 0 auto', pb: 4 }}>
-      <Box sx={{ px: 2.5, py: 2 }}>
-        <Typography component="h1" variant="h5" sx={{ textTransform: 'capitalize' }}>{ name }</Typography>
+      <Box sx={{ display: 'flex', px: 2.5, py: 2 }}>
+        <Typography component="h1" variant="h5" sx={{ flex: '1', textTransform: 'capitalize' }}>
+          { name }
+        </Typography>
+
+        <IconButton
+          component={Link}
+          href=".."
+          sx={{ mt: -1, mr: -1.5 }}
+        >
+          <CloseIcon />
+        </IconButton>
       </Box>
 
       <Divider />
