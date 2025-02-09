@@ -5,7 +5,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Paper from '@mui/material/Paper';
 import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import ipaddr from 'ipaddr.js';
@@ -29,7 +28,7 @@ export default async function WithMapServerIpLayout({ params, children }: WithMa
   }
 
   return (
-    <Paper square sx={{ flex: '1 0 auto', pb: 4 }}>
+    <>
       <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto', px: 2.5, py: 2 }}>
         <Typography component="h1" variant="h5" noWrap sx={{ gridColumnStart: 1, gridRowStart: 1 }}>
           { ipaddr.parse(ip).toString() }
@@ -54,7 +53,7 @@ export default async function WithMapServerIpLayout({ params, children }: WithMa
       <SourcesNav />
 
       { children }
-    </Paper>
+    </>
   );
 }
 
