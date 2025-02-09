@@ -2,6 +2,7 @@
 
 import { SearchContext } from '@/components/search/search.context';
 import SearchListItem from '@/components/search/SearchListItem';
+import { baseUrl } from '@/utils/url';
 import ListItemButton from '@mui/material/ListItemButton';
 import { AnimatePresence, usePresence } from 'motion/react';
 import Link from 'next/link';
@@ -22,7 +23,7 @@ export default function SearchOption({ href, children }: SearchOptionProps) {
   const isSelected = pathname === href;
 
   const url = useMemo(() => {
-    const url = new URL(href, location.origin + pathname);
+    const url = new URL(href, baseUrl() + pathname);
     url.searchParams.set('search', inputValue);
 
     return url;
