@@ -27,40 +27,43 @@ export async function generateMetadata({ params }: WithMapNameLayoutProps): Prom
 export default async function WithMapNameLayout({ children, params }: WithMapNameLayoutProps) {
   const name = decodeURIComponent((await params).name);
 
-  return <MapDrawer>
-    <Box
-      sx={{
-        position: 'relative',
-        height: 230,
-        flexShrink: 0,
-        color: 'action.selected',
-      }}
-    >
-      <ColoredImage
-        src={seaTurtlePng}
-        alt="computer"
-        style={{ position: 'absolute', bottom: 0, left: 'calc(50% - 75px)', height: 'auto', width: 150 }}
-      />
-    </Box>
-
-    <Paper component="main" square sx={{ flex: '1 0 auto', pb: 4 }}>
-      <Box sx={{ display: 'flex', px: 2.5, py: 2 }}>
-        <Typography component="h1" variant="h5" sx={{ flex: '1', textTransform: 'capitalize' }}>
-          { name }
-        </Typography>
-
-        <IconButton
-          component={Link}
-          href=".."
-          sx={{ mt: -1, mr: -1.5 }}
-        >
-          <CloseIcon />
-        </IconButton>
+  return (
+    <MapDrawer>
+      <Box
+        component="main"
+        sx={{
+          position: 'relative',
+          height: 230,
+          flexShrink: 0,
+          color: 'action.selected',
+        }}
+      >
+        <ColoredImage
+          src={seaTurtlePng}
+          alt="computer"
+          style={{ position: 'absolute', bottom: 0, left: 'calc(50% - 75px)', height: 'auto', width: 150 }}
+        />
       </Box>
 
-      <Divider />
+      <Paper square sx={{ flex: '1 0 auto', pb: 4 }}>
+        <Box sx={{ display: 'flex', px: 2.5, py: 2 }}>
+          <Typography component="h1" variant="h5" sx={{ flex: '1', textTransform: 'capitalize' }}>
+            { name }
+          </Typography>
 
-      { children }
-    </Paper>
-  </MapDrawer>;
+          <IconButton
+            component={Link}
+            href=".."
+            sx={{ mt: -1, mr: -1.5 }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Box>
+
+        <Divider />
+
+        { children }
+      </Paper>
+    </MapDrawer>
+  );
 }
