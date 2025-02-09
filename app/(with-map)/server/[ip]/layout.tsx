@@ -1,7 +1,4 @@
-import computerPng from '@/assets/computer.png';
-import ColoredImage from '@/components/ColoredImage';
 import HostnameLink from '@/components/HostnameLink';
-import MapDrawer from '@/components/map/MapDrawer';
 import SourcesNav from '@/components/SourcesNav';
 import { reverseDnsLookup } from '@/data/dns';
 import CloseIcon from '@mui/icons-material/Close';
@@ -13,47 +10,26 @@ import Typography from '@mui/material/Typography';
 import ipaddr from 'ipaddr.js';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
+import { redirect, RedirectType } from 'next/navigation';
 import { type ReactNode, Suspense } from 'react';
+import { decodeIp, type WithMapServerIpParams } from './params';
 
-export interface WithMapIpLayoutProps {
+// Layout
+export interface WithMapServerIpLayoutProps {
   readonly children: ReactNode;
-  readonly params: Promise<{
-    readonly ip: string;
-  }>;
+  readonly params: Promise<WithMapServerIpParams>;
 }
 
-export async function generateMetadata({ params }: WithMapIpLayoutProps): Promise<Metadata> {
-  return {
-    title: decodeURIComponent((await params).ip),
-  };
-}
-
-export default async function WithMapIpLayout({ children, params }: WithMapIpLayoutProps) {
-  const ip = decodeURIComponent((await params).ip);
+export default async function WithMapServerIpLayout({ params, children }: WithMapServerIpLayoutProps) {
+  const ip = await decodeIp(params);
 
   if (!ipaddr.isValid(ip)) {
-    redirect('/');
+    redirect('/', RedirectType.replace);
   }
 
-  return <MapDrawer>
-    <Box
-      sx={{
-        position: 'relative',
-        height: 230,
-        flexShrink: 0,
-        color: 'action.selected',
-      }}
-    >
-      <ColoredImage
-        src={computerPng}
-        alt="computer"
-        style={{ position: 'absolute', bottom: 0, left: 'calc(50% - 75px)', height: 'auto', width: 150 }}
-      />
-    </Box>
-
+  return (
     <Paper square sx={{ flex: '1 0 auto', pb: 4 }}>
-      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto', px: 2.5, py: 2 }}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto', gridAutoRows: 'auto', px: 2.5, py: 2 }}>
         <Typography component="h1" variant="h5" noWrap sx={{ gridColumnStart: 1, gridRowStart: 1 }}>
           { ipaddr.parse(ip).toString() }
         </Typography>
@@ -80,5 +56,11 @@ export default async function WithMapIpLayout({ children, params }: WithMapIpLay
 
       { children }
     </Paper>
-  </MapDrawer>;
+  );
+}
+
+export async function generateMetadata({ params }: WithMapServerIpLayoutProps): Promise<Metadata> {
+  return {
+    title: await decodeIp(params),
+  };
 }

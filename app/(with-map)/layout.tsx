@@ -6,6 +6,7 @@ import DnsSearchOptions from '@/components/search/DnsSearchOptions';
 import IpSearchOptions from '@/components/search/IpSearchOptions';
 import SearchBox from '@/components/search/SearchBox';
 import { SearchBoxSkeleton } from '@/components/search/SearchBoxSkeleton';
+import { mergeSx } from '@/utils/mui';
 import Paper from '@mui/material/Paper';
 import Toolbar from '@mui/material/Toolbar';
 import { domAnimation, LazyMotion } from 'motion/react';
@@ -42,7 +43,9 @@ export default async function WithMapLayout({ children }: WithMapLayoutProps) {
           </SearchBox>
         </Suspense>
 
-        <LocateButton sx={{ ml: 3 }} />
+        <Paper elevation={2} sx={{ ml: 3, p: 0.5, borderRadius: 9999 }}>
+          <LocateButton />
+        </Paper>
 
         <Paper elevation={2} sx={{ ml: 'auto', p: 0.5, borderRadius: 9999 }}>
           <ColorModeToggle />
