@@ -41,7 +41,8 @@ export function SearchComboBox(props: SearchComboBoxProps) {
 
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     onInputChange(event.currentTarget.value);
-  }, [onInputChange]);
+    onOpen();
+  }, [onInputChange, onOpen]);
   
   const handleKeyDown = useCallback((event: KeyboardEvent) => {
     switch (event.key) {
@@ -71,7 +72,8 @@ export function SearchComboBox(props: SearchComboBoxProps) {
 
   const handleClear = useCallback(() => {
     onInputChange('');
-  }, [onInputChange]);
+    onClose();
+  }, [onClose, onInputChange]);
   
   // Render
   return (
