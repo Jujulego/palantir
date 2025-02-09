@@ -28,7 +28,7 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
   const listBoxRef = useRef<HTMLUListElement>(null);
 
   // Open state
-  const [_isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const handleOpen = useCallback(() => setIsOpen(true), []);
   const handleClose = useCallback(() => setIsOpen(false), []);
 
@@ -66,19 +66,20 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
   }, [router]);
 
   // Options
-  const optionsRef = useRef<OptionsRecord>({});
+  const optionsRef = useRef(new Map<string, URL>());
   const [activeOption, setActiveOption] = useState<string | null>(null);
   const [isEmpty, setIsEmpty] = useState(true);
 
   const registerOption = useCallback((id: string, target: URL) => {
-    optionsRef.current[id] = target;
+    optionsRef.current.set(id, target);
     setIsEmpty(false);
   }, []);
 
   const unregisterOption = useCallback((id: string) => {
-    delete optionsRef.current[id];
+    optionsRef.current.delete(id);
+
     setActiveOption((old) => old === id ? null : old);
-    setIsEmpty(Object.keys(optionsRef.current).length === 0);
+    setIsEmpty(optionsRef.current.size === 0);
   }, []);
 
   const handleFocusDown = useCallback(() => {
@@ -131,7 +132,7 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
     }
 
     if (optionId) {
-      const target = optionsRef.current[optionId];
+      const target = optionsRef.current.get(optionId);
 
       if (target) {
         search(target);
@@ -140,8 +141,6 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
   }, [activeOption, search]);
 
   // Render
-  const isOpen = _isOpen && !!inputValue;
-
   return (
     <SearchSurface
       isOpen={isOpen}
@@ -206,8 +205,6 @@ const SearchListBoxContainer = styled('div')({
 });
 
 // Utils
-type OptionsRecord = Partial<Record<string, URL>>;
-
 function isEnabledOption(element: Element): boolean {
   return element.role === 'option' && element.ariaDisabled !== 'false';
 }
