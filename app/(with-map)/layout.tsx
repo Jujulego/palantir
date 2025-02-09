@@ -5,6 +5,7 @@ import AnimalSearchOptions from '@/components/search/AnimalSearchOptions';
 import DnsSearchOptions from '@/components/search/DnsSearchOptions';
 import IpSearchOptions from '@/components/search/IpSearchOptions';
 import SearchBox from '@/components/search/SearchBox';
+import { SearchBoxSkeleton } from '@/components/search/SearchBoxSkeleton';
 import Paper from '@mui/material/Paper';
 import Toolbar from '@mui/material/Toolbar';
 import { domAnimation, LazyMotion } from 'motion/react';
@@ -20,6 +21,7 @@ export default async function WithMapLayout({ children }: WithMapLayoutProps) {
   return (
     <LazyMotion features={domAnimation} strict>
       <Toolbar
+        component="header"
         disableGutters
         sx={{
           flexShrink: 0,
@@ -32,7 +34,7 @@ export default async function WithMapLayout({ children }: WithMapLayoutProps) {
           }
         }}
       >
-        <Suspense>
+        <Suspense fallback={<SearchBoxSkeleton sx={{ width: 384 }} />}>
           <SearchBox sx={{ width: 384 }}>
             <AnimalSearchOptions />
             <DnsSearchOptions />

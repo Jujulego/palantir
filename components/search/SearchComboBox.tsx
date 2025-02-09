@@ -83,7 +83,7 @@ export function SearchComboBox(props: SearchComboBoxProps) {
 
         autoCorrect="off"
         autoComplete="off"
-        placeholder="Search..."
+        placeholder="Search on Palantir"
         spellCheck={false}
         type="search"
 
