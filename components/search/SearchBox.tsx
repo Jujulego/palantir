@@ -33,7 +33,7 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
   const handleClose = useCallback(() => setIsOpen(false), []);
 
   // Input state
-  const [searchParam, _] = useSearchParam('search');
+  const [searchParam,] = useSearchParam('search');
   const [inputValue, setInputValue] = useState(searchParam ?? '');
   const inputValueRef = useRef(inputValue);
   inputValueRef.current = inputValue;
