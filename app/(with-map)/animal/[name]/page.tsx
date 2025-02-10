@@ -1,3 +1,4 @@
+import type { WithMapAnimalNameParams } from '@/app/(with-map)/animal/[name]/params';
 import LocationListItem from '@/components/LocationListItem';
 import MapFlyTo from '@/components/map/MapFlyTo';
 import MapMarker from '@/components/map/MapMarker';
@@ -15,9 +16,7 @@ import { redirect } from 'next/navigation';
 
 // Page
 export interface WithMapAnimalPageProps {
-  readonly params: Promise<{
-    readonly name: string;
-  }>;
+  readonly params: Promise<WithMapAnimalNameParams>;
 }
 
 export default async function WithMapAnimalPage({ params }: WithMapAnimalPageProps) {
@@ -31,7 +30,7 @@ export default async function WithMapAnimalPage({ params }: WithMapAnimalPagePro
   // Render
   const position = animal.coordinates[animal.coordinates.length - 1];
 
-  return <>
+  return (
     <List>
       <LocationListItem coordinates={position} />
       { animal.species && (
@@ -61,12 +60,13 @@ export default async function WithMapAnimalPage({ params }: WithMapAnimalPagePro
           <ListItemText primary={animal.gender} />
         </ListItem>
       ) }
-    </List>
 
-    <MapPolyline coordinates={animal.coordinates} />
-    { position && <MapMarker latitude={position.latitude} longitude={position.longitude} selected /> }
-    { position
-      ? <MapFlyTo latitude={position.latitude} longitude={position.longitude} zoom={5} />
-      : <MapSpin /> }
-  </>;
+      <MapPolyline coordinates={animal.coordinates} />
+
+      { position && <MapMarker latitude={position.latitude} longitude={position.longitude} selected /> }
+      { position
+        ? <MapFlyTo latitude={position.latitude} longitude={position.longitude} zoom={5} />
+        : <MapSpin /> }
+    </List>
+  );
 }
