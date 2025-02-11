@@ -1,6 +1,6 @@
 import type { IpMetadata } from '@/data/ip-metadata';
 import { queryIpGeolocationFull } from '@/lib/server/big-data-cloud/ip-geolocation';
-import { extractLocation } from '@/lib/server/big-data-cloud/extractors';
+import { extractAddress, extractLocation } from '@/lib/server/big-data-cloud/extractors';
 import type { Tag } from '@/lib/utils/tag';
 import ipaddr from 'ipaddr.js';
 
@@ -124,13 +124,7 @@ const bigDataCloud = {
       result.coordinates = extractLocation(payload)!;
 
       if (payload.country) {
-        result.address = {
-          city: payload.location.city,
-          postalCode: payload.location.postcode,
-          region: payload.location.principalSubdivision,
-          country: payload.country.name,
-          countryCode: payload.country.isoAlpha2,
-        };
+        result.address = extractAddress(payload)!;
       }
     }
 

@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import { Fragment } from 'react';
 
 export interface LocationTypographyProps {
-  readonly address?: Address;
+  readonly address?: Address | null;
   readonly location?: Location | null;
 }
 
@@ -13,12 +13,14 @@ export default function LocationTypography({ address, location }: LocationTypogr
   if (hasAddress(address)) {
     const lines = addressFormatter.format({ ...address, country: undefined }, { output: 'array' });
 
-    return <>{lines.map((line, idx) => (
-      <Fragment key={line}>
-        {idx > 0 && <>,&nbsp;</>}
-        {line}
-      </Fragment>
-    ))}</>;
+    return <>
+      { lines.map((line, idx) => (
+        <Fragment key={line}>
+          {idx > 0 && <>,&nbsp;</>}
+          {line}
+        </Fragment>
+      )) }
+    </>;
   } else if (location) {
     const lat = degreeFormat.format(location.latitude);
     const lng = degreeFormat.format(location.longitude);
@@ -37,6 +39,6 @@ const degreeFormat = new Intl.NumberFormat('fr-FR', {
   signDisplay: 'always',
 });
 
-function hasAddress(address?: Address) {
+function hasAddress(address?: Address | null) {
   return address?.city || address?.postalCode || address?.region;
 }

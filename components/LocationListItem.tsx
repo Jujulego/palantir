@@ -12,7 +12,7 @@ import ListItemText from '@mui/material/ListItemText';
 import { useCallback } from 'react';
 
 export interface LocationListItemProps {
-  readonly address?: Address;
+  readonly address?: Address | null;
   readonly location?: Location | null;
 }
 
