@@ -4,7 +4,6 @@ import IpDataIcon from '@/components/icons/IpDataIcon';
 import IpInfoIcon from '@/components/icons/IpInfoIcon';
 import IpQualityScoreIcon from '@/components/icons/IpQualityScoreIcon';
 import { parseSourceIdParam, type SourceId } from '@/data/sources';
-import { bigDataCloudColor } from '@/data/sources/big-data-cloud';
 import { ipGeolocationColor } from '@/data/sources/ip-geolocation';
 import { ipQualityScoreColor } from '@/data/sources/ip-quality-score';
 import CloudIcon from '@mui/icons-material/Cloud';
@@ -79,7 +78,7 @@ export default function SourcesNav() {
         selected={selected.includes('big-data-cloud')}
         icon={<CloudIcon />}
         onSelect={handleSelect}
-        sx={{ '.MuiChip-icon': { color: bigDataCloudColor } }}
+        sx={{ '.MuiChip-icon': { color: 'bigDataCloud.main' } }}
       />
       <LinkChip
         sourceId="ip-data"
@@ -105,11 +104,13 @@ interface LinkChipProps {
 function LinkChip({ sourceId, label, selected, icon, onSelect, sx }: LinkChipProps) {
   const handleClick = useCallback(() => onSelect(sourceId), [onSelect, sourceId]);
   
-  return <Chip
-    label={label} icon={icon}
-    clickable size="small"
-    variant={selected ? 'filled' : 'outlined'}
-    onClick={handleClick}
-    sx={sx}
-  />;
+  return (
+    <Chip
+      label={label} icon={icon}
+      clickable size="small"
+      variant={selected ? 'filled' : 'outlined'}
+      onClick={handleClick}
+      sx={sx}
+    />
+  );
 }
