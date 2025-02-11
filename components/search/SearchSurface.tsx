@@ -42,6 +42,7 @@ export default function SearchSurface({ isOpen, onOpen, onClose, children, sx }:
         onTouchStart={onOpen}
         onKeyDown={handleKeyDown}
 
+        elevation={2}
         sx={{
           position: 'absolute',
           minHeight: '100%',
