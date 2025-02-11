@@ -1,7 +1,7 @@
 import type { SourceId } from '@/data/sources';
 import type { AutonomousSystem } from '@/lib/server/autonomous-system';
 import type { Address } from '@/lib/utils/address';
-import type { Coordinates } from '@/lib/utils/coordinates';
+import type { Location } from '@/lib/utils/location';
 import type { Tag } from '@/lib/utils/tag';
 
 export interface IpMetadata {
@@ -10,7 +10,7 @@ export interface IpMetadata {
   readonly hostname?: string;
   readonly asn?: AutonomousSystem;
   readonly address?: Address;
-  readonly coordinates?: Coordinates;
+  readonly coordinates?: Location;
   readonly tags: readonly Tag[];
   readonly raw: unknown;
 }

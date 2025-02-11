@@ -31,7 +31,7 @@ export default async function WithMapServerIpPage({ params, searchParams }: With
   // Render
   return (
     <List>
-      <LocationListItem address={address} coordinates={coordinates} />
+      <LocationListItem address={address} location={coordinates} />
 
       { asn && (
         <ListItem sx={{ minHeight: 56, px: 2, py: 0 }}>

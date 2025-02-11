@@ -1,7 +1,7 @@
 /**
  * Represents coordinates on Earth
  */
-export interface Coordinates {
+export interface Location {
   readonly latitude: number;
   readonly longitude: number;
 }

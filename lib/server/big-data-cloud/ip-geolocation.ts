@@ -13,7 +13,7 @@ export async function queryIpGeolocationFull(ip: IPv4 | IPv6): Promise<IpGeoloca
   }
 
   // Make request
-  console.log(`[big data cloud] query ip geolocation of ${ip.toNormalizedString()}`);
+  console.log(`[big-data-cloud] query ip geolocation of ${ip.toNormalizedString()}`);
   const url = new URL('https://api-bdc.net/data/ip-geolocation-full');
   url.searchParams.set('ip', ip.toNormalizedString());
   url.searchParams.set('key', process.env.BIG_DATA_CLOUD_KEY!);
@@ -24,7 +24,7 @@ export async function queryIpGeolocationFull(ip: IPv4 | IPv6): Promise<IpGeoloca
       tags: [`server-${ip.toNormalizedString()}`]
     }
   });
-  console.log(`[big data cloud] received ip geolocation of ${ip.toNormalizedString()}`);
+  console.log(`[big-data-cloud] received ip geolocation of ${ip.toNormalizedString()}`);
 
   return res;
 }

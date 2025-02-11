@@ -1,15 +1,15 @@
 import type { Address } from '@/lib/utils/address';
-import type { Coordinates } from '@/lib/utils/coordinates';
+import type { Location } from '@/lib/utils/location';
 import addressFormatter from '@fragaria/address-formatter';
 import Box from '@mui/material/Box';
 import { Fragment } from 'react';
 
 export interface LocationTypographyProps {
   readonly address?: Address;
-  readonly coordinates?: Coordinates;
+  readonly location?: Location | null;
 }
 
-export default function LocationTypography({ address, coordinates }: LocationTypographyProps) {
+export default function LocationTypography({ address, location }: LocationTypographyProps) {
   if (hasAddress(address)) {
     const lines = addressFormatter.format({ ...address, country: undefined }, { output: 'array' });
 
@@ -19,9 +19,9 @@ export default function LocationTypography({ address, coordinates }: LocationTyp
         {line}
       </Fragment>
     ))}</>;
-  } else if (coordinates) {
-    const lat = degreeFormat.format(coordinates.latitude);
-    const lng = degreeFormat.format(coordinates.longitude);
+  } else if (location) {
+    const lat = degreeFormat.format(location.latitude);
+    const lng = degreeFormat.format(location.longitude);
 
     return <>{ lat }&nbsp;{ lng }</>;
   }
