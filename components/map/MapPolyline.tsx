@@ -2,14 +2,14 @@
 
 import { MapContext } from '@/components/map/map.context';
 
-import type { Location } from '@/lib/utils/location';
+import type { Coordinates } from '@/lib/utils/coordinates';
 import { useTheme } from '@mui/material';
 import type { GeoJSONSource } from 'mapbox-gl';
 import { use, useEffect, useId } from 'react';
 
 // Component
 export interface MapPolylineProps {
-  readonly coordinates: readonly Location[];
+  readonly coordinates: readonly Coordinates[];
 }
 
 export default function MapPolyline({ coordinates }: MapPolylineProps) {

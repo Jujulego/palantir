@@ -1,12 +1,12 @@
 import type { IpGeolocationFullResult } from '@/lib/server/big-data-cloud/ip-geolocation.dto';
 import type { Address } from '@/lib/utils/address';
-import type { Location } from '@/lib/utils/location';
+import type { Coordinates } from '@/lib/utils/coordinates';
 
 /**
  * Extracts location from a Big Data Cloud geolocation result
  * @param result
  */
-export function extractLocation(result: IpGeolocationFullResult): Location | null {
+export function extractCoordinates(result: IpGeolocationFullResult): Coordinates | null {
   if (result.location) {
     return {
       latitude: result.location.latitude,

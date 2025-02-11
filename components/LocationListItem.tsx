@@ -3,7 +3,7 @@
 import LocationTypography from '@/components/LocationTypography';
 import { useMapFlyTo } from '@/hooks/useMapFlyTo';
 import type { Address } from '@/lib/utils/address';
-import type { Location } from '@/lib/utils/location';
+import type { Coordinates } from '@/lib/utils/coordinates';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -13,16 +13,16 @@ import { useCallback } from 'react';
 
 export interface LocationListItemProps {
   readonly address?: Address | null;
-  readonly location?: Location | null;
+  readonly coordinates?: Coordinates | null;
 }
 
-export default function LocationListItem({ address, location }: LocationListItemProps) {
+export default function LocationListItem({ address, coordinates }: LocationListItemProps) {
   const { flyTo, isReady } = useMapFlyTo();
 
   const handleClick = useCallback(() => {
-    if (!location) return;
-    flyTo({ latitude: location.latitude, longitude: location.longitude, zoom: 5 });
-  }, [flyTo, location]);
+    if (!coordinates) return;
+    flyTo({ latitude: coordinates.latitude, longitude: coordinates.longitude, zoom: 5 });
+  }, [flyTo, coordinates]);
 
   return (
     <ListItem disablePadding>
@@ -36,7 +36,7 @@ export default function LocationListItem({ address, location }: LocationListItem
         </ListItemIcon>
 
         <ListItemText
-          primary={<LocationTypography address={address} location={location} />}
+          primary={<LocationTypography address={address} coordinates={coordinates} />}
           secondary={address?.country}
         />
       </ListItemButton>

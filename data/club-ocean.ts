@@ -1,7 +1,7 @@
 'use server';
 
 
-import type { Location } from '@/lib/utils/location';
+import type { Coordinates } from '@/lib/utils/coordinates';
 import { FetchError } from '@/utils/fetch';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
@@ -17,7 +17,7 @@ export interface ClubOceanAnimal {
   readonly coordinates: readonly ClubOceanTrackingCoordinates[];
 }
 
-export interface ClubOceanTrackingCoordinates extends Location {
+export interface ClubOceanTrackingCoordinates extends Coordinates {
   readonly date: string;
 }
 

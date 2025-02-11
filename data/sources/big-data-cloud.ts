@@ -1,6 +1,6 @@
 import type { IpMetadata } from '@/data/ip-metadata';
 import { queryIpGeolocationFull } from '@/lib/server/big-data-cloud/ip-geolocation';
-import { extractAddress, extractLocation } from '@/lib/server/big-data-cloud/extractors';
+import { extractAddress, extractCoordinates } from '@/lib/server/big-data-cloud/extractors';
 import type { Tag } from '@/lib/utils/tag';
 import ipaddr from 'ipaddr.js';
 
@@ -121,7 +121,7 @@ const bigDataCloud = {
     };
 
     if (payload.location) {
-      result.coordinates = extractLocation(payload)!;
+      result.coordinates = extractCoordinates(payload)!;
 
       if (payload.country) {
         result.address = extractAddress(payload)!;

@@ -2,18 +2,18 @@
 
 import MapMarker from '@/components/map/MapMarker';
 import { ipSources, SourceId } from '@/data/sources';
-import type { Location } from '@/lib/utils/location';
+import type { Coordinates } from '@/lib/utils/coordinates';
 import { collect$, filter$, map$, pipe$ } from 'kyrielle';
 import { useRef } from 'react';
 
 // Component
 export interface IpMapMarkersProps {
   readonly sourceId: SourceId;
-  readonly coordinates?: Location;
+  readonly coordinates?: Coordinates;
 }
 
 export default function IpMapMarkers({ sourceId, coordinates }: IpMapMarkersProps) {
-  const markersRef = useRef<Partial<Record<SourceId, Location>>>({});
+  const markersRef = useRef<Partial<Record<SourceId, Coordinates>>>({});
   const sourceIdRef = useRef(new Set<SourceId>());
 
   markersRef.current[sourceId] = coordinates;

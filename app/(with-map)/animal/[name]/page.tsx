@@ -32,7 +32,7 @@ export default async function WithMapAnimalPage({ params }: WithMapAnimalPagePro
 
   return (
     <List>
-      <LocationListItem location={position} />
+      <LocationListItem coordinates={position} />
       { animal.species && (
         <ListItem sx={{ minHeight: 56, px: 2, py: 0 }}>
           <ListItemIcon sx={{ minWidth: 40 }}>
