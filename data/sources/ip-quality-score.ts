@@ -1,4 +1,5 @@
-import type { IpMetadata, Tag } from '@/data/ip-metadata';
+import type { IpMetadata } from '@/data/ip-metadata';
+import type { Tag } from '@/lib/utils/tag';
 import { jsonFetch } from '@/utils/fetch';
 import countries from 'i18n-iso-countries';
 import ipaddr from 'ipaddr.js';

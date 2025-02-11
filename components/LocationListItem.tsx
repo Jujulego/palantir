@@ -1,8 +1,9 @@
 'use client';
 
 import LocationTypography from '@/components/LocationTypography';
-import type { Address, Coordinates } from '@/data/ip-metadata';
 import { useMapFlyTo } from '@/hooks/useMapFlyTo';
+import type { Address } from '@/lib/utils/address';
+import type { Coordinates } from '@/lib/utils/coordinates';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';

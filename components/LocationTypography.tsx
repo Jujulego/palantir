@@ -1,4 +1,5 @@
-import type { Address, Coordinates } from '@/data/ip-metadata';
+import type { Address } from '@/lib/utils/address';
+import type { Coordinates } from '@/lib/utils/coordinates';
 import addressFormatter from '@fragaria/address-formatter';
 import Box from '@mui/material/Box';
 import { Fragment } from 'react';

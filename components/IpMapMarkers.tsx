@@ -1,8 +1,8 @@
 'use client';
 
 import MapMarker from '@/components/map/MapMarker';
-import type { Coordinates } from '@/data/ip-metadata';
 import { ipSources, SourceId } from '@/data/sources';
+import type { Coordinates } from '@/lib/utils/coordinates';
 import { collect$, filter$, map$, pipe$ } from 'kyrielle';
 import { useRef } from 'react';
 
