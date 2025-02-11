@@ -8,12 +8,11 @@ import { useCallback } from 'react';
 
 // Component
 export default function ColorModeToggle() {
-  const { mode, systemMode, setMode } = useColorScheme();
-  const actualMode = mode === 'system' ? systemMode : mode;
+  const { colorScheme, setColorScheme } = useColorScheme();
 
   const handleClick = useCallback(() => {
-    setMode(actualMode === 'dark' ? 'light' : 'dark');
-  }, [actualMode, setMode]);
+    setColorScheme(colorScheme === 'dark' ? 'light' : 'dark');
+  }, [colorScheme, setColorScheme]);
 
   // Render
   return (
@@ -21,7 +20,7 @@ export default function ColorModeToggle() {
       color="inherit" aria-label="Switch theme"
       onClick={handleClick}
     >
-      { actualMode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon /> }
+      { colorScheme === 'dark' ? <Brightness7Icon /> : <Brightness4Icon /> }
     </IconButton>
   );
 }

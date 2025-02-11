@@ -9,14 +9,12 @@ export interface MapStyleProps {
 
 export default function MapStyle({ map }: MapStyleProps) {
   const theme = useTheme();
-
-  const { mode, systemMode } = useColorScheme();
-  const actualMode = mode === 'system' ? systemMode : mode;
+  const { colorScheme } = useColorScheme();
 
   useEffect(() => {
     map.setConfigProperty('basemap', 'font', theme.typography.fontFamily);
-    map.setConfigProperty('basemap', 'lightPreset', actualMode === 'light' ? 'day' : 'night');
-  }, [map, actualMode, theme.typography.fontFamily]);
+    map.setConfigProperty('basemap', 'lightPreset', colorScheme === 'light' ? 'day' : 'night');
+  }, [map, theme.typography.fontFamily, colorScheme]);
 
   // Render
   return null;
