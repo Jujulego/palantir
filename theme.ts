@@ -1,5 +1,6 @@
 'use client';
 
+// noinspection ES6UnusedImports
 import type {} from '@mui/material/themeCssVarsAugmentation';
 import { createTheme } from '@mui/material/styles';
 import { Roboto } from 'next/font/google';
@@ -24,13 +25,7 @@ const theme = createTheme({
       palette: {
         mode: 'dark'
       },
-      map: {
-        light: 'night',
-      },
     }
-  },
-  map: {
-    light: 'day',
   },
   zIndex: {
     appBar: 1200,
@@ -42,23 +37,3 @@ const theme = createTheme({
 });
 
 export default theme;
-
-declare module '@mui/material/styles' {
-  export interface Theme {
-    map: {
-      light: 'dawn' | 'day' | 'dusk' | 'night';
-    };
-  }
-
-  export interface ThemeOptions {
-    map?: {
-      light?: 'dawn' | 'day' | 'dusk' | 'night';
-    };
-  }
-
-  export interface ColorSystemOptions {
-    map?: {
-      light?: 'dawn' | 'day' | 'dusk' | 'night';
-    };
-  }
-}

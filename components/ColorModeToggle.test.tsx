@@ -14,11 +14,10 @@ describe('ColorModeToggle', () => {
   });
 
   it('should render with light icon and switch to light', async () => {
-    const setMode = vi.fn();
+    const setColorScheme = vi.fn();
     vi.mocked(useColorScheme).mockReturnValue({
-      mode: 'dark',
-      systemMode: 'light',
-      setMode: setMode as unknown,
+      colorScheme: 'dark',
+      setColorScheme: setColorScheme as unknown,
     } as ColorSchemeContextValue<SupportedColorScheme>);
 
     // Render
@@ -32,15 +31,14 @@ describe('ColorModeToggle', () => {
     // Act
     await userEvent.click(btn);
 
-    expect(setMode).toHaveBeenCalledWith('light');
+    expect(setColorScheme).toHaveBeenCalledWith('light');
   });
 
   it('should render with dark icon and switch to dark', async () => {
-    const setMode = vi.fn();
+    const setColorScheme = vi.fn();
     vi.mocked(useColorScheme).mockReturnValue({
-      mode: 'light',
-      systemMode: 'dark',
-      setMode: setMode as unknown,
+      colorScheme: 'light',
+      setColorScheme: setColorScheme as unknown,
     } as ColorSchemeContextValue<SupportedColorScheme>);
 
     // Render
@@ -54,28 +52,6 @@ describe('ColorModeToggle', () => {
     // Act
     await userEvent.click(btn);
 
-    expect(setMode).toHaveBeenCalledWith('dark');
-  });
-
-  it('should render with light icon and switch to light (system based)', async () => {
-    const setMode = vi.fn();
-    vi.mocked(useColorScheme).mockReturnValue({
-      mode: 'system',
-      systemMode: 'dark',
-      setMode: setMode as unknown,
-    } as ColorSchemeContextValue<SupportedColorScheme>);
-
-    // Render
-    render(<ColorModeToggle />);
-
-    const btn = screen.getByLabelText('Switch theme');
-
-    expect(btn).toHaveRole('button');
-    expect(queryByTestId(btn, 'Brightness7Icon')).toBeDefined();
-
-    // Act
-    await userEvent.click(btn);
-
-    expect(setMode).toHaveBeenCalledWith('light');
+    expect(setColorScheme).toHaveBeenCalledWith('dark');
   });
 });
