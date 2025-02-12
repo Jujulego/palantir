@@ -2,6 +2,7 @@ import { decodeIp, type WithMapServerIpParams } from '@/app/(with-map)/server/[i
 import LocationListItem from '@/components/LocationListItem';
 import MapMarker from '@/components/map/MapMarker';
 import MapSpin from '@/components/map/MapSpin';
+import PayloadListItem from '@/components/PayloadListItem';
 import { queryIpGeolocationFull } from '@/lib/server/big-data-cloud/ip-geolocation';
 import { extractAddress, extractCoordinates } from '@/lib/server/big-data-cloud/extractors';
 import List from '@mui/material/List';
@@ -23,6 +24,8 @@ export default async function WMServerIpBDCPage({ params }: WMServerIpBDCProps) 
   return (
     <List>
       <LocationListItem address={extractAddress(data)} coordinates={coordinates} />
+
+      <PayloadListItem payload={data} />
 
       { coordinates ? (
         <>
