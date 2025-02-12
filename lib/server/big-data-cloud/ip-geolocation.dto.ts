@@ -1,12 +1,12 @@
 export interface IpGeolocationFullResult {
-  readonly country?: BigDataCloudCountry;
-  readonly location?: BigDataCloudLocation;
-  readonly network?: BigDataCloudNetwork;
-  readonly hazardReport?: BigDataCloudHazardReport;
-  readonly confidenceArea?: readonly BigDataCloudPoint[];
+  readonly country?: Country;
+  readonly location?: Location;
+  readonly network?: Network;
+  readonly hazardReport?: HazardReport;
+  readonly confidenceArea?: readonly Point[];
 }
 
-export interface BigDataCloudCountry {
+export interface Country {
   readonly isoAlpha2: string;
   readonly isoAlpha3: string;
   readonly m49Code: number;
@@ -19,7 +19,7 @@ export interface BigDataCloudCountry {
   readonly isIndependent: boolean;
 }
 
-export interface BigDataCloudLocation {
+export interface Location {
   readonly principalSubdivision: string;
   readonly isoPrincipalSubdivision: string;
   readonly isoPrincipalSubdivisionCode: string;
@@ -33,7 +33,7 @@ export interface BigDataCloudLocation {
   readonly plusCode: string;
 }
 
-export interface BigDataCloudNetwork {
+export interface Network {
   readonly registry: string;
   readonly registryStatus: string;
   readonly registeredCountry: string;
@@ -45,10 +45,10 @@ export interface BigDataCloudNetwork {
   readonly bgpPrefixNetworkAddress: string;
   readonly bgpPrefixLastAddress: string;
   readonly totalAddresses: number;
-  readonly carriers: readonly BigDataCloudCarrier[];
+  readonly carriers: readonly NetworkCarrier[];
 }
 
-export interface BigDataCloudCarrier {
+export interface NetworkCarrier {
   readonly asn: string;
   readonly asnNumeric: number;
   readonly organisation: string;
@@ -67,7 +67,7 @@ export interface BigDataCloudCarrier {
   readonly rankText: string;
 }
 
-export interface BigDataCloudHazardReport {
+export interface HazardReport {
   readonly isKnownAsTorServer: boolean;
   readonly isKnownAsVpn: boolean;
   readonly isKnownAsProxy: boolean;
@@ -87,7 +87,7 @@ export interface BigDataCloudHazardReport {
   readonly iCloudPrivateRelay: boolean;
 }
 
-export interface BigDataCloudPoint {
+export interface Point {
   readonly latitude: number;
   readonly longitude: number;
 }

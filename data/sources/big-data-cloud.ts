@@ -1,6 +1,6 @@
 import type { IpMetadata } from '@/data/ip-metadata';
 import { queryIpGeolocationFull } from '@/lib/server/big-data-cloud/ip-geolocation';
-import { extractAddress, extractCoordinates } from '@/lib/server/big-data-cloud/extractors';
+import { extractAddress, extractAutonomousSystem, extractCoordinates } from '@/lib/server/big-data-cloud/extractors';
 import type { Tag } from '@/lib/utils/tag';
 import ipaddr from 'ipaddr.js';
 
@@ -129,10 +129,7 @@ const bigDataCloud = {
     }
 
     if (payload.network?.carriers?.length) {
-      result.asn = {
-        asn: payload.network.carriers[0].asnNumeric,
-        organisation: payload.network.carriers[0].organisation,
-      };
+      result.asn = extractAutonomousSystem(payload)!;
     }
 
     const tags: Tag[] = [];

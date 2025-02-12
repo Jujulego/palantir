@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { extractAddress, extractCoordinates } from './extractors';
-import type { IpGeolocationFullResult } from './ip-geolocation.dto';
+import { extractAddress, extractAutonomousSystem, extractCoordinates } from './extractors';
+import type { NetworkCarrier, Network, IpGeolocationFullResult } from './ip-geolocation.dto';
 
 // Tests
 describe('extractCoordinates', () => {
@@ -48,7 +48,31 @@ describe('extractAddress', () => {
     });
   });
 
-  it('should return null if location is missing', () => {
+  it('should return null if location or country is missing', () => {
     expect(extractAddress({})).toStrictEqual(null);
+  });
+});
+
+describe('extractAutonomousSystem', () => {
+  it('should extract autonomous system from result', () => {
+    const result = {
+      network: {
+        carriers: [
+          {
+            asnNumeric: 1,
+            organisation: 'organisation',
+          } as NetworkCarrier,
+        ] as readonly NetworkCarrier[]
+      } as Network
+    } as IpGeolocationFullResult;
+
+    expect(extractAutonomousSystem(result)).toStrictEqual({
+      asn: 1,
+      organisation: 'organisation',
+    });
+  });
+
+  it('should return null if network is missing', () => {
+    expect(extractAutonomousSystem({})).toStrictEqual(null);
   });
 });
