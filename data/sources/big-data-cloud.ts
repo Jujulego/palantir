@@ -1,7 +1,11 @@
 import type { IpMetadata } from '@/data/ip-metadata';
+import {
+  extractAddress,
+  extractAutonomousSystem,
+  extractCoordinates,
+  extractTags
+} from '@/lib/server/big-data-cloud/extractors';
 import { queryIpGeolocationFull } from '@/lib/server/big-data-cloud/ip-geolocation';
-import { extractAddress, extractAutonomousSystem, extractCoordinates } from '@/lib/server/big-data-cloud/extractors';
-import type { Tag } from '@/lib/utils/tag';
 import ipaddr from 'ipaddr.js';
 
 // Types
@@ -132,45 +136,7 @@ const bigDataCloud = {
       result.asn = extractAutonomousSystem(payload)!;
     }
 
-    const tags: Tag[] = [];
-
-    if (payload.hazardReport?.isCellular) {
-      tags.push({ label: 'cellular', color: 'info' });
-    }
-
-    if (payload.hazardReport?.isKnownAsPublicRouter) {
-      tags.push({ label: 'public router', color: 'info' });
-    }
-
-    if (payload.hazardReport?.iCloudPrivateRelay) {
-      tags.push({ label: 'iCloud relay', color: 'info' });
-    }
-
-    if (payload.network?.isBogon) {
-      tags.push({ label: 'bogon' });
-    }
-
-    if (payload.hazardReport?.isKnownAsMailServer) {
-      tags.push({ label: 'mail server' });
-    }
-
-    if (payload.hazardReport?.isKnownAsVpn) {
-      tags.push({ label: 'vpn', color: 'warning' });
-    }
-
-    if (payload.hazardReport?.isKnownAsTorServer) {
-      tags.push({ label: 'tor', color: 'warning' });
-    }
-
-    if (payload.hazardReport?.isBlacklistedBlocklistDe || payload.hazardReport?.isBlacklistedUceprotect) {
-      tags.push({ label: 'blacklisted', color: 'error' });
-    }
-
-    if (payload.hazardReport?.isSpamhausDrop || payload.hazardReport?.isSpamhausEdrop || payload.hazardReport?.isSpamhausAsnDrop) {
-      tags.push({ label: 'spamhaus', color: 'error' });
-    }
-
-    result.tags = tags;
+    result.tags = extractTags(payload);
 
     return result;
   }

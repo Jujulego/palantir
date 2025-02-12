@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { extractAddress, extractAutonomousSystem, extractCoordinates } from './extractors';
-import type { NetworkCarrier, Network, IpGeolocationFullResult } from './ip-geolocation.dto';
+import { extractAddress, extractAutonomousSystem, extractCoordinates, extractTags } from './extractors';
+import type { HazardReport, IpGeolocationFullResult, Network, NetworkCarrier } from './ip-geolocation.dto';
 
 // Tests
 describe('extractCoordinates', () => {
@@ -74,5 +74,41 @@ describe('extractAutonomousSystem', () => {
 
   it('should return null if network is missing', () => {
     expect(extractAutonomousSystem({})).toStrictEqual(null);
+  });
+});
+
+describe('extractTags', () => {
+  it('should return no tags', () => {
+    expect(extractTags({})).toStrictEqual([]);
+  });
+
+  it('should return result with \'bogon\' tag', () => {
+    const result = {
+      network: { isBogon: true }
+    } as IpGeolocationFullResult;
+
+    expect(extractTags(result)).toStrictEqual([
+      { label: 'bogon' }
+    ]);
+  });
+
+  it.each([
+    { key: 'isCellular', label: 'cellular', color: 'info' },
+    { key: 'isKnownAsPublicRouter', label: 'public router', color: 'info' },
+    { key: 'iCloudPrivateRelay', label: 'iCloud relay', color: 'info' },
+    { key: 'isKnownAsMailServer', label: 'mail server' },
+    { key: 'isKnownAsVpn', label: 'vpn', color: 'warning' },
+    { key: 'isKnownAsTorServer', label: 'tor', color: 'warning' },
+    { key: 'isBlacklistedBlocklistDe', label: 'blacklisted', color: 'error' },
+    { key: 'isBlacklistedUceprotect', label: 'blacklisted', color: 'error' },
+    { key: 'isSpamhausDrop', label: 'spamhaus', color: 'error' },
+    { key: 'isSpamhausEdrop', label: 'spamhaus', color: 'error' },
+    { key: 'isSpamhausAsnDrop', label: 'spamhaus', color: 'error' },
+  ])('should return result with $label tag (hazard report $key)', ({ key, ...tag }) => {
+    const result = {
+      hazardReport: { [key]: true } as unknown as HazardReport,
+    };
+
+    expect(extractTags(result)).toStrictEqual([tag]);
   });
 });

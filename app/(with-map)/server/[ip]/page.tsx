@@ -5,13 +5,9 @@ import LocationListItem from '@/components/LocationListItem';
 import MapFlyTo from '@/components/map/MapFlyTo';
 import MapSpin from '@/components/map/MapSpin';
 import PayloadListItem from '@/components/PayloadListItem';
+import { TagsListItem } from '@/components/TagsListItem';
 import { ipSources, parseSourceIdParam } from '@/data/sources';
-import LabelIcon from '@mui/icons-material/Label';
-import Box from '@mui/material/Box';
-import Chip from '@mui/material/Chip';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
 
 // Page
 export interface WithMapServerIpPageProps {
@@ -33,20 +29,7 @@ export default async function WithMapServerIpPage({ params, searchParams }: With
       <LocationListItem address={address} coordinates={coordinates} />
 
       { asn && <AutonomousSystemListItem autonomousSystem={asn} /> }
-
-      { tags.length > 0 && (
-        <ListItem disablePadding sx={{ minHeight: 56, px: 2 }}>
-          <ListItemIcon sx={{ minWidth: 40 }}>
-            <LabelIcon color="primary" />
-          </ListItemIcon>
-
-          <Box component="ul" sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', p: 0, gap: 1 }}>
-            { tags.map((tag) => (
-              <Chip key={tag.label} component="li" label={tag.label} size="small" color={tag.color} />
-            )) }
-          </Box>
-        </ListItem>
-      ) }
+      { tags.length > 0 && <TagsListItem tags={tags} /> }
 
       <PayloadListItem payload={raw} />
 

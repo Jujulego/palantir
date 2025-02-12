@@ -1,15 +1,17 @@
 import { decodeIp, type WithMapServerIpParams } from '@/app/(with-map)/server/[ip]/params';
 import AutonomousSystemListItem from '@/components/AutonomousSystemListItem';
 import LocationListItem from '@/components/LocationListItem';
+import MapFlyTo from '@/components/map/MapFlyTo';
 import MapMarker from '@/components/map/MapMarker';
 import MapSpin from '@/components/map/MapSpin';
 import PayloadListItem from '@/components/PayloadListItem';
+import { TagsListItem } from '@/components/TagsListItem';
+import { extractAddress, extractAutonomousSystem, extractCoordinates, extractTags } from '@/lib/server/big-data-cloud/extractors';
 import { queryIpGeolocationFull } from '@/lib/server/big-data-cloud/ip-geolocation';
-import { extractAddress, extractAutonomousSystem, extractCoordinates } from '@/lib/server/big-data-cloud/extractors';
 import List from '@mui/material/List';
 import ipaddr from 'ipaddr.js';
-import MapFlyTo from '@/components/map/MapFlyTo';
 
+// Page
 export interface WMServerIpBDCProps {
   readonly params: Promise<WithMapServerIpParams>;
 }
@@ -23,12 +25,14 @@ export default async function WMServerIpBDCPage({ params }: WMServerIpBDCProps) 
   const address = extractAddress(data);
   const autonomousSystem = extractAutonomousSystem(data);
   const coordinates = extractCoordinates(data);
+  const tags = extractTags(data);
 
   return (
     <List>
       <LocationListItem address={address} coordinates={coordinates} />
 
       { autonomousSystem && <AutonomousSystemListItem autonomousSystem={autonomousSystem} /> }
+      { tags.length > 0 && <TagsListItem tags={tags} /> }
 
       <PayloadListItem payload={data} />
 
