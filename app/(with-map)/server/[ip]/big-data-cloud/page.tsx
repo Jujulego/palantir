@@ -27,7 +27,9 @@ export default async function WMServerIpBDCPage({ params }: WMServerIpBDCProps) 
   return (
     <List>
       <LocationListItem address={address} coordinates={coordinates} />
+
       { autonomousSystem && <AutonomousSystemListItem autonomousSystem={autonomousSystem} /> }
+
       <PayloadListItem payload={data} />
 
       { coordinates ? (

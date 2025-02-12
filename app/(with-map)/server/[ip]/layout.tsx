@@ -40,7 +40,7 @@ export default async function WithMapServerIpLayout({ params, children }: WithMa
 
         <IconButton
           component={Link}
-          href=".."
+          href="/"
           sx={{ gridColumnStart: 2, gridRowStart: 1, gridRowEnd: 3, alignSelf: 'start', mt: -1, mr: -1.5 }}
           aria-label="Close panel"
         >
