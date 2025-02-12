@@ -12,11 +12,11 @@ import List from '@mui/material/List';
 import ipaddr from 'ipaddr.js';
 
 // Page
-export interface WMServerIpBDCProps {
+export interface WMServerIpBDCPageProps {
   readonly params: Promise<WithMapServerIpParams>;
 }
 
-export default async function WMServerIpBDCPage({ params }: WMServerIpBDCProps) {
+export default async function WMServerIpBDCPage({ params }: WMServerIpBDCPageProps) {
   // Load data
   const ip = ipaddr.parse(await decodeIp(params));
   const data = await queryIpGeolocationFull(ip);
@@ -40,7 +40,6 @@ export default async function WMServerIpBDCPage({ params }: WMServerIpBDCProps) 
   return (
     <List>
       <LocationListItem address={address} coordinates={coordinates} />
-
       { autonomousSystem && <AutonomousSystemListItem autonomousSystem={autonomousSystem} /> }
       { tags.length > 0 && <TagsListItem tags={tags} /> }
 

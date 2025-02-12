@@ -37,7 +37,13 @@ const theme = createTheme({
       color: {
         main: '#e36327'
       }
-    })
+    }),
+    ipInfo: base.palette.augmentColor({
+      name: 'ipInfo',
+      color: {
+        main: '#3091cf'
+      }
+    }),
   },
   typography: {
     fontFamily: roboto.style.fontFamily,
@@ -53,9 +59,11 @@ export default theme;
 declare module '@mui/material/styles' {
   interface Palette {
     bigDataCloud: PaletteColor;
+    ipInfo: PaletteColor;
   }
 
   interface PaletteOptions {
     bigDataCloud?: PaletteColorOptions;
+    ipInfo?: PaletteColorOptions;
   }
 }

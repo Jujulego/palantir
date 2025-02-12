@@ -53,6 +53,7 @@ const ipInfo = {
       }
     });
     console.log(`Received ${ipInfoSourceId} metadata for ${parsed.toNormalizedString()}`);
+    console.log(res);
 
     return res;
   },

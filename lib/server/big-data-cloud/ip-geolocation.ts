@@ -7,7 +7,6 @@ import type { IpGeolocationFullResult } from './ip-geolocation.dto';
  * @param ip
  */
 export async function queryIpGeolocationFull(ip: IPv4 | IPv6): Promise<IpGeolocationFullResult | null> {
-  // Do not request for "bogon" ips
   if (['private', 'loopback'].includes(ip.range())) {
     return null;
   }
