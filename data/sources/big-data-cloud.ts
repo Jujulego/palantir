@@ -107,14 +107,16 @@ export interface BigDataCloudPoint {
 export const bigDataCloudColor = '#e36327';
 export const bigDataCloudSourceId = 'big-data-cloud' as const;
 
+/** @deprecated */
 const bigDataCloud = {
   name: 'Big Data Cloud',
   color: bigDataCloudColor,
   sourceId: bigDataCloudSourceId,
   /** @deprecated */
   async rawFetch(ip: string): Promise<BigDataCloudResult> {
-    return queryIpGeolocationFull(ipaddr.parse(ip));
+    return await queryIpGeolocationFull(ipaddr.parse(ip)) ?? {};
   },
+  /** @deprecated */
   async fetch(ip: string): Promise<IpMetadata> {
     const payload = await this.rawFetch(ip);
     const result: Writeable<IpMetadata> = {

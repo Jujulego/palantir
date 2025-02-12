@@ -17,7 +17,7 @@ describe('queryIpGeolocationFull', () => {
     const ip = ipaddr.parse('1.2.3.4');
     vi.spyOn(ip, 'range').mockReturnValue('loopback');
 
-    await expect(queryIpGeolocationFull(ip)).resolves.toStrictEqual({});
+    await expect(queryIpGeolocationFull(ip)).resolves.toBeNull();
 
     expect(jsonFetch).not.toHaveBeenCalled();
   });
@@ -26,7 +26,7 @@ describe('queryIpGeolocationFull', () => {
     const ip = ipaddr.parse('1.2.3.4');
     vi.spyOn(ip, 'range').mockReturnValue('private');
 
-    await expect(queryIpGeolocationFull(ip)).resolves.toStrictEqual({});
+    await expect(queryIpGeolocationFull(ip)).resolves.toBeNull();
 
     expect(jsonFetch).not.toHaveBeenCalled();
   });

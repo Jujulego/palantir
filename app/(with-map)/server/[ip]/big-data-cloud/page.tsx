@@ -21,6 +21,16 @@ export default async function WMServerIpBDCPage({ params }: WMServerIpBDCProps) 
   const ip = ipaddr.parse(await decodeIp(params));
   const data = await queryIpGeolocationFull(ip);
 
+  // No result
+  if (!data) {
+    return (
+      <List>
+        <LocationListItem />
+        <MapSpin />
+      </List>
+    );
+  }
+
   // Render
   const address = extractAddress(data);
   const autonomousSystem = extractAutonomousSystem(data);
