@@ -1,18 +1,17 @@
 import { decodeIp, type WithMapServerIpParams } from '@/app/(with-map)/server/[ip]/params';
+import AutonomousSystemListItem from '@/components/AutonomousSystemListItem';
 import IpMapMarkers from '@/components/IpMapMarkers';
 import LocationListItem from '@/components/LocationListItem';
 import MapFlyTo from '@/components/map/MapFlyTo';
 import MapSpin from '@/components/map/MapSpin';
 import PayloadListItem from '@/components/PayloadListItem';
 import { ipSources, parseSourceIdParam } from '@/data/sources';
-import HubIcon from '@mui/icons-material/Hub';
 import LabelIcon from '@mui/icons-material/Label';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 
 // Page
 export interface WithMapServerIpPageProps {
@@ -33,21 +32,7 @@ export default async function WithMapServerIpPage({ params, searchParams }: With
     <List>
       <LocationListItem address={address} coordinates={coordinates} />
 
-      { asn && (
-        <ListItem sx={{ minHeight: 56, px: 2, py: 0 }}>
-          <ListItemIcon sx={{ minWidth: 40 }}>
-            <HubIcon color="primary" />
-          </ListItemIcon>
-
-          <ListItemText
-            primary={asn.organisation}
-            secondary={`AS${asn.asn}`}
-            slotProps={{
-               primary: { noWrap: true },
-            }}
-          />
-        </ListItem>
-      ) }
+      { asn && <AutonomousSystemListItem autonomousSystem={asn} /> }
 
       { tags.length > 0 && (
         <ListItem disablePadding sx={{ minHeight: 56, px: 2 }}>
