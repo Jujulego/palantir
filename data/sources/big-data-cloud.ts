@@ -9,6 +9,7 @@ import { queryIpGeolocationFull } from '@/lib/server/big-data-cloud/ip-geolocati
 import ipaddr from 'ipaddr.js';
 
 // Types
+/** @deprecated */
 export interface BigDataCloudResult {
   readonly country?: BigDataCloudCountry;
   readonly location?: BigDataCloudLocation;
@@ -17,6 +18,7 @@ export interface BigDataCloudResult {
   readonly confidenceArea?: readonly BigDataCloudPoint[];
 }
 
+/** @deprecated */
 export interface BigDataCloudCountry {
   readonly isoAlpha2: string;
   readonly isoAlpha3: string;
@@ -30,6 +32,7 @@ export interface BigDataCloudCountry {
   readonly isIndependent: boolean;
 }
 
+/** @deprecated */
 export interface BigDataCloudLocation {
   readonly principalSubdivision: string;
   readonly isoPrincipalSubdivision: string;
@@ -44,6 +47,7 @@ export interface BigDataCloudLocation {
   readonly plusCode: string;
 }
 
+/** @deprecated */
 export interface BigDataCloudNetwork {
   readonly registry: string;
   readonly registryStatus: string;
@@ -59,6 +63,7 @@ export interface BigDataCloudNetwork {
   readonly carriers: readonly BigDataCloudCarrier[];
 }
 
+/** @deprecated */
 export interface BigDataCloudCarrier {
   readonly asn: string;
   readonly asnNumeric: number;
@@ -78,6 +83,7 @@ export interface BigDataCloudCarrier {
   readonly rankText: string;
 }
 
+/** @deprecated */
 export interface BigDataCloudHazardReport {
   readonly isKnownAsTorServer: boolean;
   readonly isKnownAsVpn: boolean;
@@ -98,13 +104,16 @@ export interface BigDataCloudHazardReport {
   readonly iCloudPrivateRelay: boolean;
 }
 
+/** @deprecated */
 export interface BigDataCloudPoint {
   readonly latitude: number;
   readonly longitude: number;
 }
 
 // Service
+/** @deprecated */
 export const bigDataCloudColor = '#e36327';
+/** @deprecated */
 export const bigDataCloudSourceId = 'big-data-cloud' as const;
 
 /** @deprecated */
@@ -112,11 +121,9 @@ const bigDataCloud = {
   name: 'Big Data Cloud',
   color: bigDataCloudColor,
   sourceId: bigDataCloudSourceId,
-  /** @deprecated */
   async rawFetch(ip: string): Promise<BigDataCloudResult> {
     return await queryIpGeolocationFull(ipaddr.parse(ip)) ?? {};
   },
-  /** @deprecated */
   async fetch(ip: string): Promise<IpMetadata> {
     const payload = await this.rawFetch(ip);
     const result: Writeable<IpMetadata> = {

@@ -1,4 +1,5 @@
 import { queryIpGeolocationFull } from '@/lib/server/big-data-cloud/ip-geolocation';
+import type { IpGeolocationFullResult } from '@/lib/server/big-data-cloud/ip-geolocation.dto';
 import { jsonFetch } from '@/utils/fetch';
 import ipaddr from 'ipaddr.js';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -37,7 +38,7 @@ describe('queryIpGeolocationFull', () => {
         latitude: 1,
         longitude: 2,
       }
-    });
+    } as IpGeolocationFullResult);
 
     await expect(queryIpGeolocationFull(ipaddr.parse('1.2.3.4'))).resolves.toStrictEqual({
       location: {
