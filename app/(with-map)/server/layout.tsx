@@ -23,6 +23,7 @@ export default function withMapServerLayout({ children }: WithMapServerLayoutPro
         <ColoredImage
           src={computerPng}
           alt="computer"
+          priority
           style={{ position: 'absolute', bottom: 0, left: 'calc(50% - 75px)', height: 'auto', width: 150 }}
         />
       </Box>

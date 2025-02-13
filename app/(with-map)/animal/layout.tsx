@@ -23,6 +23,7 @@ export default function withMapAnimalLayout({ children }: WithMapAnimalLayoutPro
         <ColoredImage
           src={seaTurtlePng}
           alt="sea turtle"
+          priority
           style={{ position: 'absolute', bottom: 0, left: 'calc(50% - 75px)', height: 'auto', width: 150 }}
         />
       </Box>
