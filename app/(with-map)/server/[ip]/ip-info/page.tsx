@@ -44,7 +44,7 @@ export default async function WMServerIpInfoPage({ params }: WMServerIpInfoPageP
       <MapMarker
         latitude={coordinates.latitude}
         longitude={coordinates.longitude}
-        tooltip="IpInfo"
+        tooltip="IPinfo"
         selected
         sx={{ color: 'ipInfo.main' }}
       />

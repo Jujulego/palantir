@@ -1,9 +1,8 @@
-import ipInfo from '@/data/sources/ip-info';
-import { queryIpInfo } from '@/lib/server/ip-info/ip-info';
-import type { IpInfoResult } from '@/lib/server/ip-info/ip-info.dto';
 import { jsonFetch } from '@/utils/fetch';
 import ipaddr from 'ipaddr.js';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { queryIpInfo } from './ip-info';
+import type { IpInfoResult } from './ip-info.dto';
 
 // Mocks
 vi.mock('@/utils/fetch');

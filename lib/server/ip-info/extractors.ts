@@ -5,7 +5,7 @@ import type { Coordinates } from '@/lib/utils/coordinates';
 import { getName as getCountryName } from 'i18n-iso-countries';
 
 /**
- * Extracts location from an Ip Info query result
+ * Extracts location from an IPinfo query result
  * @param result
  */
 export function extractCoordinates(result: IpInfoResult): Coordinates {
@@ -18,7 +18,7 @@ export function extractCoordinates(result: IpInfoResult): Coordinates {
 }
 
 /**
- * Extracts address from an Ip Info query result
+ * Extracts address from an IPinfo query result
  * @param result
  */
 export function extractAddress(result: IpInfoResult): Address {
@@ -32,7 +32,7 @@ export function extractAddress(result: IpInfoResult): Address {
 }
 
 /**
- * Extracts autonomous system from an Ip Info query result
+ * Extracts autonomous system from an IPinfo query result
  * @param result
  */
 export function extractAutonomousSystem(result: IpInfoResult): AutonomousSystem | null {

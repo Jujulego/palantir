@@ -33,7 +33,7 @@ describe('ipGeolocation.rawFetch', () => {
     expect(jsonFetch).toHaveBeenCalledWith(new URL('https://api.ipgeolocation.io/ipgeo?apiKey=undefined&ip=1.2.3.4'), {
       next: {
         revalidate: 86400,
-        tags: ['ip-1.2.3.4']
+        tags: ['server-1.2.3.4']
       }
     });
   });
@@ -49,7 +49,7 @@ describe('ipGeolocation.rawFetch', () => {
     expect(jsonFetch).toHaveBeenCalledWith(new URL('https://api.ipgeolocation.io/ipgeo?apiKey=undefined&ip=1.2.3.4'), {
       next: {
         revalidate: 86400,
-        tags: ['ip-1.2.3.4']
+        tags: ['server-1.2.3.4']
       }
     });
   });
@@ -62,7 +62,7 @@ describe('ipGeolocation.rawFetch', () => {
     expect(jsonFetch).toHaveBeenCalledWith(new URL('https://api.ipgeolocation.io/ipgeo?apiKey=undefined&ip=1.2.3.4'), {
       next: {
         revalidate: 86400,
-        tags: ['ip-1.2.3.4']
+        tags: ['server-1.2.3.4']
       }
     });
   });

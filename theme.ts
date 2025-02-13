@@ -38,6 +38,12 @@ const theme = createTheme({
         main: '#e36327'
       }
     }),
+    ipGeolocation: base.palette.augmentColor({
+      name: 'ipGeolocation',
+      color: {
+        main: '#6c63fd'
+      }
+    }),
     ipInfo: base.palette.augmentColor({
       name: 'ipInfo',
       color: {
@@ -59,11 +65,13 @@ export default theme;
 declare module '@mui/material/styles' {
   interface Palette {
     bigDataCloud: PaletteColor;
+    ipGeolocation: PaletteColor;
     ipInfo: PaletteColor;
   }
 
   interface PaletteOptions {
     bigDataCloud?: PaletteColorOptions;
+    ipGeolocation?: PaletteColorOptions;
     ipInfo?: PaletteColorOptions;
   }
 }

@@ -1,14 +1,22 @@
 import type { IpMetadata } from '@/data/ip-metadata';
-import { FetchError, jsonFetch } from '@/utils/fetch';
+import {
+  extractAddress,
+  extractAutonomousSystem,
+  extractCoordinates,
+  extractTags
+} from '@/lib/server/ip-geolocation/extractors';
+import { queryIpGeolocation } from '@/lib/server/ip-geolocation/ip-geolocation';
 import ipaddr from 'ipaddr.js';
 
 // Types
+/** @deprecated */
 export interface IpGeolocationCurrency {
   readonly code: string;
   readonly name: string;
   readonly symbol: string;
 }
 
+/** @deprecated */
 export interface IpGeolocationTimezone {
   readonly name: string;
   readonly offset: number;
@@ -18,6 +26,7 @@ export interface IpGeolocationTimezone {
   readonly dst_savings: number;
 }
 
+/** @deprecated */
 export interface IpGeolocationResult {
   readonly domain?: string;
   readonly ip: string;
@@ -48,51 +57,26 @@ export interface IpGeolocationResult {
   readonly time_zone: IpGeolocationTimezone;
 }
 
+/** @deprecated */
 export interface IpGeolocationBogon {
   readonly ip: string;
   readonly is_bogon: boolean;
 }
 
 // Service
+/** @deprecated */
 export const ipGeolocationColor = '#6c63fd';
+/** @deprecated */
 export const ipGeolocationSourceId = 'ip-geolocation' as const;
 
+/** @deprecated */
 const ipGeolocation = {
   name: 'ipgeolocation',
   color: ipGeolocationColor,
   sourceId: ipGeolocationSourceId,
   async rawFetch(ip: string): Promise<IpGeolocationResult | IpGeolocationBogon> {
     const parsed = ipaddr.parse(ip);
-
-    // Do not request for "bogon" ips
-    if (['private', 'loopback'].includes(parsed.range())) {
-      return { ip, is_bogon: true };
-    }
-
-    // Make request
-    console.log(`Fetching ${ipGeolocationSourceId} for ${parsed.toNormalizedString()}`);
-    const url = new URL('https://api.ipgeolocation.io/ipgeo');
-    url.searchParams.set('apiKey', process.env.IP_GEOLOCATION_API_KEY!);
-    url.searchParams.set('ip', parsed.toNormalizedString());
-
-    try {
-      const res = await jsonFetch<IpGeolocationResult>(url, {
-        next: {
-          revalidate: 86400,
-          tags: [`ip-${parsed.toNormalizedString()}`]
-        }
-      });
-      console.log(`Received ${ipGeolocationSourceId} metadata for ${parsed.toNormalizedString()}`);
-
-      return res;
-    } catch (err) {
-      if (err instanceof FetchError && err.status === 423) {
-        console.log(`Received ${ipGeolocationSourceId} metadata for ${parsed.toNormalizedString()} (bogon)`);
-        return { ip, is_bogon: true };
-      }
-
-      throw err;
-    }
+    return await queryIpGeolocation(parsed) ?? { ip, is_bogon: true };
   },
   async fetch(ip: string): Promise<IpMetadata> {
     const payload = await this.rawFetch(ip);
@@ -107,28 +91,14 @@ const ipGeolocation = {
       result.tags = [{ label: 'bogon' }];
     } else {
       result.hostname = payload.hostname;
-      result.coordinates = {
-        latitude: parseFloat(payload.latitude),
-        longitude: parseFloat(payload.longitude),
-      };
-      result.address = {
-        city: payload.city,
-        postalCode: payload.zipcode,
-        region: payload.state_prov,
-        country: payload.country_name,
-        countryCode: payload.country_code2,
-      };
+      result.coordinates = extractCoordinates(payload);
+      result.address = extractAddress(payload);
 
       if (payload.asn && payload.organization) {
-        result.asn = {
-          asn: parseInt(payload.asn.slice(2), 10),
-          organisation: payload.organization,
-        };
+        result.asn = extractAutonomousSystem(payload)!;
       }
 
-      if (payload.connection_type) {
-        result.tags = [{ label: payload.connection_type }];
-      }
+      result.tags = extractTags(payload);
     }
 
     return result;

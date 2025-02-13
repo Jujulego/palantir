@@ -1,8 +1,8 @@
-import { queryIpGeolocationFull } from '@/lib/server/big-data-cloud/ip-geolocation';
-import type { IpGeolocationFullResult } from '@/lib/server/big-data-cloud/ip-geolocation.dto';
 import { jsonFetch } from '@/utils/fetch';
 import ipaddr from 'ipaddr.js';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { queryIpGeolocationFull } from './ip-geolocation';
+import type { IpGeolocationFullResult } from './ip-geolocation.dto';
 
 // Mocks
 vi.mock('@/utils/fetch');
