@@ -1,8 +1,8 @@
 import type { AutonomousSystem } from '@/lib/server/autonomous-system';
-import type { IpGeolocationFullResult } from '@/lib/server/big-data-cloud/ip-geolocation.dto';
 import type { Address } from '@/lib/utils/address';
 import type { Coordinates } from '@/lib/utils/coordinates';
 import type { Tag } from '@/lib/utils/tag';
+import type { IpGeolocationFullResult } from './ip-geolocation.dto';
 
 /**
  * Extracts location from a Big Data Cloud geolocation result

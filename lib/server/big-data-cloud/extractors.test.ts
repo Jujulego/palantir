@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { extractAddress, extractAutonomousSystem, extractCoordinates, extractTags } from './extractors';
-import type { HazardReport, IpGeolocationFullResult, Network, NetworkCarrier } from './ip-geolocation.dto';
+import type { BigDataCloudHazardReport, IpGeolocationFullResult, BigDataCloudNetwork, BigDataCloudNetworkCarrier } from './ip-geolocation.dto';
 
 // Tests
 describe('extractCoordinates', () => {
@@ -61,9 +61,9 @@ describe('extractAutonomousSystem', () => {
           {
             asnNumeric: 1,
             organisation: 'organisation',
-          } as NetworkCarrier,
-        ] as readonly NetworkCarrier[]
-      } as Network
+          } as BigDataCloudNetworkCarrier,
+        ] as readonly BigDataCloudNetworkCarrier[]
+      } as BigDataCloudNetwork
     } as IpGeolocationFullResult;
 
     expect(extractAutonomousSystem(result)).toStrictEqual({
@@ -106,7 +106,7 @@ describe('extractTags', () => {
     { key: 'isSpamhausAsnDrop', label: 'spamhaus', color: 'error' },
   ])('should return result with $label tag (hazard report $key)', ({ key, ...tag }) => {
     const result = {
-      hazardReport: { [key]: true } as unknown as HazardReport,
+      hazardReport: { [key]: true } as unknown as BigDataCloudHazardReport,
     };
 
     expect(extractTags(result)).toStrictEqual([tag]);

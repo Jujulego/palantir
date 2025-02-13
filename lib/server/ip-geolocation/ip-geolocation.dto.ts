@@ -24,17 +24,17 @@ export interface IpGeolocationResult {
   readonly connection_type?: string;
   readonly organization?: string;
   readonly asn?: string;
-  readonly currency: Currency;
-  readonly time_zone: Timezone;
+  readonly currency: IpGeolocationCurrency;
+  readonly time_zone: IpGeolocationTimezone;
 }
 
-export interface Currency {
+export interface IpGeolocationCurrency {
   readonly code: string;
   readonly name: string;
   readonly symbol: string;
 }
 
-export interface Timezone {
+export interface IpGeolocationTimezone {
   readonly name: string;
   readonly offset: number;
   readonly current_time: string;
