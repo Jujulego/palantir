@@ -87,7 +87,7 @@ describe('extractTags', () => {
     { key: 'is_tor', label: 'tor', color: 'warning' },
     { key: 'is_known_attacker', label: 'attacker', color: 'error' },
     { key: 'is_known_abuser', label: 'abuser', color: 'error' },
-  ])('should return result with $label tag (hazard report $key)', ({ key, ...tag }) => {
+  ])('should return result with $label tag (threat $key)', ({ key, ...tag }) => {
     const payload = {
       ...result,
       threat: { [key]: true } as unknown as IpDataThreat,

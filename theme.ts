@@ -56,6 +56,12 @@ const theme = createTheme({
         main: '#3091cf'
       }
     }),
+    ipQualityScore: base.palette.augmentColor({
+      name: 'ipQualityScore',
+      color: {
+        main: '#f43a3a'
+      }
+    }),
   },
   typography: {
     fontFamily: roboto.style.fontFamily,
@@ -74,6 +80,7 @@ declare module '@mui/material/styles' {
     ipData: PaletteColor;
     ipGeolocation: PaletteColor;
     ipInfo: PaletteColor;
+    ipQualityScore: PaletteColor;
   }
 
   interface PaletteOptions {
@@ -81,5 +88,6 @@ declare module '@mui/material/styles' {
     ipData?: PaletteColorOptions;
     ipGeolocation?: PaletteColorOptions;
     ipInfo?: PaletteColorOptions;
+    ipQualityScore?: PaletteColorOptions;
   }
 }

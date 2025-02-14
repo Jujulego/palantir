@@ -1,10 +1,15 @@
 import type { IpMetadata } from '@/data/ip-metadata';
-import type { Tag } from '@/lib/utils/tag';
-import { jsonFetch } from '@/utils/fetch';
-import countries from 'i18n-iso-countries';
+import {
+  extractAddress,
+  extractAutonomousSystem,
+  extractCoordinates,
+  extractTags
+} from '@/lib/server/ip-quality-score/extractors';
+import { queryIpQualityScore } from '@/lib/server/ip-quality-score/ip-quality-score';
 import ipaddr from 'ipaddr.js';
 
 // Types
+/** @deprecated */
 interface IpQualityBase {
   readonly request_id: string;
   readonly success: boolean;
@@ -12,6 +17,7 @@ interface IpQualityBase {
   readonly errors: string[];
 }
 
+/** @deprecated */
 export interface IpQualitySuccess extends IpQualityBase {
   readonly success: true;
   readonly fraud_score: number;
@@ -39,40 +45,28 @@ export interface IpQualitySuccess extends IpQualityBase {
   readonly longitude?: number;
 }
 
+/** @deprecated */
 export interface IpQualityError extends IpQualityBase {
   readonly success: false;
 }
 
+/** @deprecated */
 export type IpQualityResult = IpQualitySuccess | IpQualityError;
 
 // Service
+/** @deprecated */
 export const ipQualityScoreColor = '#f43a3a';
+/** @deprecated */
 export const ipQualityScoreSourceId = 'ip-quality-score' as const;
 
+/** @deprecated */
 const ipQualityScore = {
   name: 'IPQS',
   color: ipQualityScoreColor,
   sourceId: ipQualityScoreSourceId,
   async rawFetch(ip: string): Promise<IpQualityResult> {
     const parsed = ipaddr.parse(ip);
-
-    // Make request
-    console.log(`Fetching ${ipQualityScoreSourceId} for ${parsed.toNormalizedString()}`);
-    const url = new URL('https://ipqualityscore.com/api/json/ip');
-    url.searchParams.set('ip', parsed.toNormalizedString());
-
-    const res = await jsonFetch<IpQualityResult>(url, {
-      headers: {
-        'IPQS-KEY': process.env.IP_QUALITY_API_KEY!
-      },
-      next: {
-        revalidate: 86400,
-        tags: [`ip-${parsed.toNormalizedString()}`]
-      }
-    });
-    console.log(`Received ${ipQualityScoreSourceId} metadata for ${parsed.toNormalizedString()} (success ${res.success})`);
-
-    return res;
+    return await queryIpQualityScore(parsed) ?? { success: false, request_id: 'id', message: 'nope', errors: [] };
   },
   async fetch(ip: string): Promise<IpMetadata> {
     const payload = await this.rawFetch(ip);
@@ -87,48 +81,18 @@ const ipQualityScore = {
       result.hostname = payload.host;
 
       if (payload.latitude && payload.longitude) {
-        result.coordinates = {
-          latitude: payload.latitude,
-          longitude: payload.longitude,
-        };
+        result.coordinates = extractCoordinates(payload)!;
       }
 
       if (payload.country_code !== 'N/A') {
-        result.address = {
-          city: removeNA(payload.city),
-          postalCode: removeNA(payload.zip_code),
-          region: removeNA(payload.region),
-          country: countries.getName(payload.country_code, 'en') ?? '',
-          countryCode: payload.country_code
-        };
+        result.address = extractAddress(payload)!;
       }
 
       if (payload.ASN) {
-        result.asn = {
-          asn: payload.ASN,
-          organisation: payload.ISP,
-        };
+        result.asn = extractAutonomousSystem(payload)!;
       }
 
-      const tags: Tag[] = [];
-
-      if (payload.bot_status || payload.is_crawler) {
-        tags.push({ label: 'bot', color: 'info' });
-      }
-
-      if (payload.proxy) {
-        tags.push({ label: 'proxy' });
-      }
-
-      if (payload.active_vpn || payload.vpn) {
-        tags.push({ label: 'vpn', color: 'warning' });
-      }
-
-      if (payload.active_tor || payload.tor) {
-        tags.push({ label: 'tor', color: 'warning' });
-      }
-
-      result.tags = tags;
+      result.tags = extractTags(payload);
     }
 
     return result;
@@ -136,8 +100,3 @@ const ipQualityScore = {
 };
 
 export default ipQualityScore;
-
-// Utils
-function removeNA(value: string): string | undefined {
-  return value !== 'N/A' ? value : undefined;
-}

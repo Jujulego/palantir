@@ -27,7 +27,7 @@ describe('ipQualityScore.rawFetch', () => {
       },
       next: {
         revalidate: 86400,
-        tags: ['ip-1.2.3.4']
+        tags: ['server-1.2.3.4']
       }
     });
   });
