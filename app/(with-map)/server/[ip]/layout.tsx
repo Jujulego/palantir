@@ -1,4 +1,5 @@
 import HostnameLink from '@/components/HostnameLink';
+import IpSourceMenu from '@/components/IpSourceMenu';
 import SourcesNav from '@/components/SourcesNav';
 import { reverseDnsLookup } from '@/data/dns';
 import CloseIcon from '@mui/icons-material/Close';
@@ -29,23 +30,27 @@ export default async function WithMapServerIpLayout({ params, children }: WithMa
 
   return (
     <>
-      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto', px: 2.5, py: 2 }}>
-        <Typography component="h1" variant="h5" noWrap sx={{ gridColumnStart: 1, gridRowStart: 1 }}>
+      <Box sx={{ display: 'flex', pl: 2.5, pr: 1, pt: 2 }}>
+        <Typography component="h1" variant="h5" noWrap sx={{ flex: 1 }}>
           { ipaddr.parse(ip).toString() }
         </Typography>
-
-        <Suspense fallback={<Skeleton height={20} width="75%" />}>
-          <HostnameLink hostname={reverseDnsLookup(ip)} />
-        </Suspense>
 
         <IconButton
           component={Link}
           href="/"
-          sx={{ gridColumnStart: 2, gridRowStart: 1, gridRowEnd: 3, alignSelf: 'start', mt: -1, mr: -1.5 }}
+          sx={{ flex: '0 0 auto', mt: -1 }}
           aria-label="Close panel"
         >
           <CloseIcon />
         </IconButton>
+      </Box>
+
+      <Box sx={{ display: 'flex', pl: 2.5, pr: 1.5, pb: 2, alignItems: 'center' }}>
+        <Suspense fallback={<Skeleton height={20} width="75%" />}>
+          <HostnameLink hostname={reverseDnsLookup(ip)} sx={{ flex: 1 }} />
+        </Suspense>
+
+        <IpSourceMenu sx={{ flex: '0 0 auto', ml: 'auto' }} />
       </Box>
 
       <Divider />
