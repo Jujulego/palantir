@@ -21,10 +21,12 @@ export default async function WMServerIpInfoPage({ params }: WMServerIpInfoPageP
   const data = await queryIpInfo(ip);
 
   // No result
-  if (!data) {
+  if (!data || data.bogon) {
     return (
       <List>
         <LocationListItem />
+        { data?.bogon && <PayloadListItem payload={data} /> }
+
         <MapSpin />
       </List>
     );
@@ -41,14 +43,18 @@ export default async function WMServerIpInfoPage({ params }: WMServerIpInfoPageP
 
       <PayloadListItem payload={data} />
 
-      <MapMarker
-        latitude={coordinates.latitude}
-        longitude={coordinates.longitude}
-        tooltip="IPinfo"
-        selected
-        sx={{ color: 'ipInfo.main' }}
-      />
-      <MapFlyTo latitude={coordinates.latitude} longitude={coordinates.longitude} zoom={5} />
+      { coordinates ? (
+        <>
+          <MapMarker
+            latitude={coordinates.latitude}
+            longitude={coordinates.longitude}
+            tooltip="IPinfo"
+            selected
+            sx={{ color: 'ipInfo.main' }}
+          />
+          <MapFlyTo latitude={coordinates.latitude} longitude={coordinates.longitude} zoom={5} />
+        </>
+      ) : <MapSpin /> }
     </List>
   );
 }
