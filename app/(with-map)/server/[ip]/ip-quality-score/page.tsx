@@ -6,6 +6,7 @@ import MapMarker from '@/components/map/MapMarker';
 import MapSpin from '@/components/map/MapSpin';
 import PayloadItem from '@/components/server/PayloadItem';
 import TagsItem from '@/components/utils/TagsItem';
+import { isAuthenticated } from '@/lib/auth/is-authenticated';
 import { extractAddress, extractAutonomousSystem, extractCoordinates, extractTags } from '@/lib/server/ip-quality-score/extractors';
 import { queryIpQualityScore } from '@/lib/server/ip-quality-score/ip-quality-score';
 import List from '@mui/material/List';
@@ -17,8 +18,11 @@ export interface WMServerIpIPQSPageProps {
 }
 
 export default async function WMServerIpIPQSPage({ params }: WMServerIpIPQSPageProps) {
-  // Load data
   const ip = ipaddr.parse(await decodeIp(params));
+
+  await isAuthenticated({ returnTo: `/server/${ip}/ip-quality-score` });
+
+  // Load data
   const data = await queryIpQualityScore(ip);
 
   // No result
