@@ -1,4 +1,4 @@
-import { useLazyMapbox } from '@/hooks/useLazyMapbox';
+import { useLazyMapbox } from '@/lib/map/useLazyMapbox';
 import { styled } from '@mui/material';
 import type { Map } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';

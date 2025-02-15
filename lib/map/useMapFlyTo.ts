@@ -1,5 +1,5 @@
 import { MapContext } from '@/components/map/map.context';
-import { useLazyMapbox } from '@/hooks/useLazyMapbox';
+import { useLazyMapbox } from '@/lib/map/useLazyMapbox';
 import type { LngLat } from 'mapbox-gl';
 import { useAnimate } from 'motion/react';
 import { use, useCallback } from 'react';

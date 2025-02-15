@@ -1,6 +1,6 @@
 'use client';
 
-import { useMapFlyTo } from '@/hooks/useMapFlyTo';
+import { useMapFlyTo } from '@/lib/map/useMapFlyTo';
 import { useEffect } from 'react';
 
 // Component

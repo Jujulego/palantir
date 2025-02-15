@@ -5,7 +5,7 @@ import { SearchComboBox } from '@/components/search/SearchComboBox';
 import SearchEmptyOption from '@/components/search/SearchEmptyOption';
 import SearchListBox from '@/components/search/SearchListBox';
 import SearchSurface from '@/components/search/SearchSurface';
-import { useSearchParam } from '@/hooks/useSearchParam';
+import { useSearchParam } from '@/lib/utils/useSearchParam';
 import { mergeSx } from '@/lib/utils/mui';
 import Fade from '@mui/material/Fade';
 import LinearProgress from '@mui/material/LinearProgress';

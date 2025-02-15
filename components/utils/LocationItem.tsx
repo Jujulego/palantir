@@ -1,7 +1,7 @@
 'use client';
 
 import LocationTypography from '@/components/LocationTypography';
-import { useMapFlyTo } from '@/hooks/useMapFlyTo';
+import { useMapFlyTo } from '@/lib/map/useMapFlyTo';
 import type { Address } from '@/lib/utils/address';
 import type { Coordinates } from '@/lib/utils/coordinates';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
