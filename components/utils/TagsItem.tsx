@@ -6,11 +6,11 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 
 // Component
-export interface TagsListItemProps {
+export interface TagsItemProps {
   readonly tags: readonly Tag[];
 }
 
-export function TagsListItem({ tags }: TagsListItemProps) {
+export default function TagsItem({ tags }: TagsItemProps) {
   return (
     <ListItem disablePadding sx={{ minHeight: 56, px: 2 }}>
       <ListItemIcon sx={{ minWidth: 40 }}>

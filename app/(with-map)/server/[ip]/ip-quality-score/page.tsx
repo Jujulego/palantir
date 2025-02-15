@@ -1,11 +1,11 @@
 import { decodeIp, type WithMapServerIpParams } from '@/app/(with-map)/server/[ip]/params';
-import AutonomousSystemListItem from '@/components/AutonomousSystemListItem';
-import LocationListItem from '@/components/LocationListItem';
+import AutonomousSystemItem from '@/components/server/AutonomousSystemItem';
+import LocationItem from '@/components/utils/LocationItem';
 import MapFlyTo from '@/components/map/MapFlyTo';
 import MapMarker from '@/components/map/MapMarker';
 import MapSpin from '@/components/map/MapSpin';
-import PayloadListItem from '@/components/PayloadListItem';
-import { TagsListItem } from '@/components/TagsListItem';
+import PayloadItem from '@/components/server/PayloadItem';
+import TagsItem from '@/components/utils/TagsItem';
 import { extractAddress, extractAutonomousSystem, extractCoordinates, extractTags } from '@/lib/server/ip-quality-score/extractors';
 import { queryIpQualityScore } from '@/lib/server/ip-quality-score/ip-quality-score';
 import List from '@mui/material/List';
@@ -25,7 +25,7 @@ export default async function WMServerIpIPQSPage({ params }: WMServerIpIPQSPageP
   if (!data) {
     return (
       <List>
-        <LocationListItem />
+        <LocationItem />
         <MapSpin />
       </List>
     );
@@ -39,11 +39,11 @@ export default async function WMServerIpIPQSPage({ params }: WMServerIpIPQSPageP
 
   return (
     <List>
-      <LocationListItem address={address} coordinates={coordinates} />
-      { autonomousSystem && <AutonomousSystemListItem autonomousSystem={autonomousSystem} /> }
-      { tags.length > 0 && <TagsListItem tags={tags} /> }
+      <LocationItem address={address} coordinates={coordinates} />
+      { autonomousSystem && <AutonomousSystemItem autonomousSystem={autonomousSystem} /> }
+      { tags.length > 0 && <TagsItem tags={tags} /> }
 
-      <PayloadListItem payload={data} />
+      <PayloadItem payload={data} />
 
       { coordinates ? (
         <>

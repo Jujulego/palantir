@@ -1,11 +1,11 @@
 import { decodeIp, type WithMapServerIpParams } from '@/app/(with-map)/server/[ip]/params';
-import AutonomousSystemListItem from '@/components/AutonomousSystemListItem';
-import LocationListItem from '@/components/LocationListItem';
+import AutonomousSystemItem from '@/components/server/AutonomousSystemItem';
+import LocationItem from '@/components/utils/LocationItem';
 import MapFlyTo from '@/components/map/MapFlyTo';
 import MapMarker from '@/components/map/MapMarker';
 import MapSpin from '@/components/map/MapSpin';
-import PayloadListItem from '@/components/PayloadListItem';
-import { TagsListItem } from '@/components/TagsListItem';
+import PayloadItem from '@/components/server/PayloadItem';
+import TagsItem from '@/components/utils/TagsItem';
 import {
   extractAddress,
   extractAutonomousSystem,
@@ -30,7 +30,7 @@ export default async function WMServerIpGeolocationPage({ params }: WMServerIpGe
   if (!data) {
     return (
       <List>
-        <LocationListItem />
+        <LocationItem />
         <MapSpin />
       </List>
     );
@@ -43,11 +43,11 @@ export default async function WMServerIpGeolocationPage({ params }: WMServerIpGe
 
   return (
     <List>
-      <LocationListItem address={extractAddress(data)} coordinates={coordinates} />
-      { autonomousSystem && <AutonomousSystemListItem autonomousSystem={autonomousSystem} /> }
-      { tags.length > 0 && <TagsListItem tags={tags} /> }
+      <LocationItem address={extractAddress(data)} coordinates={coordinates} />
+      { autonomousSystem && <AutonomousSystemItem autonomousSystem={autonomousSystem} /> }
+      { tags.length > 0 && <TagsItem tags={tags} /> }
 
-      <PayloadListItem payload={data} />
+      <PayloadItem payload={data} />
 
       <MapMarker
         latitude={coordinates.latitude}

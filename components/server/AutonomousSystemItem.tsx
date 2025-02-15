@@ -4,12 +4,11 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
-// Component
-export interface AutonomousSystemListItemProps {
+export interface AutonomousSystemItemProps {
   readonly autonomousSystem: AutonomousSystem;
 }
 
-export default function AutonomousSystemListItem(props: AutonomousSystemListItemProps) {
+export default function AutonomousSystemItem(props: AutonomousSystemItemProps) {
   const { autonomousSystem } = props;
 
   return (

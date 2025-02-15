@@ -39,11 +39,12 @@ export default function IpSourceMenu({ ip, sx }: IpSourceMenuProps) {
 
   const handleClick = useCallback((event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
+    handleClose();
 
     startLoading(() => {
       router.push(event.currentTarget.href);
     });
-  }, [router]);
+  }, [handleClose, router]);
 
   // Render
   return (

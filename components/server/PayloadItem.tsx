@@ -9,14 +9,14 @@ import dynamic from 'next/dynamic';
 import { useCallback, useState } from 'react';
 
 // Lazy components
-const PayloadDialog = dynamic(() => import('@/components/PayloadDialog'), { ssr: false });
+const PayloadDialog = dynamic(() => import('@/components/server/PayloadDialog'), { ssr: false });
 
 // Component
-export interface PayloadListItemProps {
+export interface PayloadItemProps {
   readonly payload: unknown;
 }
 
-export default function PayloadListItem({ payload }: PayloadListItemProps) {
+export default function PayloadItem({ payload }: PayloadItemProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = useCallback(() => setIsOpen(true), []);

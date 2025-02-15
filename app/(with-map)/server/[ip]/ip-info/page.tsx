@@ -1,10 +1,10 @@
 import { decodeIp, type WithMapServerIpParams } from '@/app/(with-map)/server/[ip]/params';
-import AutonomousSystemListItem from '@/components/AutonomousSystemListItem';
-import LocationListItem from '@/components/LocationListItem';
+import AutonomousSystemItem from '@/components/server/AutonomousSystemItem';
+import LocationItem from '@/components/utils/LocationItem';
 import MapFlyTo from '@/components/map/MapFlyTo';
 import MapMarker from '@/components/map/MapMarker';
 import MapSpin from '@/components/map/MapSpin';
-import PayloadListItem from '@/components/PayloadListItem';
+import PayloadItem from '@/components/server/PayloadItem';
 import { extractAddress, extractAutonomousSystem, extractCoordinates } from '@/lib/server/ip-info/extractors';
 import { queryIpInfo } from '@/lib/server/ip-info/ip-info';
 import List from '@mui/material/List';
@@ -24,8 +24,8 @@ export default async function WMServerIpInfoPage({ params }: WMServerIpInfoPageP
   if (!data || data.bogon) {
     return (
       <List>
-        <LocationListItem />
-        { data?.bogon && <PayloadListItem payload={data} /> }
+        <LocationItem />
+        { data?.bogon && <PayloadItem payload={data} /> }
 
         <MapSpin />
       </List>
@@ -38,10 +38,10 @@ export default async function WMServerIpInfoPage({ params }: WMServerIpInfoPageP
 
   return (
     <List>
-      <LocationListItem address={extractAddress(data)} coordinates={coordinates} />
-      { autonomousSystem && <AutonomousSystemListItem autonomousSystem={autonomousSystem} /> }
+      <LocationItem address={extractAddress(data)} coordinates={coordinates} />
+      { autonomousSystem && <AutonomousSystemItem autonomousSystem={autonomousSystem} /> }
 
-      <PayloadListItem payload={data} />
+      <PayloadItem payload={data} />
 
       { coordinates ? (
         <>

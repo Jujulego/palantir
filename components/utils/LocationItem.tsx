@@ -11,12 +11,12 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { useCallback } from 'react';
 
-export interface LocationListItemProps {
+export interface LocationItemProps {
   readonly address?: Address | null;
   readonly coordinates?: Coordinates | null;
 }
 
-export default function LocationListItem({ address, coordinates }: LocationListItemProps) {
+export default function LocationItem({ address, coordinates }: LocationItemProps) {
   const { flyTo, isReady } = useMapFlyTo();
 
   const handleClick = useCallback(() => {

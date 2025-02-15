@@ -1,5 +1,5 @@
 import type { WithMapAnimalNameParams } from '@/app/(with-map)/animal/[name]/params';
-import LocationListItem from '@/components/LocationListItem';
+import LocationItem from '@/components/utils/LocationItem';
 import MapFlyTo from '@/components/map/MapFlyTo';
 import MapMarker from '@/components/map/MapMarker';
 import MapPolyline from '@/components/map/MapPolyline';
@@ -32,7 +32,7 @@ export default async function WithMapAnimalPage({ params }: WithMapAnimalPagePro
 
   return (
     <List>
-      <LocationListItem coordinates={position} />
+      <LocationItem coordinates={position} />
       { animal.species && (
         <ListItem sx={{ minHeight: 56, px: 2, py: 0 }}>
           <ListItemIcon sx={{ minWidth: 40 }}>

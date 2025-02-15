@@ -1,4 +1,4 @@
-import LocationCityIcon from '@mui/icons-material/LocationCity';
+import LocationItemSkeleton from '@/components/utils/LocationItemSkeleton';
 import PetsIcon from '@mui/icons-material/Pets';
 import StraightenIcon from '@mui/icons-material/Straighten';
 import WcIcon from '@mui/icons-material/Wc';
@@ -11,16 +11,7 @@ import Skeleton from '@mui/material/Skeleton';
 export default function WithMapAnimalNameLoading() {
   return (
     <List>
-      <ListItem sx={{ minHeight: 56, px: 2, py: 0 }}>
-        <ListItemIcon sx={{ minWidth: 40 }}>
-          <LocationCityIcon color="primary" />
-        </ListItemIcon>
-
-        <ListItemText
-          primary={<Skeleton sx={{ width: '75%' }} />}
-          secondary={<Skeleton sx={{ width: '50%' }} />}
-        />
-      </ListItem>
+      <LocationItemSkeleton />
 
       <ListItem sx={{ minHeight: 56, px: 2, py: 0 }}>
         <ListItemIcon sx={{ minWidth: 40 }}>
