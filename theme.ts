@@ -74,6 +74,7 @@ const theme = createTheme({
 
 export default theme;
 
+// Type enhancements
 declare module '@mui/material/styles' {
   interface Palette {
     bigDataCloud: PaletteColor;
@@ -89,5 +90,11 @@ declare module '@mui/material/styles' {
     ipGeolocation?: PaletteColorOptions;
     ipInfo?: PaletteColorOptions;
     ipQualityScore?: PaletteColorOptions;
+  }
+}
+
+declare module 'react' {
+  interface CSSProperties {
+    '--MapboxMap-left'?: string;
   }
 }

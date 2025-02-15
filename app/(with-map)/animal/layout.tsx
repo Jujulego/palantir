@@ -28,7 +28,7 @@ export default function withMapAnimalLayout({ children }: WithMapAnimalLayoutPro
         />
       </Box>
 
-      <Paper square sx={{ flex: '1 0 auto', pb: 4 }}>
+      <Paper square sx={{ flex: '1 0 auto' }}>
         { children }
       </Paper>
     </MapDrawer>

@@ -2,7 +2,7 @@
 
 import { SearchContext, useLoadingSearchOptions } from '@/components/search/search.context';
 import SearchOption from '@/components/search/SearchOption';
-import { fetchAnimalTracking } from '@/data/club-ocean';
+import { actScrapAnimalTracking } from '@/lib/animal/club-ocean.actions';
 import PetsIcon from '@mui/icons-material/Pets';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -42,5 +42,5 @@ const ANIMAL_RE = /^[a-z]{3,}$/i;
 type AnimalKey = readonly ['animal', string];
 
 function animalFetcher([, name]: AnimalKey) {
-  return fetchAnimalTracking(name);
+  return actScrapAnimalTracking(name);
 }

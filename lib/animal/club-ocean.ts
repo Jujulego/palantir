@@ -1,5 +1,3 @@
-'use server';
-
 import type { Coordinates } from '@/lib/utils/coordinates';
 import { FetchError } from '@/lib/utils/fetch';
 import dayjs from 'dayjs';
@@ -13,10 +11,10 @@ export interface ClubOceanAnimal {
   readonly species?: string;
   readonly gender?: string;
   readonly size?: string;
-  readonly coordinates: readonly ClubOceanTrackingCoordinates[];
+  readonly coordinates: readonly ClubOceanCoordinates[];
 }
 
-export interface ClubOceanTrackingCoordinates extends Coordinates {
+export interface ClubOceanCoordinates extends Coordinates {
   readonly date: string;
 }
 
@@ -25,7 +23,7 @@ const ATTRIBUTES_REGEX = /<p class="m-0">(\S+) : ([^<]+)<\/p>/g;
 const COORDINATES_REGEX = /\['([^']+)', (-?[0-9.]+), (-?[0-9.]+)],/g;
 
 // Utils
-export async function rawAnimalTracking(name: string): Promise<string | null> {
+async function loadAnimalTrackingPage(name: string): Promise<string | null> {
   const res = await fetch(`https://tracking.clubocean.org/animal/${name}`, {
     next: {
       revalidate: 86400,
@@ -44,8 +42,8 @@ export async function rawAnimalTracking(name: string): Promise<string | null> {
   return await res.text();
 }
 
-export async function fetchAnimalTracking(name: string): Promise<ClubOceanAnimal | null> {
-  const raw = await rawAnimalTracking(name);
+export async function scrapAnimalTracking(name: string): Promise<ClubOceanAnimal | null> {
+  const raw = await loadAnimalTrackingPage(name);
 
   if (!raw) {
     return null;
@@ -77,7 +75,7 @@ export async function fetchAnimalTracking(name: string): Promise<ClubOceanAnimal
   }
 
   // Load coordinates
-  const coordinates: ClubOceanTrackingCoordinates[] = [];
+  const coordinates: ClubOceanCoordinates[] = [];
 
   for (const match of raw.matchAll(COORDINATES_REGEX)) {
     coordinates.push({

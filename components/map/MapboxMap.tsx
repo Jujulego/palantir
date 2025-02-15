@@ -73,9 +73,3 @@ const Container = styled(m.div)({
     left: 'var(--MapboxMap-left)',
   },
 });
-
-declare module 'react' {
-  interface CSSProperties {
-    '--MapboxMap-left': string;
-  }
-}
