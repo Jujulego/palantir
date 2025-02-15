@@ -1,7 +1,8 @@
 import { useLazyMapbox } from '@/hooks/useLazyMapbox';
 import { styled } from '@mui/material';
-import type * as mapboxgl from 'mapbox-gl';
+import type { Map } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import { m, type MotionValue, useTransform } from 'motion/react';
 import { useEffect, useRef } from 'react';
 import { preconnect, prefetchDNS } from 'react-dom';
 
@@ -10,15 +11,16 @@ preconnect('https://api.mapbox.com');
 prefetchDNS('https://events.mapbox.com');
 
 export interface MapboxMapProps {
+  readonly leftPadding: MotionValue<number>;
   readonly zoom: number;
-  readonly onMapCreated: (map: mapboxgl.Map) => void;
+  readonly onMapCreated: (map: Map) => void;
   readonly onMapLoaded: () => void;
   readonly onMapStyleLoaded: () => void;
   readonly onMapRemoved: () => void;
 }
 
 export default function MapboxMap(props: MapboxMapProps) {
-  const { zoom, onMapCreated, onMapLoaded, onMapStyleLoaded, onMapRemoved } = props;
+  const { leftPadding, zoom, onMapCreated, onMapLoaded, onMapStyleLoaded, onMapRemoved } = props;
 
   // Initiate map
   const { mapboxRef, isLoaded: isMapboxLoaded } = useLazyMapbox();
@@ -48,14 +50,32 @@ export default function MapboxMap(props: MapboxMapProps) {
   }, [isMapboxLoaded, mapboxRef, onMapCreated, onMapLoaded, onMapRemoved, onMapStyleLoaded, zoom]);
 
   // Render
-  return <Container ref={containerRef} />;
+  const left = useTransform(leftPadding, (value) => `${value}px`);
+
+  return <Container ref={containerRef} style={{ '--MapboxMap-left': left }} />;
 }
 
 // Utils
-const Container = styled('div')({
+const Container = styled(m.div)({
   position: 'absolute',
   top: 0,
   left: 0,
   height: '100%',
   width: '100%',
+
+  '.mapboxgl-ctrl-top-left': {
+    left: 'var(--MapboxMap-left)',
+  },
+  '.mapboxgl-ctrl-left': {
+    left: 'var(--MapboxMap-left)',
+  },
+  '.mapboxgl-ctrl-bottom-left': {
+    left: 'var(--MapboxMap-left)',
+  },
 });
+
+declare module 'react' {
+  interface CSSProperties {
+    '--MapboxMap-left': string;
+  }
+}
