@@ -1,11 +1,11 @@
-import { jsonFetch } from '@/utils/fetch';
+import { jsonFetch } from '@/lib/utils/fetch';
 import ipaddr from 'ipaddr.js';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { queryIpQualityScore } from './ip-quality-score';
 import type { IpQualityScoreResult } from './ip-quality-score.dto';
 
 // Mocks
-vi.mock('@/utils/fetch');
+vi.mock('@/lib/utils/fetch');
 
 // Setup
 beforeEach(() => {

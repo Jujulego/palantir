@@ -1,4 +1,4 @@
-import { FetchError, jsonFetch } from '@/utils/fetch';
+import { FetchError, jsonFetch } from '@/lib/utils/fetch';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 beforeEach(() => {

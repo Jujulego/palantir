@@ -1,8 +1,7 @@
 'use server';
 
-
 import type { Coordinates } from '@/lib/utils/coordinates';
-import { FetchError } from '@/utils/fetch';
+import { FetchError } from '@/lib/utils/fetch';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 

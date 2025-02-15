@@ -1,10 +1,10 @@
 import { useDnsLookup } from '@/lib/dns/useDnsLookup';
-import { jsonFetch } from '@/utils/fetch';
+import { jsonFetch } from '@/lib/utils/fetch';
 import { renderHook } from '@testing-library/react';
 import useSWR, { type SWRResponse } from 'swr';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('@/utils/fetch');
+vi.mock('@/lib/utils/fetch');
 vi.mock('swr');
 
 beforeEach(() => {

@@ -1,8 +1,8 @@
-import { jsonFetch } from '@/utils/fetch';
+import { jsonFetch } from '@/lib/utils/fetch';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { reverseDnsLookup } from './reverse-dns-lookup';
 
-vi.mock('@/utils/fetch');
+vi.mock('@/lib/utils/fetch');
 
 beforeEach(() => {
   vi.resetAllMocks();

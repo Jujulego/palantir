@@ -1,12 +1,12 @@
-import { FetchError, jsonFetch } from '@/utils/fetch';
+import { FetchError, jsonFetch } from '@/lib/utils/fetch';
 import ipaddr from 'ipaddr.js';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { queryIpGeolocation } from './ip-geolocation';
 import type { IpGeolocationResult } from './ip-geolocation.dto';
 
 // Mocks
-vi.mock('@/utils/fetch', (importOriginal) =>
-  importOriginal<typeof import('@/utils/fetch')>().then((mod) => ({
+vi.mock('@/lib/utils/fetch', (importOriginal) =>
+  importOriginal<typeof import('@/lib/utils/fetch')>().then((mod) => ({
     ...mod,
     jsonFetch: vi.fn(),
   }))

@@ -1,4 +1,4 @@
-import { jsonFetch } from '@/utils/fetch';
+import { jsonFetch } from '@/lib/utils/fetch';
 import type { IPv4, IPv6 } from 'ipaddr.js';
 import type { IpGeolocationFullResult } from './ip-geolocation.dto';
 

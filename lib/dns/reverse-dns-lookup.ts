@@ -1,5 +1,5 @@
 import type { DnsResponse } from '@/lib/dns/dns.dto';
-import { jsonFetch } from '@/utils/fetch';
+import { jsonFetch } from '@/lib/utils/fetch';
 import ipaddr from 'ipaddr.js';
 
 export async function reverseDnsLookup(ip: string): Promise<string | null> {

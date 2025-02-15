@@ -1,5 +1,5 @@
 import type { IpInfoResult } from '@/lib/server/ip-info/ip-info.dto';
-import { jsonFetch } from '@/utils/fetch';
+import { jsonFetch } from '@/lib/utils/fetch';
 import type { IPv4, IPv6 } from 'ipaddr.js';
 
 /**
