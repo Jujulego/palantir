@@ -1,4 +1,4 @@
-import { mergeSx } from '@/utils/mui';
+import { mergeSx } from '@/lib/utils/mui';
 import { describe, expect, it } from 'vitest';
 
 describe('mergeSx', () => {

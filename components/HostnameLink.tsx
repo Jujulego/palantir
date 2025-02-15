@@ -1,6 +1,6 @@
 'use client';
 
-import { mergeSx } from '@/utils/mui';
+import { mergeSx } from '@/lib/utils/mui';
 import MuiLink from '@mui/material/Link';
 import type { SxProps, Theme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';

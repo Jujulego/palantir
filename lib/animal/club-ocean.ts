@@ -1,5 +1,6 @@
 import type { Coordinates } from '@/lib/utils/coordinates';
 import { FetchError } from '@/lib/utils/fetch';
+import type { Writeable } from '@/lib/utils/types';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 
