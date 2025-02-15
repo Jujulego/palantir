@@ -1,4 +1,4 @@
-import { useDnsLookup } from '@/hooks/useDnsLookup';
+import { useDnsLookup } from '@/lib/dns/useDnsLookup';
 import { jsonFetch } from '@/utils/fetch';
 import { renderHook } from '@testing-library/react';
 import useSWR, { type SWRResponse } from 'swr';

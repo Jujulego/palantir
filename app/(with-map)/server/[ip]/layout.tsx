@@ -1,6 +1,6 @@
 import HostnameLink from '@/components/HostnameLink';
 import IpSourceMenu from '@/components/IpSourceMenu';
-import { reverseDnsLookup } from '@/data/dns';
+import { reverseDnsLookup } from '@/lib/dns/reverse-dns-lookup';
 import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';

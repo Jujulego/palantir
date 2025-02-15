@@ -1,6 +1,6 @@
-import { reverseDnsLookup } from '@/data/dns';
 import { jsonFetch } from '@/utils/fetch';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { reverseDnsLookup } from './reverse-dns-lookup';
 
 vi.mock('@/utils/fetch');
 

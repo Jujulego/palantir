@@ -2,7 +2,7 @@
 
 import { SearchContext, useLoadingSearchOptions } from '@/components/search/search.context';
 import SearchOption from '@/components/search/SearchOption';
-import { useDnsLookup } from '@/hooks/useDnsLookup';
+import { useDnsLookup } from '@/lib/dns/useDnsLookup';
 import WebIcon from '@mui/icons-material/Web';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';

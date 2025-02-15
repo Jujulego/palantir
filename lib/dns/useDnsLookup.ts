@@ -1,4 +1,4 @@
-import type { DnsResponse } from '@/data/dns';
+import type { DnsResponse } from '@/lib/dns/dns.dto';
 import { jsonFetch } from '@/utils/fetch';
 import { filter$, map$, pipe$ } from 'kyrielle';
 import { useMemo } from 'react';
