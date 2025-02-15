@@ -1,8 +1,8 @@
 'use client';
 
 import { MapContext } from '@/components/map/map.context';
-import { useLazyMapbox } from '@/hooks/useLazyMapbox';
-import { mergeSx } from '@/utils/mui';
+import { useLazyMapbox } from '@/lib/map/useLazyMapbox';
+import { mergeSx } from '@/lib/utils/mui';
 import PlaceIcon from '@mui/icons-material/Place';
 import { type SxProps, type Theme } from '@mui/material/styles';
 import Tooltip from '@mui/material/Tooltip';

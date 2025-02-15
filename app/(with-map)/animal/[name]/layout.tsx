@@ -1,4 +1,4 @@
-import type { WithMapAnimalNameParams } from '@/app/(with-map)/animal/[name]/params';
+import { decodeName, type WithMapAnimalNameParams } from '@/app/(with-map)/animal/[name]/params';
 import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -8,31 +8,27 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { type ReactNode } from 'react';
 
+// Layout
 export interface WithMapAnimalNameLayoutProps {
   readonly children: ReactNode;
   readonly params: Promise<WithMapAnimalNameParams>;
 }
 
-export async function generateMetadata({ params }: WithMapAnimalNameLayoutProps): Promise<Metadata> {
-  return {
-    title: decodeURIComponent((await params).name),
-  };
-}
-
 export default async function WithMapAnimalNameLayout({ children, params }: WithMapAnimalNameLayoutProps) {
-  const name = decodeURIComponent((await params).name);
+  const name = await decodeName(params);
 
   return (
     <>
-      <Box sx={{ display: 'flex', px: 2.5, py: 2 }}>
+      <Box sx={{ display: 'flex', pl: 2.5, pr: 1, py: 2 }}>
         <Typography component="h1" variant="h5" sx={{ flex: '1', textTransform: 'capitalize' }}>
           { name }
         </Typography>
 
         <IconButton
           component={Link}
-          href=".."
-          sx={{ mt: -1, mr: -1.5 }}
+          href="/"
+          sx={{ flex: '0 0 auto', mt: -1 }}
+          aria-label="Close panel"
         >
           <CloseIcon />
         </IconButton>
@@ -43,4 +39,10 @@ export default async function WithMapAnimalNameLayout({ children, params }: With
       { children }
     </>
   );
+}
+
+export async function generateMetadata({ params }: WithMapAnimalNameLayoutProps): Promise<Metadata> {
+  return {
+    title: await decodeName(params),
+  };
 }

@@ -1,0 +1,57 @@
+import { jsonFetch } from '@/lib/utils/fetch';
+import ipaddr from 'ipaddr.js';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { queryIpGeolocationFull } from './ip-geolocation';
+import type { IpGeolocationFullResult } from './ip-geolocation.dto';
+
+// Mocks
+vi.mock('@/lib/utils/fetch');
+
+// Setup
+beforeEach(() => {
+  vi.restoreAllMocks();
+});
+
+// Tests
+describe('queryIpGeolocationFull', () => {
+  it('should not query for loopback ip addresses', async () => {
+    const ip = ipaddr.parse('1.2.3.4');
+    vi.spyOn(ip, 'range').mockReturnValue('loopback');
+
+    await expect(queryIpGeolocationFull(ip)).resolves.toBeNull();
+
+    expect(jsonFetch).not.toHaveBeenCalled();
+  });
+
+  it('should not query for private ip addresses', async () => {
+    const ip = ipaddr.parse('1.2.3.4');
+    vi.spyOn(ip, 'range').mockReturnValue('private');
+
+    await expect(queryIpGeolocationFull(ip)).resolves.toBeNull();
+
+    expect(jsonFetch).not.toHaveBeenCalled();
+  });
+
+  it('should send a request with ip and key', async () => {
+    vi.mocked(jsonFetch).mockResolvedValue({
+      location: {
+        latitude: 1,
+        longitude: 2,
+      }
+    } as IpGeolocationFullResult);
+
+    await expect(queryIpGeolocationFull(ipaddr.parse('1.2.3.4'))).resolves.toStrictEqual({
+      location: {
+        latitude: 1,
+        longitude: 2,
+      }
+    });
+
+    expect(jsonFetch).toHaveBeenCalledWith(new URL('https://api-bdc.net/data/ip-geolocation-full?ip=1.2.3.4&key=undefined'), {
+      next: {
+        revalidate: 86400,
+        tags: ['server-1.2.3.4']
+      }
+    });
+  });
+});

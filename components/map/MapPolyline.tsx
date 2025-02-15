@@ -1,7 +1,8 @@
 'use client';
 
 import { MapContext } from '@/components/map/map.context';
-import type { Coordinates } from '@/data/ip-metadata';
+
+import type { Coordinates } from '@/lib/utils/coordinates';
 import { useTheme } from '@mui/material';
 import type { GeoJSONSource } from 'mapbox-gl';
 import { use, useEffect, useId } from 'react';

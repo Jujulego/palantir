@@ -1,4 +1,4 @@
-import { useFocusWithin } from '@/hooks/useFocusWithin';
+import { useFocusWithin } from '@/lib/utils/useFocusWithin';
 import Paper from '@mui/material/Paper';
 import { styled, type SxProps, type Theme } from '@mui/material/styles';
 import { m } from 'motion/react';

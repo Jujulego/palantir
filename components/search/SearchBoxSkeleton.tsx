@@ -1,4 +1,4 @@
-import { mergeSx } from '@/utils/mui';
+import { mergeSx } from '@/lib/utils/mui';
 import Paper from '@mui/material/Paper';
 import Skeleton from '@mui/material/Skeleton';
 import type { SxProps, Theme } from '@mui/material/styles';

@@ -1,6 +1,6 @@
-import HostnameLink from '@/components/HostnameLink';
-import SourcesNav from '@/components/SourcesNav';
-import { reverseDnsLookup } from '@/data/dns';
+import HostnameLink from '@/components/dns/HostnameLink';
+import IpSourceMenu from '@/components/server/IpSourceMenu';
+import { reverseDnsLookup } from '@/lib/dns/reverse-dns-lookup';
 import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -29,28 +29,32 @@ export default async function WithMapServerIpLayout({ params, children }: WithMa
 
   return (
     <>
-      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto', px: 2.5, py: 2 }}>
-        <Typography component="h1" variant="h5" noWrap sx={{ gridColumnStart: 1, gridRowStart: 1 }}>
-          { ipaddr.parse(ip).toString() }
-        </Typography>
+      <Box sx={{ position: 'relative' }}>
+        <Box sx={{ display: 'flex', pl: 2.5, pr: 1, pt: 2 }}>
+          <Typography component="h1" variant="h5" noWrap sx={{ flex: 1 }}>
+            { ipaddr.parse(ip).toString() }
+          </Typography>
 
-        <Suspense fallback={<Skeleton height={20} width="75%" />}>
-          <HostnameLink hostname={reverseDnsLookup(ip)} />
-        </Suspense>
+          <IconButton
+            component={Link}
+            href="/"
+            sx={{ flex: '0 0 auto', mt: -1 }}
+            aria-label="Close panel"
+          >
+            <CloseIcon />
+          </IconButton>
+        </Box>
 
-        <IconButton
-          component={Link}
-          href=".."
-          sx={{ gridColumnStart: 2, gridRowStart: 1, gridRowEnd: 3, alignSelf: 'start', mt: -1, mr: -1.5 }}
-          aria-label="Close panel"
-        >
-          <CloseIcon />
-        </IconButton>
+        <Box sx={{ display: 'flex', pl: 2.5, pr: 1.5, pb: 2, alignItems: 'center' }}>
+          <Suspense fallback={<Skeleton height={20} width="75%" />}>
+            <HostnameLink hostname={reverseDnsLookup(ip)} sx={{ flex: 1 }} />
+          </Suspense>
+
+          <IpSourceMenu ip={ip} sx={{ flex: '0 0 auto', ml: 'auto' }} />
+        </Box>
       </Box>
 
       <Divider />
-
-      <SourcesNav />
 
       { children }
     </>

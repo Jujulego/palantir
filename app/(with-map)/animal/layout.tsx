@@ -1,5 +1,5 @@
 import seaTurtlePng from '@/assets/sea-turtle.png';
-import ColoredImage from '@/components/ColoredImage';
+import ColoredImage from '@/components/utils/ColoredImage';
 import MapDrawer from '@/components/map/MapDrawer';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -23,11 +23,12 @@ export default function withMapAnimalLayout({ children }: WithMapAnimalLayoutPro
         <ColoredImage
           src={seaTurtlePng}
           alt="sea turtle"
+          priority
           style={{ position: 'absolute', bottom: 0, left: 'calc(50% - 75px)', height: 'auto', width: 150 }}
         />
       </Box>
 
-      <Paper square sx={{ flex: '1 0 auto', pb: 4 }}>
+      <Paper square sx={{ flex: '1 0 auto' }}>
         { children }
       </Paper>
     </MapDrawer>

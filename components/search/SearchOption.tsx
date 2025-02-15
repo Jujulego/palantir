@@ -2,7 +2,7 @@
 
 import { SearchContext } from '@/components/search/search.context';
 import SearchListItem from '@/components/search/SearchListItem';
-import { baseUrl } from '@/utils/url';
+import { baseUrl } from '@/lib/utils/url';
 import ListItemButton from '@mui/material/ListItemButton';
 import { AnimatePresence, usePresence } from 'motion/react';
 import Link from 'next/link';
