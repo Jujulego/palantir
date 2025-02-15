@@ -1,5 +1,5 @@
 import seaTurtlePng from '@/assets/sea-turtle.png';
-import ColoredImage from '@/components/ColoredImage';
+import ColoredImage from '@/components/utils/ColoredImage';
 import MapDrawer from '@/components/map/MapDrawer';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';

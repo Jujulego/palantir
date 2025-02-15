@@ -1,6 +1,6 @@
 'use client';
 
-import LocationTypography from '@/components/LocationTypography';
+import LocationTypography from '@/components/utils/LocationTypography';
 import { useMapFlyTo } from '@/lib/map/useMapFlyTo';
 import type { Address } from '@/lib/utils/address';
 import type { Coordinates } from '@/lib/utils/coordinates';

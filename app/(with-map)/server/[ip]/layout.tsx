@@ -1,5 +1,5 @@
-import HostnameLink from '@/components/HostnameLink';
-import IpSourceMenu from '@/components/IpSourceMenu';
+import HostnameLink from '@/components/dns/HostnameLink';
+import IpSourceMenu from '@/components/server/IpSourceMenu';
 import { reverseDnsLookup } from '@/lib/dns/reverse-dns-lookup';
 import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
