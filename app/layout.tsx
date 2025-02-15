@@ -25,7 +25,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
     <body>
+      <meta name="google-site-verification" content="uT8DmsLqvM0YmnXh2shq6iGTQHk-bdS4LhQamFK0CrY" />
       <InitColorSchemeScript attribute="class" />
+
       <AppRouterCacheProvider>
         <ThemeProvider theme={theme}>
           <CssBaseline enableColorScheme />
