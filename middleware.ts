@@ -1,7 +1,7 @@
 import { auth0 } from '@/auth0';
-import * as Sentry from '@sentry/nextjs';
+import { setUser } from '@sentry/nextjs';
 import { createEdgeRouter } from 'next-connect';
-import { type NextFetchEvent, type NextRequest, NextResponse } from 'next/server';
+import { type NextFetchEvent, type NextRequest } from 'next/server';
 
 // Middleware
 export const config = {
@@ -28,22 +28,13 @@ router
   .use(async (request, _, next) => {
     const session = await auth0.getSession();
 
-    Sentry.setUser({
+    setUser({
       id: session?.user?.sub,
       email: session?.user?.email,
       ip_address: request.headers.get('X-Forwarded-For') ?? undefined,
     });
 
     return next();
-  })
-  .use('/ip/', async (request, _, next) => {
-    const session = await auth0.getSession();
-
-    if (!session) {
-      return NextResponse.redirect(`${request.nextUrl.origin}/auth/login?returnTo=${encodeURIComponent(request.nextUrl.pathname)}`);
-    } else {
-      return next();
-    }
   })
   .all(async (request) => {
     return await auth0.middleware(request);

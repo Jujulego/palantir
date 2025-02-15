@@ -6,6 +6,7 @@ import MapMarker from '@/components/map/MapMarker';
 import MapSpin from '@/components/map/MapSpin';
 import PayloadItem from '@/components/server/PayloadItem';
 import TagsItem from '@/components/utils/TagsItem';
+import { isAuthenticated } from '@/lib/auth/is-authenticated';
 import {
   extractAddress,
   extractAutonomousSystem,
@@ -22,8 +23,11 @@ export interface WMServerIpGeolocationPageProps {
 }
 
 export default async function WMServerIpGeolocationPage({ params }: WMServerIpGeolocationPageProps) {
-  // Load data
   const ip = ipaddr.parse(await decodeIp(params));
+
+  await isAuthenticated({ returnTo: `/server/${ip}/ip-geolocation` });
+
+  // Load data
   const data = await queryIpGeolocation(ip);
 
   // No result
