@@ -1,10 +1,9 @@
 import { decodeIp, type WithMapServerIpParams } from '@/app/(with-map)/server/[ip]/params';
-import AutonomousSystemItem from '@/components/server/AutonomousSystemItem';
-import LocationItem from '@/components/utils/LocationItem';
-import MapFlyTo from '@/components/map/MapFlyTo';
-import MapMarker from '@/components/map/MapMarker';
 import MapSpin from '@/components/map/MapSpin';
+import AutonomousSystemItem from '@/components/server/AutonomousSystemItem';
 import PayloadItem from '@/components/server/PayloadItem';
+import ServerMarker from '@/components/server/ServerMarker';
+import LocationItem from '@/components/utils/LocationItem';
 import { extractAddress, extractAutonomousSystem, extractCoordinates } from '@/lib/server/ip-info/extractors';
 import { queryIpInfo } from '@/lib/server/ip-info/ip-info';
 import List from '@mui/material/List';
@@ -43,18 +42,12 @@ export default async function WMServerIpInfoPage({ params }: WMServerIpInfoPageP
 
       <PayloadItem payload={data} />
 
-      { coordinates ? (
-        <>
-          <MapMarker
-            latitude={coordinates.latitude}
-            longitude={coordinates.longitude}
-            tooltip="IPinfo"
-            selected
-            sx={{ color: 'ipInfo.main' }}
-          />
-          <MapFlyTo latitude={coordinates.latitude} longitude={coordinates.longitude} zoom={5} />
-        </>
-      ) : <MapSpin /> }
+      <ServerMarker
+        coordinates={coordinates}
+        markerKey="ip-info"
+        tooltip="IPinfo"
+        sx={{ color: 'ipInfo.main' }}
+      />
     </List>
   );
 }

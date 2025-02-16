@@ -1,5 +1,6 @@
 import HostnameLink from '@/components/dns/HostnameLink';
 import MetadataSourceMenu from '@/components/server/MetadataSourceMenu';
+import ServerMarkers from '@/components/server/ServerMarkers';
 import { reverseDnsLookup } from '@/lib/dns/reverse-dns-lookup';
 import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
@@ -56,7 +57,9 @@ export default async function WithMapServerIpLayout({ params, children }: WithMa
 
       <Divider />
 
-      { children }
+      <ServerMarkers>
+        { children }
+      </ServerMarkers>
     </>
   );
 }

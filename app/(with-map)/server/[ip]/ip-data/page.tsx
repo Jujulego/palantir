@@ -1,10 +1,9 @@
 import { decodeIp, type WithMapServerIpParams } from '@/app/(with-map)/server/[ip]/params';
-import AutonomousSystemItem from '@/components/server/AutonomousSystemItem';
-import LocationItem from '@/components/utils/LocationItem';
-import MapFlyTo from '@/components/map/MapFlyTo';
-import MapMarker from '@/components/map/MapMarker';
 import MapSpin from '@/components/map/MapSpin';
+import AutonomousSystemItem from '@/components/server/AutonomousSystemItem';
 import PayloadItem from '@/components/server/PayloadItem';
+import ServerMarker from '@/components/server/ServerMarker';
+import LocationItem from '@/components/utils/LocationItem';
 import TagsItem from '@/components/utils/TagsItem';
 import { isAuthenticated } from '@/lib/auth/is-authenticated';
 import {
@@ -54,19 +53,13 @@ export default async function WMServerIpDataPage({ params }: WMServerIpDataPageP
       <PayloadItem payload={data} />
 
       { coordinates ? (
-        <>
-          <MapMarker
-            latitude={coordinates.latitude}
-            longitude={coordinates.longitude}
-            tooltip="ipdata"
-            selected
-            sx={{ color: 'ipdata.main' }}
-          />
-          <MapFlyTo latitude={coordinates.latitude} longitude={coordinates.longitude} zoom={5} />
-        </>
-      ) : (
-        <MapSpin />
-      ) }
+        <ServerMarker
+          coordinates={coordinates}
+          markerKey="ip-data"
+          tooltip="ipdata"
+          sx={{ color: 'ipdata.main' }}
+        />
+      ) : <MapSpin /> }
     </List>
   );
 }
