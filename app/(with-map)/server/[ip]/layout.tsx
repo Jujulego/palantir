@@ -1,5 +1,5 @@
 import HostnameLink from '@/components/dns/HostnameLink';
-import IpSourceMenu from '@/components/server/IpSourceMenu';
+import MetadataSourceMenu from '@/components/server/MetadataSourceMenu';
 import { reverseDnsLookup } from '@/lib/dns/reverse-dns-lookup';
 import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
@@ -50,7 +50,7 @@ export default async function WithMapServerIpLayout({ params, children }: WithMa
             <HostnameLink hostname={reverseDnsLookup(ip)} sx={{ flex: 1 }} />
           </Suspense>
 
-          <IpSourceMenu ip={ip} sx={{ flex: '0 0 auto', ml: 'auto' }} />
+          <MetadataSourceMenu ip={ip} sx={{ flex: '0 0 auto', ml: 'auto' }} />
         </Box>
       </Box>
 

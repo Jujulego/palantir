@@ -18,12 +18,12 @@ import { useRouter, useSelectedLayoutSegment } from 'next/navigation';
 import { type MouseEvent, type ReactNode, useCallback, useId, useRef, useState, useTransition } from 'react';
 
 // Component
-export interface IpSourceMenuProps {
+export interface MetadataSourceMenuProps {
   readonly ip: string;
   readonly sx?: SxProps<Theme>
 }
 
-export default function IpSourceMenu({ ip, sx }: IpSourceMenuProps) {
+export default function MetadataSourceMenu({ ip, sx }: MetadataSourceMenuProps) {
   const id = useId();
   const source = useSelectedLayoutSegment() ?? '';
   const anchorRef = useRef<HTMLButtonElement | null>(null);
@@ -60,7 +60,7 @@ export default function IpSourceMenu({ ip, sx }: IpSourceMenuProps) {
 
         aria-controls={`${id}-menu`}
         aria-expanded={open}
-        aria-label="ip source menu"
+        aria-label="metadata source menu"
         aria-haspopup="true"
       >
         { options[source] ?? <Skeleton variant="rounded" height={20} width={80} /> }
@@ -77,7 +77,7 @@ export default function IpSourceMenu({ ip, sx }: IpSourceMenuProps) {
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
 
         MenuListProps={{
-          'aria-label': 'ip source menu'
+          'aria-label': 'metadata source menu'
         }}
       >
         <MenuItem

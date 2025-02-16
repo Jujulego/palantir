@@ -9,7 +9,7 @@ import ipaddr from 'ipaddr.js';
 import { AnimatePresence } from 'motion/react';
 import { use, useMemo } from 'react';
 
-export default function IpSearchOptions() {
+export default function ServerSearchOptions() {
   const { inputValue } = use(SearchContext);
   const ip = useMemo(() => ipaddr.isValid(inputValue) ? ipaddr.parse(inputValue) : null, [inputValue]);
 

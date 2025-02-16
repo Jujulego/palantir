@@ -3,7 +3,7 @@ import LocateButton from '@/components/server/LocateButton';
 import MapLayout from '@/components/map/MapLayout';
 import AnimalSearchOptions from '@/components/animal/AnimalSearchOptions';
 import DnsSearchOptions from '@/components/dns/DnsSearchOptions';
-import IpSearchOptions from '@/components/server/IpSearchOptions';
+import ServerSearchOptions from '@/components/server/ServerSearchOptions';
 import SearchBox from '@/components/search/SearchBox';
 import { SearchBoxSkeleton } from '@/components/search/SearchBoxSkeleton';
 import Paper from '@mui/material/Paper';
@@ -38,7 +38,7 @@ export default async function WithMapLayout({ children }: WithMapLayoutProps) {
           <SearchBox sx={{ width: 384 }}>
             <AnimalSearchOptions />
             <DnsSearchOptions />
-            <IpSearchOptions />
+            <ServerSearchOptions />
           </SearchBox>
         </Suspense>
 
