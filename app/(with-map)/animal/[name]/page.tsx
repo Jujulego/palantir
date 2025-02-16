@@ -3,6 +3,7 @@ import MapFlyTo from '@/components/map/MapFlyTo';
 import MapMarker from '@/components/map/MapMarker';
 import MapPolyline from '@/components/map/MapPolyline';
 import MapSpin from '@/components/map/MapSpin';
+import ServerMarker from '@/components/server/ServerMarker';
 import LocationItem from '@/components/utils/LocationItem';
 import { scrapAnimalTracking } from '@/lib/animal/club-ocean';
 import PetsIcon from '@mui/icons-material/Pets';
@@ -63,7 +64,7 @@ export default async function WithMapAnimalPage({ params }: WithMapAnimalNamePag
 
       <MapPolyline coordinates={animal.coordinates} />
 
-      { coordinates && <MapMarker latitude={coordinates.latitude} longitude={coordinates.longitude} selected /> }
+      { coordinates && <ServerMarker latitude={coordinates.latitude} longitude={coordinates.longitude} selected /> }
       { coordinates
         ? <MapFlyTo latitude={coordinates.latitude} longitude={coordinates.longitude} zoom={5} />
         : <MapSpin /> }

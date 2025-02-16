@@ -2,7 +2,7 @@ import { decodeIp, type WithMapServerIpParams } from '@/app/(with-map)/server/[i
 import AutonomousSystemItem from '@/components/server/AutonomousSystemItem';
 import LocationItem from '@/components/utils/LocationItem';
 import MapFlyTo from '@/components/map/MapFlyTo';
-import MapMarker from '@/components/map/MapMarker';
+import ServerMarker from '@/components/map/MapMarker';
 import MapSpin from '@/components/map/MapSpin';
 import PayloadItem from '@/components/server/PayloadItem';
 import { extractAddress, extractAutonomousSystem, extractCoordinates } from '@/lib/server/ip-info/extractors';
@@ -45,7 +45,7 @@ export default async function WMServerIpInfoPage({ params }: WMServerIpInfoPageP
 
       { coordinates ? (
         <>
-          <MapMarker
+          <ServerMarker
             latitude={coordinates.latitude}
             longitude={coordinates.longitude}
             tooltip="IPinfo"

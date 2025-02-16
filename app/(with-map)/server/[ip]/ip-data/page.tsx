@@ -1,5 +1,6 @@
 import { decodeIp, type WithMapServerIpParams } from '@/app/(with-map)/server/[ip]/params';
 import AutonomousSystemItem from '@/components/server/AutonomousSystemItem';
+import ServerMarker from '@/components/server/ServerMarker';
 import LocationItem from '@/components/utils/LocationItem';
 import MapFlyTo from '@/components/map/MapFlyTo';
 import MapMarker from '@/components/map/MapMarker';
@@ -55,7 +56,7 @@ export default async function WMServerIpDataPage({ params }: WMServerIpDataPageP
 
       { coordinates ? (
         <>
-          <MapMarker
+          <ServerMarker
             latitude={coordinates.latitude}
             longitude={coordinates.longitude}
             tooltip="ipdata"
