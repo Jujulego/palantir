@@ -7,7 +7,7 @@ export default async function WithMapServerMePage() {
 
   if (ip !== null) {
     ip = ipaddr.parse(ip).toString();
-    redirect(`/server/${encodeURIComponent(ip)}`, RedirectType.replace);
+    redirect(`/server/${encodeURIComponent(ip)}/ip-info`, RedirectType.replace);
   }
 
   redirect('/');
