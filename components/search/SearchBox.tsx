@@ -5,8 +5,9 @@ import { SearchComboBox } from '@/components/search/SearchComboBox';
 import SearchEmptyOption from '@/components/search/SearchEmptyOption';
 import SearchListBox from '@/components/search/SearchListBox';
 import SearchSurface from '@/components/search/SearchSurface';
-import { useSearchParam } from '@/lib/utils/useSearchParam';
 import { mergeSx } from '@/lib/utils/mui';
+import { useDebounced } from '@/lib/utils/useDebounced';
+import { useSearchParam } from '@/lib/utils/useSearchParam';
 import Fade from '@mui/material/Fade';
 import LinearProgress from '@mui/material/LinearProgress';
 import { styled, type SxProps, type Theme } from '@mui/material/styles';
@@ -35,8 +36,7 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
   // Input state
   const [searchParam,] = useSearchParam('search');
   const [inputValue, setInputValue] = useState(searchParam ?? '');
-  const inputValueRef = useRef(inputValue);
-  inputValueRef.current = inputValue;
+  const debouncedValue = useDebounced(inputValue, 150);
 
   useEffect(() => {
     setInputValue(searchParam ?? '');
@@ -59,11 +59,11 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
   // Searching state
   const [isSearching, startSearch] = useTransition();
   const search = useCallback((url: URL) => {
-    url.searchParams.set('search', inputValueRef.current);
+    url.searchParams.set('search', debouncedValue);
 
     setIsOpen(false);
     startSearch(() => router.push(url.toString()));
-  }, [router]);
+  }, [debouncedValue, router]);
 
   // Options
   const optionsRef = useRef(new Map<string, URL>());
@@ -176,7 +176,7 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
         <SearchContext
           value={{
             activeOption,
-            inputValue,
+            inputValue: debouncedValue,
             isOpen,
             markLoading,
             markLoaded,
