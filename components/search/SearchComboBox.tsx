@@ -5,7 +5,7 @@ import Fade from '@mui/material/Fade';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import { styled, type SxProps, type Theme } from '@mui/material/styles';
-import { type ChangeEvent, type KeyboardEvent, type RefObject, useCallback, useRef } from 'react';
+import { type ChangeEvent, type KeyboardEvent, type RefObject, useCallback } from 'react';
 
 // Component
 export interface SearchComboBoxProps {
@@ -40,7 +40,7 @@ export function SearchComboBox(props: SearchComboBoxProps) {
     onOpen,
     sx
   } = props;
-  
+
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     onInputChange(event.currentTarget.value);
     onOpen();
