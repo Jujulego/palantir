@@ -1,5 +1,4 @@
 import { decodeIp, type WithMapServerIpParams } from '@/app/(with-map)/server/[ip]/params';
-import MapFlyTo from '@/components/map/MapFlyTo';
 import MapSpin from '@/components/map/MapSpin';
 import AutonomousSystemItem from '@/components/server/AutonomousSystemItem';
 import PayloadItem from '@/components/server/PayloadItem';
@@ -43,14 +42,12 @@ export default async function WMServerIpInfoPage({ params }: WMServerIpInfoPageP
 
       <PayloadItem payload={data} />
 
-      { coordinates ? (
-        <ServerMarker
-          coordinates={coordinates}
-          tooltip="IPinfo"
-          selected
-          sx={{ color: 'ipInfo.main' }}
-        />
-      ) : <MapSpin /> }
+      <ServerMarker
+        coordinates={coordinates}
+        tooltip="IPinfo"
+        selected
+        sx={{ color: 'ipInfo.main' }}
+      />
     </List>
   );
 }
