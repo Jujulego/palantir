@@ -1,13 +1,18 @@
 import { decodeIp, type WithMapServerIpParams } from '@/app/(with-map)/server/[ip]/params';
-import AutonomousSystemItem from '@/components/server/AutonomousSystemItem';
-import LocationItem from '@/components/utils/LocationItem';
 import MapFlyTo from '@/components/map/MapFlyTo';
-import ServerMarker from '@/components/map/MapMarker';
 import MapSpin from '@/components/map/MapSpin';
+import AutonomousSystemItem from '@/components/server/AutonomousSystemItem';
 import PayloadItem from '@/components/server/PayloadItem';
+import ServerMarker from '@/components/server/ServerMarker';
+import LocationItem from '@/components/utils/LocationItem';
 import TagsItem from '@/components/utils/TagsItem';
 import { isAuthenticated } from '@/lib/auth/is-authenticated';
-import { extractAddress, extractAutonomousSystem, extractCoordinates, extractTags } from '@/lib/server/ip-quality-score/extractors';
+import {
+  extractAddress,
+  extractAutonomousSystem,
+  extractCoordinates,
+  extractTags
+} from '@/lib/server/ip-quality-score/extractors';
 import { queryIpQualityScore } from '@/lib/server/ip-quality-score/ip-quality-score';
 import List from '@mui/material/List';
 import ipaddr from 'ipaddr.js';

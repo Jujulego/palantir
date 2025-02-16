@@ -1,11 +1,10 @@
 import { decodeIp, type WithMapServerIpParams } from '@/app/(with-map)/server/[ip]/params';
+import MapFlyTo from '@/components/map/MapFlyTo';
+import MapSpin from '@/components/map/MapSpin';
 import AutonomousSystemItem from '@/components/server/AutonomousSystemItem';
+import PayloadItem from '@/components/server/PayloadItem';
 import ServerMarker from '@/components/server/ServerMarker';
 import LocationItem from '@/components/utils/LocationItem';
-import MapFlyTo from '@/components/map/MapFlyTo';
-import MapMarker from '@/components/map/MapMarker';
-import MapSpin from '@/components/map/MapSpin';
-import PayloadItem from '@/components/server/PayloadItem';
 import TagsItem from '@/components/utils/TagsItem';
 import { isAuthenticated } from '@/lib/auth/is-authenticated';
 import {

@@ -1,10 +1,10 @@
 import { decodeIp, type WithMapServerIpParams } from '@/app/(with-map)/server/[ip]/params';
-import AutonomousSystemItem from '@/components/server/AutonomousSystemItem';
-import LocationItem from '@/components/utils/LocationItem';
 import MapFlyTo from '@/components/map/MapFlyTo';
-import ServerMarker from '@/components/map/MapMarker';
 import MapSpin from '@/components/map/MapSpin';
+import AutonomousSystemItem from '@/components/server/AutonomousSystemItem';
 import PayloadItem from '@/components/server/PayloadItem';
+import ServerMarker from '@/components/server/ServerMarker';
+import LocationItem from '@/components/utils/LocationItem';
 import { extractAddress, extractAutonomousSystem, extractCoordinates } from '@/lib/server/ip-info/extractors';
 import { queryIpInfo } from '@/lib/server/ip-info/ip-info';
 import List from '@mui/material/List';
