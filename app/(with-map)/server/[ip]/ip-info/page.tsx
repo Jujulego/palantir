@@ -44,8 +44,8 @@ export default async function WMServerIpInfoPage({ params }: WMServerIpInfoPageP
 
       <ServerMarker
         coordinates={coordinates}
+        markerKey="ip-info"
         tooltip="IPinfo"
-        selected
         sx={{ color: 'ipInfo.main' }}
       />
     </List>

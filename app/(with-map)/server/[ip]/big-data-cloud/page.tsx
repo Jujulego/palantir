@@ -56,8 +56,8 @@ export default async function WMServerIpBDCPage({ params }: WMServerIpBDCPagePro
       { coordinates ? (
         <ServerMarker
           coordinates={coordinates}
+          markerKey="big-data-cloud"
           tooltip="Big Data Cloud"
-          selected
           sx={{ color: 'bigDataCloud.main' }}
         />
       ) : <MapSpin /> }

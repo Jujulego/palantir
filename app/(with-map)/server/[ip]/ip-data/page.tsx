@@ -55,8 +55,8 @@ export default async function WMServerIpDataPage({ params }: WMServerIpDataPageP
       { coordinates ? (
         <ServerMarker
           coordinates={coordinates}
+          markerKey="ip-data"
           tooltip="ipdata"
-          selected
           sx={{ color: 'ipdata.main' }}
         />
       ) : <MapSpin /> }

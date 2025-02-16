@@ -56,8 +56,8 @@ export default async function WMServerIpIPQSPage({ params }: WMServerIpIPQSPageP
       { coordinates ? (
         <ServerMarker
           coordinates={coordinates}
+          markerKey="ip-quality-score"
           tooltip="IPQS"
-          selected
           sx={{ color: 'ipQualityScore.main' }}
         />
       ) : <MapSpin /> }

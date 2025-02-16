@@ -54,8 +54,8 @@ export default async function WMServerIpGeolocationPage({ params }: WMServerIpGe
 
       <ServerMarker
         coordinates={coordinates}
+        markerKey="ip-geolocation"
         tooltip="ipgeolocation"
-        selected
         sx={{ color: 'ipGeolocation.main' }}
       />
     </List>

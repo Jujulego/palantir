@@ -2,7 +2,7 @@
 
 import { MapContext } from '@/components/map/map.context';
 import { useLazyMapbox } from '@/lib/map/useLazyMapbox';
-import type * as mapboxgl from 'mapbox-gl';
+import type { Marker } from 'mapbox-gl';
 import { type ReactNode, use, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -18,7 +18,7 @@ export default function MapMarker({ latitude, longitude, children }: MapMarkerPr
   const { map, isLoaded } = use(MapContext);
 
   const elementRef = useRef(document.createElement('div'));
-  const markerRef = useRef<mapboxgl.Marker>(null);
+  const markerRef = useRef<Marker>(null);
 
   useEffect(() => {
     if (!mapboxRef.current) return;
