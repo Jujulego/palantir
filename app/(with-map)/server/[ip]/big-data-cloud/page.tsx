@@ -1,5 +1,4 @@
 import { decodeIp, type WithMapServerIpParams } from '@/app/(with-map)/server/[ip]/params';
-import MapFlyTo from '@/components/map/MapFlyTo';
 import MapSpin from '@/components/map/MapSpin';
 import AutonomousSystemItem from '@/components/server/AutonomousSystemItem';
 import PayloadItem from '@/components/server/PayloadItem';
@@ -55,19 +54,13 @@ export default async function WMServerIpBDCPage({ params }: WMServerIpBDCPagePro
       <PayloadItem payload={data} />
 
       { coordinates ? (
-        <>
-          <ServerMarker
-            latitude={coordinates.latitude}
-            longitude={coordinates.longitude}
-            tooltip="Big Data Cloud"
-            selected
-            sx={{ color: 'bigDataCloud.main' }}
-          />
-          <MapFlyTo latitude={coordinates.latitude} longitude={coordinates.longitude} zoom={5} />
-        </>
-      ) : (
-        <MapSpin />
-      ) }
+        <ServerMarker
+          coordinates={coordinates}
+          tooltip="Big Data Cloud"
+          selected
+          sx={{ color: 'bigDataCloud.main' }}
+        />
+      ) : <MapSpin /> }
     </List>
   );
 }

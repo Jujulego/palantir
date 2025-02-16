@@ -21,6 +21,7 @@ export default function AnimalMarker({ coordinates }: AnimalMarkerProps) {
     }
   }, [coordinates, flyTo, isReady]);
 
+  // Render
   return (
     <MapMarker latitude={coordinates.latitude} longitude={coordinates.longitude}>
       <m.div

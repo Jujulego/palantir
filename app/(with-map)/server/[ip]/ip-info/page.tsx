@@ -44,16 +44,12 @@ export default async function WMServerIpInfoPage({ params }: WMServerIpInfoPageP
       <PayloadItem payload={data} />
 
       { coordinates ? (
-        <>
-          <ServerMarker
-            latitude={coordinates.latitude}
-            longitude={coordinates.longitude}
-            tooltip="IPinfo"
-            selected
-            sx={{ color: 'ipInfo.main' }}
-          />
-          <MapFlyTo latitude={coordinates.latitude} longitude={coordinates.longitude} zoom={5} />
-        </>
+        <ServerMarker
+          coordinates={coordinates}
+          tooltip="IPinfo"
+          selected
+          sx={{ color: 'ipInfo.main' }}
+        />
       ) : <MapSpin /> }
     </List>
   );

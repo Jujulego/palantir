@@ -1,5 +1,4 @@
 import { decodeIp, type WithMapServerIpParams } from '@/app/(with-map)/server/[ip]/params';
-import MapFlyTo from '@/components/map/MapFlyTo';
 import MapSpin from '@/components/map/MapSpin';
 import AutonomousSystemItem from '@/components/server/AutonomousSystemItem';
 import PayloadItem from '@/components/server/PayloadItem';
@@ -54,13 +53,11 @@ export default async function WMServerIpGeolocationPage({ params }: WMServerIpGe
       <PayloadItem payload={data} />
 
       <ServerMarker
-        latitude={coordinates.latitude}
-        longitude={coordinates.longitude}
+        coordinates={coordinates}
         tooltip="ipgeolocation"
         selected
         sx={{ color: 'ipGeolocation.main' }}
       />
-      <MapFlyTo latitude={coordinates.latitude} longitude={coordinates.longitude} zoom={5} />
     </List>
   );
 }
