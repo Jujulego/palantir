@@ -9,7 +9,7 @@ export interface WithMapServerLayoutProps {
   readonly children?: ReactNode;
 }
 
-export default function withMapServerLayout({ children }: WithMapServerLayoutProps) {
+export default function WithMapServerLayout({ children }: WithMapServerLayoutProps) {
   return (
     <MapDrawer>
       <Box
