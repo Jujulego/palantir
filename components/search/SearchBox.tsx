@@ -34,12 +34,21 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
   const handleClose = useCallback(() => setIsOpen(false), []);
 
   // Input state
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const [searchParam,] = useSearchParam('search');
   const [inputValue, setInputValue] = useState(searchParam ?? '');
   const debouncedValue = useDebounced(inputValue, 150);
 
   useEffect(() => {
-    setInputValue(searchParam ?? '');
+    setInputValue((old) => {
+      if (searchParam && searchParam !== old) {
+        inputRef.current?.focus();
+        setIsOpen(true);
+      }
+
+      return searchParam ?? '';
+    });
   }, [searchParam]);
 
   // Loading state
@@ -149,6 +158,7 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
       sx={mergeSx(sx, { height: 48 })}
     >
       <SearchComboBox
+        inputRef={inputRef}
         inputValue={inputValue}
         isOpen={isOpen}
         isSearching={isSearching}

@@ -5,11 +5,12 @@ import Fade from '@mui/material/Fade';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import { styled, type SxProps, type Theme } from '@mui/material/styles';
-import { ChangeEvent, KeyboardEvent, useCallback } from 'react';
+import { type ChangeEvent, type KeyboardEvent, type RefObject, useCallback, useRef } from 'react';
 
 // Component
 export interface SearchComboBoxProps {
   readonly activeOptionId: string | null;
+  readonly inputRef: RefObject<HTMLInputElement | null>;
   readonly inputValue: string;
   readonly isOpen: boolean;
   readonly isSearching: boolean;
@@ -26,9 +27,10 @@ export interface SearchComboBoxProps {
 export function SearchComboBox(props: SearchComboBoxProps) {
   const {
     activeOptionId,
+    inputRef,
+    inputValue,
     isOpen,
     isSearching,
-    inputValue,
     listBoxId,
     onClose,
     onFocusDown,
@@ -38,7 +40,7 @@ export function SearchComboBox(props: SearchComboBoxProps) {
     onOpen,
     sx
   } = props;
-
+  
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     onInputChange(event.currentTarget.value);
     onOpen();
@@ -73,12 +75,14 @@ export function SearchComboBox(props: SearchComboBoxProps) {
   const handleClear = useCallback(() => {
     onInputChange('');
     onClose();
+    inputRef.current?.focus();
   }, [onClose, onInputChange]);
   
   // Render
   return (
     <Stack component={SearchInputBox} direction="row" useFlexGap sx={sx}>
       <SearchInput
+        ref={inputRef}
         value={inputValue}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
