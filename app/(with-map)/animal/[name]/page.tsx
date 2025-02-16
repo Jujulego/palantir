@@ -1,9 +1,7 @@
 import { decodeName, type WithMapAnimalNameParams } from '@/app/(with-map)/animal/[name]/params';
-import MapFlyTo from '@/components/map/MapFlyTo';
-import MapMarker from '@/components/map/MapMarker';
+import AnimalMarker from '@/components/animal/AnimalMarker';
 import MapPolyline from '@/components/map/MapPolyline';
 import MapSpin from '@/components/map/MapSpin';
-import ServerMarker from '@/components/server/ServerMarker';
 import LocationItem from '@/components/utils/LocationItem';
 import { scrapAnimalTracking } from '@/lib/animal/club-ocean';
 import PetsIcon from '@mui/icons-material/Pets';
@@ -64,9 +62,8 @@ export default async function WithMapAnimalPage({ params }: WithMapAnimalNamePag
 
       <MapPolyline coordinates={animal.coordinates} />
 
-      { coordinates && <ServerMarker latitude={coordinates.latitude} longitude={coordinates.longitude} selected /> }
       { coordinates
-        ? <MapFlyTo latitude={coordinates.latitude} longitude={coordinates.longitude} zoom={5} />
+        ? <AnimalMarker coordinates={coordinates} />
         : <MapSpin /> }
     </List>
   );
