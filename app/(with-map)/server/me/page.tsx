@@ -1,8 +1,9 @@
 import HostnameLink from '@/components/dns/HostnameLink';
+import MapFlyTo from '@/components/map/MapFlyTo';
 import MapMarker from '@/components/map/MapMarker';
 import MapSpin from '@/components/map/MapSpin';
 import MetadataSourceMenu from '@/components/server/MetadataSourceMenu';
-import ServerMarker from '@/components/server/ServerMarker';
+import ServerMarkerIcon from '@/components/server/ServerMarkerIcon';
 import LocationItem from '@/components/utils/LocationItem';
 import { reverseDnsLookup } from '@/lib/dns/reverse-dns-lookup';
 import { vercelIpAddress, vercelIpCoordinates } from '@/lib/server/vercel/extractors';
@@ -79,9 +80,12 @@ export default async function WithMapServerMePage() {
 
         { coordinates
           ? (
-            <MapMarker latitude={coordinates.latitude} longitude={coordinates.longitude}>
-              <ServerMarker coordinates={coordinates} markerKey="vercel" tooltip="vercel" sx={{ color: 'black' }} />
-            </MapMarker>
+            <>
+              <MapMarker latitude={coordinates.latitude} longitude={coordinates.longitude}>
+                <ServerMarkerIcon markerKey="vercel" tooltip="vercel" sx={{ color: 'black' }} />
+              </MapMarker>
+              <MapFlyTo latitude={coordinates.latitude} longitude={coordinates.longitude} zoom={5} />
+            </>
           )
           : <MapSpin /> }
       </List>
