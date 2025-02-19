@@ -82,7 +82,7 @@ export default async function WithMapServerMePage() {
           ? (
             <>
               <MapMarker latitude={coordinates.latitude} longitude={coordinates.longitude}>
-                <ServerMarkerIcon markerKey="vercel" tooltip="vercel" sx={{ color: 'black' }} />
+                <ServerMarkerIcon markerKey="vercel" tooltip="Vercel" sx={{ color: 'primary.main' }} />
               </MapMarker>
               <MapFlyTo latitude={coordinates.latitude} longitude={coordinates.longitude} zoom={5} />
             </>
