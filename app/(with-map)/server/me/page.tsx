@@ -1,14 +1,82 @@
+import HostnameLink from '@/components/dns/HostnameLink';
+import MapSpin from '@/components/map/MapSpin';
+import ServerMarker from '@/components/server/ServerMarker';
+import LocationItem from '@/components/utils/LocationItem';
+import { reverseDnsLookup } from '@/lib/dns/reverse-dns-lookup';
+import { vercelIpAddress, vercelIpCoordinates } from '@/lib/server/vercel/extractors';
+import CloseIcon from '@mui/icons-material/Close';
+import NetworkPingIcon from '@mui/icons-material/NetworkPing';
+import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Skeleton from '@mui/material/Skeleton';
+import Typography from '@mui/material/Typography';
 import ipaddr from 'ipaddr.js';
 import { headers } from 'next/headers';
-import { redirect, RedirectType } from 'next/navigation';
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import { Suspense } from 'react';
 
+// Page
 export default async function WithMapServerMePage() {
-  let ip = (await headers()).get('X-Forwarded-For');
+  const forwardedFor = (await headers()).get('x-forwarded-for');
 
-  if (ip !== null) {
-    ip = ipaddr.parse(ip).toString();
-    redirect(`/server/${encodeURIComponent(ip)}/ip-info`, RedirectType.replace);
+  if (forwardedFor === null || !ipaddr.isValid(forwardedFor)) {
+    redirect('/');
   }
 
-  redirect('/');
+  // Load data
+  const ip = ipaddr.parse(forwardedFor);
+  const coordinates = await vercelIpCoordinates();
+
+  return (
+    <>
+      <Box sx={{ position: 'relative' }}>
+        <Box sx={{ display: 'flex', pl: 2.5, pr: 1, pt: 2 }}>
+          <Typography component="h1" variant="h5" noWrap sx={{ flex: 1 }}>
+            { ip.toString() }
+          </Typography>
+
+          <IconButton
+            component={Link}
+            href="/"
+            sx={{ flex: '0 0 auto', mt: -1 }}
+            aria-label="Close panel"
+          >
+            <CloseIcon />
+          </IconButton>
+        </Box>
+
+        <Box sx={{ display: 'flex', pl: 2.5, pr: 1.5, pb: 2, alignItems: 'center' }}>
+          <Suspense fallback={<Skeleton height={20} width="75%" />}>
+            <HostnameLink hostname={reverseDnsLookup(forwardedFor)} sx={{ flex: 1 }} />
+          </Suspense>
+        </Box>
+      </Box>
+
+      <Divider />
+
+      <List>
+        <LocationItem address={await vercelIpAddress()} coordinates={coordinates} />
+
+        <ListItem sx={{ minHeight: 56, px: 2, py: 0 }}>
+          <ListItemIcon sx={{ minWidth: 40 }}>
+            <NetworkPingIcon color="primary" />
+          </ListItemIcon>
+
+          <ListItemText
+            primary={(await headers()).get('x-vercel-forwarded-for')}
+          />
+        </ListItem>
+
+        { coordinates
+          ? <ServerMarker coordinates={coordinates} markerKey="vercel" tooltip="vercel" sx={{ color: 'black' }} />
+          : <MapSpin /> }
+      </List>
+    </>
+  );
 }
