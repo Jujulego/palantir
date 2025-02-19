@@ -1,5 +1,7 @@
 import HostnameLink from '@/components/dns/HostnameLink';
+import MapMarker from '@/components/map/MapMarker';
 import MapSpin from '@/components/map/MapSpin';
+import MetadataSourceMenu from '@/components/server/MetadataSourceMenu';
 import ServerMarker from '@/components/server/ServerMarker';
 import LocationItem from '@/components/utils/LocationItem';
 import { reverseDnsLookup } from '@/lib/dns/reverse-dns-lookup';
@@ -55,6 +57,8 @@ export default async function WithMapServerMePage() {
           <Suspense fallback={<Skeleton height={20} width="75%" />}>
             <HostnameLink hostname={reverseDnsLookup(forwardedFor)} sx={{ flex: 1 }} />
           </Suspense>
+
+          <MetadataSourceMenu ip={forwardedFor} sx={{ flex: '0 0 auto', ml: 'auto' }} />
         </Box>
       </Box>
 
@@ -74,7 +78,11 @@ export default async function WithMapServerMePage() {
         </ListItem>
 
         { coordinates
-          ? <ServerMarker coordinates={coordinates} markerKey="vercel" tooltip="vercel" sx={{ color: 'black' }} />
+          ? (
+            <MapMarker latitude={coordinates.latitude} longitude={coordinates.longitude}>
+              <ServerMarker coordinates={coordinates} markerKey="vercel" tooltip="vercel" sx={{ color: 'black' }} />
+            </MapMarker>
+          )
           : <MapSpin /> }
       </List>
     </>

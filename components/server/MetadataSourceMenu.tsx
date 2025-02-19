@@ -3,6 +3,7 @@
 import IpDataIcon from '@/components/icons/IpDataIcon';
 import IpInfoIcon from '@/components/icons/IpInfoIcon';
 import IpQualityScoreIcon from '@/components/icons/IpQualityScoreIcon';
+import VercelIcon from '@/components/icons/VercelIcon';
 import CloudIcon from '@mui/icons-material/Cloud';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PlaceIcon from '@mui/icons-material/Place';
@@ -25,7 +26,7 @@ export interface MetadataSourceMenuProps {
 
 export default function MetadataSourceMenu({ ip, sx }: MetadataSourceMenuProps) {
   const id = useId();
-  const source = useSelectedLayoutSegment() ?? '';
+  const source = useSelectedLayoutSegment() ?? 'vercel';
   const anchorRef = useRef<HTMLButtonElement | null>(null);
 
   // Open state
@@ -142,6 +143,7 @@ const options: Partial<Record<string, ReactNode>> = {
   'ip-info': <IpInfoOption />,
   'ip-geolocation': <IpGeolocationOption />,
   'ip-quality-score': <IpQualityScoreOption />,
+  'vercel': <VercelOption />,
 };
 
 // Elements
@@ -218,3 +220,12 @@ const IpQualityScoreEm = styled('em')(({ theme }) => ({
   fontStyle: 'normal',
   color: theme.vars.palette.ipQualityScore.main,
 }));
+
+function VercelOption() {
+  return (
+    <>
+      <VercelIcon sx={{ color: 'text.primary', fontSize: '1em' }} />
+      Vercel
+    </>
+  );
+}
