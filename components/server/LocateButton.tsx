@@ -16,7 +16,7 @@ export default function LocateButton() {
     event.preventDefault();
 
     startLocate(() => {
-      router.push('/server/me');
+      router.push('/server/me/vercel');
     });
   }, [router]);
 
@@ -29,7 +29,7 @@ export default function LocateButton() {
         loadingIndicator={<CircularProgress size={20} />}
 
         component={Link}
-        href="/server/me"
+        href="/server/me/vercel"
         prefetch
         onClick={handleClick}
 
