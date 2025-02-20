@@ -8,14 +8,10 @@ import LocationItem from '@/components/utils/LocationItem';
 import { reverseDnsLookup } from '@/lib/dns/reverse-dns-lookup';
 import { vercelIpAddress, vercelIpCoordinates } from '@/lib/server/vercel/extractors';
 import CloseIcon from '@mui/icons-material/Close';
-import NetworkPingIcon from '@mui/icons-material/NetworkPing';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import ipaddr from 'ipaddr.js';
@@ -67,16 +63,6 @@ export default async function WithMapServerMePage() {
 
       <List>
         <LocationItem address={await vercelIpAddress()} coordinates={coordinates} />
-
-        <ListItem sx={{ minHeight: 56, px: 2, py: 0 }}>
-          <ListItemIcon sx={{ minWidth: 40 }}>
-            <NetworkPingIcon color="primary" />
-          </ListItemIcon>
-
-          <ListItemText
-            primary={(await headers()).get('x-vercel-forwarded-for')}
-          />
-        </ListItem>
 
         { coordinates
           ? (

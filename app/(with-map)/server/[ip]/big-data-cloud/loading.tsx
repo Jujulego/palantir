@@ -1,16 +1,3 @@
-import AutonomousSystemItemSkeleton from '@/components/server/AutonomousSystemItemSkeleton';
-import LocationItemSkeleton from '@/components/utils/LocationItemSkeleton';
-import PayloadItemSkeleton from '@/components/server/PayloadItemSkeleton';
-import TagsItemSkeleton from '@/components/utils/TagsItemSkeleton';
-import List from '@mui/material/List';
+import BigDataCloudMetadataLoading from '@/components/server/big-data-cloud/BigDataCloudMetadataLoading';
 
-export default function WMServerIpBDCLoading() {
-  return (
-    <List>
-      <LocationItemSkeleton />
-      <AutonomousSystemItemSkeleton />
-      <TagsItemSkeleton />
-      <PayloadItemSkeleton />
-    </List>
-  );
-}
+export default BigDataCloudMetadataLoading;
