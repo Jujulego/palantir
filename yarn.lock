@@ -5116,9 +5116,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:^12.4.5":
-  version: 12.4.5
-  resolution: "framer-motion@npm:12.4.5"
+"framer-motion@npm:^12.4.7":
+  version: 12.4.7
+  resolution: "framer-motion@npm:12.4.7"
   dependencies:
     motion-dom: "npm:^12.4.5"
     motion-utils: "npm:^12.0.0"
@@ -5134,7 +5134,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 10c0/e4b013d9715c3fe43063e53e0337004f74b51b9e540cb552c5e69a5c5c85555a3b5a0124a899b3469e3cdb16fcf88a64096af8f06f9ccb1d2ff88e6b78ae946a
+  checksum: 10c0/746b6a82f7c1a663341008241065a44370c02f563e57724ed7147f888c12b5df389e95ccda851195e2da24075daf5124ce00ee5e838b60bc9da56e1421cea86c
   languageName: node
   linkType: hard
 
@@ -6670,11 +6670,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"motion@npm:12.4.5":
-  version: 12.4.5
-  resolution: "motion@npm:12.4.5"
+"motion@npm:12.4.7":
+  version: 12.4.7
+  resolution: "motion@npm:12.4.7"
   dependencies:
-    framer-motion: "npm:^12.4.5"
+    framer-motion: "npm:^12.4.7"
     tslib: "npm:^2.4.0"
   peerDependencies:
     "@emotion/is-prop-valid": "*"
@@ -6687,7 +6687,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 10c0/03bebf8d6a76b30c5ffe1337298768ee7b9f202e04f4e8ab85f16bb70245a90bd13cc10e65332f7eedbbb091252097e3f0dd3131590ce03a5728351ae82e0fbb
+  checksum: 10c0/369b41600b507d12cf963ec686ca297ca843a3908b1526e2de9593b95416dc89d4b446d4cd7a1fe31e2ca06fcfc1237e5f0d52bcd324649040e90ba012760541
   languageName: node
   linkType: hard
 
@@ -7098,7 +7098,7 @@ __metadata:
     jsdom: "npm:26.0.0"
     kyrielle: "npm:2.2.1"
     mapbox-gl: "npm:3.10.0"
-    motion: "npm:12.4.5"
+    motion: "npm:12.4.7"
     next: "npm:15.1.7"
     next-connect: "npm:1.0.0"
     prismjs: "npm:1.29.0"
