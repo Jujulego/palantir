@@ -16,6 +16,7 @@ import IconButton from '@mui/material/IconButton';
 import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import ipaddr from 'ipaddr.js';
+import type { Metadata } from 'next';
 import { headers } from 'next/headers';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
@@ -77,4 +78,10 @@ export default async function WithMapServerMeLayout({ children }: WithMapServerM
       </ServerMarkers>
     </>
   );
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: 'My IP address',
+  };
 }
