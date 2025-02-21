@@ -47,9 +47,9 @@ export default async function IpGeolocationMetadataList({ ip }: IpGeolocationMet
       { coordinates ? (
         <ServerMarker
           coordinates={coordinates}
-          markerKey="ip-data"
-          tooltip="ipdata"
-          sx={{ color: 'ipdata.main' }}
+          markerKey="ip-geolocation"
+          tooltip="ipgeolocation"
+          sx={{ color: 'ipGeolocation.main' }}
         />
       ) : <MapSpin /> }
     </List>
