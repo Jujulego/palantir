@@ -6,6 +6,7 @@ import IpInfoOption from '@/components/server/menu/IpInfoOption';
 import IpQualityScoreOption from '@/components/server/menu/IpQualityScoreOption';
 import MetadataMenu from '@/components/server/menu/MetadataMenu';
 import MetadataOption from '@/components/server/menu/MetadataOption';
+import VercelOption from '@/components/server/menu/VercelOption';
 import ServerMarkers from '@/components/server/ServerMarkers';
 import { reverseDnsLookup } from '@/lib/dns/reverse-dns-lookup';
 import CloseIcon from '@mui/icons-material/Close';
@@ -16,30 +17,32 @@ import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import ipaddr from 'ipaddr.js';
 import type { Metadata } from 'next';
+import { headers } from 'next/headers';
 import Link from 'next/link';
-import { redirect, RedirectType } from 'next/navigation';
+import { redirect } from 'next/navigation';
 import { type ReactNode, Suspense } from 'react';
-import { decodeIp, type WithMapServerIpParams } from './params';
 
-// Layout
-export interface WithMapServerIpLayoutProps {
+// Page
+export interface WithMapServerMeLayoutProps {
   readonly children: ReactNode;
-  readonly params: Promise<WithMapServerIpParams>;
 }
 
-export default async function WithMapServerIpLayout({ params, children }: WithMapServerIpLayoutProps) {
-  const ip = await decodeIp(params);
+export default async function WithMapServerMeLayout({ children }: WithMapServerMeLayoutProps) {
+  const forwardedFor = (await headers()).get('x-forwarded-for');
 
-  if (!ipaddr.isValid(ip)) {
-    redirect('/', RedirectType.replace);
+  if (forwardedFor === null || !ipaddr.isValid(forwardedFor)) {
+    redirect('/');
   }
+
+  // Load data
+  const ip = ipaddr.parse(forwardedFor);
 
   return (
     <>
       <Box sx={{ position: 'relative' }}>
         <Box sx={{ display: 'flex', pl: 2.5, pr: 1, pt: 2 }}>
           <Typography component="h1" variant="h5" noWrap sx={{ flex: 1 }}>
-            { ipaddr.parse(ip).toString() }
+            { ip.toString() }
           </Typography>
 
           <IconButton
@@ -54,15 +57,16 @@ export default async function WithMapServerIpLayout({ params, children }: WithMa
 
         <Box sx={{ display: 'flex', pl: 2.5, pr: 1.5, pb: 2, alignItems: 'center' }}>
           <Suspense fallback={<Skeleton height={20} width="75%" />}>
-            <HostnameLink hostname={reverseDnsLookup(ip)} sx={{ flex: 1 }} />
+            <HostnameLink hostname={reverseDnsLookup(forwardedFor)} sx={{ flex: 1 }} />
           </Suspense>
 
           <MetadataMenu sx={{ flex: '0 0 auto', ml: 'auto' }}>
-            <MetadataOption href={`/server/${ip}/ip-info`}><IpInfoOption /></MetadataOption>
-            <MetadataOption href={`/server/${ip}/ip-data`}><IpDataOption /></MetadataOption>
-            <MetadataOption href={`/server/${ip}/ip-geolocation`}><IpGeolocationOption /></MetadataOption>
-            <MetadataOption href={`/server/${ip}/ip-quality-score`}><IpQualityScoreOption /></MetadataOption>
-            <MetadataOption href={`/server/${ip}/big-data-cloud`}><BigDataCloudOption /></MetadataOption>
+            <MetadataOption href="/server/me/vercel"><VercelOption /></MetadataOption>
+            <MetadataOption href="/server/me/ip-info"><IpInfoOption /></MetadataOption>
+            <MetadataOption href="/server/me/ip-data"><IpDataOption /></MetadataOption>
+            <MetadataOption href="/server/me/ip-geolocation"><IpGeolocationOption /></MetadataOption>
+            <MetadataOption href="/server/me/ip-quality-score"><IpQualityScoreOption /></MetadataOption>
+            <MetadataOption href="/server/me/big-data-cloud"><BigDataCloudOption /></MetadataOption>
           </MetadataMenu>
         </Box>
       </Box>
@@ -76,8 +80,8 @@ export default async function WithMapServerIpLayout({ params, children }: WithMa
   );
 }
 
-export async function generateMetadata({ params }: WithMapServerIpLayoutProps): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: await decodeIp(params),
+    title: 'My IP address',
   };
 }

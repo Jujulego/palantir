@@ -1,3 +1,5 @@
+'use client';
+
 import { ServerMarkersContext } from '@/components/server/server-markers.context';
 import { mergeSx } from '@/lib/utils/mui';
 import PlaceIcon from '@mui/icons-material/Place';
