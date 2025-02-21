@@ -3,6 +3,8 @@
 import IpDataIcon from '@/components/icons/IpDataIcon';
 import IpInfoIcon from '@/components/icons/IpInfoIcon';
 import IpQualityScoreIcon from '@/components/icons/IpQualityScoreIcon';
+import VercelIcon from '@/components/icons/VercelIcon';
+import TransitionLink from '@/components/utils/TransitionLink';
 import CloudIcon from '@mui/icons-material/Cloud';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PlaceIcon from '@mui/icons-material/Place';
@@ -13,9 +15,8 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Skeleton from '@mui/material/Skeleton';
 import { styled, type SxProps, type Theme } from '@mui/material/styles';
-import Link from 'next/link';
-import { useRouter, useSelectedLayoutSegment } from 'next/navigation';
-import { type MouseEvent, type ReactNode, useCallback, useId, useRef, useState, useTransition } from 'react';
+import { useSelectedLayoutSegment } from 'next/navigation';
+import { type ReactNode, useCallback, useId, useRef, useState, useTransition } from 'react';
 
 // Component
 export interface MetadataSourceMenuProps {
@@ -25,7 +26,7 @@ export interface MetadataSourceMenuProps {
 
 export default function MetadataSourceMenu({ ip, sx }: MetadataSourceMenuProps) {
   const id = useId();
-  const source = useSelectedLayoutSegment() ?? '';
+  const source = useSelectedLayoutSegment() ?? 'vercel';
   const anchorRef = useRef<HTMLButtonElement | null>(null);
 
   // Open state
@@ -34,17 +35,7 @@ export default function MetadataSourceMenu({ ip, sx }: MetadataSourceMenuProps) 
   const handleClose = useCallback(() => setOpen(false), []);
 
   // Navigation
-  const router = useRouter();
   const [isLoading, startLoading] = useTransition();
-
-  const handleClick = useCallback((event: MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    handleClose();
-
-    startLoading(() => {
-      router.push(event.currentTarget.href);
-    });
-  }, [handleClose, router]);
 
   // Render
   return (
@@ -81,9 +72,9 @@ export default function MetadataSourceMenu({ ip, sx }: MetadataSourceMenuProps) 
         }}
       >
         <MenuItem
-          component={Link}
+          component={TransitionLink}
           href={`/server/${ip}/ip-info`}
-          onClick={handleClick}
+          startTransition={startLoading}
 
           selected={source === 'ip-info'}
           sx={{ gap: 0.75 }}
@@ -91,9 +82,9 @@ export default function MetadataSourceMenu({ ip, sx }: MetadataSourceMenuProps) 
           <IpInfoOption />
         </MenuItem>
         <MenuItem
-          component={Link}
+          component={TransitionLink}
           href={`/server/${ip}/ip-data`}
-          onClick={handleClick}
+          startTransition={startLoading}
 
           selected={source === 'ip-data'}
           sx={{ gap: 0.75 }}
@@ -101,9 +92,9 @@ export default function MetadataSourceMenu({ ip, sx }: MetadataSourceMenuProps) 
           <IpDataOption />
         </MenuItem>
         <MenuItem
-          component={Link}
+          component={TransitionLink}
           href={`/server/${ip}/ip-geolocation`}
-          onClick={handleClick}
+          startTransition={startLoading}
 
           selected={source === 'ip-geolocation'}
           sx={{ gap: 0.75 }}
@@ -111,9 +102,9 @@ export default function MetadataSourceMenu({ ip, sx }: MetadataSourceMenuProps) 
           <IpGeolocationOption />
         </MenuItem>
         <MenuItem
-          component={Link}
+          component={TransitionLink}
           href={`/server/${ip}/ip-quality-score`}
-          onClick={handleClick}
+          startTransition={startLoading}
 
           selected={source === 'ip-quality-score'}
           sx={{ gap: 0.75 }}
@@ -121,9 +112,9 @@ export default function MetadataSourceMenu({ ip, sx }: MetadataSourceMenuProps) 
           <IpQualityScoreOption />
         </MenuItem>
         <MenuItem
-          component={Link}
+          component={TransitionLink}
           href={`/server/${ip}/big-data-cloud`}
-          onClick={handleClick}
+          startTransition={startLoading}
 
           selected={source === 'big-data-cloud'}
           sx={{ gap: 0.75 }}
@@ -142,6 +133,7 @@ const options: Partial<Record<string, ReactNode>> = {
   'ip-info': <IpInfoOption />,
   'ip-geolocation': <IpGeolocationOption />,
   'ip-quality-score': <IpQualityScoreOption />,
+  'vercel': <VercelOption />,
 };
 
 // Elements
@@ -218,3 +210,12 @@ const IpQualityScoreEm = styled('em')(({ theme }) => ({
   fontStyle: 'normal',
   color: theme.vars.palette.ipQualityScore.main,
 }));
+
+function VercelOption() {
+  return (
+    <>
+      <VercelIcon sx={{ color: 'text.primary', fontSize: '1em' }} />
+      Vercel
+    </>
+  );
+}
