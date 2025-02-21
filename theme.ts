@@ -27,7 +27,13 @@ const theme = createTheme({
     },
     dark: {
       palette: {
-        mode: 'dark'
+        mode: 'dark',
+        vercel: base.palette.augmentColor({
+          name: 'vercel',
+          color: {
+            main: '#ffffff'
+          }
+        }),
       },
     }
   },
@@ -62,6 +68,12 @@ const theme = createTheme({
         main: '#f43a3a'
       }
     }),
+    vercel: base.palette.augmentColor({
+      name: 'vercel',
+      color: {
+        main: '#000000'
+      }
+    }),
   },
   typography: {
     fontFamily: roboto.style.fontFamily,
@@ -82,6 +94,7 @@ declare module '@mui/material/styles' {
     ipGeolocation: PaletteColor;
     ipInfo: PaletteColor;
     ipQualityScore: PaletteColor;
+    vercel: PaletteColor;
   }
 
   interface PaletteOptions {
@@ -90,6 +103,7 @@ declare module '@mui/material/styles' {
     ipGeolocation?: PaletteColorOptions;
     ipInfo?: PaletteColorOptions;
     ipQualityScore?: PaletteColorOptions;
+    vercel?: PaletteColorOptions;
   }
 }
 

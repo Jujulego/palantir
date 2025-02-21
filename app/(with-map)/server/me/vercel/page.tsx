@@ -13,7 +13,7 @@ export default async function WithMapServerMePageVercel() {
       <LocationItem address={await vercelIpAddress()} coordinates={coordinates} />
 
       { coordinates
-        ? <ServerMarker coordinates={coordinates} markerKey="vercel" tooltip="Vercel" sx={{ color: 'primary.main' }} />
+        ? <ServerMarker coordinates={coordinates} markerKey="vercel" tooltip="Vercel" sx={{ color: 'vercel.main' }} />
         : <MapSpin /> }
     </List>
   );
