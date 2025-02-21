@@ -4,7 +4,7 @@ import PayloadItemSkeleton from '@/components/server/PayloadItemSkeleton';
 import TagsItemSkeleton from '@/components/utils/TagsItemSkeleton';
 import List from '@mui/material/List';
 
-export default function IpDataMetadataLoading() {
+export default function IpDataMetadataSkeleton() {
   return (
     <List>
       <LocationItemSkeleton />

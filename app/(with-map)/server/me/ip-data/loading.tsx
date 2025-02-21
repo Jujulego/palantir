@@ -1,1 +1,1 @@
-export { default } from '@/components/server/ip-data/IpDataMetadataLoading';
+export { default } from '@/components/server/ip-data/IpDataMetadataSkeleton';

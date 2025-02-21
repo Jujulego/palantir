@@ -1,1 +1,1 @@
-export { default } from '@/components/server/big-data-cloud/BigDataCloudMetadataLoading';
+export { default } from '@/components/server/big-data-cloud/BigDataCloudMetadataSkeleton';

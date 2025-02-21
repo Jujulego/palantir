@@ -4,7 +4,7 @@ import ipaddr from 'ipaddr.js';
 import { headers } from 'next/headers';
 
 // Page
-export default async function WithMapServerMeDataPage() {
+export default async function WithMapServerMeIpDataPage() {
   await isAuthenticated({ returnTo: '/server/me/ip-data' });
 
   const ip = (await headers()).get('x-forwarded-for')!;
