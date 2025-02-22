@@ -1,7 +1,7 @@
+import HomeLink from '@/components/HomeLink';
 import ProfileMenu from '@/components/profile/ProfileMenu';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 
@@ -15,9 +15,7 @@ export default async function ConsoleLayout({ children }: ConsoleLayoutProps) {
     <>
       <AppBar position="fixed" elevation={2}>
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Admin Console
-          </Typography>
+          <HomeLink sx={{ mr: 'auto' }} />
 
           <ProfileMenu />
         </Toolbar>
@@ -33,7 +31,7 @@ export default async function ConsoleLayout({ children }: ConsoleLayoutProps) {
 
 export const metadata: Metadata = {
   title: {
-    default: 'Admin Console',
-    template: 'Admin - %s',
+    default: 'Palantir Console',
+    template: 'Console - %s',
   },
 };
