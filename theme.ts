@@ -37,6 +37,15 @@ const theme = createTheme({
       },
     }
   },
+  components: {
+    MuiListItemIcon: {
+      styleOverrides: {
+        root: {
+          minWidth: 40,
+        }
+      }
+    }
+  },
   palette: {
     bigDataCloud: base.palette.augmentColor({
       name: 'bigDataCloud',

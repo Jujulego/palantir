@@ -26,7 +26,7 @@ export default function PayloadItem({ payload }: PayloadItemProps) {
   return <>
     <ListItem disablePadding>
       <ListItemButton onClick={handleOpen}>
-        <ListItemIcon sx={{ minWidth: 40 }}>
+        <ListItemIcon>
           <DataObjectIcon color="primary" />
         </ListItemIcon>
 

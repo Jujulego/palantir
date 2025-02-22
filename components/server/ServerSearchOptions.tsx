@@ -17,7 +17,7 @@ export default function ServerSearchOptions() {
     <AnimatePresence>
       { ip && (
         <SearchOption href={`/server/${encodeURIComponent(ip.toNormalizedString())}/ip-info`}>
-          <ListItemIcon sx={{ minWidth: 40 }}>
+          <ListItemIcon>
             <ComputerIcon color="inherit" />
           </ListItemIcon>
           <ListItemText primary={ip.toNormalizedString()} />

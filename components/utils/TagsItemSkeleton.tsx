@@ -7,7 +7,7 @@ import Stack from '@mui/material/Stack';
 export default function TagsItemSkeleton() {
   return (
     <ListItem sx={{ minHeight: 56, px: 2, py: 0 }}>
-      <ListItemIcon sx={{ minWidth: 40 }}>
+      <ListItemIcon>
         <LabelIcon color="primary" />
       </ListItemIcon>
 

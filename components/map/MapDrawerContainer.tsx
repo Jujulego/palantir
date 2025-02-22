@@ -32,7 +32,7 @@ export default function MapDrawerContainer({ ref, isOpen, leftPadding }: MapDraw
 }
 
 // Utils
-const Container = m.create(styled('div')(({ theme }) => [
+const Container = m.create(styled('main')(({ theme }) => [
   {
     position: 'absolute',
     top: 0,

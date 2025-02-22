@@ -1,4 +1,4 @@
-import ColorModeToggle from '@/components/ColorModeToggle';
+import ProfileMenu from '@/components/profile/ProfileMenu';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -19,7 +19,7 @@ export default async function ConsoleLayout({ children }: ConsoleLayoutProps) {
             Admin Console
           </Typography>
 
-          <ColorModeToggle />
+          <ProfileMenu />
         </Toolbar>
       </AppBar>
 

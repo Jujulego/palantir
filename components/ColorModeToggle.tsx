@@ -3,11 +3,15 @@
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import IconButton from '@mui/material/IconButton';
-import { useColorScheme } from '@mui/material/styles';
+import { type SxProps, type Theme, useColorScheme } from '@mui/material/styles';
 import { useCallback } from 'react';
 
 // Component
-export default function ColorModeToggle() {
+export interface ColorModeToggleProps {
+  readonly sx?: SxProps<Theme>;
+}
+
+export default function ColorModeToggle({ sx }: ColorModeToggleProps) {
   const { colorScheme, setColorScheme } = useColorScheme();
 
   const handleClick = useCallback(() => {
@@ -19,6 +23,7 @@ export default function ColorModeToggle() {
     <IconButton
       color="inherit" aria-label="Switch theme"
       onClick={handleClick}
+      sx={sx}
     >
       { colorScheme === 'dark' ? <Brightness7Icon /> : <Brightness4Icon /> }
     </IconButton>
