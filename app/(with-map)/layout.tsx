@@ -1,11 +1,11 @@
-import ColorModeToggle from '@/components/ColorModeToggle';
-import LocateButton from '@/components/server/LocateButton';
-import MapLayout from '@/components/map/MapLayout';
 import AnimalSearchOptions from '@/components/animal/AnimalSearchOptions';
 import DnsSearchOptions from '@/components/dns/DnsSearchOptions';
-import ServerSearchOptions from '@/components/server/ServerSearchOptions';
+import LocateButton from '@/components/LocateButton';
+import MapLayout from '@/components/map/MapLayout';
+import ProfileMenu from '@/components/profile/ProfileMenu';
 import SearchBox from '@/components/search/SearchBox';
 import { SearchBoxSkeleton } from '@/components/search/SearchBoxSkeleton';
+import ServerSearchOptions from '@/components/server/ServerSearchOptions';
 import Paper from '@mui/material/Paper';
 import Toolbar from '@mui/material/Toolbar';
 import { domAnimation, LazyMotion } from 'motion/react';
@@ -48,7 +48,7 @@ export default async function WithMapLayout({ children }: WithMapLayoutProps) {
         </Paper>
 
         <Paper elevation={2} sx={{ ml: 'auto', p: 0.5, borderRadius: 9999 }}>
-          <ColorModeToggle />
+          <ProfileMenu />
         </Paper>
       </Toolbar>
 

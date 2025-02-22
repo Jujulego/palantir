@@ -6,11 +6,11 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 
 // Layout
-export interface AdminLayoutProps {
+export interface ConsoleLayoutProps {
   readonly children: ReactNode;
 }
 
-export default async function AdminLayout({ children }: AdminLayoutProps) {
+export default async function ConsoleLayout({ children }: ConsoleLayoutProps) {
   return (
     <>
       <AppBar position="fixed" elevation={2}>
