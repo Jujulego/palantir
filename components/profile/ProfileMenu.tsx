@@ -57,7 +57,9 @@ export default function ProfileMenu() {
         slotProps={{
           paper: {
             sx: {
-              borderTopRightRadius: 20,
+              marginTop: -1,
+              marginLeft: 0.5,
+              borderTopRightRadius: 24,
             }
           }
         }}
