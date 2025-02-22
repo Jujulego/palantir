@@ -9,6 +9,7 @@ import { SearchBoxSkeleton } from '@/components/search/SearchBoxSkeleton';
 import Paper from '@mui/material/Paper';
 import Toolbar from '@mui/material/Toolbar';
 import { domAnimation, LazyMotion } from 'motion/react';
+import type { Metadata } from 'next';
 import { type ReactNode, Suspense } from 'react';
 
 // Layout
@@ -57,3 +58,11 @@ export default async function WithMapLayout({ children }: WithMapLayoutProps) {
     </LazyMotion>
   );
 }
+
+export const metadata: Metadata = {
+  title: {
+    default: 'Palantir',
+    template: 'Palantir - %s',
+  },
+  description: 'Locate websites in the world',
+};
