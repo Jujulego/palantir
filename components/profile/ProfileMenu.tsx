@@ -4,10 +4,10 @@ import ColorModeToggle from '@/components/ColorModeToggle';
 import { useUser } from '@auth0/nextjs-auth0';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
+import SettingsIcon from '@mui/icons-material/Settings';
 import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import SettingsIcon from '@mui/icons-material/Settings';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -60,6 +60,9 @@ export default function ProfileMenu() {
               marginTop: -1,
               marginLeft: 0.5,
               borderTopRightRadius: 24,
+              borderTopLeftRadius: 16,
+              borderBottomRightRadius: 16,
+              borderBottomLeftRadius: 16,
             }
           }
         }}
@@ -70,19 +73,10 @@ export default function ProfileMenu() {
             src={user?.picture}
             sx={{
               flex: '0 0 auto',
-              height: 54,
-              width: 54,
             }}
           />
 
-          { user?.nickname ? (
-            <ProfileNames>
-              <Typography component="h5" variant="h6">{user.nickname}</Typography>
-              <Typography component="h6" variant="subtitle2" color="textSecondary">{user.name}</Typography>
-            </ProfileNames>
-          ) : (
-            <Typography component="h5" variant="h6" sx={{ flex: '1 0 0' }}>{user?.name ?? 'Anonymous'}</Typography>
-          ) }
+          <Typography component="h5" variant="h6" sx={{ flex: '1 0 0' }}>{user?.nickname ?? user?.name ?? 'Anonymous'}</Typography>
 
           <ColorModeToggle sx={{ mb: 'auto' }} />
         </ProfileTopBar>
@@ -137,9 +131,5 @@ const ProfileTopBar = styled('div')(({ theme }) => ({
   alignItems: 'center',
 
   padding: theme.spacing(1),
-  gap: theme.spacing(1),
+  gap: theme.spacing(2),
 }));
-
-const ProfileNames = styled('div')({
-  flex: '1 0 0',
-});
