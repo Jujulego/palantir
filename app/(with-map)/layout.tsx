@@ -27,7 +27,9 @@ export default async function WithMapLayout({ children }: WithMapLayoutProps) {
         sx={{
           flexShrink: 0,
           zIndex: 'appBar',
-          p: 1.5,
+          pl: 1.5,
+          pr: 2.5,
+          py: 1,
           pointerEvents: 'none',
 
           '& > *': {
