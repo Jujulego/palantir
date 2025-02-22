@@ -58,11 +58,11 @@ export default async function WithMapServerIpLayout({ params, children }: WithMa
           </Suspense>
 
           <MetadataMenu sx={{ flex: '0 0 auto', ml: 'auto' }}>
-            <MetadataOption href={`/server/${ip}/ip-info`}><IpInfoOption /></MetadataOption>
-            <MetadataOption href={`/server/${ip}/ip-data`}><IpDataOption /></MetadataOption>
-            <MetadataOption href={`/server/${ip}/ip-geolocation`}><IpGeolocationOption /></MetadataOption>
-            <MetadataOption href={`/server/${ip}/ip-quality-score`}><IpQualityScoreOption /></MetadataOption>
-            <MetadataOption href={`/server/${ip}/big-data-cloud`}><BigDataCloudOption /></MetadataOption>
+            <MetadataOption href={`/server/${encodeURIComponent(ip)}/ip-info`}><IpInfoOption /></MetadataOption>
+            <MetadataOption href={`/server/${encodeURIComponent(ip)}/ip-data`}><IpDataOption /></MetadataOption>
+            <MetadataOption href={`/server/${encodeURIComponent(ip)}/ip-geolocation`}><IpGeolocationOption /></MetadataOption>
+            <MetadataOption href={`/server/${encodeURIComponent(ip)}/ip-quality-score`}><IpQualityScoreOption /></MetadataOption>
+            <MetadataOption href={`/server/${encodeURIComponent(ip)}/big-data-cloud`}><BigDataCloudOption /></MetadataOption>
           </MetadataMenu>
         </Box>
       </Box>
