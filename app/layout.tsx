@@ -1,6 +1,5 @@
 import MetaThemeColor from '@/components/MetaThemeColor';
 import theme from '@/theme';
-import { Auth0Provider } from '@auth0/nextjs-auth0';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import CssBaseline from '@mui/material/CssBaseline';
 import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
