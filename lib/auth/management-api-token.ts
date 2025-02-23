@@ -1,9 +1,10 @@
 import { jsonFetch } from '@/lib/utils/fetch';
+import { cache } from 'react';
 
 let rawToken = '';
 let expiryTime = 0;
 
-export async function managementApiToken(): Promise<string> {
+export const managementApiToken = cache(async (): Promise<string> => {
   if (expiryTime > new Date().getTime()) {
     console.log('[auth0] Reuse cached management token');
     return rawToken;
@@ -28,7 +29,7 @@ export async function managementApiToken(): Promise<string> {
   expiryTime = new Date().getTime() + res.expires_in * 1000;
 
   return rawToken;
-}
+});
 
 // Types
 interface OAuthTokenResponse {

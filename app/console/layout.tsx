@@ -9,6 +9,8 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import ListSubheader from '@mui/material/ListSubheader';
+import Stack from '@mui/material/Stack';
 import Toolbar from '@mui/material/Toolbar';
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -43,9 +45,16 @@ export default async function ConsoleLayout({ children }: ConsoleLayoutProps) {
       >
         <Toolbar />
 
-        <List component="nav">
+        <List
+          component="nav"
+          subheader={
+            <ListSubheader component="h6" sx={{ m: 0, lineHeight: '36px' }}>
+              Authentication
+            </ListSubheader>
+          }
+        >
           <ListItem component="div" disablePadding>
-            <ListItemButton component={Link} href="/console/users">
+            <ListItemButton component={Link} href="/console/auth/users">
               <ListItemIcon>
                 <PeopleIcon />
               </ListItemIcon>
@@ -56,10 +65,10 @@ export default async function ConsoleLayout({ children }: ConsoleLayoutProps) {
         </List>
       </Drawer>
 
-      <Box component="main" sx={{ height: '100vh', flex: '1 0 0', overflow: 'auto' }}>
+      <Stack component="main" sx={{ height: '100vh', flex: '1 0 0', overflow: 'auto' }}>
         <Toolbar />
         { children }
-      </Box>
+      </Stack>
     </Box>
   );
 }

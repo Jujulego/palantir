@@ -5,11 +5,15 @@ import { jsonFetch } from '@/lib/utils/fetch';
 export async function queryUsers(): Promise<UserDto[]> {
   console.log('[auth0] Load users');
   const url = new URL(`https://${process.env.AUTH0_DOMAIN}/api/v2/users`);
-  url.searchParams.set('fields', 'user_id,name,nickname,picture,identities,app_metadata');
+  url.searchParams.set('fields', 'user_id,name,nickname,picture,identities,last_login,app_metadata');
 
   return await jsonFetch<UserDto[]>(url, {
     headers: {
       Authorization: `Bearer ${await managementApiToken()}`
+    },
+    next: {
+      revalidate: 86400,
+      tags: ['users']
     }
   });
 }
@@ -21,6 +25,7 @@ export interface UserDto {
   readonly identities: UserIdentityDto[],
   readonly user_id: string;
   readonly picture: string;
+  readonly last_login: string;
   readonly app_metadata: Record<string, unknown>;
 }
 
