@@ -1,3 +1,4 @@
+import DrawerLink from '@/components/console/DrawerLink';
 import HomeLink from '@/components/HomeLink';
 import ProfileMenu from '@/components/profile/ProfileMenu';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -6,15 +7,10 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import Stack from '@mui/material/Stack';
 import Toolbar from '@mui/material/Toolbar';
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import type { ReactNode } from 'react';
 
 // Layout
@@ -47,15 +43,7 @@ export default async function ConsoleLayout({ children }: ConsoleLayoutProps) {
         <Toolbar />
 
         <List component="nav">
-          <ListItem component="div" disablePadding>
-            <ListItemButton component={Link} href="/console">
-              <ListItemIcon>
-                <DashboardIcon />
-              </ListItemIcon>
-
-              <ListItemText primary="Dashboard" />
-            </ListItemButton>
-          </ListItem>
+          <DrawerLink href="/console" icon={<DashboardIcon />} primary="Dashboard" exactMatch />
 
           <List
             component="div"
@@ -65,15 +53,7 @@ export default async function ConsoleLayout({ children }: ConsoleLayoutProps) {
               </ListSubheader>
             }
           >
-            <ListItem component="div" disablePadding>
-              <ListItemButton component={Link} href="/console/auth/users">
-                <ListItemIcon>
-                  <PeopleIcon />
-                </ListItemIcon>
-
-                <ListItemText primary="Users" />
-              </ListItemButton>
-            </ListItem>
+            <DrawerLink href="/console/auth/users" icon={<PeopleIcon />} primary="Users" />
           </List>
         </List>
       </Drawer>
