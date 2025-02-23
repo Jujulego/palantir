@@ -1,5 +1,6 @@
 'use client';
 
+import NoSsr from '@mui/material/NoSsr';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 
@@ -11,5 +12,5 @@ export interface FormatDateProps {
 }
 
 export default function FormatDate({ date, format }: FormatDateProps) {
-  return dayjs(date).format(format);
+  return <NoSsr>{ dayjs(date).format(format) }</NoSsr>;
 }
