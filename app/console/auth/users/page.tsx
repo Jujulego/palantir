@@ -4,7 +4,9 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import PersonIcon from '@mui/icons-material/Person';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import Avatar from '@mui/material/Avatar';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Divider from '@mui/material/Divider';
+import MuiLink from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,10 +15,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
-import dayjs from 'dayjs';
-import localizedFormat from 'dayjs/plugin/localizedFormat';
-
-dayjs.extend(localizedFormat);
+import Link from 'next/link';
 
 // Page
 export default async function ConsoleUsersPage() {
@@ -24,7 +23,12 @@ export default async function ConsoleUsersPage() {
 
   return (
     <>
-      <Typography component="h1" variant="h4" sx={{ flex: '0 0 auto', mx: 3, mt: 4, mb: 3 }}>
+      <Breadcrumbs sx={{ mx: 3, my: 2 }}>
+        <MuiLink underline="hover" color="inherit" component={Link} href="/console">Console</MuiLink>
+        <Typography sx={{ color: 'text.primary' }}>Users</Typography>
+      </Breadcrumbs>
+
+      <Typography component="h1" variant="h4" sx={{ flex: '0 0 auto', mx: 3, mb: 3 }}>
         Users
       </Typography>
 
@@ -41,7 +45,7 @@ export default async function ConsoleUsersPage() {
           </TableHead>
           <TableBody>
             { users.map((user) => (
-              <TableRow key={user.user_id}>
+              <TableRow key={user.user_id} hover>
                 <TableCell scope="row">
                   <Stack direction="row" alignItems="center" gap={1}>
                     <Avatar src={user.picture} alt={user.nickname ?? user.name} sx={{ height: 24, width: 24 }} />

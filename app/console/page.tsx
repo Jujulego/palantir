@@ -1,4 +1,5 @@
 import { queryUsers } from '@/lib/auth/users';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
@@ -11,7 +12,11 @@ export default async function AdminPage() {
 
   return (
     <>
-      <Typography component="h1" variant="h4" sx={{ flex: '0 0 auto', mx: 3, mt: 4, mb: 1 }}>
+      <Breadcrumbs sx={{ mx: 3, my: 2 }}>
+        <Typography sx={{ color: 'text.primary' }}>Console</Typography>
+      </Breadcrumbs>
+
+      <Typography component="h1" variant="h4" sx={{ flex: '0 0 auto', mx: 3, mb: 3 }}>
         Dashboard
       </Typography>
 

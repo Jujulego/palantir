@@ -20,7 +20,7 @@ export interface ConsoleLayoutProps {
 
 export default async function ConsoleLayout({ children }: ConsoleLayoutProps) {
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', '--mui-palette-TableCell-border': 'var(--mui-palette-divider)' }}>
       <AppBar position="fixed" elevation={2}>
         <Toolbar>
           <HomeLink sx={{ mr: 'auto' }} />
