@@ -1,6 +1,7 @@
 'use client';
 
 import NoSsr from '@mui/material/NoSsr';
+import Skeleton from '@mui/material/Skeleton';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 
@@ -12,5 +13,9 @@ export interface FormatDateProps {
 }
 
 export default function FormatDate({ date, format }: FormatDateProps) {
-  return <NoSsr>{ dayjs(date).format(format) }</NoSsr>;
+  return (
+    <NoSsr fallback={<Skeleton width="148px" height="1.65em" />}>
+      { dayjs(date).format(format) }
+    </NoSsr>
+  );
 }
