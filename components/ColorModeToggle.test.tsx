@@ -26,7 +26,7 @@ describe('ColorModeToggle', () => {
     const btn = screen.getByLabelText('Switch theme');
 
     expect(btn).toHaveRole('button');
-    expect(queryByTestId(btn, 'Brightness7Icon')).toBeDefined();
+    expect(queryByTestId(btn, 'DarkModeIcon')).not.toBeNull();
 
     // Act
     await userEvent.click(btn);
@@ -47,7 +47,7 @@ describe('ColorModeToggle', () => {
     const btn = screen.getByLabelText('Switch theme');
 
     expect(btn).toHaveRole('button');
-    expect(queryByTestId(btn, 'Brightness4Icon')).toBeDefined();
+    expect(queryByTestId(btn, 'LightModeIcon')).not.toBeNull();
 
     // Act
     await userEvent.click(btn);
