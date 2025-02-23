@@ -20,11 +20,13 @@ dayjs.extend(localizedFormat);
 
 // Page
 export default async function ConsoleUsersPage() {
-  const users = await queryUsers();
+  const { users } = await queryUsers();
 
   return (
     <>
-      <Typography component="h1" variant="h4" sx={{ flex: '0 0 auto', mx: 3, my: 2 }}>Users</Typography>
+      <Typography component="h1" variant="h4" sx={{ flex: '0 0 auto', mx: 3, mt: 4, mb: 3 }}>
+        Users
+      </Typography>
 
       <Divider />
 

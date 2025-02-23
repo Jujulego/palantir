@@ -1,5 +1,6 @@
 import HomeLink from '@/components/HomeLink';
 import ProfileMenu from '@/components/profile/ProfileMenu';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -45,23 +46,35 @@ export default async function ConsoleLayout({ children }: ConsoleLayoutProps) {
       >
         <Toolbar />
 
-        <List
-          component="nav"
-          subheader={
-            <ListSubheader component="h6" sx={{ m: 0, lineHeight: '36px' }}>
-              Authentication
-            </ListSubheader>
-          }
-        >
+        <List component="nav">
           <ListItem component="div" disablePadding>
-            <ListItemButton component={Link} href="/console/auth/users">
+            <ListItemButton component={Link} href="/console">
               <ListItemIcon>
-                <PeopleIcon />
+                <DashboardIcon />
               </ListItemIcon>
 
-              <ListItemText primary="Users" />
+              <ListItemText primary="Dashboard" />
             </ListItemButton>
           </ListItem>
+
+          <List
+            component="div"
+            subheader={
+              <ListSubheader component="h6" sx={{ m: 0, lineHeight: '36px' }}>
+                Authentication
+              </ListSubheader>
+            }
+          >
+            <ListItem component="div" disablePadding>
+              <ListItemButton component={Link} href="/console/auth/users">
+                <ListItemIcon>
+                  <PeopleIcon />
+                </ListItemIcon>
+
+                <ListItemText primary="Users" />
+              </ListItemButton>
+            </ListItem>
+          </List>
         </List>
       </Drawer>
 
