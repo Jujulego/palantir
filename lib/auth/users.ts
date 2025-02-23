@@ -12,7 +12,6 @@ export async function queryUsers(): Promise<UserDto[]> {
       Authorization: `Bearer ${await managementApiToken()}`
     },
     next: {
-      revalidate: 86400,
       tags: ['users']
     }
   });

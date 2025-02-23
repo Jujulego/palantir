@@ -1,3 +1,4 @@
+import FormatDate from '@/components/utils/FormatDate';
 import { queryUsers } from '@/lib/auth/users';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import PersonIcon from '@mui/icons-material/Person';
@@ -12,7 +13,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 
+dayjs.extend(localizedFormat);
+
+// Page
 export default async function ConsoleUsersPage() {
   const users = await queryUsers();
 
@@ -57,7 +63,7 @@ export default async function ConsoleUsersPage() {
                   </Stack>
                 </TableCell>
                 <TableCell>
-                  { user.last_login }
+                  <FormatDate date={user.last_login} format="lll" />
                 </TableCell>
               </TableRow>
             )) }
