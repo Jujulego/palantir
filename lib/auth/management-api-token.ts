@@ -22,6 +22,9 @@ export const managementApiToken = cache(async (): Promise<string> => {
       client_secret: process.env.AUTH0_CLIENT_SECRET,
       grant_type: 'client_credentials',
     }),
+    next: {
+      revalidate: 86400
+    }
   });
 
   console.log(`[auth0] Loaded management token valid for ${res.expires_in} seconds`);
