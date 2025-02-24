@@ -2,7 +2,7 @@
 
 import { mergeSx } from '@/lib/utils/mui';
 import type { SxProps, Theme } from '@mui/material/styles';
-import Table from '@mui/material/Table';
+import Table, { type TableOwnProps } from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableHead from '@mui/material/TableHead';
 import { collect$, map$, pipe$ } from 'kyrielle';
@@ -12,7 +12,7 @@ import { type ReactNode, type UIEvent, useCallback, useEffect, useRef, useState 
 const DEFAULT_ROW_SIZE = 52.8;
 
 // Component
-export interface VirtualTableProps {
+export interface VirtualTableProps extends TableOwnProps {
   readonly columnLayout: string;
   readonly head?: ReactNode;
   readonly overscan?: number;
@@ -30,10 +30,13 @@ export default function VirtualTable(props: VirtualTableProps) {
     row,
     rowCount,
     rowSize = DEFAULT_ROW_SIZE,
-    sx
+    sx,
+    ...tableProps
   } = props;
 
   // Compute printed interval
+  const tableRef = useRef<HTMLTableElement>(null);
+  
   const [firstIdx, setFirstIdx] = useState(0);
   const [printedCount, setPrintedCount] = useState(rowCount);
 
@@ -42,9 +45,11 @@ export default function VirtualTable(props: VirtualTableProps) {
     setFirstIdx(firstPrintableRow(event.currentTarget, rowCount, rowSize));
   }, [rowCount, rowSize]);
 
-  // Track container height
-  const tableRef = useRef<HTMLTableElement>(null);
+  useEffect(() => {
+    if (tableRef.current) setFirstIdx(firstPrintableRow(tableRef.current, rowCount, rowSize));
+  }, [rowCount, rowSize]);
 
+  // Track container height
   useEffect(() => {
     if (!tableRef.current) return;
 
@@ -68,6 +73,7 @@ export default function VirtualTable(props: VirtualTableProps) {
   return (
     <Table
       ref={tableRef}
+      {...tableProps}
       onScroll={handleScroll}
       sx={mergeSx(sx, {
         display: 'grid',

@@ -21,6 +21,8 @@ export default function UsersTable({ users, userCount, sx }: UsersTableProps) {
   return (
     <VirtualTable
       columnLayout="1fr 1fr 1fr"
+      rowCount={userCount}
+      sx={sx}
 
       head={
         <VirtualRow>
@@ -64,9 +66,6 @@ export default function UsersTable({ users, userCount, sx }: UsersTableProps) {
           </VirtualRow>
         );
       }}
-      rowCount={userCount}
-
-      sx={sx}
     />
   );
 }

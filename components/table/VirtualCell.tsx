@@ -14,7 +14,6 @@ export default function VirtualCell({ sx, ...rest }: TableCellProps) {
         top: 0,
         zIndex: 'var(--VirtualCell-zIndex, 0)',
         background: 'var(--VirtualCell-background, transparent)',
-        gridRowStart: 'var(--VirtualCell-rowIndex, auto)'
       }, sx)}
     />
   );

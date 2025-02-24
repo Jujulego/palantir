@@ -24,8 +24,8 @@ export default async function ConsoleUsersPage() {
       <Divider />
 
       <UsersTable
-        users={[...users, ...users, ...users, ...users, ...users, ...users, ...users, ...users, ...users, ...users]}
-        userCount={total * 10}
+        users={users}
+        userCount={total}
         sx={{ flex: '1 0 0' }}
       />
     </>

@@ -122,7 +122,6 @@ declare module 'react' {
 
     '--VirtualCell-background'?: string;
     '--VirtualCell-position'?: string;
-    '--VirtualCell-rowIndex'?: string;
     '--VirtualCell-zIndex'?: string;
   }
 }
