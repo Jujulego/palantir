@@ -88,6 +88,7 @@ export default function VirtualTable<D>(props: VirtualTableProps<D>) {
   }, [headerRow, headerSize, rowSize]);
 
   // Render
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const List = useCallback(({ ref, height, onItemsRendered }: Pick<VariableSizeListProps, 'height' | 'onItemsRendered'> & { ref?: Ref<any> }) => (
     <VariableSizeList
       ref={ref}
@@ -145,11 +146,13 @@ export default function VirtualTable<D>(props: VirtualTableProps<D>) {
 // Utils
 interface ItemData {
   readonly hasHeaderRow: boolean;
-  
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   readonly row: (idx: number, data: any, style: CSSProperties) => ReactNode;
   readonly rowCount: number;
   readonly rowData: unknown;
-  
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   readonly skeletonRow?: (idx: number, data: any, style: CSSProperties) => ReactNode;
 }
 
