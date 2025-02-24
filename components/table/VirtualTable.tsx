@@ -1,34 +1,41 @@
 'use client';
 
 import { mergeSx } from '@/lib/utils/mui';
-import type { SxProps, Theme } from '@mui/material/styles';
-import Table, { type TableOwnProps } from '@mui/material/Table';
+import Table, { type TableProps } from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableHead from '@mui/material/TableHead';
 import { collect$, map$, pipe$ } from 'kyrielle';
-import { type HTMLProps, type ReactNode, type UIEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { type ReactNode, type UIEvent, useCallback, useEffect, useRef, useState } from 'react';
 
 // Constants
-const DEFAULT_ROW_SIZE = 52.8;
+const DEFAULT_ROW_SIZE = 52.68;
 
 // Component
-export interface VirtualTableProps extends TableOwnProps, Omit<HTMLProps<HTMLTableElement>, 'size'> {
-  readonly columnLayout: string;
-  readonly head?: ReactNode;
-  readonly overscan?: number;
-  readonly row: (index: number) => ReactNode;
-  readonly rowCount: number;
-  readonly rowSize?: number;
-  readonly sx?: SxProps<Theme>;
+export interface RowFnArg<out D = unknown> {
+  readonly data: D;
+  readonly index: number;
 }
 
-export default function VirtualTable(props: VirtualTableProps) {
+export type RowFn<in D> = (arg: RowFnArg<D>) => ReactNode;
+
+export interface VirtualTableProps<in out D = unknown> extends Omit<TableProps, 'component'> {
+  readonly columnLayout: string;
+  readonly data: D;
+  readonly head?: ReactNode;
+  readonly row: RowFn<D>;
+  readonly rowCount: number;
+  readonly rowOverScan?: number;
+  readonly rowSize?: number;
+}
+
+export default function VirtualTable<D>(props: VirtualTableProps<D>) {
   const {
     columnLayout,
+    data,
     head,
-    overscan = 2,
     row,
     rowCount,
+    rowOverScan = 2,
     rowSize = DEFAULT_ROW_SIZE,
     sx,
     ...tableProps
@@ -111,10 +118,10 @@ export default function VirtualTable(props: VirtualTableProps) {
       >
         { pipe$(
           count$(
-            Math.max(0, firstIdx - overscan),
-            Math.min(firstIdx + printedCount + overscan, rowCount)
+            Math.max(0, firstIdx - rowOverScan),
+            Math.min(firstIdx + printedCount + rowOverScan, rowCount)
           ),
-          map$((idx) => row(idx)),
+          map$((index) => row({ index, data })),
           collect$()
         ) }
       </TableBody>

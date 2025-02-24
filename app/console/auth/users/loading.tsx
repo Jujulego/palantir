@@ -1,15 +1,12 @@
-import UserTable from '@/components/users/UserTable';
-import { queryUsers } from '@/lib/auth/users';
+import UserTableSkeleton from '@/components/users/UserTableSkeleton';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Divider from '@mui/material/Divider';
 import MuiLink from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 
-// Page
-export default async function ConsoleUsersPage() {
-  const { users, total } = await queryUsers();
-
+// Loading state
+export default function ConsoleUsersLoading() {
   return (
     <>
       <Breadcrumbs sx={{ mx: 3, my: 2 }}>
@@ -23,11 +20,7 @@ export default async function ConsoleUsersPage() {
 
       <Divider />
 
-      <UserTable
-        users={users}
-        userCount={total}
-        sx={{ flex: '1 0 0' }}
-      />
+      <UserTableSkeleton />
     </>
   );
 }
