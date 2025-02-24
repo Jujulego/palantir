@@ -119,5 +119,10 @@ declare module '@mui/material/styles' {
 declare module 'react' {
   interface CSSProperties {
     '--MapboxMap-left'?: string;
+
+    '--VirtualCell-background'?: string;
+    '--VirtualCell-position'?: string;
+    '--VirtualCell-rowIndex'?: string;
+    '--VirtualCell-zIndex'?: string;
   }
 }

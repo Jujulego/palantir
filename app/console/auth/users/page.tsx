@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 // Page
 export default async function ConsoleUsersPage() {
-  const { users } = await queryUsers();
+  const { users, total } = await queryUsers();
 
   return (
     <>
@@ -23,7 +23,11 @@ export default async function ConsoleUsersPage() {
 
       <Divider />
 
-      <UsersTable users={users} />
+      <UsersTable
+        users={[...users, ...users, ...users, ...users, ...users, ...users, ...users, ...users, ...users, ...users]}
+        userCount={total * 10}
+        sx={{ flex: '1 0 0' }}
+      />
     </>
   );
 }

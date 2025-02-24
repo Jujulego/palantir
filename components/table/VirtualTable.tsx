@@ -1,206 +1,164 @@
 'use client';
 
-import { VirtualTableContext } from '@/components/table/virtual-table.context';
 import { mergeSx } from '@/lib/utils/mui';
-import type { AllOrNothing } from '@/lib/utils/types';
 import type { TableProps } from '@mui/material';
+import Box from '@mui/material/Box';
+import type { SxProps, Theme } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableHead from '@mui/material/TableHead';
 import {
+  createContext,
   type CSSProperties,
   type HTMLProps,
-  type Key, memo,
+  type Key,
+  memo,
   type ReactNode,
-  type Ref,
   use,
-  useCallback,
-  useMemo
+  useEffect,
+  useRef,
+  useState
 } from 'react';
-import AutoSizer from 'react-virtualized-auto-sizer';
-import { areEqual, type ListChildComponentProps, VariableSizeList, type VariableSizeListProps } from 'react-window';
-import InfiniteLoader from 'react-window-infinite-loader';
+import { areEqual, FixedSizeList, type ListChildComponentProps } from 'react-window';
+
+// Constants
+const DEFAULT_ROW_SIZE = 52.8;
+
+// Context
+export interface VirtualContextProps {
+  readonly columnLayout: string;
+  readonly rowSize: number;
+  readonly head?: ReactNode;
+}
+
+const VirtualContext = createContext<VirtualContextProps>({
+  columnLayout: '',
+  rowSize: DEFAULT_ROW_SIZE
+});
 
 // Component
-interface VirtualTableHeaderProps {
-  readonly headerRow: ReactNode;
-  readonly headerSize: number;
-}
+export interface VirtualTableProps<D = unknown> {
+  readonly columnLayout: string;
+  readonly data: D;
 
-interface VirtualTableRowProps<D> {
-  readonly row: (idx: number, data: D, style: CSSProperties) => ReactNode;
+  readonly head?: ReactNode;
+
+  readonly row: RowFn<D>;
+  readonly rowKey: (index: number, data: D) => Key;
   readonly rowCount: number;
-  readonly rowData: D;
-  readonly rowKey: (idx: number, data: D) => Key;
   readonly rowSize?: number;
-}
 
-interface VirtualTableSkeletonProps<D> {
-  readonly skeletonRow: (idx: number, data: D, style: CSSProperties) => ReactNode;
-  readonly skeletonCount: number;
+  readonly sx?: SxProps<Theme>;
 }
-
-interface VirtualTableOptions {
-  readonly columnLayout?: readonly string[];
-  readonly onLoadMore?: (startIdx: number, stopIdx: number) => Promise<void>;
-}
-
-export type VirtualTableProps<D> = Omit<TableProps, 'component' | 'children'>
-  & VirtualTableOptions
-  & VirtualTableRowProps<D>
-  & AllOrNothing<VirtualTableHeaderProps>
-  & AllOrNothing<VirtualTableSkeletonProps<D>>;
 
 export default function VirtualTable<D>(props: VirtualTableProps<D>) {
   const {
-    columnLayout = [], onLoadMore,
-    row, rowCount, rowData, rowKey, rowSize = 52.8,
-    headerRow, headerSize = 52.8,
-    skeletonRow, skeletonCount = 0,
-    ...tableProps
+    columnLayout, data,
+    head,
+    row, rowKey, rowCount, rowSize = DEFAULT_ROW_SIZE,
+    sx
   } = props;
 
-  // Prepare item data
-  const itemCount = (headerRow ? rowCount + 1 : rowCount) + skeletonCount;
-  
-  const itemData = useMemo<ItemData>(() => ({
-    hasHeaderRow: !!headerRow,
-    row, rowCount, rowData,
-    skeletonRow,
-  }), [headerRow, row, rowCount, rowData, skeletonRow]);
-  
-  const itemKey = useCallback((idx: number, { rowData }: ItemData) => {
-    if (headerRow) {
-      if (idx === 0) return '--header--';
-      
-      idx--;
-    }
-    
-    if (idx > rowCount) {
-      return `--skeleton-${idx - rowCount}--`;
-    }
-    
-    return rowKey(idx, rowData as D);
-  }, [headerRow, rowCount, rowKey]);
-  
-  const itemSize = useCallback((idx: number) => {
-    return headerRow && idx === 0 ? headerSize : rowSize;
-  }, [headerRow, headerSize, rowSize]);
+  // Track container height
+  const containerRef = useRef<HTMLTableElement>(null);
+  const [height, setHeight] = useState(rowCount * rowSize);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const observer = new ResizeObserver((entries) => {
+      if (!entries[0]) return;
+      setHeight(entries[0].contentRect.height);
+    });
+
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   // Render
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const List = useCallback(({ ref, height, onItemsRendered }: Pick<VariableSizeListProps, 'height' | 'onItemsRendered'> & { ref?: Ref<any> }) => (
-    <VariableSizeList
-      ref={ref}
-      height={height} width="100%"
-      innerElementType={InnerElement}
-      overscanCount={5}
-      onItemsRendered={onItemsRendered}
-      
-      itemCount={itemCount}
-      itemData={itemData}
-      itemKey={itemKey}
-      itemSize={itemSize}
-      estimatedItemSize={(headerSize + (rowCount + skeletonCount) * rowSize) / itemCount}
-    >
-      { Row }
-    </VariableSizeList>
-  ), [headerSize, itemCount, itemData, itemKey, itemSize, rowCount, rowSize, skeletonCount]);
-
-  const InfiniteList = useMemo(() => {
-    if (onLoadMore) {
-      return function InfiniteList({ height }: Pick<VariableSizeListProps, 'height'>) {
-        return (
-          <InfiniteLoader
-            isItemLoaded={(index) => index < itemCount - skeletonCount}
-            itemCount={itemCount}
-            loadMoreItems={onLoadMore}
-          >
-            {({ ref, onItemsRendered }) => List({ ref, height, onItemsRendered })}
-          </InfiniteLoader>
-        );
-      };
-    }
-
-    return List;
-  }, [List, itemCount, onLoadMore, skeletonCount]);
-
   return (
-    <VirtualTableContext value={{ isVirtual: true, columnLayout, headerRow, headerSize }}>
-      <Table
-        {...tableProps}
-        component="div"
-        sx={mergeSx(tableProps.sx, {
-          display: 'block',
-          overflow: 'hidden',
-        })}
-      >
-        <AutoSizer defaultHeight={headerSize + skeletonCount * rowSize} disableWidth>
-          {InfiniteList}
-        </AutoSizer>
-      </Table>
-    </VirtualTableContext>
+    <Box
+      ref={containerRef}
+      sx={mergeSx(sx, { overflow: 'hidden' })}
+    >
+      <VirtualContext value={{ columnLayout, head, rowSize }}>
+        <FixedSizeList
+          height={height}
+          width="100%"
+          outerElementType={OuterElement}
+          innerElementType={InnerElement}
+          overscanCount={5}
+
+          itemData={{ data, row: row as RowFn, rowSize }}
+          itemKey={(index, { data }) => rowKey(index, data as D)}
+          itemCount={rowCount}
+          itemSize={rowSize}
+        >
+          { InnerRow }
+        </FixedSizeList>
+      </VirtualContext>
+    </Box>
   );
 }
 
-// Utils
-interface ItemData {
-  readonly hasHeaderRow: boolean;
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  readonly row: (idx: number, data: any, style: CSSProperties) => ReactNode;
-  readonly rowCount: number;
-  readonly rowData: unknown;
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  readonly skeletonRow?: (idx: number, data: any, style: CSSProperties) => ReactNode;
+// Elements
+interface ItemData<D = unknown> {
+  readonly data: D;
+  readonly row: RowFn<D>;
 }
 
-function InnerElement({ ref, children, ...rest }: HTMLProps<HTMLDivElement>) {
-  const { headerRow, headerSize } = use(VirtualTableContext);
+export type RowFn<in D = unknown> = (index: number, data: D, style: CSSProperties) => ReactNode
+
+function OuterElement({ children, ...rest }: TableProps) {
+  const { head, columnLayout } = use(VirtualContext);
 
   return (
-    <div ref={ref} {...rest}>
-      { headerRow && (
+    <Table
+      {...rest}
+      sx={{
+        display: 'grid',
+        gridTemplateColumns: columnLayout,
+        gridTemplateRows: 'auto 1fr',
+      }}
+    >
+      { head && (
         <TableHead
-          component="div"
           sx={{
-            display: 'block',
-            position: 'sticky',
-            top: 0, left: 0, zIndex: 2,
-            width: '100%', height: headerSize,
-            bgcolor: 'background.default',
+            display: 'grid',
+            gridColumn: '1 / -1',
+            gridTemplateColumns: 'subgrid',
+
+            '--VirtualCell-position': 'sticky',
+            '--VirtualCell-zIndex': '10',
+            '--VirtualCell-background': 'var(--mui-palette-background-default)',
           }}
         >
-          { headerRow }
+          { head }
         </TableHead>
       ) }
-
-      <TableBody component="div" sx={{ display: 'block' }}>
-        { children }
-      </TableBody>
-    </div>
+      { children }
+    </Table>
   );
 }
 
-const Row = memo(function Row({ index, data, style }: ListChildComponentProps<ItemData>) {
-  const {
-    hasHeaderRow,
-    row, rowCount, rowData,
-    skeletonRow,
-  } = data;
+function InnerElement({ children, ...rest }: HTMLProps<HTMLTableSectionElement>) {
+  const { rowSize } = use(VirtualContext);
 
-  if (hasHeaderRow) {
-    if (index === 0) return null;
+  return (
+    <TableBody
+      {...rest}
+      sx={{
+        display: 'grid',
+        gridColumn: '1 / -1',
+        gridTemplateColumns: 'subgrid',
+        gridAutoRows: rowSize
+      }}
+    >
+      { children }
+    </TableBody>
+  );
+}
 
-    index--;
-  }
-
-  if (index >= rowCount) {
-    if (!skeletonRow) return null;
-
-    return skeletonRow(index, rowData, style);
-  }
-
-  return row(index, rowData, style);
+const InnerRow = memo(function InnerRow<D>(props: ListChildComponentProps<ItemData<D>>) {
+  return props.data.row(props.index, props.data.data, props.style);
 }, areEqual);
