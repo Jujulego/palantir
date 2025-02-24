@@ -20,12 +20,13 @@ export interface UsersTableProps {
 export default function UsersTable({ users, userCount, sx }: UsersTableProps) {
   return (
     <VirtualTable
+      aria-rowcount={userCount + 1}
       columnLayout="1fr 1fr 1fr"
       rowCount={userCount}
       sx={sx}
 
       head={
-        <VirtualRow>
+        <VirtualRow aria-rowindex={1}>
           <VirtualCell scope="col" size="small">Name</VirtualCell>
           <VirtualCell scope="col" size="small">Identities</VirtualCell>
           <VirtualCell scope="col" size="small">Last login</VirtualCell>
@@ -39,7 +40,7 @@ export default function UsersTable({ users, userCount, sx }: UsersTableProps) {
         }
 
         return (
-          <VirtualRow key={user.user_id + '-' + idx} rowIndex={idx} hover>
+          <VirtualRow key={user.user_id + '-' + idx} aria-rowindex={idx + 2} rowIndex={idx} hover>
             <VirtualCell scope="row" sx={{ display: 'flex', alignItems: 'center', py: 0, gap: 1 }}>
               <Avatar src={user.picture} sx={{ height: 24, width: 24 }}>
                 {(user.nickname ?? user.name ?? '').charAt(0).toUpperCase()}

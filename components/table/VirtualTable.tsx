@@ -6,13 +6,13 @@ import Table, { type TableOwnProps } from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableHead from '@mui/material/TableHead';
 import { collect$, map$, pipe$ } from 'kyrielle';
-import { type ReactNode, type UIEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { type HTMLProps, type ReactNode, type UIEvent, useCallback, useEffect, useRef, useState } from 'react';
 
 // Constants
 const DEFAULT_ROW_SIZE = 52.8;
 
 // Component
-export interface VirtualTableProps extends TableOwnProps {
+export interface VirtualTableProps extends TableOwnProps, Omit<HTMLProps<HTMLTableElement>, 'size'> {
   readonly columnLayout: string;
   readonly head?: ReactNode;
   readonly overscan?: number;
@@ -84,6 +84,7 @@ export default function VirtualTable(props: VirtualTableProps) {
     >
       { head && (
         <TableHead
+          role="rowgroup"
           sx={{
             display: 'grid',
             gridColumn: '1 / -1',
@@ -99,6 +100,7 @@ export default function VirtualTable(props: VirtualTableProps) {
       ) }
 
       <TableBody
+        role="rowgroup"
         sx={{
           display: 'grid',
           gridColumn: '1 / -1',

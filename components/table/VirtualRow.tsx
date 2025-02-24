@@ -10,7 +10,6 @@ export default function VirtualRow({ rowIndex, sx, ...rest }: VirtualRowProps) {
   return (
     <TableRow
       {...rest}
-      aria-rowindex={typeof rowIndex === 'number' ? rowIndex + 1 : undefined}
       sx={mergeSx(sx, {
         display: 'grid',
         gridColumn: '1 / -1',
