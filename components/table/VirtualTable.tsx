@@ -1,125 +1,80 @@
 'use client';
 
 import { mergeSx } from '@/lib/utils/mui';
-import type { TableProps } from '@mui/material';
-import Box from '@mui/material/Box';
 import type { SxProps, Theme } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableHead from '@mui/material/TableHead';
-import {
-  createContext,
-  type CSSProperties,
-  type HTMLProps,
-  type Key,
-  memo,
-  type ReactNode,
-  use,
-  useEffect,
-  useRef,
-  useState
-} from 'react';
-import { areEqual, FixedSizeList, type ListChildComponentProps } from 'react-window';
+import { collect$, map$, pipe$ } from 'kyrielle';
+import { type ReactNode, type UIEvent, useCallback, useEffect, useRef, useState } from 'react';
 
 // Constants
 const DEFAULT_ROW_SIZE = 52.8;
 
-// Context
-export interface VirtualContextProps {
-  readonly columnLayout: string;
-  readonly rowSize: number;
-  readonly head?: ReactNode;
-}
-
-const VirtualContext = createContext<VirtualContextProps>({
-  columnLayout: '',
-  rowSize: DEFAULT_ROW_SIZE
-});
-
 // Component
-export interface VirtualTableProps<D = unknown> {
+export interface VirtualTableProps {
   readonly columnLayout: string;
-  readonly data: D;
-
   readonly head?: ReactNode;
-
-  readonly row: RowFn<D>;
-  readonly rowKey: (index: number, data: D) => Key;
+  readonly overscan?: number;
+  readonly row: (index: number) => ReactNode;
   readonly rowCount: number;
   readonly rowSize?: number;
-
   readonly sx?: SxProps<Theme>;
 }
 
-export default function VirtualTable<D>(props: VirtualTableProps<D>) {
+export default function VirtualTable(props: VirtualTableProps) {
   const {
-    columnLayout, data,
+    columnLayout,
     head,
-    row, rowKey, rowCount, rowSize = DEFAULT_ROW_SIZE,
+    overscan = 2,
+    row,
+    rowCount,
+    rowSize = DEFAULT_ROW_SIZE,
     sx
   } = props;
 
+  // Compute printed interval
+  const [firstIdx, setFirstIdx] = useState(0);
+  const [printedCount, setPrintedCount] = useState(rowCount);
+
+  // Track scroll offset
+  const handleScroll = useCallback((event: UIEvent<HTMLTableElement>) => {
+    setFirstIdx(firstPrintableRow(event.currentTarget, rowCount, rowSize));
+  }, [rowCount, rowSize]);
+
   // Track container height
-  const containerRef = useRef<HTMLTableElement>(null);
-  const [height, setHeight] = useState(rowCount * rowSize);
+  const tableRef = useRef<HTMLTableElement>(null);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!tableRef.current) return;
 
+    // Update to current count
+    setPrintedCount(printableRowCount(tableRef.current, rowCount, rowSize));
+
+    // Track updates
     const observer = new ResizeObserver((entries) => {
-      if (!entries[0]) return;
-      setHeight(entries[0].contentRect.height);
-    });
+      if (!entries[0]) {
+        return;
+      }
 
-    observer.observe(containerRef.current);
+      setPrintedCount(printableRowCount(entries[0].target as HTMLTableElement, rowCount, rowSize));
+    });
+    observer.observe(tableRef.current);
+
     return () => observer.disconnect();
-  }, []);
+  }, [rowCount, rowSize]);
 
   // Render
   return (
-    <Box
-      ref={containerRef}
-      sx={mergeSx(sx, { overflow: 'hidden' })}
-    >
-      <VirtualContext value={{ columnLayout, head, rowSize }}>
-        <FixedSizeList
-          height={height}
-          width="100%"
-          outerElementType={OuterElement}
-          innerElementType={InnerElement}
-          overscanCount={5}
-
-          itemData={{ data, row: row as RowFn, rowSize }}
-          itemKey={(index, { data }) => rowKey(index, data as D)}
-          itemCount={rowCount}
-          itemSize={rowSize}
-        >
-          { InnerRow }
-        </FixedSizeList>
-      </VirtualContext>
-    </Box>
-  );
-}
-
-// Elements
-interface ItemData<D = unknown> {
-  readonly data: D;
-  readonly row: RowFn<D>;
-}
-
-export type RowFn<in D = unknown> = (index: number, data: D, style: CSSProperties) => ReactNode
-
-function OuterElement({ children, ...rest }: TableProps) {
-  const { head, columnLayout } = use(VirtualContext);
-
-  return (
     <Table
-      {...rest}
-      sx={{
+      ref={tableRef}
+      onScroll={handleScroll}
+      sx={mergeSx(sx, {
         display: 'grid',
         gridTemplateColumns: columnLayout,
         gridTemplateRows: 'auto 1fr',
-      }}
+        overflow: 'auto'
+      })}
     >
       { head && (
         <TableHead
@@ -136,29 +91,50 @@ function OuterElement({ children, ...rest }: TableProps) {
           { head }
         </TableHead>
       ) }
-      { children }
+
+      <TableBody
+        sx={{
+          display: 'grid',
+          gridColumn: '1 / -1',
+          gridTemplateColumns: 'subgrid',
+          gridAutoRows: rowSize,
+          height: rowCount * rowSize,
+        }}
+      >
+        { pipe$(
+          count$(
+            Math.max(0, firstIdx - overscan),
+            Math.min(firstIdx + printedCount + overscan, rowCount)
+          ),
+          map$((idx) => row(idx)),
+          collect$()
+        ) }
+      </TableBody>
     </Table>
   );
 }
 
-function InnerElement({ children, ...rest }: HTMLProps<HTMLTableSectionElement>) {
-  const { rowSize } = use(VirtualContext);
+// Utils
+function* count$(start: number, end: number): Generator<number> {
+  let idx = start;
 
-  return (
-    <TableBody
-      {...rest}
-      sx={{
-        display: 'grid',
-        gridColumn: '1 / -1',
-        gridTemplateColumns: 'subgrid',
-        gridAutoRows: rowSize
-      }}
-    >
-      { children }
-    </TableBody>
-  );
+  while (idx < end) {
+    yield idx++;
+  }
 }
 
-const InnerRow = memo(function InnerRow<D>(props: ListChildComponentProps<ItemData<D>>) {
-  return props.data.row(props.index, props.data.data, props.style);
-}, areEqual);
+function firstPrintableRow(table: HTMLTableElement, rowCount: number, rowSize: number): number {
+  const scrollOffset = Math.max(0, Math.min(table.scrollTop, table.scrollHeight - table.clientHeight));
+
+  return Math.max(0, Math.min(rowCount - 1, Math.floor(scrollOffset / rowSize)));
+}
+
+function printableRowCount(table: HTMLTableElement, rowCount: number, rowSize: number): number {
+  let height = table.clientHeight;
+
+  if (table.tHead) {
+    height -= table.tHead.offsetHeight;
+  }
+
+  return Math.max(0, Math.min(rowCount, Math.ceil(height / rowSize)));
+}

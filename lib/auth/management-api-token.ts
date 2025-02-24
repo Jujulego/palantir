@@ -23,7 +23,7 @@ export const managementApiToken = cache(async (): Promise<string> => {
       grant_type: 'client_credentials',
     }),
     next: {
-      revalidate: 86400
+      revalidate: 0
     }
   });
 
