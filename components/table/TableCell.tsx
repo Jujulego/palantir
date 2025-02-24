@@ -27,7 +27,7 @@ export default function TableCell(props: TableCellProps) {
       component="div"
       sx={mergeSx({
         display: 'block',
-        flex: columnLayout[column] ?? '0 0 auto',
+        flex: columnLayout[column] ?? '1 0 0',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
