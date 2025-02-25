@@ -1,11 +1,12 @@
 'use client';
 
 import ColorModeToggle from '@/components/ColorModeToggle';
+import UserAvatar from '@/components/users/UserAvatar';
+import type { UserDto } from '@/lib/users/users';
 import { useUser } from '@auth0/nextjs-auth0';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
-import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
@@ -22,7 +23,7 @@ import { usePathname } from 'next/navigation';
 import { useCallback, useRef, useState } from 'react';
 
 export default function ProfileMenu() {
-  const { user, isLoading } = useUser();
+  const { user = null, isLoading } = useUser();
   const pathname = usePathname();
   const anchorEl = useRef<HTMLButtonElement>(null);
 
@@ -39,7 +40,7 @@ export default function ProfileMenu() {
   return (
     <>
       <IconButton ref={anchorEl} onClick={handleOpen} aria-label="Profile menu" sx={{ padding: 0.5 }}>
-        <Avatar alt={user?.nickname ?? user?.name} src={user?.picture} sx={{ height: 32, width: 32 }} />
+        <UserAvatar user={user as UserDto | null} sx={{ height: 32, width: 32 }} />
       </IconButton>
 
       <Popover
@@ -68,13 +69,7 @@ export default function ProfileMenu() {
         }}
       >
         <ProfileTopBar>
-          <Avatar
-            alt={user?.nickname ?? user?.name}
-            src={user?.picture}
-            sx={{
-              flex: '0 0 auto',
-            }}
-          />
+          <UserAvatar user={user as UserDto | null} sx={{ flex: '0 0 auto' }} />
 
           <Typography component="h5" variant="h6" sx={{ flex: '1 0 0' }}>{user?.nickname ?? user?.name ?? 'Anonymous'}</Typography>
 

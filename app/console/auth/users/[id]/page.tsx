@@ -1,6 +1,6 @@
 import { type ConsoleUsersIdParams, decodeId } from '@/app/console/auth/users/[id]/params';
+import UserAvatar from '@/components/users/UserAvatar';
 import { queryUser } from '@/lib/users/users';
-import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Divider from '@mui/material/Divider';
@@ -31,7 +31,7 @@ export default async function ConsoleUsersIdPage({ params }: ConsoleUsersIdPageP
       </Breadcrumbs>
 
       <Box sx={{ display: 'flex', mx: 3, mb: 3 }}>
-        <Avatar src={user.picture} alt={user.nickname ?? user.name} sx={{ height: 48, width: 48, mr: 2 }}  />
+        <UserAvatar user={user} sx={{ height: 48, width: 48, mr: 2 }}  />
 
         <Typography component="h1" variant="h4">
           { user.nickname ?? user.name }
