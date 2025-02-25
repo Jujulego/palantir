@@ -24,7 +24,10 @@ export async function queryUsers(query: UserListQuery = {}): Promise<UserListDto
     headers: {
       Authorization: `Bearer ${await managementApiToken()}`
     },
-    cache: 'no-store'
+    next: {
+      revalidate: 60,
+      tags: ['users']
+    }
   });
 }
 

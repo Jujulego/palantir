@@ -12,7 +12,7 @@ import { useCallback, useMemo } from 'react';
 import useSWRInfinite from 'swr/infinite';
 
 // Constants
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 25;
 
 // Component
 export interface UsersTableProps {
@@ -69,7 +69,7 @@ function userPageKey(pageIndex: number): UserPageKey {
   return ['users', '--page--', pageIndex];
 }
 
-async function usersFetcher([,, page]: UserPageKey) {
+async function usersFetcher([,, page]: UserPageKey): Promise<UserDto[]> {
   return await actQueryUsers({ page, perPage: PAGE_SIZE });
 }
 

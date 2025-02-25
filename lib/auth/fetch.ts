@@ -1,11 +1,5 @@
 import { FetchError } from '@/lib/utils/fetch';
 
-export class Auth0RateLimit extends FetchError {
-  constructor(readonly resetAt: number) {
-    super(429, 'Rate limit limit reached');
-  }
-}
-
 export async function auth0Fetch<D>(url: string | URL, options?: RequestInit): Promise<D> {
   while (true) {
     const res = await fetch(url, options);
@@ -25,6 +19,8 @@ export async function auth0Fetch<D>(url: string | URL, options?: RequestInit): P
         await new Promise(resolve => setTimeout(resolve, delay));
 
         continue;
+      } else {
+        console.error(`[auth0] Rate limit reached (reset at ${new Date(reset).toISOString()})`);
       }
     }
 
