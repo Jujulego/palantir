@@ -14,7 +14,7 @@ export default function ConsoleUsersLoading() {
         <Typography sx={{ color: 'text.primary' }}>Users</Typography>
       </Breadcrumbs>
 
-      <Typography component="h1" variant="h4" sx={{ flex: '0 0 auto', mx: 3, mb: 3 }}>
+      <Typography component="h1" variant="h4" sx={{ mx: 3, mb: 3 }}>
         Users
       </Typography>
 
