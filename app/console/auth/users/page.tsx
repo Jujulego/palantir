@@ -1,5 +1,5 @@
 import UserTable from '@/components/users/UserTable';
-import { queryUsers } from '@/lib/auth/users';
+import { queryUsers } from '@/lib/users/users';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Divider from '@mui/material/Divider';
 import MuiLink from '@mui/material/Link';

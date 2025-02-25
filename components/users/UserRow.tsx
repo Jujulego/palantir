@@ -1,7 +1,7 @@
 import VirtualCell from '@/components/table/VirtualCell';
 import VirtualRow, { type VirtualRowProps } from '@/components/table/VirtualRow';
 import FormatDate from '@/components/utils/FormatDate';
-import type { UserDto } from '@/lib/auth/users';
+import type { UserDto } from '@/lib/users/users';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import PersonIcon from '@mui/icons-material/Person';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
