@@ -25,7 +25,7 @@ export default function MapDrawer({ children }: MapDrawerProps) {
   }
 
   return createPortal(
-    <Stack component="main" sx={{ height: '100%', overflow: 'auto' }}>
+    <Stack sx={{ height: '100%', overflow: 'auto' }}>
       { children }
     </Stack>,
     containerRef

@@ -36,14 +36,14 @@ export default function AnimalMarker({ coordinates }: AnimalMarkerProps) {
           duration: 0.5,
         }}
       >
-          <PlaceIcon
-            sx={{
-              color: 'primary.main',
-              filter: 'drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.2))',
-              fontSize: 36,
-              verticalAlign: 'bottom'
-            }}
-          />
+        <PlaceIcon
+          sx={{
+            color: 'primary.main',
+            filter: 'drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.2))',
+            fontSize: 36,
+            verticalAlign: 'bottom'
+          }}
+        />
       </m.div>
     </MapMarker>
   );

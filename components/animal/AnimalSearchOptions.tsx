@@ -26,7 +26,7 @@ export default function AnimalSearchOptions() {
     <AnimatePresence>
       { data && (
         <SearchOption href={`/animal/${inputValue}`}>
-          <ListItemIcon sx={{ minWidth: 40 }}>
+          <ListItemIcon>
             <PetsIcon color="inherit" />
           </ListItemIcon>
           <ListItemText primary={inputValue} />

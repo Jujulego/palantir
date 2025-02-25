@@ -19,7 +19,7 @@ export default function DnsSearchOptions() {
     <AnimatePresence>
       { ips.map((ip) => (
         <SearchOption key={ip} href={`/server/${encodeURIComponent(ip)}`}>
-          <ListItemIcon sx={{ minWidth: 40 }}>
+          <ListItemIcon>
             <WebIcon color="inherit" />
           </ListItemIcon>
           <ListItemText primary={ip} />

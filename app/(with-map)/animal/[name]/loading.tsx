@@ -14,7 +14,7 @@ export default function WithMapAnimalNameLoading() {
       <LocationItemSkeleton />
 
       <ListItem sx={{ minHeight: 56, px: 2, py: 0 }}>
-        <ListItemIcon sx={{ minWidth: 40 }}>
+        <ListItemIcon>
           <PetsIcon color="primary" />
         </ListItemIcon>
 
@@ -24,7 +24,7 @@ export default function WithMapAnimalNameLoading() {
       </ListItem>
 
       <ListItem sx={{ minHeight: 56, px: 2, py: 0 }}>
-        <ListItemIcon sx={{ minWidth: 40 }}>
+        <ListItemIcon>
           <StraightenIcon color="primary" />
         </ListItemIcon>
 
@@ -34,7 +34,7 @@ export default function WithMapAnimalNameLoading() {
       </ListItem>
 
       <ListItem sx={{ minHeight: 56, px: 2, py: 0 }}>
-        <ListItemIcon sx={{ minWidth: 40 }}>
+        <ListItemIcon>
           <WcIcon color="primary" />
         </ListItemIcon>
 

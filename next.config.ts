@@ -6,6 +6,12 @@ import { webpack } from 'next/dist/compiled/webpack/webpack';
 
 // Config
 const nextConfig: NextConfig = {
+  logging: {
+    fetches: {
+      fullUrl: true,
+      hmrRefreshes: true,
+    }
+  },
   webpack(config: NextConfig, options) {
     config.plugins.push(
       codecovNextJSWebpackPlugin({

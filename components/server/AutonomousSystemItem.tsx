@@ -13,7 +13,7 @@ export default function AutonomousSystemItem(props: AutonomousSystemItemProps) {
 
   return (
     <ListItem sx={{ minHeight: 56, px: 2, py: 0 }}>
-      <ListItemIcon sx={{ minWidth: 40 }}>
+      <ListItemIcon>
         <HubIcon color="primary" />
       </ListItemIcon>
 

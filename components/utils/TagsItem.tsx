@@ -13,7 +13,7 @@ export interface TagsItemProps {
 export default function TagsItem({ tags }: TagsItemProps) {
   return (
     <ListItem disablePadding sx={{ minHeight: 56, px: 2 }}>
-      <ListItemIcon sx={{ minWidth: 40 }}>
+      <ListItemIcon>
         <LabelIcon color="primary" />
       </ListItemIcon>
 

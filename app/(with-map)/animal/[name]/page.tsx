@@ -34,7 +34,7 @@ export default async function WithMapAnimalPage({ params }: WithMapAnimalNamePag
       <LocationItem coordinates={coordinates} />
       { animal.species && (
         <ListItem sx={{ minHeight: 56, px: 2, py: 0 }}>
-          <ListItemIcon sx={{ minWidth: 40 }}>
+          <ListItemIcon>
             <PetsIcon color="primary" />
           </ListItemIcon>
 
@@ -43,7 +43,7 @@ export default async function WithMapAnimalPage({ params }: WithMapAnimalNamePag
       ) }
       { animal.size && (
         <ListItem sx={{ minHeight: 56, px: 2, py: 0 }}>
-          <ListItemIcon sx={{ minWidth: 40 }}>
+          <ListItemIcon>
             <StraightenIcon color="primary" />
           </ListItemIcon>
 
@@ -52,7 +52,7 @@ export default async function WithMapAnimalPage({ params }: WithMapAnimalNamePag
       ) }
       { animal.gender && (
         <ListItem sx={{ minHeight: 56, px: 2, py: 0 }}>
-          <ListItemIcon sx={{ minWidth: 40 }}>
+          <ListItemIcon>
             <WcIcon color="primary" />
           </ListItemIcon>
 

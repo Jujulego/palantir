@@ -1,14 +1,15 @@
-import ColorModeToggle from '@/components/ColorModeToggle';
-import LocateButton from '@/components/server/LocateButton';
-import MapLayout from '@/components/map/MapLayout';
 import AnimalSearchOptions from '@/components/animal/AnimalSearchOptions';
 import DnsSearchOptions from '@/components/dns/DnsSearchOptions';
-import ServerSearchOptions from '@/components/server/ServerSearchOptions';
+import LocateButton from '@/components/LocateButton';
+import MapLayout from '@/components/map/MapLayout';
+import ProfileMenu from '@/components/profile/ProfileMenu';
 import SearchBox from '@/components/search/SearchBox';
 import { SearchBoxSkeleton } from '@/components/search/SearchBoxSkeleton';
+import ServerSearchOptions from '@/components/server/ServerSearchOptions';
 import Paper from '@mui/material/Paper';
 import Toolbar from '@mui/material/Toolbar';
 import { domAnimation, LazyMotion } from 'motion/react';
+import type { Metadata } from 'next';
 import { type ReactNode, Suspense } from 'react';
 
 // Layout
@@ -26,7 +27,9 @@ export default async function WithMapLayout({ children }: WithMapLayoutProps) {
         sx={{
           flexShrink: 0,
           zIndex: 'appBar',
-          p: 1.5,
+          pl: 1.5,
+          pr: 2.5,
+          py: 1,
           pointerEvents: 'none',
 
           '& > *': {
@@ -47,7 +50,7 @@ export default async function WithMapLayout({ children }: WithMapLayoutProps) {
         </Paper>
 
         <Paper elevation={2} sx={{ ml: 'auto', p: 0.5, borderRadius: 9999 }}>
-          <ColorModeToggle />
+          <ProfileMenu />
         </Paper>
       </Toolbar>
 
@@ -57,3 +60,11 @@ export default async function WithMapLayout({ children }: WithMapLayoutProps) {
     </LazyMotion>
   );
 }
+
+export const metadata: Metadata = {
+  title: {
+    default: 'Palantir',
+    template: 'Palantir - %s',
+  },
+  description: 'Locate websites in the world',
+};

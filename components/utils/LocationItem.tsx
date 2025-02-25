@@ -31,7 +31,7 @@ export default function LocationItem({ address, coordinates }: LocationItemProps
         onClick={handleClick}
         sx={{ minHeight: 56, px: 2, py: 0 }}
       >
-        <ListItemIcon sx={{ minWidth: 40 }}>
+        <ListItemIcon>
           <LocationCityIcon color="primary" />
         </ListItemIcon>
 

@@ -8,7 +8,7 @@ export default function PayloadItemSkeleton() {
   return (
     <ListItem disablePadding>
       <ListItemButton disabled>
-        <ListItemIcon sx={{ minWidth: 40 }}>
+        <ListItemIcon>
           <DataObjectIcon color="primary" />
         </ListItemIcon>
 
