@@ -14,7 +14,7 @@ export interface ConsoleUsersIdPageProps {
   readonly params: Promise<ConsoleUsersIdParams>;
 }
 
-export default async function ConsoleUsersPage({ params }: ConsoleUsersIdPageProps) {
+export default async function ConsoleUsersIdPage({ params }: ConsoleUsersIdPageProps) {
   const userId = await decodeId(params);
   const user = await queryUser(userId);
 
