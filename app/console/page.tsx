@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 
 export default async function AdminPage() {
-  const { total: userCount } = await queryUsers({ perPage: 0 });
+  const { total: userCount } = await queryUsers({ includeTotals: true, perPage: 0 });
 
   return (
     <>

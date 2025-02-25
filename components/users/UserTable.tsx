@@ -2,11 +2,17 @@
 
 import VirtualCell from '@/components/table/VirtualCell';
 import VirtualRow from '@/components/table/VirtualRow';
-import VirtualTable, { type RowFn } from '@/components/table/VirtualTable';
+import VirtualTable, { type RowFn, type RowInterval } from '@/components/table/VirtualTable';
 import UserRow from '@/components/users/UserRow';
 import UserRowSkeleton from '@/components/users/UserRowSkeleton';
 import type { UserDto } from '@/lib/auth/users';
+import { actQueryUsers } from '@/lib/auth/users.actions';
 import type { SxProps, Theme } from '@mui/material/styles';
+import { useCallback, useMemo } from 'react';
+import useSWRInfinite from 'swr/infinite';
+
+// Constants
+const PAGE_SIZE = 5;
 
 // Component
 export interface UsersTableProps {
@@ -15,7 +21,26 @@ export interface UsersTableProps {
   readonly sx?: SxProps<Theme>;
 }
 
-export default function UserTable({ users, userCount, sx }: UsersTableProps) {
+export default function UserTable({ users: _users, userCount, sx }: UsersTableProps) {
+  // Load data
+  const { data = [], size, setSize } = useSWRInfinite(userPageKey, usersFetcher, {
+    fallbackData: [_users],
+    initialSize: Math.ceil(_users.length / PAGE_SIZE),
+    parallel: true,
+    revalidateAll: true,
+  });
+
+  const users = useMemo(() => data.flat(), [data]);
+
+  const handleRowIntervalChange = useCallback((interval: RowInterval) => {
+    const lastPage = Math.ceil(interval.last / PAGE_SIZE);
+
+    if (lastPage > size) {
+      setSize((old) => Math.max(old, lastPage));
+    }
+  }, [setSize, size]);
+  
+  // Render
   return (
     <VirtualTable
       columnLayout="1fr 1fr 1fr"
@@ -27,6 +52,7 @@ export default function UserTable({ users, userCount, sx }: UsersTableProps) {
           <VirtualCell scope="col" size="small">Last login</VirtualCell>
         </VirtualRow>
       }
+      onRowIntervalChange={handleRowIntervalChange}
       row={userRow}
       rowCount={userCount}
       sx={sx}
@@ -37,6 +63,17 @@ export default function UserTable({ users, userCount, sx }: UsersTableProps) {
 }
 
 // Utils
+type UserPageKey = ['users', '--page--', number];
+
+function userPageKey(pageIndex: number): UserPageKey {
+  return ['users', '--page--', pageIndex];
+}
+
+async function usersFetcher([,, page]: UserPageKey) {
+  console.log(page);
+  return await actQueryUsers({ page, perPage: PAGE_SIZE });
+}
+
 const userRow: RowFn<UserDto[]> = ({ index, data: users }) => {
   const user = users[index];
 

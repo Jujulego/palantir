@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 // Page
 export default async function ConsoleUsersPage() {
-  const { users, total } = await queryUsers();
+  const { users, total } = await queryUsers({ includeTotals: true });
 
   return (
     <>

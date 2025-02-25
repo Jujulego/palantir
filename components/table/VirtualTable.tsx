@@ -11,13 +11,6 @@ import { type ReactNode, type UIEvent, useCallback, useEffect, useRef, useState 
 const DEFAULT_ROW_SIZE = 52.68;
 
 // Component
-export interface RowFnArg<out D = unknown> {
-  readonly data: D;
-  readonly index: number;
-}
-
-export type RowFn<in D> = (arg: RowFnArg<D>) => ReactNode;
-
 export interface VirtualTableProps<in out D = unknown> extends Omit<TableProps, 'component'> {
   readonly columnLayout: string;
   readonly data: D;
@@ -26,6 +19,8 @@ export interface VirtualTableProps<in out D = unknown> extends Omit<TableProps, 
   readonly rowCount: number;
   readonly rowOverScan?: number;
   readonly rowSize?: number;
+
+  readonly onRowIntervalChange?: (interval: RowInterval) => void;
 }
 
 export default function VirtualTable<D>(props: VirtualTableProps<D>) {
@@ -33,6 +28,7 @@ export default function VirtualTable<D>(props: VirtualTableProps<D>) {
     columnLayout,
     data,
     head,
+    onRowIntervalChange,
     row,
     rowCount,
     rowOverScan = 2,
@@ -41,27 +37,24 @@ export default function VirtualTable<D>(props: VirtualTableProps<D>) {
     ...tableProps
   } = props;
 
-  // Compute printed interval
+  // Synchronize with screen
   const tableRef = useRef<HTMLTableElement>(null);
   
   const [firstIdx, setFirstIdx] = useState(0);
   const [printedCount, setPrintedCount] = useState(rowCount);
+  const [isSynchronized, setIsSynchronized] = useState(false);
 
-  // Track scroll offset
   const handleScroll = useCallback((event: UIEvent<HTMLTableElement>) => {
     setFirstIdx(firstPrintableRow(event.currentTarget, rowCount, rowSize));
   }, [rowCount, rowSize]);
 
   useEffect(() => {
-    if (tableRef.current) setFirstIdx(firstPrintableRow(tableRef.current, rowCount, rowSize));
-  }, [rowCount, rowSize]);
-
-  // Track container height
-  useEffect(() => {
     if (!tableRef.current) return;
 
-    // Update to current count
+    // Update to match screen
+    setFirstIdx(firstPrintableRow(tableRef.current, rowCount, rowSize));
     setPrintedCount(printableRowCount(tableRef.current, rowCount, rowSize));
+    setIsSynchronized(true);
 
     // Track updates
     const observer = new ResizeObserver((entries) => {
@@ -73,8 +66,23 @@ export default function VirtualTable<D>(props: VirtualTableProps<D>) {
     });
     observer.observe(tableRef.current);
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      setIsSynchronized(false);
+    };
   }, [rowCount, rowSize]);
+
+  // Compute rendered interval
+  const first = Math.max(0, firstIdx - rowOverScan);
+  const last = Math.min(firstIdx + printedCount + rowOverScan, rowCount);
+  
+  useEffect(() => {
+    if (!isSynchronized) return;
+
+    if (onRowIntervalChange) {
+      onRowIntervalChange({ first, last });
+    }
+  }, [first, isSynchronized, last, onRowIntervalChange]);
 
   // Render
   return (
@@ -117,10 +125,7 @@ export default function VirtualTable<D>(props: VirtualTableProps<D>) {
         }}
       >
         { pipe$(
-          count$(
-            Math.max(0, firstIdx - rowOverScan),
-            Math.min(firstIdx + printedCount + rowOverScan, rowCount)
-          ),
+          count$(first, last),
           map$((index) => row({ index, data })),
           collect$()
         ) }
@@ -128,6 +133,19 @@ export default function VirtualTable<D>(props: VirtualTableProps<D>) {
     </Table>
   );
 }
+
+// Types
+export interface RowInterval {
+  readonly first: number;
+  readonly last: number;
+}
+
+export interface RowFnArg<out D = unknown> {
+  readonly data: D;
+  readonly index: number;
+}
+
+export type RowFn<in D> = (arg: RowFnArg<D>) => ReactNode;
 
 // Utils
 function* count$(start: number, end: number): Generator<number> {
