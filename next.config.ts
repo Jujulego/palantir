@@ -6,12 +6,10 @@ import { webpack } from 'next/dist/compiled/webpack/webpack';
 
 // Config
 const nextConfig: NextConfig = {
-  experimental: {
-    serverComponentsHmrCache: false,
-  },
   logging: {
     fetches: {
       fullUrl: true,
+      hmrRefreshes: true,
     }
   },
   webpack(config: NextConfig, options) {

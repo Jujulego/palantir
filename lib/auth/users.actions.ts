@@ -7,5 +7,6 @@ export async function actQueryUsers(query: UserListQuery & { includeTotals: true
 export async function actQueryUsers(query?: UserListQuery & { includeTotals?: false }): Promise<UserDto[]>;
 export async function actQueryUsers(query: UserListQuery = {}): Promise<UserListDto | UserDto[]> {
   await isAuthenticated();
+
   return await queryUsers(query);
 }

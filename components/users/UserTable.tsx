@@ -70,7 +70,6 @@ function userPageKey(pageIndex: number): UserPageKey {
 }
 
 async function usersFetcher([,, page]: UserPageKey) {
-  console.log(page);
   return await actQueryUsers({ page, perPage: PAGE_SIZE });
 }
 
