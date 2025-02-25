@@ -29,7 +29,7 @@ export default function UserTable({ users: _users, userCount, sx }: UsersTablePr
     initialSize: Math.ceil(_users.length / PAGE_SIZE),
     parallel: true,
     revalidateAll: true,
-    revalidateOnMount: false,
+    revalidateOnMount: _users.length < PAGE_SIZE,
   });
 
   const users = useMemo(() => data.flat(), [data]);
@@ -54,6 +54,7 @@ export default function UserTable({ users: _users, userCount, sx }: UsersTablePr
           <VirtualCell scope="col" size="small">Last login</VirtualCell>
         </VirtualRow>
       }
+      loadedCount={users.length}
       onRowIntervalChange={handleRowIntervalChange}
       row={userRow}
       rowCount={userCount}

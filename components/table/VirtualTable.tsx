@@ -15,6 +15,7 @@ export interface VirtualTableProps<in out D = unknown> extends Omit<TableProps, 
   readonly columnLayout: string;
   readonly data: D;
   readonly head?: ReactNode;
+  readonly loadedCount?: number;
   readonly row: RowFn<D>;
   readonly rowCount: number;
   readonly rowOverScan?: number;
@@ -28,6 +29,7 @@ export default function VirtualTable<D>(props: VirtualTableProps<D>) {
     columnLayout,
     data,
     head,
+    loadedCount,
     onRowIntervalChange,
     row,
     rowCount,
@@ -41,7 +43,7 @@ export default function VirtualTable<D>(props: VirtualTableProps<D>) {
   const tableRef = useRef<HTMLTableElement>(null);
   
   const [firstIdx, setFirstIdx] = useState(0);
-  const [printedCount, setPrintedCount] = useState(rowCount);
+  const [printedCount, setPrintedCount] = useState(loadedCount ?? rowCount);
   const [isSynchronized, setIsSynchronized] = useState(false);
 
   const handleScroll = useCallback((event: UIEvent<HTMLTableElement>) => {
