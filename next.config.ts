@@ -6,6 +6,14 @@ import { webpack } from 'next/dist/compiled/webpack/webpack';
 
 // Config
 const nextConfig: NextConfig = {
+  experimental: {
+    serverComponentsHmrCache: false,
+  },
+  logging: {
+    fetches: {
+      fullUrl: true,
+    }
+  },
   webpack(config: NextConfig, options) {
     config.plugins.push(
       codecovNextJSWebpackPlugin({

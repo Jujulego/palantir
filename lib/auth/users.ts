@@ -1,5 +1,5 @@
+import { auth0Fetch } from '@/lib/auth/fetch';
 import { managementApiToken } from '@/lib/auth/management-api-token';
-import { jsonFetch } from '@/lib/utils/fetch';
 
 // Api calls
 export async function queryUsers(query: UserListQuery & { includeTotals: true }): Promise<UserListDto>;
@@ -19,14 +19,12 @@ export async function queryUsers(query: UserListQuery = {}): Promise<UserListDto
     url.searchParams.set('per_page', query.perPage.toString());
   }
 
-  return await jsonFetch<UserListDto>(url, {
+  return await auth0Fetch<UserListDto>(url, {
+    method: 'GET',
     headers: {
       Authorization: `Bearer ${await managementApiToken()}`
     },
-    next: {
-      revalidate: 0,
-      tags: ['users']
-    }
+    cache: 'no-store'
   });
 }
 
