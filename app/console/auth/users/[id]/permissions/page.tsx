@@ -1,6 +1,7 @@
 import { type ConsoleUsersIdParams, decodeId } from '@/app/console/auth/users/[id]/params';
 import UserPermissionListItem from '@/components/users/UserPermissionListItem';
 import { queryUser } from '@/lib/users/users';
+import { actPatchUser } from '@/lib/users/users.actions';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import MuiLink from '@mui/material/Link';
@@ -27,10 +28,11 @@ export default async function ConsoleUsersIdPermissions({ params }: ConsoleUsers
         <Typography component="h2" variant="h5" sx={{ mt: 2, mb: 1 }}>IP Address Metadata</Typography>
         <Divider />
 
-        <List>
+        <List disablePadding>
           <UserPermissionListItem
             user={user}
             right="ip:AccessBigDataCloud"
+            onPatchAction={actPatchUser}
 
             primary="BigDataCloud"
             secondary={
@@ -41,6 +43,7 @@ export default async function ConsoleUsersIdPermissions({ params }: ConsoleUsers
           <UserPermissionListItem
             user={user}
             right="ip:AccessIpData"
+            onPatchAction={actPatchUser}
 
             primary="ipdata"
             secondary={
@@ -51,6 +54,7 @@ export default async function ConsoleUsersIdPermissions({ params }: ConsoleUsers
           <UserPermissionListItem
             user={user}
             right="ip:AccessIpGeolocation"
+            onPatchAction={actPatchUser}
 
             primary="ipgeolocation"
             secondary={
@@ -61,6 +65,7 @@ export default async function ConsoleUsersIdPermissions({ params }: ConsoleUsers
           <UserPermissionListItem
             user={user}
             right="ip:AccessIpQualityScore"
+            onPatchAction={actPatchUser}
 
             primary="IPQualityScore"
             secondary={
@@ -74,10 +79,11 @@ export default async function ConsoleUsersIdPermissions({ params }: ConsoleUsers
         <Typography component="h2" variant="h5" sx={{ mt: 2, mb: 1 }}>Console</Typography>
         <Divider />
 
-        <List>
+        <List disablePadding>
           <UserPermissionListItem
             user={user}
             right="console:ManageUsers"
+            onPatchAction={actPatchUser}
 
             primary="Manage users"
             secondary="Access and update users from the console"

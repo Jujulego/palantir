@@ -1,7 +1,6 @@
 import { auth0Fetch } from '@/lib/auth/fetch';
 import { managementApiToken } from '@/lib/auth/management-api-token';
 import { PatchUserDto, USER_FIELDS, type UserDto, type UserListDto, type UserListQuery } from '@/lib/users/user.dto';
-import { revalidateTag } from 'next/cache';
 import { FetchError } from '../utils/fetch';
 
 // Constants
@@ -78,8 +77,8 @@ export async function patchUser(id: string, patch: PatchUserDto): Promise<UserDt
       cache: 'no-store',
     });
 
-    revalidateTag('users-pages');
-    revalidateTag(`users-${id}`);
+    // revalidateTag('users-pages');
+    // revalidateTag(`users-${id}`);
     
     return result;
   } catch (error) {
