@@ -7,6 +7,7 @@ import IpQualityScoreOption from '@/components/server/menu/IpQualityScoreOption'
 import MetadataMenu from '@/components/server/menu/MetadataMenu';
 import MetadataOption from '@/components/server/menu/MetadataOption';
 import ServerMarkers from '@/components/server/ServerMarkers';
+import { querySessionRights } from '@/lib/auth/need-right';
 import { reverseDnsLookup } from '@/lib/dns/reverse-dns-lookup';
 import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
@@ -34,6 +35,9 @@ export default async function WithMapServerIpLayout({ params, children }: WithMa
     redirect('/', RedirectType.replace);
   }
 
+  // Render
+  const rights = await querySessionRights();
+
   return (
     <>
       <Box sx={{ position: 'relative' }}>
@@ -59,10 +63,18 @@ export default async function WithMapServerIpLayout({ params, children }: WithMa
 
           <MetadataMenu sx={{ flex: '0 0 auto', ml: 'auto' }}>
             <MetadataOption href={`/server/${encodeURIComponent(ip)}/ip-info`}><IpInfoOption /></MetadataOption>
-            <MetadataOption href={`/server/${encodeURIComponent(ip)}/ip-data`}><IpDataOption /></MetadataOption>
-            <MetadataOption href={`/server/${encodeURIComponent(ip)}/ip-geolocation`}><IpGeolocationOption /></MetadataOption>
-            <MetadataOption href={`/server/${encodeURIComponent(ip)}/ip-quality-score`}><IpQualityScoreOption /></MetadataOption>
-            <MetadataOption href={`/server/${encodeURIComponent(ip)}/big-data-cloud`}><BigDataCloudOption /></MetadataOption>
+            { rights.includes('ip:AccessIpData') && (
+              <MetadataOption href={`/server/${encodeURIComponent(ip)}/ip-data`}><IpDataOption /></MetadataOption>
+            ) }
+            { rights.includes('ip:AccessIpGeolocation') && (
+              <MetadataOption href={`/server/${encodeURIComponent(ip)}/ip-geolocation`}><IpGeolocationOption /></MetadataOption>
+            ) }
+            { rights.includes('ip:AccessIpQualityScore') && (
+              <MetadataOption href={`/server/${encodeURIComponent(ip)}/ip-quality-score`}><IpQualityScoreOption /></MetadataOption>
+            ) }
+            { rights.includes('ip:AccessBigDataCloud') && (
+              <MetadataOption href={`/server/${encodeURIComponent(ip)}/big-data-cloud`}><BigDataCloudOption /></MetadataOption>
+            ) }
           </MetadataMenu>
         </Box>
       </Box>

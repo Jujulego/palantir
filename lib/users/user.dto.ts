@@ -1,4 +1,6 @@
 // Constants
+import type { RightKey } from '@/lib/auth/permissions';
+
 export const USER_FIELDS = ['user_id', 'name', 'nickname', 'picture', 'identities', 'last_login', 'app_metadata'];
 
 // Types
@@ -13,7 +15,7 @@ export interface UserDto {
 }
 
 export interface UserAppMetadata {
-  readonly permissions?: readonly string[];
+  readonly permissions?: readonly RightKey[];
 }
 
 export interface UserIdentity {

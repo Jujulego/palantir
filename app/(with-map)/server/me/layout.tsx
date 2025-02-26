@@ -8,6 +8,7 @@ import MetadataMenu from '@/components/server/menu/MetadataMenu';
 import MetadataOption from '@/components/server/menu/MetadataOption';
 import VercelOption from '@/components/server/menu/VercelOption';
 import ServerMarkers from '@/components/server/ServerMarkers';
+import { querySessionRights } from '@/lib/auth/need-right';
 import { reverseDnsLookup } from '@/lib/dns/reverse-dns-lookup';
 import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
@@ -34,7 +35,8 @@ export default async function WithMapServerMeLayout({ children }: WithMapServerM
     redirect('/');
   }
 
-  // Load data
+  // Render
+  const rights = await querySessionRights();
   const ip = ipaddr.parse(forwardedFor);
 
   return (
@@ -63,10 +65,18 @@ export default async function WithMapServerMeLayout({ children }: WithMapServerM
           <MetadataMenu sx={{ flex: '0 0 auto', ml: 'auto' }}>
             <MetadataOption href="/server/me/vercel"><VercelOption /></MetadataOption>
             <MetadataOption href="/server/me/ip-info"><IpInfoOption /></MetadataOption>
-            <MetadataOption href="/server/me/ip-data"><IpDataOption /></MetadataOption>
-            <MetadataOption href="/server/me/ip-geolocation"><IpGeolocationOption /></MetadataOption>
-            <MetadataOption href="/server/me/ip-quality-score"><IpQualityScoreOption /></MetadataOption>
-            <MetadataOption href="/server/me/big-data-cloud"><BigDataCloudOption /></MetadataOption>
+            { rights.includes('ip:AccessIpData') && (
+              <MetadataOption href="/server/me/ip-data"><IpDataOption /></MetadataOption>
+            ) }
+            { rights.includes('ip:AccessIpGeolocation') && (
+              <MetadataOption href="/server/me/ip-geolocation"><IpGeolocationOption /></MetadataOption>
+            ) }
+            { rights.includes('ip:AccessIpQualityScore') && (
+              <MetadataOption href="/server/me/ip-quality-score"><IpQualityScoreOption /></MetadataOption>
+            ) }
+            { rights.includes('ip:AccessBigDataCloud') && (
+              <MetadataOption href="/server/me/big-data-cloud"><BigDataCloudOption /></MetadataOption>
+            ) }
           </MetadataMenu>
         </Box>
       </Box>
