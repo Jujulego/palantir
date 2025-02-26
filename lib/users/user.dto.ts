@@ -9,7 +9,7 @@ export interface UserDto {
   readonly user_id: string;
   readonly picture?: string;
   readonly last_login: string;
-  readonly app_metadata: UserAppMetadata;
+  readonly app_metadata?: UserAppMetadata;
 }
 
 export interface UserAppMetadata {
