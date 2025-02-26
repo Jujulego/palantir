@@ -1,11 +1,15 @@
+'use client';
+
 import VirtualCell from '@/components/table/VirtualCell';
 import VirtualRow, { type VirtualRowProps } from '@/components/table/VirtualRow';
+import UserAvatar from '@/components/users/UserAvatar';
 import FormatDate from '@/components/utils/FormatDate';
-import type { UserDto } from '@/lib/users/users';
+import type { UserDto } from '@/lib/users/user.dto';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import PersonIcon from '@mui/icons-material/Person';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import Avatar from '@mui/material/Avatar';
+import ButtonBase from '@mui/material/ButtonBase';
+import Link from 'next/link';
 
 // Component
 export interface VirtualUserRowProps extends VirtualRowProps {
@@ -14,11 +18,26 @@ export interface VirtualUserRowProps extends VirtualRowProps {
 
 export default function UserRow({ user, ...rest }: VirtualUserRowProps) {
   return (
-    <VirtualRow {...rest}>
-      <VirtualCell scope="row" sx={{ display: 'flex', alignItems: 'center', py: 0, gap: 1 }}>
-        <Avatar src={user.picture} alt={user.nickname ?? user.name} sx={{ height: 24, width: 24 }} />
-        <span>{user.nickname ?? user.name}</span>
+    <VirtualRow {...rest} hover>
+      <VirtualCell scope="row" padding="none">
+        <ButtonBase
+          component={Link}
+          href={`/console/auth/users/${encodeURIComponent(user.user_id)}`}
+          sx={{
+            height: '100%',
+            px: 2,
+
+            display: 'flex',
+            justifyContent: 'unset',
+            alignItems: 'center',
+            gap: 1,
+          }}
+        >
+          <UserAvatar user={user} sx={{ height: 24, width: 24 }} />
+          <span>{user.nickname ?? user.name}</span>
+        </ButtonBase>
       </VirtualCell>
+
       <VirtualCell sx={{ display: 'flex', alignItems: 'center', py: 0, gap: 1 }}>
         {user.identities.map((identity) => {
           switch (identity.connection) {
@@ -33,6 +52,7 @@ export default function UserRow({ user, ...rest }: VirtualUserRowProps) {
           }
         })}
       </VirtualCell>
+
       <VirtualCell>
         <FormatDate date={user.last_login} format="lll" />
       </VirtualCell>

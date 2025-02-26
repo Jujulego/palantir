@@ -44,6 +44,23 @@ const theme = createTheme({
           minWidth: 40,
         }
       }
+    },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          minHeight: 40,
+          textTransform: 'unset',
+          paddingTop: 8,
+          paddingBottom: 8,
+        }
+      }
+    },
+    MuiTabs: {
+      styleOverrides: {
+        root: {
+          minHeight: 36,
+        }
+      }
     }
   },
   palette: {

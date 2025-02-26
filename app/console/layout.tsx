@@ -1,6 +1,7 @@
 import DrawerLink from '@/components/console/DrawerLink';
 import HomeLink from '@/components/HomeLink';
 import ProfileMenu from '@/components/profile/ProfileMenu';
+import { querySessionRights } from '@/lib/auth/need-right';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import AppBar from '@mui/material/AppBar';
@@ -19,6 +20,8 @@ export interface ConsoleLayoutProps {
 }
 
 export default async function ConsoleLayout({ children }: ConsoleLayoutProps) {
+  const rights = await querySessionRights();
+
   return (
     <Box sx={{ display: 'flex', '--mui-palette-TableCell-border': 'var(--mui-palette-divider)' }}>
       <AppBar position="fixed" elevation={2}>
@@ -45,16 +48,18 @@ export default async function ConsoleLayout({ children }: ConsoleLayoutProps) {
         <List component="nav">
           <DrawerLink href="/console" icon={<DashboardIcon />} primary="Dashboard" exactMatch />
 
-          <List
-            component="div"
-            subheader={
-              <ListSubheader component="h6" sx={{ m: 0, lineHeight: '36px' }}>
-                Authentication
-              </ListSubheader>
-            }
-          >
-            <DrawerLink href="/console/auth/users" icon={<PeopleIcon />} primary="Users" />
-          </List>
+          { rights.includes('console:ManageUsers') && (
+            <List
+              component="div"
+              subheader={
+                <ListSubheader component="h6" sx={{ m: 0, lineHeight: '36px' }}>
+                  Authentication
+                </ListSubheader>
+              }
+            >
+              <DrawerLink href="/console/auth/users" icon={<PeopleIcon />} primary="Users" />
+            </List>
+          ) }
         </List>
       </Drawer>
 
