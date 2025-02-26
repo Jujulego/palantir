@@ -1,5 +1,6 @@
 import { type ConsoleUsersIdParams, decodeId } from '@/app/console/auth/users/[id]/params';
 import UserPermissionListItem from '@/components/users/UserPermissionListItem';
+import { needRight } from '@/lib/auth/need-right';
 import { queryUser } from '@/lib/users/users';
 import { actPatchUser } from '@/lib/users/users.actions';
 import Box from '@mui/material/Box';
@@ -15,6 +16,10 @@ export interface ConsoleUsersIdPermissionsProps {
 }
 
 export default async function ConsoleUsersIdPermissions({ params }: ConsoleUsersIdPermissionsProps) {
+  await needRight('console:ManageUsers', {
+    forbiddenRedirectTo: '/console',
+  });
+
   const userId = await decodeId(params);
   const user = await queryUser(userId);
 

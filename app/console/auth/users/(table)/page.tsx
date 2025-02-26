@@ -1,4 +1,5 @@
 import UserTable from '@/components/users/UserTable';
+import { needRight } from '@/lib/auth/need-right';
 import { queryUsers } from '@/lib/users/users';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Divider from '@mui/material/Divider';
@@ -8,6 +9,9 @@ import Link from 'next/link';
 
 // Page
 export default async function ConsoleUsersPage() {
+  await needRight('console:ManageUsers', {
+    forbiddenRedirectTo: '/console',
+  });
   const { users, total } = await queryUsers({ includeTotals: true });
 
   return (

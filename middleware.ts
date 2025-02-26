@@ -1,5 +1,4 @@
 import { auth0 } from '@/auth0';
-import { querySessionRights } from '@/lib/auth/need-right';
 import { setUser } from '@sentry/nextjs';
 import { createEdgeRouter } from 'next-connect';
 import { type NextFetchEvent, type NextRequest, NextResponse } from 'next/server';
@@ -45,15 +44,6 @@ router
     }
 
     return NextResponse.redirect(`${request.nextUrl.origin}/auth/login?returnTo=${encodeURIComponent(request.nextUrl.pathname)}`);
-  })
-  .use('/console/auth/users', async (request, _, next) => {
-    const rights = await querySessionRights();
-
-    if (rights.includes('console:ManageUsers')) {
-      return next();
-    }
-
-    return NextResponse.redirect(`${request.nextUrl.origin}/console`);
   })
   .all(async (request) => {
     return await auth0.middleware(request);
