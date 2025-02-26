@@ -9,7 +9,7 @@ import Link from 'next/link';
 export default function ConsoleUsersLoading() {
   return (
     <>
-      <Breadcrumbs sx={{ mx: 3, my: 2 }}>
+      <Breadcrumbs sx={{ mx: 3, mt: 2, mb: 3 }}>
         <MuiLink underline="hover" color="inherit" component={Link} href="/console">Console</MuiLink>
         <Typography sx={{ color: 'text.primary' }}>Users</Typography>
       </Breadcrumbs>

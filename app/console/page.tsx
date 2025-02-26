@@ -8,7 +8,7 @@ import { Suspense } from 'react';
 export default async function AdminPage() {
   return (
     <>
-      <Breadcrumbs sx={{ mx: 3, my: 2 }}>
+      <Breadcrumbs sx={{ mx: 3, mt: 2, mb: 3 }}>
         <Typography sx={{ color: 'text.primary' }}>Console</Typography>
       </Breadcrumbs>
 
