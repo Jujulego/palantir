@@ -36,3 +36,7 @@ export interface UserListQuery {
   readonly page?: number;
   readonly perPage?: number;
 }
+
+export interface PatchUserDto extends Partial<UserDto> {
+  readonly app_metadata?: Partial<UserAppMetadata>;
+}

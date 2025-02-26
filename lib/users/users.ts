@@ -1,6 +1,7 @@
 import { auth0Fetch } from '@/lib/auth/fetch';
 import { managementApiToken } from '@/lib/auth/management-api-token';
-import { USER_FIELDS, type UserDto, type UserListDto, type UserListQuery } from '@/lib/users/user.dto';
+import { PatchUserDto, USER_FIELDS, type UserDto, type UserListDto, type UserListQuery } from '@/lib/users/user.dto';
+import { revalidateTag } from 'next/cache';
 import { FetchError } from '../utils/fetch';
 
 // Constants
@@ -61,3 +62,31 @@ export async function queryUser(id: string): Promise<UserDto | null> {
   }
 }
 
+export async function patchUser(id: string, patch: PatchUserDto): Promise<UserDto | null> {
+  console.log(`[auth0] Patch user "${id}"`);
+  const url = new URL(`https://${process.env.AUTH0_DOMAIN}/api/v2/users/${id}`);
+  url.searchParams.set('fields', USER_FIELDS.join(','));
+
+  try {
+    const result = await auth0Fetch<UserDto>(url, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${await managementApiToken()}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(patch),
+      cache: 'no-store',
+    });
+
+    revalidateTag('users-pages');
+    revalidateTag(`users-${id}`);
+    
+    return result;
+  } catch (error) {
+    if (error instanceof FetchError && error.status === 404) {
+      return null;
+    }
+
+    throw error;
+  }
+}
