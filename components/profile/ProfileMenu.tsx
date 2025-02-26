@@ -2,7 +2,7 @@
 
 import ColorModeToggle from '@/components/ColorModeToggle';
 import UserAvatar from '@/components/users/UserAvatar';
-import type { UserDto } from '@/lib/users/users';
+import type { UserDto } from '@/lib/users/user.dto';
 import { useUser } from '@auth0/nextjs-auth0';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';

@@ -1,7 +1,8 @@
 'use server';
 
 import { isAuthenticated } from '@/lib/auth/is-authenticated';
-import { queryUsers, type UserDto, type UserListDto, type UserListQuery } from '@/lib/users/users';
+import type { UserDto, UserListDto, UserListQuery } from '@/lib/users/user.dto';
+import { queryUsers } from '@/lib/users/users';
 
 // Actions
 export async function actQueryUsers(query: UserListQuery & { includeTotals: true }): Promise<UserListDto>;

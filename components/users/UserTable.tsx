@@ -5,7 +5,7 @@ import VirtualRow from '@/components/table/VirtualRow';
 import VirtualTable, { type RowFn, type RowInterval } from '@/components/table/VirtualTable';
 import UserRow from '@/components/users/UserRow';
 import UserRowSkeleton from '@/components/users/UserRowSkeleton';
-import type { UserDto } from '@/lib/users/users';
+import type { UserDto } from '@/lib/users/user.dto';
 import { actQueryUsers } from '@/lib/users/users.actions';
 import type { SxProps, Theme } from '@mui/material/styles';
 import { useCallback, useMemo } from 'react';

@@ -1,4 +1,4 @@
-import type { UserDto } from '@/lib/users/users';
+import type { UserDto } from '@/lib/users/user.dto';
 import type { AvatarProps } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 
