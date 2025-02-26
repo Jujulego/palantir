@@ -1,14 +1,13 @@
 import { type ConsoleUsersIdParams, decodeId } from '@/app/console/auth/users/[id]/params';
 import { queryUser } from '@/lib/users/users';
-import Box from '@mui/material/Box';
 import { notFound } from 'next/navigation';
 
 // Page
-export interface ConsoleUsersIdProps {
+export interface ConsoleUsersIdPermissionsProps {
   readonly params: Promise<ConsoleUsersIdParams>;
 }
 
-export default async function ConsoleUsersId({ params }: ConsoleUsersIdProps) {
+export default async function ConsoleUsersIdPermissions({ params }: ConsoleUsersIdPermissionsProps) {
   const userId = await decodeId(params);
   const user = await queryUser(userId);
 
@@ -17,10 +16,6 @@ export default async function ConsoleUsersId({ params }: ConsoleUsersIdProps) {
   }
 
   return (
-    <Box sx={{ flex: '1 0 0', overflow: 'auto' }}>
-      <code style={{ whiteSpace: 'pre' }}>
-        { JSON.stringify(user, null, 2) }
-      </code>
-    </Box>
+    <h1>Hello world !</h1>
   );
 }

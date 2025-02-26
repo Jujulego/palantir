@@ -49,6 +49,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           minHeight: 40,
+          textTransform: 'unset',
           paddingTop: 8,
           paddingBottom: 8,
         }

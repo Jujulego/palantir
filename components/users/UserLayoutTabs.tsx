@@ -17,13 +17,7 @@ export default function UserLayoutTabs({ userId }: UserLayoutTabsProps) {
   return (
     <Tabs component="nav" value={segment}>
       <Tab component={Link} href={userUrl} label="Details" value={null} />
-      <Tab
-        component={Link}
-        href={`${userUrl}/permissions`}
-        label="Permissions"
-        value="permissions"
-        disabled
-      />
+      <Tab component={Link} href={`${userUrl}/permissions`} label="Permissions" value="permissions" />
     </Tabs>
   );
 }
