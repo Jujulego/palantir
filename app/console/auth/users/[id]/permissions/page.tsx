@@ -1,13 +1,10 @@
 import { type ConsoleUsersIdParams, decodeId } from '@/app/console/auth/users/[id]/params';
+import UserPermissionListItem from '@/components/users/UserPermissionListItem';
 import { queryUser } from '@/lib/users/users';
 import Box from '@mui/material/Box';
-import Checkbox from '@mui/material/Checkbox';
 import Divider from '@mui/material/Divider';
 import MuiLink from '@mui/material/Link';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import { notFound } from 'next/navigation';
 
@@ -31,47 +28,45 @@ export default async function ConsoleUsersIdPermissions({ params }: ConsoleUsers
         <Divider />
 
         <List>
-          <ListItem>
-            <ListItemIcon>
-              <Checkbox edge="start" />
-            </ListItemIcon>
-            <ListItemText
-              primary="BigDataCloud"
-              secondary={
-                <>Access ip metadata retrieved using <MuiLink href="https://www.bigdatacloud.com" target="_blank">BigDataCloud API</MuiLink></>
-              }
-            />
-          </ListItem>
+          <UserPermissionListItem
+            user={user}
+            right="ip:AccessBigDataCloud"
 
-          <ListItem>
-            <ListItemIcon>
-              <Checkbox edge="start" />
-            </ListItemIcon>
-            <ListItemText
-              primary="ipdata"
-              secondary="Access ip metadata retreived using ipdata API"
-            />
-          </ListItem>
+            primary="BigDataCloud"
+            secondary={
+              <>Access ip metadata retrieved using <MuiLink href="https://www.bigdatacloud.com" target="_blank">BigDataCloud API</MuiLink></>
+            }
+          />
 
-          <ListItem>
-            <ListItemIcon>
-              <Checkbox edge="start" />
-            </ListItemIcon>
-            <ListItemText
-              primary="ipgeolocation"
-              secondary="Access ip metadata retreived using ipgeolocation API"
-            />
-          </ListItem>
+          <UserPermissionListItem
+            user={user}
+            right="ip:AccessIpData"
 
-          <ListItem>
-            <ListItemIcon>
-              <Checkbox edge="start" />
-            </ListItemIcon>
-            <ListItemText
-              primary="IP Quality Score"
-              secondary="Access ip metadata retreived using IP Quality Score API"
-            />
-          </ListItem>
+            primary="ipdata"
+            secondary={
+              <>Access ip metadata retrieved using <MuiLink href="https://ipdata.co" target="_blank">ipdata API</MuiLink></>
+            }
+          />
+
+          <UserPermissionListItem
+            user={user}
+            right="ip:AccessIpGeolocation"
+
+            primary="ipgeolocation"
+            secondary={
+              <>Access ip metadata retrieved using <MuiLink href="https://ipgeolocation.io" target="_blank">ipgeolocation API</MuiLink></>
+            }
+          />
+
+          <UserPermissionListItem
+            user={user}
+            right="ip:AccessIpQualityScore"
+
+            primary="IPQualityScore"
+            secondary={
+              <>Access ip metadata retrieved using <MuiLink href="https://www.ipqualityscore.com" target="_blank">IPQualityScore API</MuiLink></>
+            }
+          />
         </List>
       </section>
 
@@ -80,15 +75,13 @@ export default async function ConsoleUsersIdPermissions({ params }: ConsoleUsers
         <Divider />
 
         <List>
-          <ListItem>
-            <ListItemIcon>
-              <Checkbox edge="start" />
-            </ListItemIcon>
-            <ListItemText
-              primary="Read users"
-              secondary="Access users list and details"
-            />
-          </ListItem>
+          <UserPermissionListItem
+            user={user}
+            right="console:ManageUsers"
+
+            primary="Manage users"
+            secondary="Access and update users from the console"
+          />
         </List>
       </section>
     </Box>
