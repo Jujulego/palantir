@@ -102,7 +102,7 @@ export default function ProfileMenu() {
             </>
           ) : (
             <ListItem disablePadding>
-              <ListItemButton component="a" href="/auth/login">
+              <ListItemButton component="a" href={`/auth/login?returnTo=${encodeURIComponent(pathname)}`}>
                 <ListItemIcon>
                   <LoginIcon />
                 </ListItemIcon>

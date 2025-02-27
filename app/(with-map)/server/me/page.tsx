@@ -1,6 +1,6 @@
-import { redirect } from 'next/navigation';
+import { permanentRedirect, RedirectType } from 'next/navigation';
 
 // Page
 export default async function WithMapServerMePage() {
-  redirect('/server/me/vercel');
+  permanentRedirect('/server/me/vercel', RedirectType.replace);
 }

@@ -1,3 +1,4 @@
+import RightGate from '@/components/auth/RightGate';
 import HostnameLink from '@/components/dns/HostnameLink';
 import BigDataCloudOption from '@/components/server/menu/BigDataCloudOption';
 import IpDataOption from '@/components/server/menu/IpDataOption';
@@ -7,7 +8,6 @@ import IpQualityScoreOption from '@/components/server/menu/IpQualityScoreOption'
 import MetadataMenu from '@/components/server/menu/MetadataMenu';
 import MetadataOption from '@/components/server/menu/MetadataOption';
 import ServerMarkers from '@/components/server/ServerMarkers';
-import { querySessionRights } from '@/lib/auth/need-right';
 import { reverseDnsLookup } from '@/lib/dns/reverse-dns-lookup';
 import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
@@ -36,7 +36,7 @@ export default async function WithMapServerIpLayout({ params, children }: WithMa
   }
 
   // Render
-  const rights = await querySessionRights();
+  const ipUrl = `/server/${encodeURIComponent(ip)}`;
 
   return (
     <>
@@ -62,19 +62,19 @@ export default async function WithMapServerIpLayout({ params, children }: WithMa
           </Suspense>
 
           <MetadataMenu sx={{ flex: '0 0 auto', ml: 'auto' }}>
-            <MetadataOption href={`/server/${encodeURIComponent(ip)}/ip-info`}><IpInfoOption /></MetadataOption>
-            { rights.includes('ip:AccessIpData') && (
-              <MetadataOption href={`/server/${encodeURIComponent(ip)}/ip-data`}><IpDataOption /></MetadataOption>
-            ) }
-            { rights.includes('ip:AccessIpGeolocation') && (
-              <MetadataOption href={`/server/${encodeURIComponent(ip)}/ip-geolocation`}><IpGeolocationOption /></MetadataOption>
-            ) }
-            { rights.includes('ip:AccessIpQualityScore') && (
-              <MetadataOption href={`/server/${encodeURIComponent(ip)}/ip-quality-score`}><IpQualityScoreOption /></MetadataOption>
-            ) }
-            { rights.includes('ip:AccessBigDataCloud') && (
-              <MetadataOption href={`/server/${encodeURIComponent(ip)}/big-data-cloud`}><BigDataCloudOption /></MetadataOption>
-            ) }
+            <MetadataOption href={`${ipUrl}/ip-info`}><IpInfoOption /></MetadataOption>
+            <RightGate right="ip:AccessIpData">
+              <MetadataOption href={`${ipUrl}/ip-data`}><IpDataOption /></MetadataOption>
+            </RightGate>
+            <RightGate right="ip:AccessIpGeolocation">
+              <MetadataOption href={`${ipUrl}/ip-geolocation`}><IpGeolocationOption /></MetadataOption>
+            </RightGate>
+            <RightGate right="ip:AccessIpQualityScore">
+              <MetadataOption href={`${ipUrl}/ip-quality-score`}><IpQualityScoreOption /></MetadataOption>
+            </RightGate>
+            <RightGate right="ip:AccessBigDataCloud">
+              <MetadataOption href={`${ipUrl}/big-data-cloud`}><BigDataCloudOption /></MetadataOption>
+            </RightGate>
           </MetadataMenu>
         </Box>
       </Box>

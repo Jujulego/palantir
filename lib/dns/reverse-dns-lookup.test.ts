@@ -20,7 +20,11 @@ describe('reverseDnsLookup', () => {
 
     await expect(reverseDnsLookup('1.2.3.4')).resolves.toBe('www.example.com');
 
-    expect(jsonFetch).toHaveBeenCalledWith(new URL('https://dns.google/resolve?type=12&name=4.3.2.1.in-addr.arpa'));
+    expect(jsonFetch).toHaveBeenCalledWith(new URL('https://dns.google/resolve?type=12&name=4.3.2.1.in-addr.arpa'), {
+      next: {
+        revalidate: 3600,
+      }
+    });
   });
 
   it('should send a type 12 dns query with the given ipv6 address', async () => {
@@ -34,7 +38,11 @@ describe('reverseDnsLookup', () => {
 
     await expect(reverseDnsLookup('1234::5678')).resolves.toBe('www.example.com');
 
-    expect(jsonFetch).toHaveBeenCalledWith(new URL('https://dns.google/resolve?type=12&name=8.7.6.5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.4.3.2.1.ip6.arpa'));
+    expect(jsonFetch).toHaveBeenCalledWith(new URL('https://dns.google/resolve?type=12&name=8.7.6.5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.4.3.2.1.ip6.arpa'), {
+      next: {
+        revalidate: 3600,
+      }
+    });
   });
 
   it('should return null if query as no answers', async () => {
@@ -42,6 +50,10 @@ describe('reverseDnsLookup', () => {
 
     await expect(reverseDnsLookup('1.2.3.4')).resolves.toBeNull();
 
-    expect(jsonFetch).toHaveBeenCalledWith(new URL('https://dns.google/resolve?type=12&name=4.3.2.1.in-addr.arpa'));
+    expect(jsonFetch).toHaveBeenCalledWith(new URL('https://dns.google/resolve?type=12&name=4.3.2.1.in-addr.arpa'), {
+      next: {
+        revalidate: 3600,
+      }
+    });
   });
 });

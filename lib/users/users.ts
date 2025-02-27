@@ -1,5 +1,4 @@
 import { auth0Fetch } from '@/lib/auth/fetch';
-import { managementApiToken } from '@/lib/auth/management-api-token';
 import { PatchUserDto, USER_FIELDS, type UserDto, type UserListDto, type UserListQuery } from '@/lib/users/user.dto';
 import { revalidateTag } from 'next/cache';
 import { FetchError } from '../utils/fetch';
@@ -27,9 +26,6 @@ export async function queryUsers(query: UserListQuery = {}): Promise<UserListDto
 
   return await auth0Fetch(url, {
     method: 'GET',
-    headers: {
-      Authorization: `Bearer ${await managementApiToken()}`
-    },
     next: {
       revalidate: USER_CACHE_TIMEOUT,
       tags: ['users', 'users-pages']
@@ -45,9 +41,6 @@ export async function queryUser(id: string): Promise<UserDto | null> {
   try {
     return await auth0Fetch<UserDto>(url, {
       method: 'GET',
-      headers: {
-        Authorization: `Bearer ${await managementApiToken()}`
-      },
       next: {
         revalidate: USER_CACHE_TIMEOUT,
         tags: ['users', `users-${id}`]
@@ -71,7 +64,6 @@ export async function patchUser(id: string, patch: PatchUserDto): Promise<UserDt
     const result = await auth0Fetch<UserDto>(url, {
       method: 'PATCH',
       headers: {
-        Authorization: `Bearer ${await managementApiToken()}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(patch),
@@ -80,7 +72,7 @@ export async function patchUser(id: string, patch: PatchUserDto): Promise<UserDt
 
     revalidateTag('users-pages');
     revalidateTag(`users-${id}`);
-    
+
     return result;
   } catch (error) {
     if (error instanceof FetchError && error.status === 404) {

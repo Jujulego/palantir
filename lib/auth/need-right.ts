@@ -3,11 +3,10 @@ import { isAuthenticated, type IsAuthenticatedOpts } from '@/lib/auth/is-authent
 import type { RightKey } from '@/lib/auth/permissions';
 import { queryUser } from '@/lib/users/users';
 import { redirect, RedirectType } from 'next/navigation';
-import { cache } from 'react';
 
 // Utils
 export async function needRight(right: RightKey, opts: NeedRightOpts = {}) {
-  const [session, rights] = await Promise.all([isAuthenticated(), await querySessionRights()]);
+  const [session, rights] = await Promise.all([isAuthenticated(opts), await querySessionRights()]);
 
   if (!rights.includes(right)) {
     redirect(opts.forbiddenRedirectTo ?? '/', RedirectType.replace);
@@ -16,7 +15,7 @@ export async function needRight(right: RightKey, opts: NeedRightOpts = {}) {
   return session;
 }
 
-export const querySessionRights = cache(async () => {
+export async function querySessionRights() {
   const session = await auth0.getSession();
 
   if (!session) {
@@ -25,7 +24,7 @@ export const querySessionRights = cache(async () => {
 
   const user = await queryUser(session.user.sub);
   return user?.app_metadata?.permissions ?? [];
-});
+}
 
 // Types
 export interface NeedRightOpts extends IsAuthenticatedOpts {
