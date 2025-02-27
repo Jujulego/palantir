@@ -1,3 +1,4 @@
+import RightGate from '@/components/auth/RightGate';
 import HostnameLink from '@/components/dns/HostnameLink';
 import BigDataCloudOption from '@/components/server/menu/BigDataCloudOption';
 import IpDataOption from '@/components/server/menu/IpDataOption';
@@ -7,7 +8,6 @@ import IpQualityScoreOption from '@/components/server/menu/IpQualityScoreOption'
 import MetadataMenu from '@/components/server/menu/MetadataMenu';
 import MetadataOption from '@/components/server/menu/MetadataOption';
 import ServerMarkers from '@/components/server/ServerMarkers';
-import type { RightKey } from '@/lib/auth/permissions';
 import { reverseDnsLookup } from '@/lib/dns/reverse-dns-lookup';
 import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
@@ -37,7 +37,6 @@ export default async function WithMapServerIpLayout({ params, children }: WithMa
 
   // Render
   const ipUrl = `/server/${encodeURIComponent(ip)}`;
-  const rights: readonly RightKey[] = []; //await querySessionRights();
 
   return (
     <>
@@ -64,18 +63,18 @@ export default async function WithMapServerIpLayout({ params, children }: WithMa
 
           <MetadataMenu sx={{ flex: '0 0 auto', ml: 'auto' }}>
             <MetadataOption href={`${ipUrl}/ip-info`}><IpInfoOption /></MetadataOption>
-            { rights.includes('ip:AccessIpData') && (
+            <RightGate right="ip:AccessIpData">
               <MetadataOption href={`${ipUrl}/ip-data`}><IpDataOption /></MetadataOption>
-            ) }
-            { rights.includes('ip:AccessIpGeolocation') && (
+            </RightGate>
+            <RightGate right="ip:AccessIpGeolocation">
               <MetadataOption href={`${ipUrl}/ip-geolocation`}><IpGeolocationOption /></MetadataOption>
-            ) }
-            { rights.includes('ip:AccessIpQualityScore') && (
+            </RightGate>
+            <RightGate right="ip:AccessIpQualityScore">
               <MetadataOption href={`${ipUrl}/ip-quality-score`}><IpQualityScoreOption /></MetadataOption>
-            ) }
-            { rights.includes('ip:AccessBigDataCloud') && (
+            </RightGate>
+            <RightGate right="ip:AccessBigDataCloud">
               <MetadataOption href={`${ipUrl}/big-data-cloud`}><BigDataCloudOption /></MetadataOption>
-            ) }
+            </RightGate>
           </MetadataMenu>
         </Box>
       </Box>
