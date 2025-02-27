@@ -1,8 +1,28 @@
+import { managementApiToken } from '@/lib/auth/management-api-token';
 import { FetchError } from '@/lib/utils/fetch';
+import { revalidateTag } from 'next/cache';
 
-export async function auth0Fetch<D>(url: string | URL, options?: RequestInit): Promise<D> {
+export async function auth0Fetch<D>(url: string | URL, options: RequestInit = {}): Promise<D> {
+  // Add token
+  options.headers = {
+    ...options.headers,
+    Authorization: `Bearer ${await managementApiToken()}`
+  };
+
   while (true) {
+    // Try api call
     const res = await fetch(url, options);
+
+    if (res.status === 401) {
+      revalidateTag('auth0-management-token');
+
+      options.headers = {
+        ...options.headers,
+        Authorization: `Bearer ${await managementApiToken()}`
+      };
+
+      continue;
+    }
 
     if (res.status === 429) {
       const now = new Date().getTime();

@@ -21,7 +21,10 @@ export async function managementApiToken(): Promise<string> {
       client_secret: process.env.AUTH0_CLIENT_SECRET,
       grant_type: 'client_credentials',
     }),
-    cache: 'no-store',
+    next: {
+      revalidate: 3600,
+      tags: ['auth0-management-token'],
+    }
   });
 
   console.log(`[auth0] Loaded management token valid for ${res.expires_in} seconds`);

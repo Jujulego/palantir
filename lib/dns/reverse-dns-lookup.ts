@@ -14,7 +14,11 @@ export async function reverseDnsLookup(ip: string): Promise<string | null> {
     url.searchParams.set('name', `${digits.reverse().join('.')}.ip6.arpa`);
   }
 
-  const response = await jsonFetch<DnsResponse>(url);
+  const response = await jsonFetch<DnsResponse>(url, {
+    next: {
+      revalidate: 3600
+    }
+  });
 
   if (response.Answer) {
     return response.Answer[0].data.slice(0, -1);

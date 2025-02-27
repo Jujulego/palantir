@@ -36,6 +36,7 @@ export default async function WithMapServerIpLayout({ params, children }: WithMa
   }
 
   // Render
+  const ipUrl = `/server/${encodeURIComponent(ip)}`;
   const rights = await querySessionRights();
 
   return (
@@ -62,18 +63,18 @@ export default async function WithMapServerIpLayout({ params, children }: WithMa
           </Suspense>
 
           <MetadataMenu sx={{ flex: '0 0 auto', ml: 'auto' }}>
-            <MetadataOption href={`/server/${encodeURIComponent(ip)}/ip-info`}><IpInfoOption /></MetadataOption>
+            <MetadataOption href={`${ipUrl}/ip-info`}><IpInfoOption /></MetadataOption>
             { rights.includes('ip:AccessIpData') && (
-              <MetadataOption href={`/server/${encodeURIComponent(ip)}/ip-data`}><IpDataOption /></MetadataOption>
+              <MetadataOption href={`${ipUrl}/ip-data`}><IpDataOption /></MetadataOption>
             ) }
             { rights.includes('ip:AccessIpGeolocation') && (
-              <MetadataOption href={`/server/${encodeURIComponent(ip)}/ip-geolocation`}><IpGeolocationOption /></MetadataOption>
+              <MetadataOption href={`${ipUrl}/ip-geolocation`}><IpGeolocationOption /></MetadataOption>
             ) }
             { rights.includes('ip:AccessIpQualityScore') && (
-              <MetadataOption href={`/server/${encodeURIComponent(ip)}/ip-quality-score`}><IpQualityScoreOption /></MetadataOption>
+              <MetadataOption href={`${ipUrl}/ip-quality-score`}><IpQualityScoreOption /></MetadataOption>
             ) }
             { rights.includes('ip:AccessBigDataCloud') && (
-              <MetadataOption href={`/server/${encodeURIComponent(ip)}/big-data-cloud`}><BigDataCloudOption /></MetadataOption>
+              <MetadataOption href={`${ipUrl}/big-data-cloud`}><BigDataCloudOption /></MetadataOption>
             ) }
           </MetadataMenu>
         </Box>
@@ -92,4 +93,8 @@ export async function generateMetadata({ params }: WithMapServerIpLayoutProps): 
   return {
     title: await decodeIp(params),
   };
+}
+
+export function generateStaticParams(): WithMapServerIpParams[] {
+  return [];
 }
