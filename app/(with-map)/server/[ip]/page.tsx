@@ -4,15 +4,12 @@ import { permanentRedirect, RedirectType } from 'next/navigation';
 // Page
 export interface WithMapServerIpPageProps {
   readonly params: Promise<WithMapServerIpParams>;
-  readonly searchParams: Promise<{
-    readonly source?: string;
-  }>
 }
 
-export default async function WithMapServerIpPage({ params, searchParams }: WithMapServerIpPageProps) {
-  const search = new URLSearchParams(await searchParams);
-  const source = search.get('source') ?? 'ip-info';
-  search.delete('source');
+export default async function WithMapServerIpPage({ params }: WithMapServerIpPageProps) {
+  permanentRedirect(`/server/${(await params).ip}/ip-info`, RedirectType.replace);
+}
 
-  permanentRedirect(`/server/${(await params).ip}/${source}?${search}`, RedirectType.replace);
+export function generateStaticParams(): WithMapServerIpParams[] {
+  return [];
 }
