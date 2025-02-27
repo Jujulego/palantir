@@ -14,6 +14,8 @@ export async function auth0Fetch<D>(url: string | URL, options: RequestInit = {}
     const res = await fetch(url, options);
 
     if (res.status === 401) {
+      console.warn('[auth0] Unauthorized call revalidating token');
+      
       revalidateTag('auth0-management-token');
 
       options.headers = {

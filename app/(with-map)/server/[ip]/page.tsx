@@ -16,3 +16,7 @@ export default async function WithMapServerIpPage({ params, searchParams }: With
 
   permanentRedirect(`/server/${(await params).ip}/${source}?${search}`, RedirectType.replace);
 }
+
+export function generateStaticParams(): WithMapServerIpParams[] {
+  return [];
+}

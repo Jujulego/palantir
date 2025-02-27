@@ -12,3 +12,7 @@ export default async function WithMapServerIpInfoPage({ params }: WithMapServerI
 
   return <IpInfoMetadataList ip={ipaddr.parse(ip)} />;
 }
+
+export function generateStaticParams(): WithMapServerIpParams[] {
+  return [];
+}

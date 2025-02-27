@@ -94,7 +94,3 @@ export async function generateMetadata({ params }: WithMapServerIpLayoutProps): 
     title: await decodeIp(params),
   };
 }
-
-export function generateStaticParams(): WithMapServerIpParams[] {
-  return [];
-}
