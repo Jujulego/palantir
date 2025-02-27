@@ -7,7 +7,7 @@ import IpQualityScoreOption from '@/components/server/menu/IpQualityScoreOption'
 import MetadataMenu from '@/components/server/menu/MetadataMenu';
 import MetadataOption from '@/components/server/menu/MetadataOption';
 import ServerMarkers from '@/components/server/ServerMarkers';
-import { querySessionRights } from '@/lib/auth/need-right';
+import type { RightKey } from '@/lib/auth/permissions';
 import { reverseDnsLookup } from '@/lib/dns/reverse-dns-lookup';
 import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
@@ -37,7 +37,7 @@ export default async function WithMapServerIpLayout({ params, children }: WithMa
 
   // Render
   const ipUrl = `/server/${encodeURIComponent(ip)}`;
-  const rights = await querySessionRights();
+  const rights: readonly RightKey[] = []; //await querySessionRights();
 
   return (
     <>
