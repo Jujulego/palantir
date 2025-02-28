@@ -64,3 +64,9 @@ export interface UserListQuery {
 export interface PatchUserDto extends Partial<UserDto> {
   readonly app_metadata?: Partial<UserAppMetadata>;
 }
+
+export interface LinkAccountDto {
+  readonly provider: string;
+  readonly user_id: string;
+  readonly connection_id?: string;
+}

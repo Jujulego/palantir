@@ -1,5 +1,12 @@
 import { auth0Fetch } from '@/lib/auth/fetch';
-import { PatchUserDto, USER_FIELDS, type UserDto, type UserListDto, type UserListQuery } from '@/lib/users/user.dto';
+import {
+  type LinkAccountDto,
+  PatchUserDto,
+  USER_FIELDS,
+  type UserDto, type UserIdentity,
+  type UserListDto,
+  type UserListQuery
+} from '@/lib/users/user.dto';
 import { revalidateTag } from 'next/cache';
 import { FetchError } from '../utils/fetch';
 
@@ -79,6 +86,31 @@ export async function patchUser(id: string, patch: PatchUserDto): Promise<UserDt
       return null;
     }
 
+    throw error;
+  }
+}
+
+export async function linkAccount(id: string, payload: LinkAccountDto): Promise<UserIdentity[]> {
+  console.log(`[auth0] Link user "${id}" to account "${payload.user_id}"`);
+  const url = new URL(`https://${process.env.AUTH0_DOMAIN}/api/v2/users/${id}/identities`);
+  url.searchParams.set('fields', USER_FIELDS.join(','));
+
+  try {
+    const result = await auth0Fetch<UserIdentity[]>(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+      cache: 'no-store',
+    });
+
+    revalidateTag('users-pages');
+    revalidateTag(`users-${id}`);
+    revalidateTag(`users-${payload.user_id}`);
+
+    return result;
+  } catch (error) {
     throw error;
   }
 }

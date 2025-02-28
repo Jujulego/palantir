@@ -1,8 +1,15 @@
 'use server';
 
 import { needRight } from '@/lib/auth/need-right';
-import type { PatchUserDto, UserDto, UserListDto, UserListQuery } from '@/lib/users/user.dto';
-import { patchUser, queryUsers } from '@/lib/users/users';
+import type {
+  LinkAccountDto,
+  PatchUserDto,
+  UserDto,
+  UserIdentity,
+  UserListDto,
+  UserListQuery
+} from '@/lib/users/user.dto';
+import { linkAccount, patchUser, queryUsers } from '@/lib/users/users';
 import { notFound } from 'next/navigation';
 
 // Actions
@@ -24,4 +31,10 @@ export async function actPatchUser(id: string, data: PatchUserDto): Promise<User
   }
 
   return result;
+}
+
+export async function actLinkAccount(id: string, data: LinkAccountDto): Promise<UserIdentity[]> {
+  await needRight('console:ManageUsers');
+
+  return await linkAccount(id, data);
 }
