@@ -8,13 +8,19 @@ export default function UserRowSkeleton(props: VirtualRowProps) {
     <VirtualRow {...props}>
       <VirtualCell sx={{ display: 'flex', alignItems: 'center', py: 0, gap: 1 }}>
         <Skeleton variant="circular" height={24} width={24} />
-        <Skeleton height="1.65em" sx={{ flexGrow: 1 }} />
+        <Skeleton sx={{ flexGrow: 1 }} />
+      </VirtualCell>
+      <VirtualCell>
+        <Skeleton width="75%" />
       </VirtualCell>
       <VirtualCell sx={{ display: 'flex', alignItems: 'center', py: 0, gap: 1 }}>
         <Skeleton variant="circular" height={24} width={24} />
       </VirtualCell>
       <VirtualCell>
-        <Skeleton height="1.65em" width={148} />
+        <Skeleton width="25%" />
+      </VirtualCell>
+      <VirtualCell>
+        <Skeleton width="75%" />
       </VirtualCell>
     </VirtualRow>
   );

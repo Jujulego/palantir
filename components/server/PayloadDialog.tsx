@@ -21,14 +21,16 @@ export interface PayloadDialogProps {
 export default function PayloadDialog({ payload, open, onClose }: PayloadDialogProps) {
   const formatted = useMemo(() => JSON.stringify(payload, null, 2), [payload]);
   
-  return <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
-    <DialogTitle>Raw Payload</DialogTitle>
-    <DialogContent sx={{ display: 'flex', flexDirection: 'column', overflow: 'hidden'}}>
-      <SyntaxHighlighter language="json" useInlineStyles={false} showLineNumbers PreTag={Pre}>
-        { formatted }
-      </SyntaxHighlighter>
-    </DialogContent>
-  </Dialog>;
+  return (
+    <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
+      <DialogTitle>Raw Payload</DialogTitle>
+      <DialogContent sx={{ display: 'flex', flexDirection: 'column', overflow: 'hidden'}}>
+        <SyntaxHighlighter language="json" useInlineStyles={false} showLineNumbers PreTag={Pre}>
+          { formatted }
+        </SyntaxHighlighter>
+      </DialogContent>
+    </Dialog>
+  );
 }
 
 // Utils

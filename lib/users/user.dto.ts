@@ -1,17 +1,39 @@
-// Constants
 import type { RightKey } from '@/lib/auth/permissions';
 
-export const USER_FIELDS = ['user_id', 'name', 'nickname', 'picture', 'identities', 'last_login', 'app_metadata'];
+// Constants
+export const USER_FIELDS = [
+  'user_id',
+  'created_at',
+  'updated_at',
+
+  'app_metadata',
+  'email',
+  'email_verified',
+  'identities',
+  'last_login',
+  'last_ip',
+  'logins_count',
+  'name',
+  'nickname',
+  'picture',
+];
 
 // Types
 export interface UserDto {
+  readonly user_id: string;
+  readonly created_at: string;
+  readonly updated_at: string;
+
+  readonly app_metadata?: UserAppMetadata;
+  readonly email: string;
+  readonly email_verified: boolean;
+  readonly identities: UserIdentity[],
+  readonly last_login: string;
+  readonly last_ip?: string;
+  readonly logins_count: number;
   readonly name?: string;
   readonly nickname?: string;
-  readonly identities: UserIdentity[],
-  readonly user_id: string;
   readonly picture?: string;
-  readonly last_login: string;
-  readonly app_metadata?: UserAppMetadata;
 }
 
 export interface UserAppMetadata {
@@ -41,4 +63,10 @@ export interface UserListQuery {
 
 export interface PatchUserDto extends Partial<UserDto> {
   readonly app_metadata?: Partial<UserAppMetadata>;
+}
+
+export interface LinkAccountDto {
+  readonly provider: string;
+  readonly user_id: string;
+  readonly connection_id?: string;
 }

@@ -1,6 +1,6 @@
 import { type ConsoleUsersIdParams, decodeId } from '@/app/console/auth/users/[id]/params';
-import UserLayoutHeading from '@/components/users/UserLayoutHeading';
-import UserLayoutHeadingSkeleton from '@/components/users/UserLayoutHeadingSkeleton';
+import UserLayoutToolbar from '@/components/users/UserLayoutToolbar';
+import UserLayoutToolbarSkeleton from '@/components/users/UserLayoutToolbarSkeleton';
 import UserLayoutTabs from '@/components/users/UserLayoutTabs';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Divider from '@mui/material/Divider';
@@ -20,14 +20,14 @@ export default async function ConsoleUsersIdLayout({ children, params }: Console
 
   return (
     <>
-      <Breadcrumbs sx={{ mx: 3, mt: 2, mb: 3 }}>
+      <Breadcrumbs sx={{ mx: 3, mt: 2, mb: 1 }}>
         <MuiLink underline="hover" color="inherit" component={Link} href="/console">Console</MuiLink>
         <MuiLink underline="hover" color="inherit" component={Link} href="/console/auth/users">Users</MuiLink>
         <Typography sx={{ color: 'text.primary' }}>{ userId }</Typography>
       </Breadcrumbs>
 
-      <Suspense fallback={<UserLayoutHeadingSkeleton />}>
-        <UserLayoutHeading userId={userId} />
+      <Suspense fallback={<UserLayoutToolbarSkeleton sx={{ mb: 1 }} />}>
+        <UserLayoutToolbar userId={userId} sx={{ mb: 1 }} />
       </Suspense>
 
       <UserLayoutTabs userId={userId} />

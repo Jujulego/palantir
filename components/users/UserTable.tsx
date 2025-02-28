@@ -6,10 +6,9 @@ import VirtualTable, { type RowFn, type RowInterval } from '@/components/table/V
 import UserRow from '@/components/users/UserRow';
 import UserRowSkeleton from '@/components/users/UserRowSkeleton';
 import type { UserDto } from '@/lib/users/user.dto';
-import { actQueryUsers } from '@/lib/users/users.actions';
+import { useUsers } from '@/lib/users/useUsers';
 import type { SxProps, Theme } from '@mui/material/styles';
 import { useCallback, useMemo } from 'react';
-import useSWRInfinite from 'swr/infinite';
 
 // Constants
 const PAGE_SIZE = 25;
@@ -21,17 +20,9 @@ export interface UsersTableProps {
   readonly sx?: SxProps<Theme>;
 }
 
-export default function UserTable({ users: _users, userCount, sx }: UsersTableProps) {
+export default function UserTable({ users: fallbackData, userCount, sx }: UsersTableProps) {
   // Load data
-  const { data = [], size, setSize } = useSWRInfinite(userPageKey, usersFetcher, {
-    fallbackData: [_users],
-    focusThrottleInterval: 30_000,
-    initialSize: Math.ceil(_users.length / PAGE_SIZE),
-    parallel: true,
-    revalidateAll: true,
-    revalidateOnMount: _users.length < PAGE_SIZE,
-  });
-
+  const { data = [], size, setSize } = useUsers({ fallbackData });
   const users = useMemo(() => data.flat(), [data]);
 
   const handleRowIntervalChange = useCallback((interval: RowInterval) => {
@@ -45,12 +36,14 @@ export default function UserTable({ users: _users, userCount, sx }: UsersTablePr
   // Render
   return (
     <VirtualTable
-      columnLayout="1fr 1fr 1fr"
+      columnLayout="2fr 2fr 1fr 1fr 2fr"
       data={users}
       head={
         <VirtualRow aria-rowindex={1}>
           <VirtualCell scope="col" size="small">Name</VirtualCell>
+          <VirtualCell scope="col" size="small">Email</VirtualCell>
           <VirtualCell scope="col" size="small">Identities</VirtualCell>
+          <VirtualCell scope="col" size="small">Login count</VirtualCell>
           <VirtualCell scope="col" size="small">Last login</VirtualCell>
         </VirtualRow>
       }
@@ -66,16 +59,6 @@ export default function UserTable({ users: _users, userCount, sx }: UsersTablePr
 }
 
 // Utils
-type UserPageKey = ['users', '--page--', number];
-
-function userPageKey(pageIndex: number): UserPageKey {
-  return ['users', '--page--', pageIndex];
-}
-
-async function usersFetcher([,, page]: UserPageKey): Promise<UserDto[]> {
-  return await actQueryUsers({ page, perPage: PAGE_SIZE });
-}
-
 const userRow: RowFn<UserDto[]> = ({ index, data: users }) => {
   const user = users[index];
 

@@ -4,6 +4,7 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Link from 'next/link';
 import { useSelectedLayoutSegment } from 'next/navigation';
+import type { ReactNode } from 'react';
 
 // Component
 export interface UserLayoutTabsProps {
@@ -16,8 +17,27 @@ export default function UserLayoutTabs({ userId }: UserLayoutTabsProps) {
 
   return (
     <Tabs component="nav" value={segment}>
-      <Tab component={Link} href={userUrl} label="Details" value={null} />
-      <Tab component={Link} href={`${userUrl}/permissions`} label="Permissions" value="permissions" />
+      <LinkTab baseUrl={userUrl} label="Details" value={null} />
+      <LinkTab baseUrl={userUrl} label="Permissions" value="permissions" />
     </Tabs>
+  );
+}
+
+// Elements
+interface LinkTabProps {
+  readonly label: ReactNode;
+  readonly baseUrl: string;
+  readonly value: string | null;
+  readonly selected?: boolean;
+}
+
+function LinkTab({ baseUrl, ...props }: LinkTabProps) {
+  return (
+    <Tab
+      component={Link}
+      {...props}
+      href={props.value ? `${baseUrl}/${props.value}` : baseUrl}
+      aria-current={props.selected && 'page'}
+    />
   );
 }
