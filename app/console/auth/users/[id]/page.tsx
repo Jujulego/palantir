@@ -1,9 +1,9 @@
 import { type ConsoleUsersIdParams, decodeId } from '@/app/console/auth/users/[id]/params';
+import UserEmail from '@/components/users/UserEmail';
 import UserIdentities from '@/components/users/UserIdentities';
 import FormatDate from '@/components/utils/FormatDate';
 import { needRight } from '@/lib/auth/need-right';
 import { queryUser } from '@/lib/users/users';
-import CheckIcon from '@mui/icons-material/Check';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -43,14 +43,7 @@ export default async function ConsoleUsersId({ params }: ConsoleUsersIdProps) {
         />
         <DataField
           label="Email"
-          value={user.email && (
-            <Box sx={{ display: 'flex', gap: 1 }}>
-              <Typography>
-                { user.email }
-              </Typography>
-              { user.email_verified && <CheckIcon color="success" /> }
-            </Box>
-          )}
+          value={user.email && <UserEmail user={user} />}
         />
         <DataField
           label="Identities"

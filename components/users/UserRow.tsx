@@ -3,6 +3,7 @@
 import VirtualCell from '@/components/table/VirtualCell';
 import VirtualRow, { type VirtualRowProps } from '@/components/table/VirtualRow';
 import UserAvatar from '@/components/users/UserAvatar';
+import UserEmail from '@/components/users/UserEmail';
 import UserIdentities from '@/components/users/UserIdentities';
 import FormatDate from '@/components/utils/FormatDate';
 import type { UserDto } from '@/lib/users/user.dto';
@@ -34,6 +35,10 @@ export default function UserRow({ user, ...rest }: VirtualUserRowProps) {
           <UserAvatar user={user} sx={{ height: 24, width: 24 }} />
           <span>{user.nickname ?? user.name}</span>
         </ButtonBase>
+      </VirtualCell>
+
+      <VirtualCell sx={{ py: 0 }}>
+        <UserEmail user={user} sx={{ height: '100%' }} />
       </VirtualCell>
 
       <VirtualCell sx={{ display: 'flex', alignItems: 'center', py: 0, gap: 1 }}>

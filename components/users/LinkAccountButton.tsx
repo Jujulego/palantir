@@ -12,9 +12,10 @@ const LinkAccountDialog = dynamic(() => import('@/components/users/LinkAccountDi
 // Component
 export interface LinkAccountButtonProps {
   readonly userId: string;
+  readonly disabled?: boolean;
 }
 
-export default function LinkAccountButton({ userId }: LinkAccountButtonProps) {
+export default function LinkAccountButton({ disabled, userId }: LinkAccountButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = useCallback(() => setIsOpen(true), []);
@@ -24,7 +25,7 @@ export default function LinkAccountButton({ userId }: LinkAccountButtonProps) {
   return (
     <>
       <Tooltip title="Link account">
-        <IconButton onClick={handleOpen}>
+        <IconButton disabled={disabled} onClick={handleOpen}>
           <LinkIcon />
         </IconButton>
       </Tooltip>

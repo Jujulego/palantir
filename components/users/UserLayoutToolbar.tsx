@@ -22,7 +22,7 @@ export default async function UserLayoutToolbar({ userId, sx }: UserLayoutToolba
         { user?.nickname ?? user?.name }
       </Typography>
 
-      <LinkAccountButton userId={userId} />
+      <LinkAccountButton disabled={!user?.email_verified} userId={userId} />
     </Toolbar>
   );
 }

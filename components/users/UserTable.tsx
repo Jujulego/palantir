@@ -36,11 +36,12 @@ export default function UserTable({ users: fallbackData, userCount, sx }: UsersT
   // Render
   return (
     <VirtualTable
-      columnLayout="1fr 1fr 1fr 1fr"
+      columnLayout="2fr 2fr 1fr 1fr 2fr"
       data={users}
       head={
         <VirtualRow aria-rowindex={1}>
           <VirtualCell scope="col" size="small">Name</VirtualCell>
+          <VirtualCell scope="col" size="small">Email</VirtualCell>
           <VirtualCell scope="col" size="small">Identities</VirtualCell>
           <VirtualCell scope="col" size="small">Login count</VirtualCell>
           <VirtualCell scope="col" size="small">Last login</VirtualCell>

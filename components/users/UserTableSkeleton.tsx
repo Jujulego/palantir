@@ -7,11 +7,13 @@ import UserRowSkeleton from '@/components/users/UserRowSkeleton';
 export default function UserTableSkeleton() {
   return (
     <VirtualTableSkeleton
-      columnLayout="1fr 1fr 1fr"
+      columnLayout="2fr 2fr 1fr 1fr 2fr"
       head={
         <VirtualRow>
           <VirtualCell scope="col" size="small">Name</VirtualCell>
+          <VirtualCell scope="col" size="small">Email</VirtualCell>
           <VirtualCell scope="col" size="small">Identities</VirtualCell>
+          <VirtualCell scope="col" size="small">Login count</VirtualCell>
           <VirtualCell scope="col" size="small">Last login</VirtualCell>
         </VirtualRow>
       }
