@@ -14,7 +14,10 @@ export default function UserRowSkeleton(props: VirtualRowProps) {
         <Skeleton variant="circular" height={24} width={24} />
       </VirtualCell>
       <VirtualCell>
-        <Skeleton height="1.65em" width={148} />
+        <Skeleton height="1.65em" width="25%" />
+      </VirtualCell>
+      <VirtualCell>
+        <Skeleton height="1.65em" width="75%" />
       </VirtualCell>
     </VirtualRow>
   );

@@ -3,11 +3,9 @@
 import VirtualCell from '@/components/table/VirtualCell';
 import VirtualRow, { type VirtualRowProps } from '@/components/table/VirtualRow';
 import UserAvatar from '@/components/users/UserAvatar';
+import UserIdentities from '@/components/users/UserIdentities';
 import FormatDate from '@/components/utils/FormatDate';
 import type { UserDto } from '@/lib/users/user.dto';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import PersonIcon from '@mui/icons-material/Person';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import ButtonBase from '@mui/material/ButtonBase';
 import Link from 'next/link';
 
@@ -39,18 +37,11 @@ export default function UserRow({ user, ...rest }: VirtualUserRowProps) {
       </VirtualCell>
 
       <VirtualCell sx={{ display: 'flex', alignItems: 'center', py: 0, gap: 1 }}>
-        {user.identities.map((identity) => {
-          switch (identity.connection) {
-            case 'github':
-              return <GitHubIcon key={identity.connection}/>;
+        <UserIdentities identities={user.identities} />
+      </VirtualCell>
 
-            case 'Username-Password-Authentication':
-              return <PersonIcon key={identity.connection}/>;
-
-            default:
-              return <PersonOutlineIcon key={identity.connection}/>;
-          }
-        })}
+      <VirtualCell>
+        { user.logins_count }
       </VirtualCell>
 
       <VirtualCell>

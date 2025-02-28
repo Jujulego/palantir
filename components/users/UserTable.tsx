@@ -45,12 +45,13 @@ export default function UserTable({ users: _users, userCount, sx }: UsersTablePr
   // Render
   return (
     <VirtualTable
-      columnLayout="1fr 1fr 1fr"
+      columnLayout="1fr 1fr 1fr 1fr"
       data={users}
       head={
         <VirtualRow aria-rowindex={1}>
           <VirtualCell scope="col" size="small">Name</VirtualCell>
           <VirtualCell scope="col" size="small">Identities</VirtualCell>
+          <VirtualCell scope="col" size="small">Login count</VirtualCell>
           <VirtualCell scope="col" size="small">Last login</VirtualCell>
         </VirtualRow>
       }

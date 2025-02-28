@@ -14,7 +14,7 @@ export interface FormatDateProps {
 
 export default function FormatDate({ date, format }: FormatDateProps) {
   return (
-    <NoSsr fallback={<Skeleton width="148px" height="1.65em" />}>
+    <NoSsr fallback={<Skeleton width="75%" />}>
       { dayjs(date).format(format) }
     </NoSsr>
   );
