@@ -46,7 +46,7 @@ export default function UserRow({ user, ...rest }: VirtualUserRowProps) {
       </VirtualCell>
 
       <VirtualCell>
-        { user.logins_count }
+        { user.logins_count ?? 0 }
       </VirtualCell>
 
       <VirtualCell>

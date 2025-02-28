@@ -16,21 +16,21 @@ export default function UserIdentities({ identities }: UserIdentitiesProps) {
         switch (identity.connection) {
           case 'github':
             return (
-              <Tooltip key={identity.connection} title="GitHub">
+              <Tooltip key={identity.user_id} title="GitHub">
                 <GitHubIcon />
               </Tooltip>
             );
 
           case 'Username-Password-Authentication':
             return (
-              <Tooltip key={identity.connection} title="Auth0">
+              <Tooltip key={identity.user_id} title="Auth0">
                 <PersonIcon />
               </Tooltip>
             );
 
           default:
             return (
-              <Tooltip key={identity.connection} title={identity.connection}>
+              <Tooltip key={identity.user_id} title={identity.connection}>
                 <PersonOutlineIcon />
               </Tooltip>
             );

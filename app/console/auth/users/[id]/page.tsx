@@ -58,15 +58,15 @@ export default async function ConsoleUsersId({ params }: ConsoleUsersIdProps) {
         <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', alignContent: 'start', gap: 3 }}>
           <DataField
             label="Last login"
-            value={<FormatDate date={user.last_login} format="lll" />}
+            value={user.last_login && <FormatDate date={user.last_login} format="lll" />}
           />
           <DataField
             label="Login count"
-            value={<Typography>{ user.logins_count }</Typography>}
+            value={<Typography>{ user.logins_count ?? 0 }</Typography>}
           />
           <DataField
             label="Last IP address"
-            value={<Typography>{ user.last_ip }</Typography>}
+            value={user.last_ip && <Typography>{ user.last_ip }</Typography>}
             action={user.last_ip && (
               <IconButton component={Link} href={`/server/${encodeURIComponent(user.last_ip)}/ip-info`}>
                 <TravelExploreIcon />
