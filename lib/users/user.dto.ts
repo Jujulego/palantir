@@ -7,6 +7,8 @@ export const USER_FIELDS = [
   'updated_at',
 
   'app_metadata',
+  'email',
+  'email_verified',
   'identities',
   'last_login',
   'last_ip',
@@ -23,6 +25,8 @@ export interface UserDto {
   readonly updated_at: string;
 
   readonly app_metadata?: UserAppMetadata;
+  readonly email: string;
+  readonly email_verified: boolean;
   readonly identities: UserIdentity[],
   readonly last_login: string;
   readonly last_ip?: string;

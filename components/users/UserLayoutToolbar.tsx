@@ -1,3 +1,4 @@
+import LinkAccountButton from '@/components/users/LinkAccountButton';
 import UserAvatar from '@/components/users/UserAvatar';
 import { queryUser } from '@/lib/users/users';
 import type { SxProps, Theme } from '@mui/material/styles';
@@ -20,6 +21,8 @@ export default async function UserLayoutToolbar({ userId, sx }: UserLayoutToolba
       <Typography component="h1" variant="h4" sx={{ mr: 'auto' }}>
         { user?.nickname ?? user?.name }
       </Typography>
+
+      <LinkAccountButton userId={userId} />
     </Toolbar>
   );
 }

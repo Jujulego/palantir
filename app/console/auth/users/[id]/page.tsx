@@ -3,6 +3,7 @@ import UserIdentities from '@/components/users/UserIdentities';
 import FormatDate from '@/components/utils/FormatDate';
 import { needRight } from '@/lib/auth/need-right';
 import { queryUser } from '@/lib/users/users';
+import CheckIcon from '@mui/icons-material/Check';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -34,11 +35,22 @@ export default async function ConsoleUsersId({ params }: ConsoleUsersIdProps) {
       <Box component="section" sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', alignContent: 'start', my: 3, px: 3, gap: 3 }}>
         <DataField
           label="Name"
-          value={<Typography>{ user.name }</Typography>}
+          value={user.name && <Typography>{ user.name }</Typography>}
         />
         <DataField
           label="Nickname"
-          value={<Typography>{ user.nickname }</Typography>}
+          value={user.nickname && <Typography>{ user.nickname }</Typography>}
+        />
+        <DataField
+          label="Email"
+          value={user.email && (
+            <Box sx={{ display: 'flex', gap: 1 }}>
+              <Typography>
+                { user.email }
+              </Typography>
+              { user.email_verified && <CheckIcon color="success" /> }
+            </Box>
+          )}
         />
         <DataField
           label="Identities"
