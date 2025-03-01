@@ -14,10 +14,10 @@ describe('ColorModeToggle', () => {
   });
 
   it('should render with light icon and switch to light', async () => {
-    const setColorScheme = vi.fn();
+    const setMode = vi.fn();
     vi.mocked(useColorScheme).mockReturnValue({
-      colorScheme: 'dark',
-      setColorScheme: setColorScheme as unknown,
+      mode: 'dark',
+      setMode: setMode as unknown,
     } as ColorSchemeContextValue<SupportedColorScheme>);
 
     // Render
@@ -31,14 +31,14 @@ describe('ColorModeToggle', () => {
     // Act
     await userEvent.click(btn);
 
-    expect(setColorScheme).toHaveBeenCalledWith('light');
+    expect(setMode).toHaveBeenCalledWith('light');
   });
 
   it('should render with dark icon and switch to dark', async () => {
-    const setColorScheme = vi.fn();
+    const setMode = vi.fn();
     vi.mocked(useColorScheme).mockReturnValue({
-      colorScheme: 'light',
-      setColorScheme: setColorScheme as unknown,
+      mode: 'light',
+      setMode: setMode as unknown,
     } as ColorSchemeContextValue<SupportedColorScheme>);
 
     // Render
@@ -52,6 +52,6 @@ describe('ColorModeToggle', () => {
     // Act
     await userEvent.click(btn);
 
-    expect(setColorScheme).toHaveBeenCalledWith('dark');
+    expect(setMode).toHaveBeenCalledWith('dark');
   });
 });
