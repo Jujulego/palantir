@@ -1,32 +1,36 @@
 'use client';
 
+import UserRow from '@/components/users/UserRow';
+import UserRowSkeleton from '@/components/users/UserRowSkeleton';
 import VirtualCell from '@/components/virtual/VirtualCell';
 import VirtualRow from '@/components/virtual/VirtualRow';
 import VirtualTable, { type RowFn, type RowInterval } from '@/components/virtual/VirtualTable';
-import UserRow from '@/components/users/UserRow';
-import UserRowSkeleton from '@/components/users/UserRowSkeleton';
 import type { UserDto } from '@/lib/users/user.dto';
-import { useUsers } from '@/lib/users/useUsers';
-import type { SxProps, Theme } from '@mui/material/styles';
+import { useUserCount } from '@/lib/users/useUserCount';
+import { USER_PAGE_SIZE, useUsers } from '@/lib/users/useUsers';
+import type { TableProps } from '@mui/material/Table';
 import { useCallback, useMemo } from 'react';
 
-// Constants
-const PAGE_SIZE = 25;
-
 // Component
-export interface UsersTableProps {
-  readonly users: UserDto[];
-  readonly userCount: number;
-  readonly sx?: SxProps<Theme>;
+export interface UsersTableProps extends TableProps {
+  readonly users?: UserDto[];
+  readonly userCount?: number;
 }
 
-export default function UserTable({ users: fallbackData, userCount, sx }: UsersTableProps) {
+export default function UserTable(props: UsersTableProps) {
+  const { users: fallbackData, userCount: fallbackCount, ...tableProps } = props;
+
+  // Load count
+  const { data: userCount = 0 } = useUserCount({
+    fallbackData: fallbackCount
+  });
+
   // Load data
   const { data = [], size, setSize } = useUsers({ fallbackData });
   const users = useMemo(() => data.flat(), [data]);
 
-  const handleRowIntervalChange = useCallback((interval: RowInterval) => {
-    const lastPage = Math.ceil(interval.last / PAGE_SIZE);
+  const handleIntervalChange = useCallback((interval: RowInterval) => {
+    const lastPage = Math.ceil(interval.last / USER_PAGE_SIZE);
 
     if (lastPage > size) {
       setSize((old) => Math.max(old, lastPage));
@@ -36,6 +40,7 @@ export default function UserTable({ users: fallbackData, userCount, sx }: UsersT
   // Render
   return (
     <VirtualTable
+      {...tableProps}
       columnLayout="2fr 2fr 1fr 1fr 2fr"
       data={users}
       head={
@@ -48,10 +53,9 @@ export default function UserTable({ users: fallbackData, userCount, sx }: UsersT
         </VirtualRow>
       }
       loadedCount={users.length}
-      onRowIntervalChange={handleRowIntervalChange}
+      onIntervalChange={handleIntervalChange}
       row={userRow}
       rowCount={userCount}
-      sx={sx}
 
       aria-rowcount={userCount + 1}
     />
@@ -66,5 +70,5 @@ const userRow: RowFn<UserDto[]> = ({ index, data: users }) => {
     return <UserRowSkeleton key={index} rowIndex={index} aria-rowindex={index + 2} />;
   }
 
-  return <UserRow key={index} rowIndex={index} user={user} aria-rowindex={index + 2} />;
+  return <UserRow key={user.user_id} rowIndex={index} user={user} aria-rowindex={index + 2} />;
 };

@@ -22,7 +22,7 @@ export interface VirtualTableProps<in out D = unknown> extends Omit<TableProps, 
   readonly rowOverScan?: number;
   readonly rowSize?: number;
 
-  readonly onRowIntervalChange?: (interval: RowInterval) => void;
+  readonly onIntervalChange?: (interval: RowInterval) => void;
 }
 
 export default function VirtualTable<D>(props: VirtualTableProps<D>) {
@@ -31,7 +31,7 @@ export default function VirtualTable<D>(props: VirtualTableProps<D>) {
     data,
     head,
     loadedCount,
-    onRowIntervalChange,
+    onIntervalChange,
     row,
     rowCount,
     rowOverScan = 2,
@@ -82,10 +82,10 @@ export default function VirtualTable<D>(props: VirtualTableProps<D>) {
   useEffect(() => {
     if (!isSynchronized) return;
 
-    if (onRowIntervalChange) {
-      onRowIntervalChange({ first, last });
+    if (onIntervalChange) {
+      onIntervalChange({ first, last });
     }
-  }, [first, isSynchronized, last, onRowIntervalChange]);
+  }, [first, isSynchronized, last, onIntervalChange]);
 
   // Render
   return (
