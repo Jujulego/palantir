@@ -1,5 +1,5 @@
-import VirtualCell from '@/components/table/VirtualCell';
-import VirtualRow, { type VirtualRowProps } from '@/components/table/VirtualRow';
+import VirtualCell from '@/components/virtual/VirtualCell';
+import VirtualRow, { type VirtualRowProps } from '@/components/virtual/VirtualRow';
 import Skeleton from '@mui/material/Skeleton';
 
 // Component

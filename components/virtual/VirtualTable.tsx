@@ -1,5 +1,6 @@
 'use client';
 
+import { count$ } from '@/lib/utils/kyrielle';
 import { mergeSx } from '@/lib/utils/mui';
 import Table, { type TableProps } from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -150,14 +151,6 @@ export interface RowFnArg<out D = unknown> {
 export type RowFn<in D> = (arg: RowFnArg<D>) => ReactNode;
 
 // Utils
-function* count$(start: number, end: number): Generator<number> {
-  let idx = start;
-
-  while (idx < end) {
-    yield idx++;
-  }
-}
-
 function firstPrintableRow(table: HTMLTableElement, rowCount: number, rowSize: number): number {
   const scrollOffset = Math.max(0, Math.min(table.scrollTop, table.scrollHeight - table.clientHeight));
 

@@ -1,8 +1,8 @@
 'use client';
 
-import VirtualCell from '@/components/table/VirtualCell';
-import VirtualRow from '@/components/table/VirtualRow';
-import VirtualTable, { type RowFn, type RowInterval } from '@/components/table/VirtualTable';
+import VirtualCell from '@/components/virtual/VirtualCell';
+import VirtualRow from '@/components/virtual/VirtualRow';
+import VirtualTable, { type RowFn, type RowInterval } from '@/components/virtual/VirtualTable';
 import UserRow from '@/components/users/UserRow';
 import UserRowSkeleton from '@/components/users/UserRowSkeleton';
 import type { UserDto } from '@/lib/users/user.dto';
