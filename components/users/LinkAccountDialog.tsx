@@ -16,6 +16,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Skeleton from '@mui/material/Skeleton';
+import { useRouter } from 'next/navigation';
 import { useCallback, useMemo, useState } from 'react';
 
 // Component
@@ -26,6 +27,8 @@ export interface LinkAccountDialogProps {
 }
 
 export default function LinkAccountDialog({ userId, open, onClose }: LinkAccountDialogProps) {
+  const router = useRouter();
+
   // Load user count
   const { data: userCount = 0 } = useUserCount();
 
@@ -60,12 +63,13 @@ export default function LinkAccountDialog({ userId, open, onClose }: LinkAccount
         user_id: selected.user_id,
         provider: selected.identities[0].provider,
       });
-      
+
+      router.refresh();
       onClose();
     } finally {
       setIsLinking(false);
     }
-  }, [onClose, selected, userId]);
+  }, [onClose, router, selected, userId]);
   
   // Render
   const userItem: ItemFn<UserDto[]> = useCallback(({ index, data: users }) => {
