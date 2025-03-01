@@ -1,12 +1,11 @@
 'use client';
 
-import { actQueryUsers } from '@/lib/users/users.actions';
+import { useUserCount } from '@/lib/users/useUserCount';
 import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
-import useSWR from 'swr';
 
 // Component
 export interface UserCountCardProps {
@@ -14,11 +13,7 @@ export interface UserCountCardProps {
 }
 
 export default function UserCountCard({ userCount }: UserCountCardProps) {
-  const { data } = useSWR(['users', '--count--'], userCountFetcher, {
-    fallbackData: userCount,
-    focusThrottleInterval: 30_000,
-    revalidateOnMount: false,
-  });
+  const { data } = useUserCount({ fallbackData: userCount });
 
   return (
     <Card>
@@ -32,10 +27,4 @@ export default function UserCountCard({ userCount }: UserCountCardProps) {
       </CardActionArea>
     </Card>
   );
-}
-
-// Utils
-async function userCountFetcher(): Promise<number> {
-  const { total } = await actQueryUsers({ includeTotals: true, perPage: 0 });
-  return total;
 }

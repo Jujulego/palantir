@@ -1,5 +1,6 @@
 'use client';
 
+import { count$ } from '@/lib/utils/kyrielle';
 import { mergeSx } from '@/lib/utils/mui';
 import Table, { type TableProps } from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -21,7 +22,7 @@ export interface VirtualTableProps<in out D = unknown> extends Omit<TableProps, 
   readonly rowOverScan?: number;
   readonly rowSize?: number;
 
-  readonly onRowIntervalChange?: (interval: RowInterval) => void;
+  readonly onIntervalChange?: (interval: RowInterval) => void;
 }
 
 export default function VirtualTable<D>(props: VirtualTableProps<D>) {
@@ -30,7 +31,7 @@ export default function VirtualTable<D>(props: VirtualTableProps<D>) {
     data,
     head,
     loadedCount,
-    onRowIntervalChange,
+    onIntervalChange,
     row,
     rowCount,
     rowOverScan = 2,
@@ -81,10 +82,10 @@ export default function VirtualTable<D>(props: VirtualTableProps<D>) {
   useEffect(() => {
     if (!isSynchronized) return;
 
-    if (onRowIntervalChange) {
-      onRowIntervalChange({ first, last });
+    if (onIntervalChange) {
+      onIntervalChange({ first, last });
     }
-  }, [first, isSynchronized, last, onRowIntervalChange]);
+  }, [first, isSynchronized, last, onIntervalChange]);
 
   // Render
   return (
@@ -150,14 +151,6 @@ export interface RowFnArg<out D = unknown> {
 export type RowFn<in D> = (arg: RowFnArg<D>) => ReactNode;
 
 // Utils
-function* count$(start: number, end: number): Generator<number> {
-  let idx = start;
-
-  while (idx < end) {
-    yield idx++;
-  }
-}
-
 function firstPrintableRow(table: HTMLTableElement, rowCount: number, rowSize: number): number {
   const scrollOffset = Math.max(0, Math.min(table.scrollTop, table.scrollHeight - table.clientHeight));
 

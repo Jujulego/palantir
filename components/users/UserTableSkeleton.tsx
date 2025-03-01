@@ -1,6 +1,6 @@
-import VirtualCell from '@/components/table/VirtualCell';
-import VirtualRow from '@/components/table/VirtualRow';
-import VirtualTableSkeleton from '@/components/table/VirtualTableSkeleton';
+import VirtualCell from '@/components/virtual/VirtualCell';
+import VirtualRow from '@/components/virtual/VirtualRow';
+import VirtualTableSkeleton from '@/components/virtual/VirtualTableSkeleton';
 import UserRowSkeleton from '@/components/users/UserRowSkeleton';
 
 // Component

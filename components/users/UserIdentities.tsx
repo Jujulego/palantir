@@ -1,5 +1,6 @@
 import type { UserIdentity } from '@/lib/users/user.dto';
 import GitHubIcon from '@mui/icons-material/GitHub';
+import GoogleIcon from '@mui/icons-material/Google';
 import PersonIcon from '@mui/icons-material/Person';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import Box from '@mui/material/Box';
@@ -18,6 +19,13 @@ export default function UserIdentities({ identities }: UserIdentitiesProps) {
             return (
               <Tooltip key={identity.user_id} title="GitHub">
                 <GitHubIcon />
+              </Tooltip>
+            );
+
+          case 'google-oauth2':
+            return (
+              <Tooltip key={identity.user_id} title="Google OAuth2">
+                <GoogleIcon />
               </Tooltip>
             );
 

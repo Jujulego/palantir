@@ -1,7 +1,7 @@
 'use client';
 
-import VirtualCell from '@/components/table/VirtualCell';
-import VirtualRow, { type VirtualRowProps } from '@/components/table/VirtualRow';
+import VirtualCell from '@/components/virtual/VirtualCell';
+import VirtualRow, { type VirtualRowProps } from '@/components/virtual/VirtualRow';
 import UserAvatar from '@/components/users/UserAvatar';
 import UserEmail from '@/components/users/UserEmail';
 import UserIdentities from '@/components/users/UserIdentities';
