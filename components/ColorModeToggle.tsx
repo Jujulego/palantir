@@ -12,11 +12,11 @@ export interface ColorModeToggleProps {
 }
 
 export default function ColorModeToggle({ sx }: ColorModeToggleProps) {
-  const { colorScheme, setColorScheme } = useColorScheme();
+  const { mode, setMode } = useColorScheme();
 
   const handleClick = useCallback(() => {
-    setColorScheme(colorScheme === 'dark' ? 'light' : 'dark');
-  }, [colorScheme, setColorScheme]);
+    setMode(mode === 'dark' ? 'light' : 'dark');
+  }, [mode, setMode]);
 
   // Render
   return (
@@ -25,7 +25,7 @@ export default function ColorModeToggle({ sx }: ColorModeToggleProps) {
       onClick={handleClick}
       sx={sx}
     >
-      { colorScheme === 'dark' ? <DarkModeIcon /> : <LightModeIcon /> }
+      { mode === 'dark' ? <DarkModeIcon /> : <LightModeIcon /> }
     </IconButton>
   );
 }

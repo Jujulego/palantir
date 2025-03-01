@@ -1,5 +1,3 @@
-'use client';
-
 // noinspection ES6UnusedImports
 import type {} from '@mui/material/themeCssVarsAugmentation';
 import { createTheme, type PaletteColor, type PaletteColorOptions } from '@mui/material/styles';
@@ -16,9 +14,6 @@ const roboto = Roboto({
 const base = createTheme({});
 
 const theme = createTheme({
-  cssVariables: {
-    colorSchemeSelector: 'class'
-  },
   colorSchemes: {
     light: {
       palette: {
@@ -63,7 +58,11 @@ const theme = createTheme({
       }
     }
   },
+  cssVariables: {
+    colorSchemeSelector: 'class'
+  },
   palette: {
+    mode: 'light',
     bigDataCloud: base.palette.augmentColor({
       name: 'bigDataCloud',
       color: {
