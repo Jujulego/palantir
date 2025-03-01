@@ -120,12 +120,12 @@ export interface ItemFnArg<out D = unknown> {
 export type ItemFn<in D> = (arg: ItemFnArg<D>) => ReactNode;
 
 // Utils
-function firstPrintableItem(list: HTMLElement, rowCount: number, rowSize: number): number {
+function firstPrintableItem(list: HTMLElement, itemCount: number, itemSize: number): number {
   const scrollOffset = Math.max(0, Math.min(list.scrollTop, list.scrollHeight - list.clientHeight));
 
-  return Math.max(0, Math.min(rowCount - 1, Math.floor(scrollOffset / rowSize)));
+  return Math.max(0, Math.min(itemCount - 1, Math.floor(scrollOffset / itemSize)));
 }
 
-function printableItemCount(list: HTMLElement, rowCount: number, rowSize: number): number {
-  return Math.max(0, Math.min(rowCount, Math.ceil(list.clientHeight / rowSize)));
+function printableItemCount(list: HTMLElement, itemCount: number, itemSize: number): number {
+  return Math.max(0, Math.min(itemCount, Math.ceil(list.clientHeight / itemSize)));
 }
