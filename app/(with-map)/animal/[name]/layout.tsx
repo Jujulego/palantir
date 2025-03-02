@@ -46,3 +46,12 @@ export async function generateMetadata({ params }: WithMapAnimalNameLayoutProps)
     title: await decodeName(params),
   };
 }
+
+export function generateStaticParams(): WithMapAnimalNameParams[] {
+  return [
+    { name: 'babar' },
+    { name: 'boreo' },
+    { name: 'daisy' },
+    { name: 'tidal' },
+  ];
+}
