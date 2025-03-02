@@ -42,7 +42,18 @@ export default async function WithMapAnimalNameLayout({ children, params }: With
 }
 
 export async function generateMetadata({ params }: WithMapAnimalNameLayoutProps): Promise<Metadata> {
+  const name = await decodeName(params);
+
   return {
-    title: await decodeName(params),
+    title: name.charAt(0).toUpperCase() + name.slice(1),
   };
+}
+
+export function generateStaticParams(): WithMapAnimalNameParams[] {
+  return [
+    { name: 'babar' },
+    { name: 'boreo' },
+    { name: 'daisy' },
+    { name: 'tidal' },
+  ];
 }

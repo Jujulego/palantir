@@ -12,11 +12,12 @@ import useSWR from 'swr';
 
 // Component
 export default function AnimalSearchOptions() {
-  const { inputValue } = use(SearchContext);
+  const { inputValue: _inputValue } = use(SearchContext);
+  const inputValue = _inputValue.toLowerCase();
 
   const { data, isValidating } = useSWR(
     ANIMAL_RE.test(inputValue)
-      ? ['animal', inputValue.toLowerCase()]
+      ? ['animal', inputValue]
       : null,
     { fetcher: animalFetcher }
   );
@@ -29,7 +30,14 @@ export default function AnimalSearchOptions() {
           <ListItemIcon>
             <PetsIcon color="inherit" />
           </ListItemIcon>
-          <ListItemText primary={inputValue} />
+          <ListItemText
+            primary={inputValue}
+            slotProps={{
+              primary: {
+                sx: { textTransform: 'capitalize' }
+              }
+            }}
+          />
         </SearchOption>
       ) }
     </AnimatePresence>
@@ -37,7 +45,7 @@ export default function AnimalSearchOptions() {
 }
 
 // Utils
-const ANIMAL_RE = /^[a-z]{3,}$/i;
+const ANIMAL_RE = /^[a-z]{3,}$/;
 
 type AnimalKey = readonly ['animal', string];
 
