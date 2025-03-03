@@ -10,10 +10,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.5,
     },
     {
-      url: `${baseUrl()}/server/me`,
+      url: `${baseUrl()}/server/me/vercel`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 1,
+    },
+    {
+      url: `${baseUrl()}/server/me/ip-info`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.75,
     }
   ];
 }

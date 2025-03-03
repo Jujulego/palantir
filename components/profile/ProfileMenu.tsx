@@ -20,12 +20,11 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { useCallback, useRef, useState } from 'react';
+import { Suspense, useCallback, useRef, useState } from 'react';
 
 export default function ProfileMenu() {
   const { user = null, isLoading } = useUser();
   const pathname = usePathname();
-  const url = `${pathname}?${useSearchParams()}`;
   const anchorEl = useRef<HTMLButtonElement>(null);
 
   // Open state
@@ -102,15 +101,9 @@ export default function ProfileMenu() {
               </ListItem>
             </>
           ) : (
-            <ListItem disablePadding>
-              <ListItemButton component="a" href={`/auth/login?returnTo=${encodeURIComponent(url)}`}>
-                <ListItemIcon>
-                  <LoginIcon />
-                </ListItemIcon>
-
-                <ListItemText primary="Login" />
-              </ListItemButton>
-            </ListItem>
+            <Suspense fallback={<BasicLoginLink />}>
+              <CompleteLoginLink />
+            </Suspense>
           ) }
         </List>
       </Popover>
@@ -129,3 +122,35 @@ const ProfileTopBar = styled('div')(({ theme }) => ({
   padding: theme.spacing(1),
   gap: theme.spacing(2),
 }));
+
+function BasicLoginLink() {
+  const url = usePathname();
+
+  return (
+    <ListItem disablePadding>
+      <ListItemButton component="a" href={`/auth/login?returnTo=${encodeURIComponent(url)}`}>
+        <ListItemIcon>
+          <LoginIcon />
+        </ListItemIcon>
+
+        <ListItemText primary="Login" />
+      </ListItemButton>
+    </ListItem>
+  );
+}
+
+function CompleteLoginLink() {
+  const url = `${usePathname()}?${useSearchParams()}`;
+
+  return (
+    <ListItem disablePadding>
+      <ListItemButton component="a" href={`/auth/login?returnTo=${encodeURIComponent(url)}`}>
+        <ListItemIcon>
+          <LoginIcon />
+        </ListItemIcon>
+
+        <ListItemText primary="Login" />
+      </ListItemButton>
+    </ListItem>
+  );
+}
