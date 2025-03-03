@@ -18,11 +18,14 @@ export default function DnsSearchOptions() {
   return (
     <AnimatePresence>
       { ips.map((ip) => (
-        <SearchOption key={ip} href={`/server/${encodeURIComponent(ip)}`}>
+        <SearchOption
+          key={ip.toNormalizedString()}
+          href={`/server/${encodeURIComponent(ip.toNormalizedString())}/ip-info`}
+        >
           <ListItemIcon>
             <WebIcon color="inherit" />
           </ListItemIcon>
-          <ListItemText primary={ip} />
+          <ListItemText primary={ip.toString()} />
         </SearchOption>
       )) }
     </AnimatePresence>

@@ -20,7 +20,7 @@ export default function ServerSearchOptions() {
           <ListItemIcon>
             <ComputerIcon color="inherit" />
           </ListItemIcon>
-          <ListItemText primary={ip.toNormalizedString()} />
+          <ListItemText primary={ip.toString()} />
         </SearchOption>
       ) }
     </AnimatePresence>

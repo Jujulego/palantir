@@ -1,12 +1,13 @@
 import type { DnsResponse } from '@/lib/dns/dns.dto';
 import { jsonFetch } from '@/lib/utils/fetch';
+import ipaddr, { type IPv4, type IPv6 } from 'ipaddr.js';
 import { filter$, map$, pipe$ } from 'kyrielle';
 import { useMemo } from 'react';
 import { preload } from 'react-dom';
 import useSWR from 'swr';
 
 export interface DnsLookupState {
-  readonly ips: readonly string[];
+  readonly ips: readonly (IPv4 | IPv6)[];
   readonly isLoading: boolean;
   readonly isValidating: boolean;
 }
@@ -41,6 +42,6 @@ function extractIps(type: number, data?: DnsResponse) {
   return pipe$(
     data?.Answer ?? [],
     filter$((ans) => ans.type === type),
-    map$((ans) => ans.data),
+    map$((ans) => ipaddr.parse(ans.data)),
   );
 }
