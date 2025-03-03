@@ -3,7 +3,7 @@
 import { MetadataMenuContext } from '@/components/server/menu/metadata-menu.context';
 import TransitionLink from '@/components/utils/TransitionLink';
 import MenuItem from '@mui/material/MenuItem';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { type ReactNode, use, useEffect } from 'react';
 
 export interface MetadataOptionProps {
@@ -13,6 +13,7 @@ export interface MetadataOptionProps {
 
 export default function MetadataOption({ href, children }: MetadataOptionProps) {
   const { setSelectedNode, startLoading } = use(MetadataMenuContext);
+  const searchParams = useSearchParams();
   const isSelected = href === usePathname();
 
   useEffect(() => {
@@ -24,7 +25,7 @@ export default function MetadataOption({ href, children }: MetadataOptionProps) 
   return (
     <MenuItem
       component={TransitionLink}
-      href={href}
+      href={`${href}?${searchParams}`}
       startTransition={startLoading}
 
       selected={isSelected}

@@ -60,8 +60,10 @@ export default function MetadataMenu({ children, sx }: MetadataMenuProps) {
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
 
-        MenuListProps={{
-          'aria-label': 'metadata source menu'
+        slotProps={{
+          list: {
+            'aria-label': 'metadata source menu'
+          }
         }}
       >
         <MetadataMenuContext value={{ setSelectedNode, startLoading }}>

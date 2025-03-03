@@ -11,5 +11,5 @@ export default async function WithMapServerIpPage({ params }: WithMapServerIpPag
 }
 
 export function generateStaticParams(): WithMapServerIpParams[] {
-  return [];
+  return [{ ip: '8.8.8.8' }];
 }

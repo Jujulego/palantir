@@ -19,12 +19,13 @@ import Skeleton from '@mui/material/Skeleton';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { useCallback, useRef, useState } from 'react';
 
 export default function ProfileMenu() {
   const { user = null, isLoading } = useUser();
   const pathname = usePathname();
+  const url = `${pathname}?${useSearchParams()}`;
   const anchorEl = useRef<HTMLButtonElement>(null);
 
   // Open state
@@ -102,7 +103,7 @@ export default function ProfileMenu() {
             </>
           ) : (
             <ListItem disablePadding>
-              <ListItemButton component="a" href={`/auth/login?returnTo=${encodeURIComponent(pathname)}`}>
+              <ListItemButton component="a" href={`/auth/login?returnTo=${encodeURIComponent(url)}`}>
                 <ListItemIcon>
                   <LoginIcon />
                 </ListItemIcon>
