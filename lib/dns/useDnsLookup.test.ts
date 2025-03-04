@@ -1,6 +1,7 @@
 import { useDnsLookup } from '@/lib/dns/useDnsLookup';
 import { jsonFetch } from '@/lib/utils/fetch';
 import { renderHook } from '@testing-library/react';
+import ipaddr from 'ipaddr.js';
 import useSWR, { type SWRResponse } from 'swr';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -68,7 +69,7 @@ describe('useDnsLookup', () => {
     const { result } = renderHook(() => useDnsLookup('www.example.com'));
 
     expect(result.current).toStrictEqual({
-      ips: ['0.0.0.0'],
+      ips: [ipaddr.parse('0.0.0.0')],
       isLoading: false,
       isValidating: true,
     });
@@ -96,7 +97,7 @@ describe('useDnsLookup', () => {
     const { result } = renderHook(() => useDnsLookup('www.example.com'));
 
     expect(result.current).toStrictEqual({
-      ips: ['::1'],
+      ips: [ipaddr.parse('::1')],
       isLoading: false,
       isValidating: true,
     });
@@ -121,7 +122,7 @@ describe('useDnsLookup', () => {
     const { result } = renderHook(() => useDnsLookup('www.example.com'));
 
     expect(result.current).toStrictEqual({
-      ips: ['0.0.0.0', '::1'],
+      ips: [ipaddr.parse('0.0.0.0'), ipaddr.parse('::1')],
       isLoading: false,
       isValidating: false,
     });
