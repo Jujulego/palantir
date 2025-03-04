@@ -40,7 +40,7 @@ export default function ProfileMenu() {
   return (
     <>
       <IconButton ref={anchorEl} onClick={handleOpen} aria-label="Profile menu" sx={{ padding: 0.5 }}>
-        <UserAvatar user={user as UserDto | null} sx={{ height: 32, width: 32 }} />
+        <UserAvatar size={32} user={user as UserDto | null} />
       </IconButton>
 
       <Popover

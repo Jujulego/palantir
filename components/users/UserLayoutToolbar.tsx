@@ -16,7 +16,7 @@ export default async function UserLayoutToolbar({ userId, sx }: UserLayoutToolba
 
   return (
     <Toolbar sx={sx}>
-      <UserAvatar user={user} sx={{ height: 48, width: 48, mr: 2 }}  />
+      <UserAvatar user={user} size={48} sx={{ mr: 2 }}  />
 
       <Typography component="h1" variant="h4" sx={{ mr: 'auto' }}>
         { user?.nickname ?? user?.name }
