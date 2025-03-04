@@ -12,6 +12,14 @@
   "packageRules": [
     {
       "matchCategories": [
+        "ci"
+      ],
+      "addLabels": [
+        "github-actions"
+      ]
+    },
+    {
+      "matchCategories": [
         "js"
       ],
       "addLabels": [
@@ -35,10 +43,5 @@
       "automergeType": "pr",
       "platformAutomerge": true
     }
-  ],
-  "github-actions": {
-    "addLabels": [
-      "github-actions"
-    ]
-  }
+  ]
 }
