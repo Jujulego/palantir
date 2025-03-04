@@ -6,6 +6,25 @@ import { webpack } from 'next/dist/compiled/webpack/webpack';
 
 // Config
 const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 's.gravatar.com',
+        pathname: '/avatar/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: '**.googleusercontent.com',
+        pathname: '/**'
+      },
+    ]
+  },
   logging: {
     fetches: {
       fullUrl: true,

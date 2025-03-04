@@ -32,7 +32,7 @@ export default function UserRow({ user, ...rest }: VirtualUserRowProps) {
             gap: 1,
           }}
         >
-          <UserAvatar user={user} sx={{ height: 24, width: 24 }} />
+          <UserAvatar user={user} size={24} />
           <span>{user.nickname ?? user.name}</span>
         </ButtonBase>
       </VirtualCell>
