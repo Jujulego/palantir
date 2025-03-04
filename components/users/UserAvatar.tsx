@@ -2,6 +2,7 @@ import type { UserDto } from '@/lib/users/user.dto';
 import { mergeSx } from '@/lib/utils/mui';
 import type { AvatarProps } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
+import Skeleton from '@mui/material/Skeleton';
 import { getImageProps } from 'next/image';
 
 export interface UserAvatarProps extends Omit<AvatarProps, 'alt' | 'children' | 'src'> {
@@ -25,7 +26,9 @@ export default function UserAvatar({ size = 40, user, sx, ...rest }: UserAvatarP
         srcSet={srcSet}
         slotProps={{ img: imgProps }}
         sx={mergeSx(sx, { height: size, width: size })}
-      />
+      >
+        <Skeleton variant="circular" height={size} width={size} />
+      </Avatar>
     );
   }
 
