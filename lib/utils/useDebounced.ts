@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
 
+/**
+ * Returns a value debounced by the given time.
+ * @param value
+ * @param ms
+ */
 export function useDebounced<V>(value: V, ms?: number): V {
   const [debounced, setDebounced] = useState(value);
 
@@ -9,8 +14,4 @@ export function useDebounced<V>(value: V, ms?: number): V {
   }, [value, ms]);
   
   return debounced;
-}
-
-export interface DebouncedOpts {
-  readonly ms?: number;
 }
