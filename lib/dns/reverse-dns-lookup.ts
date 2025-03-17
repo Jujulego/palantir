@@ -16,7 +16,7 @@ export async function reverseDnsLookup(ip: string): Promise<string | null> {
 
   const response = await jsonFetch<DnsResponse>(url, {
     next: {
-      revalidate: 3600
+      revalidate: 86400
     }
   });
 
