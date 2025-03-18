@@ -22,7 +22,7 @@ describe('reverseDnsLookup', () => {
 
     expect(jsonFetch).toHaveBeenCalledWith(new URL('https://dns.google/resolve?type=12&name=4.3.2.1.in-addr.arpa'), {
       next: {
-        revalidate: 3600,
+        revalidate: 86400,
       }
     });
   });
@@ -40,7 +40,7 @@ describe('reverseDnsLookup', () => {
 
     expect(jsonFetch).toHaveBeenCalledWith(new URL('https://dns.google/resolve?type=12&name=8.7.6.5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.4.3.2.1.ip6.arpa'), {
       next: {
-        revalidate: 3600,
+        revalidate: 86400,
       }
     });
   });
@@ -52,7 +52,7 @@ describe('reverseDnsLookup', () => {
 
     expect(jsonFetch).toHaveBeenCalledWith(new URL('https://dns.google/resolve?type=12&name=4.3.2.1.in-addr.arpa'), {
       next: {
-        revalidate: 3600,
+        revalidate: 86400,
       }
     });
   });
