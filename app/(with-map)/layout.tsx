@@ -1,6 +1,5 @@
 import AnimalSearchOptions from '@/components/animal/AnimalSearchOptions';
 import DnsSearchOptions from '@/components/dns/DnsSearchOptions';
-import LocateButton from '@/components/LocateButton';
 import MapLayout from '@/components/map/MapLayout';
 import ProfileMenu from '@/components/profile/ProfileMenu';
 import SearchBox from '@/components/search/SearchBox';
@@ -44,10 +43,6 @@ export default async function WithMapLayout({ children }: WithMapLayoutProps) {
             <ServerSearchOptions />
           </SearchBox>
         </Suspense>
-
-        <Paper elevation={2} sx={{ ml: 3, p: 0.5, borderRadius: 9999 }}>
-          <LocateButton />
-        </Paper>
 
         <Paper elevation={2} sx={{ ml: 'auto', p: 0.5, borderRadius: 9999 }}>
           <ProfileMenu />

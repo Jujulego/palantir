@@ -74,7 +74,7 @@ export default function ProfileMenu() {
         <ProfileTopBar>
           <UserAvatar user={user as UserDto | null} sx={{ flex: '0 0 auto' }} />
 
-          <Typography component="h6" sx={{ flex: '1 0 0' }}>{user?.nickname ?? user?.name ?? 'Anonymous'}</Typography>
+          <Typography variant="h6" sx={{ flex: '1 0 0' }}>{user?.nickname ?? user?.name ?? 'Anonymous'}</Typography>
 
           <ColorModeToggle sx={{ mb: 'auto' }} />
         </ProfileTopBar>
@@ -135,13 +135,13 @@ export default function ProfileMenu() {
 
 // Elements
 const ProfileTopBar = styled('div')(({ theme }) => ({
-  minHeight: 40,
+  minHeight: 48,
   minWidth: 320,
 
   display: 'flex',
   alignItems: 'center',
 
-  padding: theme.spacing(1),
+  padding: theme.spacing(1.25),
   gap: theme.spacing(2),
 }));
 
