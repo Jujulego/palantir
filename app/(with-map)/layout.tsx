@@ -1,6 +1,5 @@
 import AnimalSearchOptions from '@/components/animal/AnimalSearchOptions';
 import DnsSearchOptions from '@/components/dns/DnsSearchOptions';
-import LocateButton from '@/components/LocateButton';
 import MapLayout from '@/components/map/MapLayout';
 import ProfileMenu from '@/components/profile/ProfileMenu';
 import SearchBox from '@/components/search/SearchBox';
@@ -45,10 +44,6 @@ export default async function WithMapLayout({ children }: WithMapLayoutProps) {
           </SearchBox>
         </Suspense>
 
-        <Paper elevation={2} sx={{ ml: 3, p: 0.5, borderRadius: 9999 }}>
-          <LocateButton />
-        </Paper>
-
         <Paper elevation={2} sx={{ ml: 'auto', p: 0.5, borderRadius: 9999 }}>
           <ProfileMenu />
         </Paper>
@@ -66,5 +61,12 @@ export const metadata: Metadata = {
     default: 'Palantir',
     template: 'Palantir - %s',
   },
-  description: 'Locate websites in the world',
+  description: 'One map to locate them all',
+  openGraph: {
+    title: {
+      default: 'Palantir',
+      template: 'Palantir - %s',
+    },
+    description: 'One map to locate them all',
+  },
 };

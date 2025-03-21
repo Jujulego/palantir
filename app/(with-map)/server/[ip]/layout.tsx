@@ -89,7 +89,14 @@ export default async function WithMapServerIpLayout({ params, children }: WithMa
 }
 
 export async function generateMetadata({ params }: WithMapServerIpLayoutProps): Promise<Metadata> {
+  const ip = await decodeIp(params);
+
   return {
-    title: await decodeIp(params),
+    title: ip,
+    description: 'Locate websites in the world',
+    openGraph: {
+      title: ip,
+      description: 'Locate websites in the world',
+    }
   };
 }

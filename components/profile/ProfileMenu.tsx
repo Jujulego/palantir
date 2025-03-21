@@ -21,6 +21,7 @@ import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { Suspense, useCallback, useRef, useState } from 'react';
+import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 
 export default function ProfileMenu() {
   const { user = null, isLoading } = useUser();
@@ -33,15 +34,15 @@ export default function ProfileMenu() {
   const handleClose = useCallback(() => setIsOpen(false), []);
 
   // Render
-  if (isLoading) {
-    return <Skeleton variant="circular" width={40} height={40} />;
-  }
-
   return (
     <>
-      <IconButton ref={anchorEl} onClick={handleOpen} aria-label="Profile menu" sx={{ padding: 0.5 }}>
-        <UserAvatar size={32} user={user as UserDto | null} />
-      </IconButton>
+      { isLoading ? (
+        <Skeleton variant="circular" width={40} height={40} />
+      ) : (
+        <IconButton ref={anchorEl} onClick={handleOpen} aria-label="Profile menu" sx={{ padding: 0.5 }}>
+          <UserAvatar size={32} user={user as UserDto | null} />
+        </IconButton>
+      ) }
 
       <Popover
         open={isOpen}
@@ -55,11 +56,13 @@ export default function ProfileMenu() {
           vertical: 'top',
           horizontal: 'right',
         }}
+        keepMounted
+        disablePortal
         slotProps={{
           paper: {
             sx: {
-              marginTop: -1,
-              marginLeft: 0.5,
+              marginTop: -1.25,
+              marginLeft: 0.25,
               borderTopRightRadius: 24,
               borderTopLeftRadius: 16,
               borderBottomRightRadius: 16,
@@ -71,35 +74,54 @@ export default function ProfileMenu() {
         <ProfileTopBar>
           <UserAvatar user={user as UserDto | null} sx={{ flex: '0 0 auto' }} />
 
-          <Typography component="h5" variant="h6" sx={{ flex: '1 0 0' }}>{user?.nickname ?? user?.name ?? 'Anonymous'}</Typography>
+          <Typography variant="h6" sx={{ flex: '1 0 0' }}>{user?.nickname ?? user?.name ?? 'Anonymous'}</Typography>
 
           <ColorModeToggle sx={{ mb: 'auto' }} />
         </ProfileTopBar>
 
         <Divider />
 
-        <List dense onClick={handleClose}>
+        <List component="nav" disablePadding onClick={handleClose}>
+          <ListItem disablePadding>
+            <ListItemButton
+              component={Link}
+              href="/server/me/vercel"
+              selected={pathname.startsWith('/server/me')}
+            >
+              <ListItemIcon>
+                <GpsFixedIcon />
+              </ListItemIcon>
+
+              <ListItemText>My IP address</ListItemText>
+            </ListItemButton>
+          </ListItem>
+
+          { user && (
+            <ListItem disablePadding>
+              <ListItemButton component={Link} href="/console" selected={pathname.startsWith('/console')}>
+                <ListItemIcon>
+                  <SettingsIcon />
+                </ListItemIcon>
+
+                <ListItemText primary="Console" />
+              </ListItemButton>
+            </ListItem>
+          ) }
+        </List>
+
+        <Divider />
+
+        <List component="nav" disablePadding onClick={handleClose}>
           { user ? (
-            <>
-              <ListItem disablePadding>
-                <ListItemButton component={Link} href="/console" selected={pathname.startsWith('/console')}>
-                  <ListItemIcon>
-                    <SettingsIcon />
-                  </ListItemIcon>
+            <ListItem disablePadding>
+              <ListItemButton component="a" href="/auth/logout">
+                <ListItemIcon>
+                  <LogoutIcon />
+                </ListItemIcon>
 
-                  <ListItemText primary="Console" />
-                </ListItemButton>
-              </ListItem>
-              <ListItem disablePadding>
-                <ListItemButton component="a" href="/auth/logout">
-                  <ListItemIcon>
-                    <LogoutIcon />
-                  </ListItemIcon>
-
-                  <ListItemText primary="Logout" />
-                </ListItemButton>
-              </ListItem>
-            </>
+                <ListItemText primary="Logout" />
+              </ListItemButton>
+            </ListItem>
           ) : (
             <Suspense fallback={<BasicLoginLink />}>
               <CompleteLoginLink />
@@ -113,13 +135,13 @@ export default function ProfileMenu() {
 
 // Elements
 const ProfileTopBar = styled('div')(({ theme }) => ({
-  minHeight: 40,
+  minHeight: 48,
   minWidth: 320,
 
   display: 'flex',
   alignItems: 'center',
 
-  padding: theme.spacing(1),
+  padding: theme.spacing(1.25),
   gap: theme.spacing(2),
 }));
 

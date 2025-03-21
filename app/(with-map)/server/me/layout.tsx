@@ -92,5 +92,10 @@ export default async function WithMapServerMeLayout({ children }: WithMapServerM
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: 'My IP address',
+    description: 'Locate your IP address',
+    openGraph: {
+      title: 'My IP address',
+      description: 'Locate your IP address',
+    }
   };
 }
