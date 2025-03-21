@@ -3,7 +3,7 @@ import theme from '@/theme';
 import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import type { Viewport } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { ReactNode } from 'react';
 
 // Layout
@@ -28,6 +28,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
     </html>
   );
 }
+
+export const metadata: Metadata = {
+  openGraph: {
+    siteName: 'Palantir',
+  }
+};
 
 export const viewport: Viewport = {
   themeColor: [

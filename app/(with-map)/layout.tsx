@@ -61,5 +61,10 @@ export const metadata: Metadata = {
     default: 'Palantir',
     template: 'Palantir - %s',
   },
-  description: 'Locate websites in the world',
+  openGraph: {
+    title: {
+      default: 'Palantir',
+      template: 'Palantir - %s',
+    },
+  },
 };
