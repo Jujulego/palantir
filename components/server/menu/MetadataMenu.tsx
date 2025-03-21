@@ -54,7 +54,6 @@ export default function MetadataMenu({ children, sx }: MetadataMenuProps) {
         open={open}
         onClick={handleClose}
         onClose={handleClose}
-        keepMounted
 
         anchorEl={anchorRef.current}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
