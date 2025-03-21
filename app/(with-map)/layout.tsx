@@ -61,10 +61,12 @@ export const metadata: Metadata = {
     default: 'Palantir',
     template: 'Palantir - %s',
   },
+  description: 'One map to locate them all',
   openGraph: {
     title: {
       default: 'Palantir',
       template: 'Palantir - %s',
     },
+    description: 'One map to locate them all',
   },
 };
