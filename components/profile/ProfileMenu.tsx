@@ -34,15 +34,15 @@ export default function ProfileMenu() {
   const handleClose = useCallback(() => setIsOpen(false), []);
 
   // Render
-  if (isLoading) {
-    return <Skeleton variant="circular" width={40} height={40} />;
-  }
-
   return (
     <>
-      <IconButton ref={anchorEl} onClick={handleOpen} aria-label="Profile menu" sx={{ padding: 0.5 }}>
-        <UserAvatar size={32} user={user as UserDto | null} />
-      </IconButton>
+      { isLoading ? (
+        <Skeleton variant="circular" width={40} height={40} />
+      ) : (
+        <IconButton ref={anchorEl} onClick={handleOpen} aria-label="Profile menu" sx={{ padding: 0.5 }}>
+          <UserAvatar size={32} user={user as UserDto | null} />
+        </IconButton>
+      ) }
 
       <Popover
         open={isOpen}
@@ -57,6 +57,7 @@ export default function ProfileMenu() {
           horizontal: 'right',
         }}
         keepMounted
+        disablePortal
         slotProps={{
           paper: {
             sx: {
@@ -80,7 +81,7 @@ export default function ProfileMenu() {
 
         <Divider />
 
-        <List component="nav" dense onClick={handleClose}>
+        <List component="nav" disablePadding onClick={handleClose}>
           <ListItem disablePadding>
             <ListItemButton
               component={Link}
@@ -95,12 +96,7 @@ export default function ProfileMenu() {
             </ListItemButton>
           </ListItem>
 
-        </List>
-
-        <Divider />
-
-        { user ? (
-          <List component="nav" dense onClick={handleClose}>
+          { user && (
             <ListItem disablePadding>
               <ListItemButton component={Link} href="/console" selected={pathname.startsWith('/console')}>
                 <ListItemIcon>
@@ -110,7 +106,13 @@ export default function ProfileMenu() {
                 <ListItemText primary="Console" />
               </ListItemButton>
             </ListItem>
+          ) }
+        </List>
 
+        <Divider />
+
+        <List component="nav" disablePadding onClick={handleClose}>
+          { user ? (
             <ListItem disablePadding>
               <ListItemButton component="a" href="/auth/logout">
                 <ListItemIcon>
@@ -120,14 +122,12 @@ export default function ProfileMenu() {
                 <ListItemText primary="Logout" />
               </ListItemButton>
             </ListItem>
-          </List>
-        ) : (
-          <List component="nav" dense onClick={handleClose}>
+          ) : (
             <Suspense fallback={<BasicLoginLink />}>
               <CompleteLoginLink />
             </Suspense>
-          </List>
-        ) }
+          ) }
+        </List>
       </Popover>
     </>
   );
