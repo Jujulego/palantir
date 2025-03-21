@@ -21,6 +21,7 @@ import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { Suspense, useCallback, useRef, useState } from 'react';
+import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 
 export default function ProfileMenu() {
   const { user = null, isLoading } = useUser();
@@ -55,6 +56,7 @@ export default function ProfileMenu() {
           vertical: 'top',
           horizontal: 'right',
         }}
+        keepMounted
         slotProps={{
           paper: {
             sx: {
@@ -71,41 +73,61 @@ export default function ProfileMenu() {
         <ProfileTopBar>
           <UserAvatar user={user as UserDto | null} sx={{ flex: '0 0 auto' }} />
 
-          <Typography component="h5" variant="h6" sx={{ flex: '1 0 0' }}>{user?.nickname ?? user?.name ?? 'Anonymous'}</Typography>
+          <Typography component="h6" sx={{ flex: '1 0 0' }}>{user?.nickname ?? user?.name ?? 'Anonymous'}</Typography>
 
           <ColorModeToggle sx={{ mb: 'auto' }} />
         </ProfileTopBar>
 
         <Divider />
 
-        <List dense onClick={handleClose}>
-          { user ? (
-            <>
-              <ListItem disablePadding>
-                <ListItemButton component={Link} href="/console" selected={pathname.startsWith('/console')}>
-                  <ListItemIcon>
-                    <SettingsIcon />
-                  </ListItemIcon>
+        <List component="nav" dense onClick={handleClose}>
+          <ListItem disablePadding>
+            <ListItemButton
+              component={Link}
+              href="/server/me/vercel"
+              selected={pathname.startsWith('/server/me')}
+            >
+              <ListItemIcon>
+                <GpsFixedIcon />
+              </ListItemIcon>
 
-                  <ListItemText primary="Console" />
-                </ListItemButton>
-              </ListItem>
-              <ListItem disablePadding>
-                <ListItemButton component="a" href="/auth/logout">
-                  <ListItemIcon>
-                    <LogoutIcon />
-                  </ListItemIcon>
+              <ListItemText>My IP address</ListItemText>
+            </ListItemButton>
+          </ListItem>
 
-                  <ListItemText primary="Logout" />
-                </ListItemButton>
-              </ListItem>
-            </>
-          ) : (
+        </List>
+
+        <Divider />
+
+        { user ? (
+          <List component="nav" dense onClick={handleClose}>
+            <ListItem disablePadding>
+              <ListItemButton component={Link} href="/console" selected={pathname.startsWith('/console')}>
+                <ListItemIcon>
+                  <SettingsIcon />
+                </ListItemIcon>
+
+                <ListItemText primary="Console" />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem disablePadding>
+              <ListItemButton component="a" href="/auth/logout">
+                <ListItemIcon>
+                  <LogoutIcon />
+                </ListItemIcon>
+
+                <ListItemText primary="Logout" />
+              </ListItemButton>
+            </ListItem>
+          </List>
+        ) : (
+          <List component="nav" dense onClick={handleClose}>
             <Suspense fallback={<BasicLoginLink />}>
               <CompleteLoginLink />
             </Suspense>
-          ) }
-        </List>
+          </List>
+        ) }
       </Popover>
     </>
   );
