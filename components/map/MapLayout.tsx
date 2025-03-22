@@ -3,7 +3,6 @@
 import { MapContext } from '@/components/map/map.context';
 import MapboxMap from '@/components/map/MapboxMap';
 import MapCamera from '@/components/map/MapCamera';
-import MapDrawerContainer from '@/components/map/MapDrawerContainer';
 import MapStyle from '@/components/map/MapStyle';
 import type * as mapboxgl from 'mapbox-gl';
 import { useMotionValue } from 'motion/react';
@@ -42,15 +41,11 @@ export default function MapLayout({ children }: MapLayoutProps) {
     map,
     isLoaded,
     isStyleLoaded,
-    camera: { lat, lng, zoom },
-  }), [isLoaded, isStyleLoaded, lat, lng, map, zoom]);
+    camera: { lat, lng, zoom, leftPadding },
+  }), [isLoaded, isStyleLoaded, lat, leftPadding, lng, map, zoom]);
 
   return (
     <MapContext value={value}>
-      <MapDrawerContainer leftPadding={leftPadding}>
-        { children }
-      </MapDrawerContainer>
-
       <MapboxMap
         leftPadding={leftPadding}
         zoom={INITIAL_ZOOM}
@@ -62,6 +57,8 @@ export default function MapLayout({ children }: MapLayoutProps) {
 
       { map && <MapCamera map={map} lat={lat} lng={lng} zoom={zoom} leftPadding={leftPadding} /> }
       { map && isStyleLoaded && <MapStyle map={map} /> }
+
+      { children }
     </MapContext>
   );
 }

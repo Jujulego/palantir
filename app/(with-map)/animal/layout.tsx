@@ -1,6 +1,6 @@
 import seaTurtlePng from '@/assets/sea-turtle.png';
 import ColoredImage from '@/components/utils/ColoredImage';
-import MapDrawer from '@/components/map/MapDrawer';
+import MapDrawerContent from '@/components/map/MapDrawerContent';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import type { ReactNode } from 'react';
@@ -11,7 +11,7 @@ export interface WithMapAnimalLayoutProps {
 
 export default function withMapAnimalLayout({ children }: WithMapAnimalLayoutProps) {
   return (
-    <MapDrawer>
+    <MapDrawerContent>
       <Box
         sx={{
           position: 'relative',
@@ -31,6 +31,6 @@ export default function withMapAnimalLayout({ children }: WithMapAnimalLayoutPro
       <Paper square sx={{ flex: '1 0 auto' }}>
         { children }
       </Paper>
-    </MapDrawer>
+    </MapDrawerContent>
   );
 }
