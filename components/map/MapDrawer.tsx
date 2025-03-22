@@ -1,9 +1,8 @@
 'use client';
 
-import { MapContext } from '@/components/map/map.context';
+import { MapDrawerContext } from '@/components/map/map-drawer.context';
 import Stack from '@mui/material/Stack';
 import { type ReactNode, use, useEffect } from 'react';
-import { createPortal } from 'react-dom';
 
 // Component
 export interface MapDrawerProps {
@@ -11,23 +10,18 @@ export interface MapDrawerProps {
 }
 
 export default function MapDrawer({ children }: MapDrawerProps) {
-  const { drawer: { openDrawer, closeDrawer, containerRef } } = use(MapContext);
+  const { openDrawer, closeDrawer } = use(MapDrawerContext);
 
   // Open drawer !
   useEffect(() => {
     openDrawer();
-    return () => closeDrawer();
+    return closeDrawer;
   }, [openDrawer, closeDrawer]);
 
   // Render
-  if (!containerRef) {
-    return null;
-  }
-
-  return createPortal(
+  return (
     <Stack sx={{ height: '100%', overflow: 'auto' }}>
       { children }
-    </Stack>,
-    containerRef
+    </Stack>
   );
 }

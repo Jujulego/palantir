@@ -37,26 +37,19 @@ export default function MapLayout({ children }: MapLayoutProps) {
   const zoom = useMotionValue(INITIAL_ZOOM);
   const leftPadding = useMotionValue(0);
 
-  // Drawer state
-  const [drawerRef, setDrawerRef] = useState<HTMLDivElement | null>(null);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
   // Render
   const value = useMemo(() => ({
     map,
     isLoaded,
     isStyleLoaded,
     camera: { lat, lng, zoom },
-    drawer: {
-      containerRef: drawerRef,
-      openDrawer: () => setIsDrawerOpen(true),
-      closeDrawer: () => setIsDrawerOpen(false),
-    },
-  }), [drawerRef, isLoaded, isStyleLoaded, lat, lng, map, zoom]);
+  }), [isLoaded, isStyleLoaded, lat, lng, map, zoom]);
 
   return (
     <MapContext value={value}>
-      <MapDrawerContainer ref={setDrawerRef} isOpen={isDrawerOpen} leftPadding={leftPadding} />
+      <MapDrawerContainer leftPadding={leftPadding}>
+        { children }
+      </MapDrawerContainer>
 
       <MapboxMap
         leftPadding={leftPadding}
@@ -69,8 +62,6 @@ export default function MapLayout({ children }: MapLayoutProps) {
 
       { map && <MapCamera map={map} lat={lat} lng={lng} zoom={zoom} leftPadding={leftPadding} /> }
       { map && isStyleLoaded && <MapStyle map={map} /> }
-
-      { children }
     </MapContext>
   );
 }

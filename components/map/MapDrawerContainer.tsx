@@ -1,19 +1,26 @@
+import { MapDrawerContext } from '@/components/map/map-drawer.context';
 import { grey } from '@mui/material/colors';
 import { styled, useTheme } from '@mui/material/styles';
 import { m, type MotionValue, useAnimate, useTransform } from 'motion/react';
-import { type Ref, useEffect } from 'react';
+import { type ReactNode, useCallback, useEffect, useState } from 'react';
 
 // Constants
 const DRAWER_WIDTH = 408;
 
 // Component
 export interface MapDrawerContainerProps {
-  readonly ref?: Ref<HTMLDivElement | null>;
-  readonly isOpen: boolean;
+  readonly children: ReactNode;
   readonly leftPadding: MotionValue<number>;
 }
 
-export default function MapDrawerContainer({ ref, isOpen, leftPadding }: MapDrawerContainerProps) {
+export default function MapDrawerContainer({ children, leftPadding }: MapDrawerContainerProps) {
+  // Open state
+  const [isOpen, setOpen] = useState(false);
+
+  const openDrawer = useCallback(() => setOpen(true), []);
+  const closeDrawer = useCallback(() => setOpen(false), []);
+
+  // Animation
   const [,animate] = useAnimate();
   const theme = useTheme();
 
@@ -28,7 +35,13 @@ export default function MapDrawerContainer({ ref, isOpen, leftPadding }: MapDraw
   // Render
   const left = useTransform(leftPadding, (v) => v - DRAWER_WIDTH);
 
-  return <Container ref={ref} style={{ left }} />;
+  return (
+    <MapDrawerContext value={{ openDrawer, closeDrawer }}>
+      <Container style={{ left }}>
+        { children }
+      </Container>
+    </MapDrawerContext>
+  );
 }
 
 // Utils
