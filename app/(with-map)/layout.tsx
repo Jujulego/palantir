@@ -1,5 +1,6 @@
 import AnimalSearchOptions from '@/components/animal/AnimalSearchOptions';
 import DnsSearchOptions from '@/components/dns/DnsSearchOptions';
+import MapDrawer from '@/components/map/MapDrawer';
 import MapLayout from '@/components/map/MapLayout';
 import ProfileMenu from '@/components/profile/ProfileMenu';
 import SearchBox from '@/components/search/SearchBox';
@@ -50,7 +51,9 @@ export default async function WithMapLayout({ children }: WithMapLayoutProps) {
       </Toolbar>
 
       <MapLayout>
-        { children }
+        <MapDrawer>
+          { children }
+        </MapDrawer>
       </MapLayout>
     </LazyMotion>
   );

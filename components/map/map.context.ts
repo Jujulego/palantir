@@ -9,19 +9,13 @@ export interface MapContextProps {
   readonly isStyleLoaded: boolean;
 
   readonly camera: MapCamera;
-  readonly drawer: MapDrawer;
 }
 
 export interface MapCamera {
   readonly lat: MotionValue<number>;
   readonly lng: MotionValue<number>;
   readonly zoom: MotionValue<number>;
-}
-
-export interface MapDrawer {
-  readonly containerRef: HTMLDivElement | null;
-  readonly openDrawer: () => void;
-  readonly closeDrawer: () => void;
+  readonly leftPadding: MotionValue<number>;
 }
 
 export const MapContext = createContext<MapContextProps>({
@@ -32,10 +26,6 @@ export const MapContext = createContext<MapContextProps>({
     lat: motionValue(0),
     lng: motionValue(0),
     zoom: motionValue(0),
-  },
-  drawer: {
-    containerRef: null,
-    openDrawer: () => null,
-    closeDrawer: () => null,
+    leftPadding: motionValue(0),
   }
 });

@@ -3,7 +3,6 @@
 import { MapContext } from '@/components/map/map.context';
 import MapboxMap from '@/components/map/MapboxMap';
 import MapCamera from '@/components/map/MapCamera';
-import MapDrawerContainer from '@/components/map/MapDrawerContainer';
 import MapStyle from '@/components/map/MapStyle';
 import type * as mapboxgl from 'mapbox-gl';
 import { useMotionValue } from 'motion/react';
@@ -37,27 +36,16 @@ export default function MapLayout({ children }: MapLayoutProps) {
   const zoom = useMotionValue(INITIAL_ZOOM);
   const leftPadding = useMotionValue(0);
 
-  // Drawer state
-  const [drawerRef, setDrawerRef] = useState<HTMLDivElement | null>(null);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
   // Render
   const value = useMemo(() => ({
     map,
     isLoaded,
     isStyleLoaded,
-    camera: { lat, lng, zoom },
-    drawer: {
-      containerRef: drawerRef,
-      openDrawer: () => setIsDrawerOpen(true),
-      closeDrawer: () => setIsDrawerOpen(false),
-    },
-  }), [drawerRef, isLoaded, isStyleLoaded, lat, lng, map, zoom]);
+    camera: { lat, lng, zoom, leftPadding },
+  }), [isLoaded, isStyleLoaded, lat, leftPadding, lng, map, zoom]);
 
   return (
     <MapContext value={value}>
-      <MapDrawerContainer ref={setDrawerRef} isOpen={isDrawerOpen} leftPadding={leftPadding} />
-
       <MapboxMap
         leftPadding={leftPadding}
         zoom={INITIAL_ZOOM}

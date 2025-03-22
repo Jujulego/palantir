@@ -2,6 +2,7 @@
 
 import MapMarker, { type MapMarkerProps } from '@/components/map/MapMarker';
 import { ServerMarkersContext } from '@/components/server/server-markers.context';
+import NoSsr from '@mui/material/NoSsr';
 import { type ReactNode, useCallback, useRef, useState } from 'react';
 
 export interface ServerMarkersProps {
@@ -24,9 +25,11 @@ export default function ServerMarkers({ children }: ServerMarkersProps) {
     <ServerMarkersContext value={{ createMarker, selectMarker, selectedMarker }}>
       { children }
 
-      { Array.from(markers.current).map(([key, props]) => (
-        <MapMarker key={key} {...props} />
-      )) }
+      <NoSsr>
+        { Array.from(markers.current).map(([key, props]) => (
+          <MapMarker key={key} {...props} />
+        )) }
+      </NoSsr>
     </ServerMarkersContext>
   );
 }
