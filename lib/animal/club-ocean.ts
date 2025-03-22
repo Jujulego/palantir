@@ -25,6 +25,7 @@ const COORDINATES_REGEX = /\['([^']+)', (-?[0-9.]+), (-?[0-9.]+)],/g;
 
 // Utils
 async function loadAnimalTrackingPage(name: string): Promise<string | null> {
+  console.log(`[animal] loading ${name} tracking page`);
   const res = await fetch(`https://tracking.clubocean.org/animal/${name}`, {
     next: {
       revalidate: 86400,
@@ -34,12 +35,14 @@ async function loadAnimalTrackingPage(name: string): Promise<string | null> {
 
   if (!res.ok) {
     if (res.status === 404) {
+      console.warn(`[animal] ${name} tracking page not found`);
       return null;
     }
 
     throw new FetchError(res.status, await res.text());
   }
 
+  console.log(`[animal] ${name} tracking page loaded`);
   return await res.text();
 }
 
