@@ -20,20 +20,20 @@ export default function MapDrawerHeader({ children, sx }: MapDrawerHeaderProps) 
   const initialDragState = useRef({ touchId: 0, position: 0, touch: 0 });
 
   const handleTouchStart = useCallback((event: TouchEvent) => {
-    if (mode === 'mobile') {
-      const touch = event.changedTouches[0];
-
-      initialDragState.current = {
-        position: dragPosition.get(),
-        touchId: touch.identifier,
-        touch: touch.clientY
-      };
-    }
+    if (mode !== 'mobile') return;
+    
+    const touch = event.changedTouches[0];
+    initialDragState.current = {
+      position: dragPosition.get(),
+      touchId: touch.identifier,
+      touch: touch.clientY
+    };
   }, [dragPosition, mode]);
 
   const handleTouchMove = useCallback((event: TouchEvent) => {
-    let touch: Touch | null = null;
+    if (mode !== 'mobile') return;
 
+    let touch: Touch | null = null;
     for (let i = 0; i < event.changedTouches.length; i++) {
       if (event.changedTouches.item(i).identifier === initialDragState.current.touchId) {
         touch = event.changedTouches.item(i);
@@ -45,7 +45,7 @@ export default function MapDrawerHeader({ children, sx }: MapDrawerHeaderProps) 
       const diff = initialDragState.current.touch - touch.clientY;
       dragPosition.set(Math.min(Math.max(initialDragState.current.position + diff, 0), dragLimit));
     }
-  }, [dragLimit, dragPosition]);
+  }, [dragLimit, dragPosition, mode]);
 
   // Track container height
   const containerRef = useRef<HTMLDivElement | null>(null);
