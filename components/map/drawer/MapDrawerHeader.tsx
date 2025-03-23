@@ -29,7 +29,10 @@ export default function MapDrawerHeader({ children, sx }: MapDrawerHeaderProps) 
     });
     observer.observe(container);
     
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      setHeaderHeight(0);
+    };
   }, [setHeaderHeight]);
 
   // Render

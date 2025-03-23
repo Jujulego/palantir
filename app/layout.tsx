@@ -6,6 +6,8 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata, Viewport } from 'next';
 import { ReactNode } from 'react';
 
+import './global.css';
+
 // Layout
 export interface RootLayoutProps {
   readonly children: ReactNode;

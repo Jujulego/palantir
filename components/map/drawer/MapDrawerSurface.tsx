@@ -71,33 +71,48 @@ export default function MapDrawerSurface({ children }: MapDrawerContainerProps) 
         setHeaderHeight
       }}
     >
-      <Surface
+      <Root
         aria-hidden={!isOpen}
-        style={isMobile ? { top, left: 0 } : { top: 0, left }}
+        style={isMobile ? { top, left: 0, height: headerHeight } : { top: 0, left, height: '100vh' }}
       >
-        { children }
-      </Surface>
+        <Surface drag>
+          { children }
+        </Surface>
+      </Root>
     </MapDrawerContext>
   );
 }
 
 // Utils
-const Surface = m.create(styled('main')(({ theme }) => [
+const Root = m.create(styled('main')(({ theme }) => ({
+  position: 'absolute',
+  zIndex: theme.vars.zIndex.drawer,
+  [theme.breakpoints.down('sm')]: {
+    top: '100vh',
+    width: '100%',
+  },
+  [theme.breakpoints.up('sm')]: {
+    width: DRAWER_WIDTH,
+    height: '100%'
+  }
+})));
+
+const Surface = m.create(styled('div')(({ theme }) => [
   {
-    position: 'absolute',
-    zIndex: theme.vars.zIndex.drawer,
     display: 'flex',
     flexDirection: 'column',
     overflow: 'auto',
     backgroundColor: grey[50],
-    borderRight: `1px solid ${theme.vars.palette.divider}`,
     [theme.breakpoints.down('sm')]: {
-      top: '100vh',
-      width: '100%'
+      width: '100%',
+      borderTopLeftRadius: 16,
+      borderTopRightRadius: 16,
+      boxShadow: theme.vars.shadows[2],
     },
     [theme.breakpoints.up('sm')]: {
       width: DRAWER_WIDTH,
-      height: '100%'
+      height: '100%',
+      borderRight: `1px solid ${theme.vars.palette.divider}`,
     }
   },
   theme.applyStyles('dark', {
