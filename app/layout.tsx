@@ -30,8 +30,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
 }
 
 export const metadata: Metadata = {
+  description: 'One map to locate them all',
   openGraph: {
     siteName: 'Palantir',
+    description: 'One map to locate them all',
   }
 };
 
