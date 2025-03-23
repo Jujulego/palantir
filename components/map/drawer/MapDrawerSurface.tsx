@@ -18,13 +18,13 @@ export interface MapDrawerContainerProps {
 
 export default function MapDrawerSurface({ children }: MapDrawerContainerProps) {
   const theme = useTheme();
+
+  const openDuration = theme.transitions.duration.enteringScreen / 1000;
+  const closeDuration = theme.transitions.duration.enteringScreen / 1000;
+
+  // State
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
-  // Open state
-  const [isOpen, setOpen] = useState(false);
-
-  const openDrawer = useCallback(() => setOpen(true), []);
-  const closeDrawer = useCallback(() => setOpen(false), []);
+  const [isOpen, setIsOpen] = useState(false);
 
   // Animation
   const { camera } = use(MapContext);
@@ -52,30 +52,30 @@ export default function MapDrawerSurface({ children }: MapDrawerContainerProps) 
       return camera.padding.left.on('change', (v) => left.set(`${v - DRAWER_WIDTH}px`));
     }
   }, [camera.padding.left, isMobile, left]);
-  
-  useEffect(() => {
-    if (isOpen) {
-      const duration = theme.transitions.duration.enteringScreen / 1000;
 
-      if (isMobile) {
-        camera.padding.left.set(0);
-        animate(camera.padding.bottom, headerHeight, { duration });
-      } else {
-        camera.padding.bottom.set(0);
-        animate(camera.padding.left, DRAWER_WIDTH, { duration });
-      }
+  const openDrawer = useCallback(() => {
+    setIsOpen(true);
+
+    if (isMobile) {
+      camera.padding.left.set(0);
+      animate(camera.padding.bottom, headerHeight, { duration: openDuration });
     } else {
-      const duration = theme.transitions.duration.leavingScreen / 1000;
-
-      if (isMobile) {
-        camera.padding.left.set(0);
-        animate(camera.padding.bottom, 0, { duration });
-      } else {
-        camera.padding.bottom.set(0);
-        animate(camera.padding.left, 0, { duration });
-      }
+      camera.padding.bottom.set(0);
+      animate(camera.padding.left, DRAWER_WIDTH, { duration: openDuration });
     }
-  }, [animate, isOpen, camera.padding.left, theme.transitions.duration.enteringScreen, theme.transitions.duration.leavingScreen, isMobile, camera.padding.bottom, headerHeight]);
+  }, [animate, camera.padding.bottom, camera.padding.left, headerHeight, isMobile, openDuration]);
+
+  const closeDrawer = useCallback(() => {
+    setIsOpen(false);
+
+    if (isMobile) {
+      camera.padding.left.set(0);
+      animate(camera.padding.bottom, 0, { duration: closeDuration });
+    } else {
+      camera.padding.bottom.set(0);
+      animate(camera.padding.left, 0, { duration: closeDuration });
+    }
+  }, [animate, camera.padding.bottom, camera.padding.left, closeDuration, isMobile]);
 
   // Render
   return (
