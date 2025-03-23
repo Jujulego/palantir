@@ -20,19 +20,15 @@ export default function MapDrawerHeader({ children, sx }: MapDrawerHeaderProps) 
   const initialDragState = useRef({ touchId: 0, position: 0, touch: 0 });
 
   const handleTouchStart = useCallback((event: TouchEvent) => {
-    if (mode !== 'mobile') return;
-    
     const touch = event.changedTouches[0];
     initialDragState.current = {
       position: dragPosition.get(),
       touchId: touch.identifier,
       touch: touch.clientY
     };
-  }, [dragPosition, mode]);
+  }, [dragPosition]);
 
   const handleTouchMove = useCallback((event: TouchEvent) => {
-    if (mode !== 'mobile') return;
-
     let touch: Touch | null = null;
     for (let i = 0; i < event.changedTouches.length; i++) {
       if (event.changedTouches.item(i).identifier === initialDragState.current.touchId) {
@@ -45,7 +41,7 @@ export default function MapDrawerHeader({ children, sx }: MapDrawerHeaderProps) 
       const diff = initialDragState.current.touch - touch.clientY;
       dragPosition.set(Math.min(Math.max(initialDragState.current.position + diff, 0), dragLimit));
     }
-  }, [dragLimit, dragPosition, mode]);
+  }, [dragLimit, dragPosition]);
 
   // Track container height
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -73,8 +69,8 @@ export default function MapDrawerHeader({ children, sx }: MapDrawerHeaderProps) 
   return (
     <Box
       ref={containerRef}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
+      onTouchStart={mode === 'mobile' ? handleTouchStart : undefined}
+      onTouchMove={mode === 'mobile' ? handleTouchMove : undefined}
       sx={mergeSx(sx, {
         position: 'relative',
         userSelect: 'none',
