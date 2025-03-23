@@ -59,9 +59,7 @@ export default function MapDrawerSurface({ children }: MapDrawerContainerProps) 
   }, [animate, isOpen, camera.padding.left, theme.transitions.duration.enteringScreen, theme.transitions.duration.leavingScreen, isMobile, camera.padding.bottom, headerHeight]);
 
   // Render
-  const fullHeight = isMobile ? `${window.innerHeight}px` : '100vh';
-
-  const top = useTransform(camera.padding.bottom, (v) => `calc(${fullHeight} - ${v}px)`);
+  const top = useTransform(camera.padding.bottom, (v) => `calc(100% - ${v}px)`);
   const left = useTransform(camera.padding.left, (v) => v - DRAWER_WIDTH);
 
   return (
@@ -75,9 +73,9 @@ export default function MapDrawerSurface({ children }: MapDrawerContainerProps) 
     >
       <Root
         aria-hidden={!isOpen}
-        style={isMobile ? { top, left: 0, height: headerHeight } : { top: 0, left, height: fullHeight }}
+        style={isMobile ? { top, left: 0, height: headerHeight } : { top: 0, left, height: '100vh' }}
       >
-        <Surface drag>
+        <Surface>
           { children }
         </Surface>
       </Root>
@@ -90,7 +88,7 @@ const Root = m.create(styled('main')(({ theme }) => ({
   position: 'absolute',
   zIndex: theme.vars.zIndex.drawer,
   [theme.breakpoints.down('sm')]: {
-    top: '100vh',
+    top: '100%',
     width: '100%',
   },
   [theme.breakpoints.up('sm')]: {
@@ -103,16 +101,15 @@ const Surface = m.create(styled('div')(({ theme }) => [
   {
     display: 'flex',
     flexDirection: 'column',
+    width: '100%',
     overflow: 'auto',
     backgroundColor: grey[50],
     [theme.breakpoints.down('sm')]: {
-      width: '100%',
       borderTopLeftRadius: 16,
       borderTopRightRadius: 16,
       boxShadow: theme.vars.shadows[2],
     },
     [theme.breakpoints.up('sm')]: {
-      width: DRAWER_WIDTH,
       height: '100%',
       borderRight: `1px solid ${theme.vars.palette.divider}`,
     }

@@ -73,8 +73,8 @@ const Container = styled(m.div)({
   position: 'absolute',
   top: 0,
   left: 0,
-  height: '100%',
-  width: '100%',
+  height: '100vh',
+  width: '100vw',
 
   '.mapboxgl-ctrl-top': {
     top: 'var(--MapboxMap-top)',
