@@ -41,7 +41,7 @@ export default async function WithMapServerIpLayout({ params, children }: WithMa
 
   return (
     <>
-      <MapDrawerHeader sx={{ position: 'relative' }}>
+      <MapDrawerHeader>
         <Box sx={{ display: 'flex', pl: 2.5, pr: 1, pt: 2 }}>
           <Typography component="h1" variant="h5" noWrap sx={{ flex: 1 }}>
             { ipaddr.parse(ip).toString() }
