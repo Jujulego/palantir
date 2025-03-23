@@ -25,18 +25,18 @@ export default function MapDrawer({ children }: MapDrawerContainerProps) {
   // Animation
   const [,animate] = useAnimate();
   const theme = useTheme();
-  const { camera: { leftPadding } } = use(MapContext);
+  const { camera } = use(MapContext);
 
   useEffect(() => {
     if (isOpen) {
-      animate(leftPadding, DRAWER_WIDTH, { duration: theme.transitions.duration.enteringScreen / 1000 });
+      animate(camera.padding.left, DRAWER_WIDTH, { duration: theme.transitions.duration.enteringScreen / 1000 });
     } else {
-      animate(leftPadding, 0, { duration: theme.transitions.duration.leavingScreen / 1000 });
+      animate(camera.padding.left, 0, { duration: theme.transitions.duration.leavingScreen / 1000 });
     }
-  }, [animate, isOpen, leftPadding, theme.transitions.duration.enteringScreen, theme.transitions.duration.leavingScreen]);
+  }, [animate, isOpen, camera.padding.left, theme.transitions.duration.enteringScreen, theme.transitions.duration.leavingScreen]);
 
   // Render
-  const left = useTransform(leftPadding, (v) => v - DRAWER_WIDTH);
+  const left = useTransform(camera.padding.left, (v) => v - DRAWER_WIDTH);
 
   return (
     <MapDrawerContext value={{ openDrawer, closeDrawer }}>
