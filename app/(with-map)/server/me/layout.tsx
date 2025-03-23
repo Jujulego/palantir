@@ -59,7 +59,7 @@ export default async function WithMapServerMeLayout({ children }: WithMapServerM
 
         <Box sx={{ display: 'flex', pl: 2.5, pr: 1.5, pb: 2, alignItems: 'center' }}>
           <Suspense fallback={<Skeleton height={20} width="75%" />}>
-            <HostnameLink hostname={reverseDnsLookup(forwardedFor)} sx={{ flex: 1 }} />
+            <HostnameLink hostname={reverseDnsLookup(forwardedFor)} sx={{ flex: '0 0 auto' }} />
           </Suspense>
 
           <MetadataMenu sx={{ flex: '0 0 auto', ml: 'auto' }}>

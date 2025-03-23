@@ -3,7 +3,7 @@ import { useLazyMapbox } from '@/lib/map/useLazyMapbox';
 import { styled } from '@mui/material';
 import type { Map } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { m, useTransform } from 'motion/react';
+import { m, useMotionValue, useTransform } from 'motion/react';
 import { useEffect, useRef } from 'react';
 import { preconnect, prefetchDNS } from 'react-dom';
 
@@ -21,6 +21,7 @@ export interface MapboxMapProps {
 
 export default function MapboxMap(props: MapboxMapProps) {
   const { camera, onMapCreated, onMapLoaded, onMapStyleLoaded, onMapRemoved } = props;
+  const height = useMotionValue(0);
 
   // Initiate map
   const { mapboxRef, isLoaded: isMapboxLoaded } = useLazyMapbox();
@@ -40,14 +41,33 @@ export default function MapboxMap(props: MapboxMapProps) {
     map.once('load', onMapLoaded);
     map.once('style.load', onMapStyleLoaded);
 
+    const offHeight = height.on('change', () => {
+      setTimeout(() => map.resize());
+    });
+
     return () => {
+      offHeight();
+
       map.off('load', onMapLoaded);
       map.off('style.load', onMapStyleLoaded);
       map.remove();
 
       onMapRemoved();
     };
-  }, [isMapboxLoaded, mapboxRef, onMapCreated, onMapLoaded, onMapRemoved, onMapStyleLoaded, camera.zoom]);
+  }, [isMapboxLoaded, mapboxRef, onMapCreated, onMapLoaded, onMapRemoved, onMapStyleLoaded, camera.zoom, height]);
+
+  // Container height
+  useEffect(() => {
+    height.set(window.innerHeight);
+
+    const listener = () => {
+      height.set(window.innerHeight);
+    };
+
+    window.addEventListener('resize', listener);
+
+    return () => window.removeEventListener('resize', listener);
+  }, [height]);
 
   // Render
   const top = useTransform(camera.padding.top, (value) => `${value}px`);
@@ -59,6 +79,7 @@ export default function MapboxMap(props: MapboxMapProps) {
     <Container
       ref={containerRef}
       style={{
+        height,
         '--MapboxMap-top': top,
         '--MapboxMap-left': left,
         '--MapboxMap-bottom': bottom,
@@ -73,8 +94,7 @@ const Container = styled(m.div)({
   position: 'absolute',
   top: 0,
   left: 0,
-  height: '100vh',
-  width: '100vw',
+  width: '100%',
 
   '.mapboxgl-ctrl-top': {
     top: 'var(--MapboxMap-top)',
