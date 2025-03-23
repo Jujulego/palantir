@@ -33,8 +33,9 @@ export default function MapDrawerSurface({ children }: MapDrawerContainerProps) 
   const { camera } = use(MapContext);
   const [,animate] = useAnimate();
 
+  const [drawerHeight, setDrawerHeight] = useState(0);
   const [headerHeight, setHeaderHeight] = useState(0);
-  
+
   const top = useMotionValue('0px');
   const left = useMotionValue(`${-DRAWER_WIDTH}px`);
   const height = useMotionValue('100%');
@@ -95,9 +96,11 @@ export default function MapDrawerSurface({ children }: MapDrawerContainerProps) 
       value={{
         mode: isMobile ? 'mobile' : 'desktop',
         dragPosition,
+        dragLimit: drawerHeight - headerHeight,
         openDrawer,
         closeDrawer,
-        setHeaderHeight
+        setDrawerHeight,
+        setHeaderHeight,
       }}
     >
       <Root
