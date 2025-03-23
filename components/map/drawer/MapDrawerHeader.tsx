@@ -20,12 +20,16 @@ export default function MapDrawerHeader({ children, sx }: MapDrawerHeaderProps) 
   const initialDragState = useRef({ touchId: 0, position: 0, touch: 0 });
 
   const handleTouchStart = useCallback((event: TouchEvent) => {
-    initialDragState.current = {
-      touchId: event.touches[0].identifier,
-      position: dragPosition.get(),
-      touch: event.touches[0].clientY
-    };
-  }, [dragPosition]);
+    if (mode === 'mobile') {
+      const touch = event.changedTouches[0];
+
+      initialDragState.current = {
+        position: dragPosition.get(),
+        touchId: touch.identifier,
+        touch: touch.clientY
+      };
+    }
+  }, [dragPosition, mode]);
 
   const handleTouchMove = useCallback((event: TouchEvent) => {
     let touch: Touch | null = null;
