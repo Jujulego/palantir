@@ -1,6 +1,6 @@
 import { decodeName, type WithMapAnimalNameParams } from '@/app/(with-map)/animal/[name]/params';
+import MapDrawerHeader from '@/components/map/drawer/MapDrawerHeader';
 import CloseIcon from '@mui/icons-material/Close';
-import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -19,7 +19,7 @@ export default async function WithMapAnimalNameLayout({ children, params }: With
 
   return (
     <>
-      <Box sx={{ display: 'flex', pl: 2.5, pr: 1, py: 2 }}>
+      <MapDrawerHeader sx={{ display: 'flex', pl: 2.5, pr: 1, py: 2 }}>
         <Typography component="h1" variant="h5" sx={{ flex: '1', textTransform: 'capitalize' }}>
           { name }
         </Typography>
@@ -32,7 +32,7 @@ export default async function WithMapAnimalNameLayout({ children, params }: With
         >
           <CloseIcon />
         </IconButton>
-      </Box>
+      </MapDrawerHeader>
 
       <Divider />
 
@@ -57,5 +57,6 @@ export function generateStaticParams(): WithMapAnimalNameParams[] {
     { name: 'daisy' },
     { name: 'lucille' },
     { name: 'tidal' },
+    { name: 'zaza' },
   ];
 }

@@ -14,7 +14,7 @@ export interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
-    <body>
+    <body style={{ overflow: 'hidden' }}>
       <meta name="google-site-verification" content="uT8DmsLqvM0YmnXh2shq6iGTQHk-bdS4LhQamFK0CrY" />
       <InitColorSchemeScript attribute="class" />
 

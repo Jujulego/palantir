@@ -15,7 +15,12 @@ export interface MapCamera {
   readonly lat: MotionValue<number>;
   readonly lng: MotionValue<number>;
   readonly zoom: MotionValue<number>;
-  readonly leftPadding: MotionValue<number>;
+  readonly padding: {
+    readonly top: MotionValue<number>;
+    readonly left: MotionValue<number>;
+    readonly bottom: MotionValue<number>;
+    readonly right: MotionValue<number>;
+  }
 }
 
 export const MapContext = createContext<MapContextProps>({
@@ -26,6 +31,11 @@ export const MapContext = createContext<MapContextProps>({
     lat: motionValue(0),
     lng: motionValue(0),
     zoom: motionValue(0),
-    leftPadding: motionValue(0),
+    padding: {
+      top: motionValue(0),
+      left: motionValue(0),
+      bottom: motionValue(0),
+      right: motionValue(0),
+    }
   }
 });

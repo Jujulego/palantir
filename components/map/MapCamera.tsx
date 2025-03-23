@@ -1,31 +1,26 @@
+import type { MapCamera } from '@/components/map/map.context';
 import type * as mapboxgl from 'mapbox-gl';
-import { type MotionValue, useTransform } from 'motion/react';
+import { useTransform } from 'motion/react';
 import { useEffect } from 'react';
 
 // Component
 export interface MapCameraProps {
+  readonly camera: MapCamera;
   readonly map: mapboxgl.Map;
-  readonly lat: MotionValue<number>;
-  readonly lng: MotionValue<number>;
-  readonly zoom: MotionValue<number>;
-  readonly leftPadding: MotionValue<number>;
 }
 
-export default function MapCamera({ map, lat, lng, zoom, leftPadding }: MapCameraProps) {
+export default function MapCamera({ camera, map }: MapCameraProps) {
   // Apply motion values to map camera
-  const camera = useTransform([lat, lng, zoom, leftPadding], ([lat, lng, zoom, leftPadding]) => ({
-    center: {
-      lat: lat,
-      lng: lng,
-    },
-    padding: {
-      top: 72,
-      left: leftPadding,
-    },
-    zoom: zoom
-  } as mapboxgl.CameraOptions));
+  const options = useTransform(
+    [camera.lat, camera.lng, camera.padding.top, camera.padding.left, camera.padding.bottom, camera.padding.right, camera.zoom],
+    ([lat, lng, top, left, bottom, right, zoom]) => ({
+      center: { lat, lng },
+      padding: { top, left, bottom, right },
+      zoom: zoom
+    } as mapboxgl.CameraOptions)
+  );
   
-  useEffect(() => camera.on('change', (opts) => map.jumpTo(opts)), [camera, map]);
+  useEffect(() => options.on('change', (opts) => map.jumpTo(opts)), [options, map]);
 
   // Render
   return null;

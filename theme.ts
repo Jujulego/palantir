@@ -134,7 +134,10 @@ declare module '@mui/material/styles' {
 
 declare module 'react' {
   interface CSSProperties {
+    '--MapboxMap-top'?: string;
     '--MapboxMap-left'?: string;
+    '--MapboxMap-bottom'?: string;
+    '--MapboxMap-right'?: string;
 
     '--VirtualCell-background'?: string;
     '--VirtualCell-position'?: string;
