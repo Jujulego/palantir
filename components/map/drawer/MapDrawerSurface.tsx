@@ -59,7 +59,9 @@ export default function MapDrawerSurface({ children }: MapDrawerContainerProps) 
   }, [animate, isOpen, camera.padding.left, theme.transitions.duration.enteringScreen, theme.transitions.duration.leavingScreen, isMobile, camera.padding.bottom, headerHeight]);
 
   // Render
-  const top = useTransform(camera.padding.bottom, (v) => `calc(100vh - ${v}px)`);
+  const fullHeight = isMobile ? `${window.innerHeight}px` : '100vh';
+
+  const top = useTransform(camera.padding.bottom, (v) => `calc(${fullHeight} - ${v}px)`);
   const left = useTransform(camera.padding.left, (v) => v - DRAWER_WIDTH);
 
   return (
@@ -73,7 +75,7 @@ export default function MapDrawerSurface({ children }: MapDrawerContainerProps) 
     >
       <Root
         aria-hidden={!isOpen}
-        style={isMobile ? { top, left: 0, height: headerHeight } : { top: 0, left, height: '100vh' }}
+        style={isMobile ? { top, left: 0, height: headerHeight } : { top: 0, left, height: fullHeight }}
       >
         <Surface drag>
           { children }
