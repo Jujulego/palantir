@@ -4,7 +4,7 @@ import { MapDrawerContext } from '@/components/map/drawer/map-drawer.context';
 import { grey } from '@mui/material/colors';
 import { styled, useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { m, useAnimate, useMotionValue } from 'motion/react';
+import { m, useAnimate, useMotionValue, useTransform } from 'motion/react';
 import { type ReactNode, use, useCallback, useEffect, useState } from 'react';
 import { MapContext } from '../map.context';
 
@@ -26,6 +26,9 @@ export default function MapDrawerSurface({ children }: MapDrawerContainerProps) 
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [isOpen, setIsOpen] = useState(false);
 
+  const dragPosition = useMotionValue(0);
+  const transform = useTransform(dragPosition, (v) => `translateY(-${v}px)`);
+
   // Animation
   const { camera } = use(MapContext);
   const [,animate] = useAnimate();
@@ -34,6 +37,7 @@ export default function MapDrawerSurface({ children }: MapDrawerContainerProps) 
   
   const top = useMotionValue('0px');
   const left = useMotionValue(`${-DRAWER_WIDTH}px`);
+  const height = useMotionValue('100%');
 
   useEffect(() => {
     if (isMobile) {
@@ -52,6 +56,14 @@ export default function MapDrawerSurface({ children }: MapDrawerContainerProps) 
       return camera.padding.left.on('change', (v) => left.set(`${v - DRAWER_WIDTH}px`));
     }
   }, [camera.padding.left, isMobile, left]);
+
+  useEffect(() => {
+    if (isMobile) {
+      height.set(`${headerHeight}px`);
+    } else {
+      height.set('100%');
+    }
+  }, [headerHeight, height, isMobile]);
 
   const openDrawer = useCallback(() => {
     setIsOpen(true);
@@ -82,6 +94,7 @@ export default function MapDrawerSurface({ children }: MapDrawerContainerProps) 
     <MapDrawerContext
       value={{
         mode: isMobile ? 'mobile' : 'desktop',
+        dragPosition,
         openDrawer,
         closeDrawer,
         setHeaderHeight
@@ -89,9 +102,9 @@ export default function MapDrawerSurface({ children }: MapDrawerContainerProps) 
     >
       <Root
         aria-hidden={!isOpen}
-        style={{ top, left, height: isMobile ? headerHeight : '100%' }}
+        style={{ top, left, height }}
       >
-        <Surface>
+        <Surface style={{ transform }}>
           { children }
         </Surface>
       </Root>
@@ -103,13 +116,13 @@ export default function MapDrawerSurface({ children }: MapDrawerContainerProps) 
 const Root = styled(m.main)(({ theme }) => ({
   position: 'absolute',
   zIndex: theme.vars.zIndex.drawer,
-  overflow: 'hidden',
   [theme.breakpoints.down('sm')]: {
     top: '100%',
     width: '100%',
   },
   [theme.breakpoints.up('sm')]: {
     width: DRAWER_WIDTH,
+    overflow: 'hidden',
   }
 }));
 

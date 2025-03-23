@@ -5,7 +5,7 @@ import { mergeSx } from '@/lib/utils/mui';
 import Box from '@mui/material/Box';
 import { grey } from '@mui/material/colors';
 import { styled, type SxProps, type Theme } from '@mui/material/styles';
-import { type ReactNode, use, useEffect, useRef } from 'react';
+import { type ReactNode, type Touch, type TouchEvent, use, useCallback, useEffect, useRef } from 'react';
 
 // Component
 export interface MapDrawerHeaderProps {
@@ -14,8 +14,36 @@ export interface MapDrawerHeaderProps {
 }
 
 export default function MapDrawerHeader({ children, sx }: MapDrawerHeaderProps) {
+  const { mode, dragPosition, setHeaderHeight } = use(MapDrawerContext);
+
+  // Drag state
+  const initialDragState = useRef({ touchId: 0, position: 0, touch: 0 });
+
+  const handleTouchStart = useCallback((event: TouchEvent) => {
+    initialDragState.current = {
+      touchId: event.touches[0].identifier,
+      position: dragPosition.get(),
+      touch: event.touches[0].clientY
+    };
+  }, [dragPosition]);
+
+  const handleTouchMove = useCallback((event: TouchEvent) => {
+    let touch: Touch | null = null;
+
+    for (let i = 0; i < event.changedTouches.length; i++) {
+      if (event.changedTouches.item(i).identifier === initialDragState.current.touchId) {
+        touch = event.changedTouches.item(i);
+        break;
+      }
+    }
+
+    if (touch) {
+      const diff = initialDragState.current.touch - touch.clientY;
+      dragPosition.set(Math.max(initialDragState.current.position + diff, 0));
+    }
+  }, [dragPosition]);
+
   // Track container height
-  const { mode, setHeaderHeight } = use(MapDrawerContext);
   const containerRef = useRef<HTMLDivElement | null>(null);
   
   useEffect(() => {
@@ -39,7 +67,15 @@ export default function MapDrawerHeader({ children, sx }: MapDrawerHeaderProps) 
 
   // Render
   return (
-    <Box ref={containerRef} sx={mergeSx({ position: 'relative' }, sx)}>
+    <Box
+      ref={containerRef}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      sx={mergeSx(sx, {
+        position: 'relative',
+        userSelect: 'none',
+      })}
+    >
       { mode === 'mobile' && <Grab /> }
       { children }
     </Box>
