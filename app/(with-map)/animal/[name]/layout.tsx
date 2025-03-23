@@ -57,5 +57,6 @@ export function generateStaticParams(): WithMapAnimalNameParams[] {
     { name: 'daisy' },
     { name: 'lucille' },
     { name: 'tidal' },
+    { name: 'zaza' },
   ];
 }
