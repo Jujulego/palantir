@@ -1,6 +1,7 @@
 'use client';
 
 import { MapDrawerContext } from '@/components/map/drawer/map-drawer.context';
+import { mergeSx } from '@/lib/utils/mui';
 import Box from '@mui/material/Box';
 import { type SxProps, Theme } from '@mui/material/styles';
 import { type ReactNode, use, useEffect, useRef } from 'react';
@@ -44,7 +45,7 @@ export default function MapDrawer({ children, sx }: MapDrawerProps) {
 
   // Render
   return (
-    <Box ref={containerRef} sx={sx}>
+    <Box ref={containerRef} sx={mergeSx({ display: 'flex', flexDirection: 'column', height: '100%' }, sx)}>
       { children }
     </Box>
   );

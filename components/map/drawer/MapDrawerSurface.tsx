@@ -139,8 +139,6 @@ const Root = styled(m.main)(({ theme }) => ({
 
 const Surface = styled(m.div)(({ theme }) => [
   {
-    display: 'flex',
-    flexDirection: 'column',
     width: '100%',
     overflow: 'auto',
     backgroundColor: grey[50],
