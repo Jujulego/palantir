@@ -62,7 +62,7 @@ export default function ProfileMenu() {
           paper: {
             sx: {
               marginTop: -1.25,
-              marginLeft: 0.25,
+              marginLeft: 0.5,
               borderTopRightRadius: 24,
               borderTopLeftRadius: 16,
               borderBottomRightRadius: 16,
