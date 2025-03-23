@@ -34,28 +34,43 @@ export default function MapLayout({ children }: MapLayoutProps) {
   const lat = useMotionValue(0);
   const lng = useMotionValue(0);
   const zoom = useMotionValue(INITIAL_ZOOM);
+
+  const topPadding = useMotionValue(0);
   const leftPadding = useMotionValue(0);
+  const bottomPadding = useMotionValue(0);
+  const rightPadding = useMotionValue(0);
+
+  const camera = useMemo(() => ({
+    lat,
+    lng,
+    zoom,
+    padding: {
+      top: topPadding,
+      left: leftPadding,
+      bottom: bottomPadding,
+      right: rightPadding,
+    },
+  }), [bottomPadding, lat, leftPadding, lng, rightPadding, topPadding, zoom]);
 
   // Render
-  const value = useMemo(() => ({
-    map,
-    isLoaded,
-    isStyleLoaded,
-    camera: { lat, lng, zoom, leftPadding },
-  }), [isLoaded, isStyleLoaded, lat, leftPadding, lng, map, zoom]);
-
   return (
-    <MapContext value={value}>
+    <MapContext
+      value={{
+        camera,
+        map,
+        isLoaded,
+        isStyleLoaded,
+      }}
+    >
       <MapboxMap
-        leftPadding={leftPadding}
-        zoom={INITIAL_ZOOM}
+        camera={camera}
         onMapCreated={setMap}
         onMapLoaded={handleMapLoaded}
         onMapStyleLoaded={handleMapStyleLoaded}
         onMapRemoved={handleMapRemoved}
       />
 
-      { map && <MapCamera map={map} lat={lat} lng={lng} zoom={zoom} leftPadding={leftPadding} /> }
+      { map && <MapCamera camera={camera} map={map} /> }
       { map && isStyleLoaded && <MapStyle map={map} /> }
 
       { children }
