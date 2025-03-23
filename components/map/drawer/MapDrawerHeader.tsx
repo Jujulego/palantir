@@ -74,7 +74,7 @@ export default function MapDrawerHeader({ children, sx }: MapDrawerHeaderProps) 
       sx={mergeSx(sx, {
         position: 'relative',
         userSelect: 'none',
-        touchAction: 'none',
+        touchAction: mode === 'mobile' ? 'none' : undefined,
       })}
     >
       { mode === 'mobile' && <Grab /> }
