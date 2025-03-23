@@ -17,7 +17,9 @@ export interface MapDrawerContainerProps {
 }
 
 export default function MapDrawerSurface({ children }: MapDrawerContainerProps) {
+  const { camera } = use(MapContext);
   const theme = useTheme();
+  const [,animate] = useAnimate();
 
   const openDuration = theme.transitions.duration.enteringScreen / 1000;
   const closeDuration = theme.transitions.duration.enteringScreen / 1000;
@@ -30,11 +32,9 @@ export default function MapDrawerSurface({ children }: MapDrawerContainerProps) 
   const transform = useTransform(dragPosition, (v) => `translateY(-${v}px)`);
 
   // Animation
-  const { camera } = use(MapContext);
-  const [,animate] = useAnimate();
-
   const [drawerHeight, setDrawerHeight] = useState(0);
   const [headerHeight, setHeaderHeight] = useState(0);
+  const dragLimit = drawerHeight - headerHeight;
 
   const top = useMotionValue('0px');
   const left = useMotionValue(`${-DRAWER_WIDTH}px`);
@@ -66,6 +66,14 @@ export default function MapDrawerSurface({ children }: MapDrawerContainerProps) 
     }
   }, [headerHeight, height, isMobile]);
 
+  useEffect(() => {
+    if (isMobile) {
+      dragPosition.set(Math.min(dragPosition.get(), dragLimit));
+    } else {
+      dragPosition.set(0);
+    }
+  }, [animate, dragLimit, dragPosition, isMobile]);
+
   const openDrawer = useCallback(() => {
     setIsOpen(true);
 
@@ -96,7 +104,7 @@ export default function MapDrawerSurface({ children }: MapDrawerContainerProps) 
       value={{
         mode: isMobile ? 'mobile' : 'desktop',
         dragPosition,
-        dragLimit: drawerHeight - headerHeight,
+        dragLimit,
         openDrawer,
         closeDrawer,
         setDrawerHeight,
