@@ -1,11 +1,11 @@
 'use client';
 
-import { MapDrawerContext } from '@/components/map/map-drawer.context';
+import { MapDrawerContext } from '@/components/map/drawer/map-drawer.context';
 import { grey } from '@mui/material/colors';
 import { styled, useTheme } from '@mui/material/styles';
 import { m, useAnimate, useTransform } from 'motion/react';
 import { type ReactNode, use, useCallback, useEffect, useState } from 'react';
-import { MapContext } from './map.context';
+import { MapContext } from '../map.context';
 
 // Constants
 const DRAWER_WIDTH = 408;
@@ -15,7 +15,7 @@ export interface MapDrawerContainerProps {
   readonly children: ReactNode;
 }
 
-export default function MapDrawer({ children }: MapDrawerContainerProps) {
+export default function MapDrawerSurface({ children }: MapDrawerContainerProps) {
   // Open state
   const [isOpen, setOpen] = useState(false);
 
@@ -23,9 +23,11 @@ export default function MapDrawer({ children }: MapDrawerContainerProps) {
   const closeDrawer = useCallback(() => setOpen(false), []);
 
   // Animation
+  const { camera } = use(MapContext);
   const [,animate] = useAnimate();
   const theme = useTheme();
-  const { camera } = use(MapContext);
+
+  const [headerHeight, setHeaderHeight] = useState(0);
 
   useEffect(() => {
     if (isOpen) {
@@ -39,16 +41,16 @@ export default function MapDrawer({ children }: MapDrawerContainerProps) {
   const left = useTransform(camera.padding.left, (v) => v - DRAWER_WIDTH);
 
   return (
-    <MapDrawerContext value={{ openDrawer, closeDrawer }}>
-      <Container style={{ left }} aria-hidden={!isOpen}>
+    <MapDrawerContext value={{ mode: 'desktop', openDrawer, closeDrawer, setHeaderHeight }}>
+      <Surface style={{ left }} aria-hidden={!isOpen}>
         { children }
-      </Container>
+      </Surface>
     </MapDrawerContext>
   );
 }
 
 // Utils
-const Container = m.create(styled('main')(({ theme }) => [
+const Surface = m.create(styled('main')(({ theme }) => [
   {
     position: 'absolute',
     top: 0,

@@ -1,5 +1,6 @@
 import RightGate from '@/components/auth/RightGate';
 import HostnameLink from '@/components/dns/HostnameLink';
+import MapDrawerHeader from '@/components/map/drawer/MapDrawerHeader';
 import BigDataCloudOption from '@/components/server/menu/BigDataCloudOption';
 import IpDataOption from '@/components/server/menu/IpDataOption';
 import IpGeolocationOption from '@/components/server/menu/IpGeolocationOption';
@@ -40,7 +41,7 @@ export default async function WithMapServerMeLayout({ children }: WithMapServerM
 
   return (
     <>
-      <Box sx={{ position: 'relative' }}>
+      <MapDrawerHeader sx={{ position: 'relative' }}>
         <Box sx={{ display: 'flex', pl: 2.5, pr: 1, pt: 2 }}>
           <Typography component="h1" variant="h5" noWrap sx={{ flex: 1 }}>
             { ip.toString() }
@@ -78,7 +79,7 @@ export default async function WithMapServerMeLayout({ children }: WithMapServerM
             </RightGate>
           </MetadataMenu>
         </Box>
-      </Box>
+      </MapDrawerHeader>
 
       <Divider />
 
