@@ -8,6 +8,7 @@ import { useMemo } from 'react';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import json from 'react-syntax-highlighter/dist/esm/languages/prism/json';
 import 'prismjs/themes/prism-tomorrow.min.css';
+import { grey } from '@mui/material/colors';
 
 SyntaxHighlighter.registerLanguage('json', json);
 
@@ -40,8 +41,8 @@ const Pre = styled('pre')(({ theme }) => ({
   margin: 0,
   paddingLeft: theme.spacing(1),
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: theme.palette.grey['50'],
+  backgroundColor: grey['50'],
   ...theme.applyStyles('dark', {
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.vars.palette.background.paper,
   })
 }));

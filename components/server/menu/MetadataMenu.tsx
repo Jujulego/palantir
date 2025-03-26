@@ -95,6 +95,6 @@ const TriggerButton = styled(ButtonBase)(({ theme }) => ({
   '--ServerMenu-icon-width': '18px',
 
   '&:hover': {
-    backgroundColor: theme.palette.action.hover,
+    backgroundColor: theme.vars.palette.action.hover,
   }
 }));

@@ -4,6 +4,7 @@ import { MapContext } from '@/components/map/map.context';
 
 import type { Coordinates } from '@/lib/utils/coordinates';
 import { useTheme } from '@mui/material';
+import { useColorScheme } from '@mui/material/styles';
 import type { GeoJSONSource } from 'mapbox-gl';
 import { use, useEffect, useId } from 'react';
 
@@ -15,6 +16,7 @@ export interface MapPolylineProps {
 export default function MapPolyline({ coordinates }: MapPolylineProps) {
   const { map, isLoaded } = use(MapContext);
   const theme = useTheme();
+  const { colorScheme = 'light' } = useColorScheme();
   const id = useId();
 
   useEffect(() => {
@@ -58,11 +60,12 @@ export default function MapPolyline({ coordinates }: MapPolylineProps) {
     });
   }, [coordinates, id, isLoaded, map]);
 
+  const lineColor = (theme.colorSchemes[colorScheme] ?? theme).palette.primary.main;
   useEffect(() => {
     if (!map || !isLoaded) return;
     
-    map.setPaintProperty(`${id}-line`, 'line-color', theme.palette.primary.main);
-  }, [id, isLoaded, map, theme.palette.primary.main]);
+    map.setPaintProperty(`${id}-line`, 'line-color', lineColor);
+  }, [id, isLoaded, map, lineColor]);
 
   return null;
 }
