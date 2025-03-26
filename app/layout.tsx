@@ -41,11 +41,11 @@ export const viewport: Viewport = {
   themeColor: [
     {
       media: '(prefers-color-scheme: light)',
-      color: (theme.colorSchemes['light'] ?? theme).palette.primary.main,
+      color: theme.colorSchemes['light']!.palette.primary.main,
     },
     {
       media: '(prefers-color-scheme: dark)',
-      color: (theme.colorSchemes['dark'] ?? theme).palette.primary.main,
+      color: theme.colorSchemes['dark']!.palette.background.paper,
     },
   ]
 };
