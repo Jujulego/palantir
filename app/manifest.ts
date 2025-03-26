@@ -8,7 +8,7 @@ export default function manifest(): MetadataRoute.Manifest {
     description: 'One map to locate them all',
     start_url: '/',
     display: 'standalone',
-    theme_color: theme.palette.primary.main,
+    theme_color: theme.palette.primary.dark,
     background_color: '#04162a',
     icons: [
       { src: '/icon-192.png', type: 'image/png', sizes: '192x192' },
