@@ -6,6 +6,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: 'Palantir',
     short_name: 'Palantir',
     description: 'One map to locate them all',
+    start_url: '/',
     display: 'standalone',
     theme_color: (theme.colorSchemes['light'] ?? theme).palette.primary.main,
     background_color: (theme.colorSchemes['light'] ?? theme).palette.background.paper,
