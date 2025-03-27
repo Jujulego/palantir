@@ -64,9 +64,9 @@ export default function ProfileMenu() {
               marginTop: -1.25,
               marginLeft: 0.5,
               borderTopRightRadius: 24,
-              borderTopLeftRadius: 16,
-              borderBottomRightRadius: 16,
-              borderBottomLeftRadius: 16,
+              borderTopLeftRadius: 8,
+              borderBottomRightRadius: 8,
+              borderBottomLeftRadius: 8,
             }
           }
         }}

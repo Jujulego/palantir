@@ -83,9 +83,11 @@ export default async function WithMapServerMeLayout({ children }: WithMapServerM
 
       <Divider />
 
-      <ServerMarkers>
-        { children }
-      </ServerMarkers>
+      <Box sx={{ flex: '1 0 0', overflow: 'auto' }}>
+        <ServerMarkers>
+          { children }
+        </ServerMarkers>
+      </Box>
     </>
   );
 }

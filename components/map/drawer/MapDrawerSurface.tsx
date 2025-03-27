@@ -4,7 +4,7 @@ import { MapDrawerContext } from '@/components/map/drawer/map-drawer.context';
 import { grey } from '@mui/material/colors';
 import { styled, useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { m, useAnimate, useMotionValue, useTransform } from 'motion/react';
+import { m, useAnimate, useMotionValue } from 'motion/react';
 import { type ReactNode, use, useCallback, useEffect, useState } from 'react';
 import { MapContext } from '../map.context';
 
@@ -18,85 +18,62 @@ export interface MapDrawerContainerProps {
 
 export default function MapDrawerSurface({ children }: MapDrawerContainerProps) {
   const { camera } = use(MapContext);
-  const theme = useTheme();
   const [,animate] = useAnimate();
 
+  const theme = useTheme();
   const openDuration = theme.transitions.duration.enteringScreen / 1000;
   const closeDuration = theme.transitions.duration.enteringScreen / 1000;
 
   // State
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [isOpen, setIsOpen] = useState(false);
-
-  const dragPosition = useMotionValue(0);
-  const transform = useTransform(dragPosition, (v) => `translateY(-${v}px)`);
-
-  // Animation
-  const [drawerHeight, setDrawerHeight] = useState(0);
   const [headerHeight, setHeaderHeight] = useState(0);
-  const dragLimit = drawerHeight - headerHeight;
 
-  const top = useMotionValue('0px');
-  const left = useMotionValue(`${-DRAWER_WIDTH}px`);
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  // Values
+  const dragPosition = useMotionValue(0);
   const height = useMotionValue('100%');
+  const left = useMotionValue(`${-DRAWER_WIDTH}px`);
 
-  useEffect(() => {
-    if (isMobile) {
-      top.set(`calc(100% - ${camera.padding.bottom.get()}px)`);
-      return camera.padding.bottom.on('change', (v) => top.set(`calc(100% - ${v}px)`));
-    } else {
-      top.set('0px');
-    }
-  }, [camera.padding.bottom, isMobile, top]);
-  
   useEffect(() => {
     if (isMobile) {
       left.set('0px');
+      camera.padding.left.set(0);
     } else {
-      left.set(`${camera.padding.left.get() - DRAWER_WIDTH}px`);
-      return camera.padding.left.on('change', (v) => left.set(`${v - DRAWER_WIDTH}px`));
+      if (isOpen) {
+        animate(left, '0px', { duration: openDuration });
+        animate(camera.padding.left, DRAWER_WIDTH, { duration: openDuration });
+      } else {
+        animate(left, `${-DRAWER_WIDTH}px`, { duration: closeDuration });
+        animate(camera.padding.left, 0, { duration: closeDuration });
+      }
     }
-  }, [camera.padding.left, isMobile, left]);
+  }, [animate, camera.padding.left, closeDuration, isMobile, isOpen, left, openDuration]);
 
   useEffect(() => {
     if (isMobile) {
-      height.set(`${headerHeight}px`);
-    } else {
-      height.set('100%');
-    }
-  }, [headerHeight, height, isMobile]);
+      if (isOpen) {
+        animate(height, `${headerHeight + dragPosition.get()}px`, { duration: openDuration });
+        animate(camera.padding.bottom, headerHeight + dragPosition.get(), { duration: openDuration });
 
-  useEffect(() => {
-    if (isMobile) {
-      dragPosition.set(Math.min(dragPosition.get(), dragLimit));
+        return dragPosition.on('change', (dp) => {
+          height.set(`${headerHeight + dp}px`);
+          camera.padding.bottom.set(headerHeight + dp);
+        });
+      } else {
+        animate(height, '0px', { duration: closeDuration });
+        animate(camera.padding.bottom, 0, { duration: closeDuration });
+      }
     } else {
       dragPosition.set(0);
-    }
-  }, [animate, dragLimit, dragPosition, isMobile]);
-
-  const openDrawer = useCallback(() => {
-    setIsOpen(true);
-
-    if (isMobile) {
-      camera.padding.left.set(0);
-      animate(camera.padding.bottom, headerHeight, { duration: openDuration });
-    } else {
+      height.set('100%');
       camera.padding.bottom.set(0);
-      animate(camera.padding.left, DRAWER_WIDTH, { duration: openDuration });
     }
-  }, [animate, camera.padding.bottom, camera.padding.left, headerHeight, isMobile, openDuration]);
+  }, [animate, camera.padding.bottom, closeDuration, dragPosition, headerHeight, height, isMobile, isOpen, openDuration]);
 
-  const closeDrawer = useCallback(() => {
-    setIsOpen(false);
-
-    if (isMobile) {
-      camera.padding.left.set(0);
-      animate(camera.padding.bottom, 0, { duration: closeDuration });
-    } else {
-      camera.padding.bottom.set(0);
-      animate(camera.padding.left, 0, { duration: closeDuration });
-    }
-  }, [animate, camera.padding.bottom, camera.padding.left, closeDuration, isMobile]);
+  // Handlers
+  const openDrawer = useCallback(() => setIsOpen(true), []);
+  const closeDrawer = useCallback(() => setIsOpen(false), []);
 
   // Render
   return (
@@ -104,51 +81,37 @@ export default function MapDrawerSurface({ children }: MapDrawerContainerProps) 
       value={{
         mode: isMobile ? 'mobile' : 'desktop',
         dragPosition,
-        dragLimit,
         openDrawer,
         closeDrawer,
-        setDrawerHeight,
         setHeaderHeight,
       }}
     >
       <Root
         aria-hidden={!isOpen}
-        style={{ top, left, height }}
+        style={{ left, height }}
       >
-        <Surface style={{ transform }}>
-          { children }
-        </Surface>
+        { children }
       </Root>
     </MapDrawerContext>
   );
 }
 
 // Utils
-const Root = styled(m.main)(({ theme }) => ({
-  position: 'absolute',
-  zIndex: theme.vars.zIndex.drawer,
-  [theme.breakpoints.down('sm')]: {
-    top: '100%',
-    width: '100%',
-  },
-  [theme.breakpoints.up('sm')]: {
-    width: DRAWER_WIDTH,
-    overflow: 'hidden',
-  }
-}));
-
-const Surface = styled(m.div)(({ theme }) => [
+const Root = styled(m.main)(({ theme }) => [
   {
-    width: '100%',
-    overflow: 'auto',
+    position: 'absolute',
+    bottom: 0,
+    zIndex: theme.vars.zIndex.drawer,
+    overflow: 'hidden',
     backgroundColor: grey[50],
     [theme.breakpoints.down('sm')]: {
+      width: '100%',
       borderTopLeftRadius: 16,
       borderTopRightRadius: 16,
       boxShadow: theme.vars.shadows[2],
     },
     [theme.breakpoints.up('sm')]: {
-      height: '100%',
+      width: DRAWER_WIDTH,
       borderRight: `1px solid ${theme.vars.palette.divider}`,
     }
   },

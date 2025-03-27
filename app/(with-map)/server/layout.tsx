@@ -1,7 +1,7 @@
 import computerPng from '@/assets/computer.png';
+import MapDrawer from '@/components/map/drawer/MapDrawer';
 import MapDrawerIllustration from '@/components/map/drawer/MapDrawerIllustration';
 import ColoredImage from '@/components/utils/ColoredImage';
-import MapDrawer from '@/components/map/drawer/MapDrawer';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import type { ReactNode } from 'react';
@@ -31,7 +31,7 @@ export default function WithMapServerLayout({ children }: WithMapServerLayoutPro
         </Box>
       </MapDrawerIllustration>
 
-      <Paper square sx={{ flex: '1 0 auto' }}>
+      <Paper square sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
         { children }
       </Paper>
     </MapDrawer>

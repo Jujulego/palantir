@@ -14,7 +14,7 @@ export interface MapDrawerHeaderProps {
 }
 
 export default function MapDrawerHeader({ children, sx }: MapDrawerHeaderProps) {
-  const { mode, dragPosition, dragLimit, setHeaderHeight } = use(MapDrawerContext);
+  const { mode, dragPosition, setHeaderHeight } = use(MapDrawerContext);
 
   // Drag state
   const initialDragState = useRef({ touchId: 0, position: 0, touch: 0 });
@@ -39,9 +39,9 @@ export default function MapDrawerHeader({ children, sx }: MapDrawerHeaderProps) 
 
     if (touch) {
       const diff = initialDragState.current.touch - touch.clientY;
-      dragPosition.set(Math.min(Math.max(initialDragState.current.position + diff, 0), dragLimit));
+      dragPosition.set(Math.max(initialDragState.current.position + diff, 0));
     }
-  }, [dragLimit, dragPosition]);
+  }, [dragPosition]);
 
   // Track container height
   const containerRef = useRef<HTMLDivElement | null>(null);

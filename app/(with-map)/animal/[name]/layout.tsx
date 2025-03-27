@@ -1,6 +1,7 @@
 import { decodeName, type WithMapAnimalNameParams } from '@/app/(with-map)/animal/[name]/params';
 import MapDrawerHeader from '@/components/map/drawer/MapDrawerHeader';
 import CloseIcon from '@mui/icons-material/Close';
+import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -36,7 +37,9 @@ export default async function WithMapAnimalNameLayout({ children, params }: With
 
       <Divider />
 
-      { children }
+      <Box sx={{ flex: '1 0 0', overflow: 'auto' }}>
+        { children }
+      </Box>
     </>
   );
 }

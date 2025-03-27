@@ -82,9 +82,11 @@ export default async function WithMapServerIpLayout({ params, children }: WithMa
 
       <Divider />
 
-      <ServerMarkers>
-        { children }
-      </ServerMarkers>
+      <Box sx={{ flex: '1 0 0', overflow: 'auto' }}>
+        <ServerMarkers>
+          { children }
+        </ServerMarkers>
+      </Box>
     </>
   );
 }
