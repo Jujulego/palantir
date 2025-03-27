@@ -12,19 +12,21 @@ import {
 } from '@/lib/server/big-data-cloud/extractors';
 import { queryIpGeolocationFull } from '@/lib/server/big-data-cloud/ip-geolocation';
 import List from '@mui/material/List';
+import type { SxProps, Theme } from '@mui/material/styles';
 import type { IPv4, IPv6 } from 'ipaddr.js';
 
 export interface BigDataCloudIpMetadataProps {
   readonly ip: IPv4 | IPv6;
+  readonly sx?: SxProps<Theme>;
 }
 
-export default async function BigDataCloudMetadataList({ ip }: BigDataCloudIpMetadataProps) {
+export default async function BigDataCloudMetadataList({ ip, sx }: BigDataCloudIpMetadataProps) {
   const data = await queryIpGeolocationFull(ip);
 
   // No result
   if (!data) {
     return (
-      <List>
+      <List sx={sx}>
         <LocationItem />
         <MapSpin />
       </List>
@@ -38,7 +40,7 @@ export default async function BigDataCloudMetadataList({ ip }: BigDataCloudIpMet
   const tags = extractTags(data);
 
   return (
-    <List>
+    <List sx={sx}>
       <LocationItem address={address} coordinates={coordinates} />
       { autonomousSystem && <AutonomousSystemItem autonomousSystem={autonomousSystem} /> }
       { tags.length > 0 && <TagsItem tags={tags} /> }

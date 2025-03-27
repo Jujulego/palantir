@@ -31,7 +31,7 @@ export default function withMapAnimalLayout({ children }: WithMapAnimalLayoutPro
         </Box>
       </MapDrawerIllustration>
 
-      <Paper square sx={{ flex: '1 0 auto' }}>
+      <Paper square sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
         { children }
       </Paper>
     </MapDrawer>
