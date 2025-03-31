@@ -33,6 +33,8 @@ export default function MapLayout({ children }: MapLayoutProps) {
   // Camera values
   const lat = useMotionValue(0);
   const lng = useMotionValue(0);
+  const height = useMotionValue(0);
+  const width = useMotionValue(0);
   const zoom = useMotionValue(INITIAL_ZOOM);
 
   const topPadding = useMotionValue(0);
@@ -43,6 +45,8 @@ export default function MapLayout({ children }: MapLayoutProps) {
   const camera = useMemo(() => ({
     lat,
     lng,
+    height,
+    width,
     zoom,
     padding: {
       top: topPadding,
@@ -50,7 +54,7 @@ export default function MapLayout({ children }: MapLayoutProps) {
       bottom: bottomPadding,
       right: rightPadding,
     },
-  }), [bottomPadding, lat, leftPadding, lng, rightPadding, topPadding, zoom]);
+  }), [bottomPadding, height, lat, leftPadding, lng, rightPadding, topPadding, width, zoom]);
 
   // Render
   return (
