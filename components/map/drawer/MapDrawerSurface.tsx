@@ -4,7 +4,7 @@ import { MapDrawerContext } from '@/components/map/drawer/map-drawer.context';
 import { grey } from '@mui/material/colors';
 import { styled, useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { m, useAnimate, useMotionValue } from 'motion/react';
+import { m, useAnimate, useMotionValue, useTransform } from 'motion/react';
 import { type ReactNode, use, useCallback, useEffect, useState } from 'react';
 import { MapContext } from '../map.context';
 
@@ -31,6 +31,10 @@ export default function MapDrawerSurface({ children }: MapDrawerContainerProps) 
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   // Values
+  const dragLimit = useTransform<number, number>(
+    [camera.height, camera.width, camera.padding.top],
+    ([height, width, top]) => height - ((width * 3 / 4) + top)
+  );
   const dragPosition = useMotionValue(0);
   const height = useMotionValue('100%');
   const left = useMotionValue(`${-DRAWER_WIDTH}px`);
@@ -80,6 +84,7 @@ export default function MapDrawerSurface({ children }: MapDrawerContainerProps) 
     <MapDrawerContext
       value={{
         mode: isMobile ? 'mobile' : 'desktop',
+        dragLimit,
         dragPosition,
         openDrawer,
         closeDrawer,
