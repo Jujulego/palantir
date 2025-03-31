@@ -5,8 +5,7 @@ import { mergeSx } from '@/lib/utils/mui';
 import Box from '@mui/material/Box';
 import { grey } from '@mui/material/colors';
 import { styled, type SxProps, type Theme } from '@mui/material/styles';
-import { m, PanInfo } from 'motion/react';
-import { type ReactNode, use, useCallback, useEffect, useRef } from 'react';
+import { type ReactNode, type Touch, type TouchEvent, use, useCallback, useEffect, useRef } from 'react';
 
 // Component
 export interface MapDrawerHeaderProps {
@@ -18,17 +17,43 @@ export default function MapDrawerHeader({ children, sx }: MapDrawerHeaderProps) 
   const { mode, setState, setHeaderHeight } = use(MapDrawerContext);
 
   // Drag state
-  const handlePan = useCallback((_: unknown, info: PanInfo) => {
-    if (info.offset.y > 0) {
-      setState('reduced');
-    } else if (info.offset.y < 0) {
-      setState('opened');
+  const initialDragState = useRef({ touchId: 0, touchX: 0, touchY: 0 });
+
+  const handleTouchStart = useCallback((event: TouchEvent) => {
+    const touch = event.changedTouches[0];
+    initialDragState.current = {
+      touchId: touch.identifier,
+      touchX: touch.clientX,
+      touchY: touch.clientY,
+    };
+  }, []);
+
+  const handleTouchMove = useCallback((event: TouchEvent) => {
+    let touch: Touch | null = null;
+    for (let i = 0; i < event.changedTouches.length; i++) {
+      if (event.changedTouches.item(i).identifier === initialDragState.current.touchId) {
+        touch = event.changedTouches.item(i);
+        break;
+      }
+    }
+
+    if (touch) {
+      const dx = touch.clientX - initialDragState.current.touchX;
+      const dy = touch.clientY - initialDragState.current.touchY;
+
+      if (Math.abs(dy) > 3 && Math.abs(dy) > Math.abs(dx)) {
+        if (dy < 0) {
+          setState('opened');
+        } else {
+          setState('reduced');
+        }
+      }
     }
   }, [setState]);
 
   // Track container height
   const containerRef = useRef<HTMLDivElement | null>(null);
-  
+
   useEffect(() => {
     if (!containerRef.current) return;
 
@@ -41,7 +66,7 @@ export default function MapDrawerHeader({ children, sx }: MapDrawerHeaderProps) 
       setHeaderHeight(container.clientHeight);
     });
     observer.observe(container);
-    
+
     return () => {
       observer.disconnect();
       setHeaderHeight(0);
@@ -51,9 +76,9 @@ export default function MapDrawerHeader({ children, sx }: MapDrawerHeaderProps) 
   // Render
   return (
     <Box
-      component={m.div}
       ref={containerRef}
-      onPan={mode === 'mobile' ? handlePan : undefined}
+      onTouchStart={mode === 'mobile' ? handleTouchStart : undefined}
+      onTouchMove={mode === 'mobile' ? handleTouchMove : undefined}
       sx={mergeSx(sx, {
         position: 'relative',
         userSelect: 'none',

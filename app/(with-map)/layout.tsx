@@ -8,7 +8,7 @@ import SearchBox from '@/components/search/SearchBox';
 import { SearchBoxSkeleton } from '@/components/search/SearchBoxSkeleton';
 import ServerSearchOptions from '@/components/server/ServerSearchOptions';
 import Paper from '@mui/material/Paper';
-import { domMax, LazyMotion } from 'motion/react';
+import { domAnimation, LazyMotion } from 'motion/react';
 import type { Metadata } from 'next';
 import { type ReactNode, Suspense } from 'react';
 
@@ -20,7 +20,7 @@ export interface WithMapLayoutProps {
 export default async function WithMapLayout({ children }: WithMapLayoutProps) {
   // Render
   return (
-    <LazyMotion features={domMax} strict>
+    <LazyMotion features={domAnimation} strict>
       <MapLayout>
         <MapToolbar component="header">
           <Suspense fallback={<SearchBoxSkeleton sx={{ width: 384 }} />}>

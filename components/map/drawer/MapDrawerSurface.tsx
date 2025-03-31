@@ -60,7 +60,7 @@ export default function MapDrawerSurface({ children }: MapDrawerContainerProps) 
     if (isMobile) {
       const openOptions: Transition = previousMobileState.current === 'closed'
         ? { duration: openDuration }
-        : { duration: openDuration * 5, type: 'spring' };
+        : { duration: openDuration * 4, type: 'spring' };
 
       if (state === 'closed') {
         animate(height, '0px', { duration: closeDuration });
