@@ -5,7 +5,8 @@ import { mergeSx } from '@/lib/utils/mui';
 import Box from '@mui/material/Box';
 import { grey } from '@mui/material/colors';
 import { styled, type SxProps, type Theme } from '@mui/material/styles';
-import { type ReactNode, type Touch, type TouchEvent, use, useCallback, useEffect, useRef } from 'react';
+import { m, PanInfo } from 'motion/react';
+import { type ReactNode, use, useCallback, useEffect, useRef } from 'react';
 
 // Component
 export interface MapDrawerHeaderProps {
@@ -14,34 +15,16 @@ export interface MapDrawerHeaderProps {
 }
 
 export default function MapDrawerHeader({ children, sx }: MapDrawerHeaderProps) {
-  const { mode, dragLimit, dragPosition, setHeaderHeight } = use(MapDrawerContext);
+  const { mode, setState, setHeaderHeight } = use(MapDrawerContext);
 
   // Drag state
-  const initialDragState = useRef({ touchId: 0, position: 0, touch: 0 });
-
-  const handleTouchStart = useCallback((event: TouchEvent) => {
-    const touch = event.changedTouches[0];
-    initialDragState.current = {
-      position: dragPosition.get(),
-      touchId: touch.identifier,
-      touch: touch.clientY
-    };
-  }, [dragPosition]);
-
-  const handleTouchMove = useCallback((event: TouchEvent) => {
-    let touch: Touch | null = null;
-    for (let i = 0; i < event.changedTouches.length; i++) {
-      if (event.changedTouches.item(i).identifier === initialDragState.current.touchId) {
-        touch = event.changedTouches.item(i);
-        break;
-      }
+  const handlePan = useCallback((_: unknown, info: PanInfo) => {
+    if (info.offset.y > 0) {
+      setState('reduced');
+    } else if (info.offset.y < 0) {
+      setState('opened');
     }
-
-    if (touch) {
-      const diff = initialDragState.current.touch - touch.clientY;
-      dragPosition.set(Math.min(Math.max(initialDragState.current.position + diff, 0), dragLimit.get()));
-    }
-  }, [dragLimit, dragPosition]);
+  }, [setState]);
 
   // Track container height
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -68,9 +51,9 @@ export default function MapDrawerHeader({ children, sx }: MapDrawerHeaderProps) 
   // Render
   return (
     <Box
+      component={m.div}
       ref={containerRef}
-      onTouchStart={mode === 'mobile' ? handleTouchStart : undefined}
-      onTouchMove={mode === 'mobile' ? handleTouchMove : undefined}
+      onPan={mode === 'mobile' ? handlePan : undefined}
       sx={mergeSx(sx, {
         position: 'relative',
         userSelect: 'none',
