@@ -9,13 +9,18 @@ export interface MapDrawerProps {
 }
 
 export default function MapDrawer({ children }: MapDrawerProps) {
-  const { openDrawer, closeDrawer } = use(MapDrawerContext);
+  const { mode, setState } = use(MapDrawerContext);
 
   // Open drawer !
   useEffect(() => {
-    openDrawer();
-    return closeDrawer;
-  }, [openDrawer, closeDrawer]);
+    if (mode === 'mobile') {
+      setState((old) => old === 'closed' ? 'reduced' : old);
+    } else {
+      setState('opened');
+    }
+
+    return () => setState('closed');
+  }, [mode, setState]);
 
   // Render
   return children;

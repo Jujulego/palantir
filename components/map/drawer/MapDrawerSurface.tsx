@@ -1,12 +1,13 @@
 'use client';
 
-import { MapDrawerContext } from '@/components/map/drawer/map-drawer.context';
 import { grey } from '@mui/material/colors';
 import { styled, useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { m, useAnimate, useMotionValue } from 'motion/react';
-import { type ReactNode, use, useCallback, useEffect, useState } from 'react';
+import type { Transition } from 'motion';
+import { m, useAnimate, useMotionValue, useTransform } from 'motion/react';
+import { type ReactNode, use, useEffect, useRef, useState } from 'react';
 import { MapContext } from '../map.context';
+import { MapDrawerContext, type MapDrawerState } from './map-drawer.context';
 
 // Constants
 const DRAWER_WIDTH = 408;
@@ -25,13 +26,16 @@ export default function MapDrawerSurface({ children }: MapDrawerContainerProps) 
   const closeDuration = theme.transitions.duration.enteringScreen / 1000;
 
   // State
-  const [isOpen, setIsOpen] = useState(false);
+  const [state, setState] = useState<MapDrawerState>('closed');
   const [headerHeight, setHeaderHeight] = useState(0);
 
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   // Values
-  const dragPosition = useMotionValue(0);
+  const fullHeight = useTransform<number, number>(
+    [camera.height, camera.width, camera.padding.top],
+    ([height, width, top]) => height - ((width * 9 / 16) + top)
+  );
   const height = useMotionValue('100%');
   const left = useMotionValue(`${-DRAWER_WIDTH}px`);
 
@@ -40,54 +44,54 @@ export default function MapDrawerSurface({ children }: MapDrawerContainerProps) 
       left.set('0px');
       camera.padding.left.set(0);
     } else {
-      if (isOpen) {
-        animate(left, '0px', { duration: openDuration });
-        animate(camera.padding.left, DRAWER_WIDTH, { duration: openDuration });
-      } else {
+      if (state === 'closed') {
         animate(left, `${-DRAWER_WIDTH}px`, { duration: closeDuration });
         animate(camera.padding.left, 0, { duration: closeDuration });
+      } else {
+        animate(left, '0px', { duration: openDuration });
+        animate(camera.padding.left, DRAWER_WIDTH, { duration: openDuration });
       }
     }
-  }, [animate, camera.padding.left, closeDuration, isMobile, isOpen, left, openDuration]);
+  }, [animate, camera.padding.left, closeDuration, isMobile, left, openDuration, state]);
+
+  const previousMobileState = useRef<MapDrawerState>('closed');
 
   useEffect(() => {
     if (isMobile) {
-      if (isOpen) {
-        animate(height, `${headerHeight + dragPosition.get()}px`, { duration: openDuration });
-        animate(camera.padding.bottom, headerHeight + dragPosition.get(), { duration: openDuration });
+      const openOptions: Transition = previousMobileState.current === 'closed'
+        ? { duration: openDuration }
+        : { duration: openDuration * 4, type: 'spring' };
 
-        return dragPosition.on('change', (dp) => {
-          height.set(`${headerHeight + dp}px`);
-          camera.padding.bottom.set(headerHeight + dp);
-        });
-      } else {
+      if (state === 'closed') {
         animate(height, '0px', { duration: closeDuration });
         animate(camera.padding.bottom, 0, { duration: closeDuration });
+      } else if (state === 'reduced') {
+        animate(height, `${headerHeight}px`, openOptions);
+        animate(camera.padding.bottom, headerHeight, openOptions);
+      } else {
+        animate(height, `${fullHeight.get()}px`, openOptions);
+        animate(camera.padding.bottom, fullHeight.get(), openOptions);
       }
     } else {
-      dragPosition.set(0);
       height.set('100%');
       camera.padding.bottom.set(0);
     }
-  }, [animate, camera.padding.bottom, closeDuration, dragPosition, headerHeight, height, isMobile, isOpen, openDuration]);
 
-  // Handlers
-  const openDrawer = useCallback(() => setIsOpen(true), []);
-  const closeDrawer = useCallback(() => setIsOpen(false), []);
+    previousMobileState.current = state;
+  }, [animate, camera.padding.bottom, closeDuration, fullHeight, headerHeight, height, isMobile, openDuration, state]);
 
   // Render
   return (
     <MapDrawerContext
       value={{
         mode: isMobile ? 'mobile' : 'desktop',
-        dragPosition,
-        openDrawer,
-        closeDrawer,
+        state,
         setHeaderHeight,
+        setState,
       }}
     >
       <Root
-        aria-hidden={!isOpen}
+        aria-hidden={state === 'closed'}
         style={{ left, height }}
       >
         { children }

@@ -1,19 +1,19 @@
-import { motionValue, type MotionValue } from 'motion/react';
-import { createContext } from 'react';
+import { createContext, type Dispatch, type SetStateAction } from 'react';
 
 // Types
+export type MapDrawerMode = 'mobile' | 'desktop';
+export type MapDrawerState = 'closed' | 'reduced' | 'opened';
+
 export interface MapDrawerContextProps {
-  readonly mode: 'mobile' | 'desktop';
-  readonly dragPosition: MotionValue<number>;
-  readonly openDrawer: () => void;
-  readonly closeDrawer: () => void;
+  readonly mode: MapDrawerMode;
+  readonly state: MapDrawerState;
   readonly setHeaderHeight: (height: number) => void;
+  readonly setState: Dispatch<SetStateAction<MapDrawerState>>;
 }
 
 export const MapDrawerContext = createContext<MapDrawerContextProps>({
   mode: 'desktop',
-  dragPosition: motionValue(0),
-  openDrawer: () => null,
-  closeDrawer: () => null,
+  state: 'closed',
   setHeaderHeight: () => null,
+  setState: () => null,
 });

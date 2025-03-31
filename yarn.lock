@@ -5099,7 +5099,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:^12.6.2":
+"framer-motion@npm:^12.6.1":
   version: 12.6.2
   resolution: "framer-motion@npm:12.6.2"
   dependencies:
@@ -6653,11 +6653,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"motion@npm:12.6.2":
-  version: 12.6.2
-  resolution: "motion@npm:12.6.2"
+"motion@npm:12.6.1":
+  version: 12.6.1
+  resolution: "motion@npm:12.6.1"
   dependencies:
-    framer-motion: "npm:^12.6.2"
+    framer-motion: "npm:^12.6.1"
     tslib: "npm:^2.4.0"
   peerDependencies:
     "@emotion/is-prop-valid": "*"
@@ -6670,7 +6670,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 10c0/e46c6673056d69a2dae570a3f1272bd7896788dd5fa5e03d2fc005e6b6c209421df8ec2aec67ca4d143037326def7e9d4191f61edb19cc1b4999ddc19c653cc0
+  checksum: 10c0/4fcf8c4dcc3e2752033b2e9f5034fab6da49bcbcd9f95dbcf8f018cb660435fedc4ca77eab7815a45da1662a036e8a11f86792ae53a90d47c3d443df6664a84b
   languageName: node
   linkType: hard
 
@@ -7081,7 +7081,7 @@ __metadata:
     jsdom: "npm:26.0.0"
     kyrielle: "npm:2.2.2"
     mapbox-gl: "npm:3.10.0"
-    motion: "npm:12.6.2"
+    motion: "npm:12.6.1"
     next: "npm:15.2.4"
     next-connect: "npm:1.0.0"
     prismjs: "npm:1.30.0"

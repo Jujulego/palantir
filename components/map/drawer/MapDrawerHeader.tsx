@@ -14,19 +14,19 @@ export interface MapDrawerHeaderProps {
 }
 
 export default function MapDrawerHeader({ children, sx }: MapDrawerHeaderProps) {
-  const { mode, dragPosition, setHeaderHeight } = use(MapDrawerContext);
+  const { mode, setState, setHeaderHeight } = use(MapDrawerContext);
 
   // Drag state
-  const initialDragState = useRef({ touchId: 0, position: 0, touch: 0 });
+  const initialDragState = useRef({ touchId: 0, touchX: 0, touchY: 0 });
 
   const handleTouchStart = useCallback((event: TouchEvent) => {
     const touch = event.changedTouches[0];
     initialDragState.current = {
-      position: dragPosition.get(),
       touchId: touch.identifier,
-      touch: touch.clientY
+      touchX: touch.clientX,
+      touchY: touch.clientY,
     };
-  }, [dragPosition]);
+  }, []);
 
   const handleTouchMove = useCallback((event: TouchEvent) => {
     let touch: Touch | null = null;
@@ -38,14 +38,22 @@ export default function MapDrawerHeader({ children, sx }: MapDrawerHeaderProps) 
     }
 
     if (touch) {
-      const diff = initialDragState.current.touch - touch.clientY;
-      dragPosition.set(Math.max(initialDragState.current.position + diff, 0));
+      const dx = touch.clientX - initialDragState.current.touchX;
+      const dy = touch.clientY - initialDragState.current.touchY;
+
+      if (Math.abs(dy) > 3 && Math.abs(dy) > Math.abs(dx)) {
+        if (dy < 0) {
+          setState('opened');
+        } else {
+          setState('reduced');
+        }
+      }
     }
-  }, [dragPosition]);
+  }, [setState]);
 
   // Track container height
   const containerRef = useRef<HTMLDivElement | null>(null);
-  
+
   useEffect(() => {
     if (!containerRef.current) return;
 
@@ -58,7 +66,7 @@ export default function MapDrawerHeader({ children, sx }: MapDrawerHeaderProps) 
       setHeaderHeight(container.clientHeight);
     });
     observer.observe(container);
-    
+
     return () => {
       observer.disconnect();
       setHeaderHeight(0);
