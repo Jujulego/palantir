@@ -1,4 +1,4 @@
-import { type ConsoleUsersIdParams, decodeId } from '@/app/console/auth/users/[id]/params';
+import { type ConsoleUsersIdParams, decodeId } from '@/app/(private)/console/auth/users/[id]/params';
 import UserEmail from '@/components/users/UserEmail';
 import UserIdentities from '@/components/users/UserIdentities';
 import FormatDate from '@/components/utils/FormatDate';

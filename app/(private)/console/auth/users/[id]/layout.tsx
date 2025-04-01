@@ -1,4 +1,4 @@
-import { type ConsoleUsersIdParams, decodeId } from '@/app/console/auth/users/[id]/params';
+import { type ConsoleUsersIdParams, decodeId } from '@/app/(private)/console/auth/users/[id]/params';
 import UserLayoutToolbar from '@/components/users/UserLayoutToolbar';
 import UserLayoutToolbarSkeleton from '@/components/users/UserLayoutToolbarSkeleton';
 import UserLayoutTabs from '@/components/users/UserLayoutTabs';
