@@ -104,13 +104,13 @@ export default function VirtualTable<D>(props: VirtualTableProps<D>) {
         <TableHead
           role="rowgroup"
           sx={{
+            position: 'sticky',
+            top: 0,
+            zIndex: 10,
             display: 'grid',
             gridColumn: '1 / -1',
             gridTemplateColumns: 'subgrid',
-
-            '--VirtualCell-position': 'sticky',
-            '--VirtualCell-zIndex': '10',
-            '--VirtualCell-background': 'var(--mui-palette-background-default)',
+            background: 'var(--mui-palette-background-default)',
           }}
         >
           { head }

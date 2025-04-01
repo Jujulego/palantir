@@ -138,9 +138,5 @@ declare module 'react' {
     '--MapboxMap-left'?: string;
     '--MapboxMap-bottom'?: string;
     '--MapboxMap-right'?: string;
-
-    '--VirtualCell-background'?: string;
-    '--VirtualCell-position'?: string;
-    '--VirtualCell-zIndex'?: string;
   }
 }

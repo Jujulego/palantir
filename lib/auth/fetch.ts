@@ -1,6 +1,5 @@
 import { managementApiToken } from '@/lib/auth/management-api-token';
 import { FetchError } from '@/lib/utils/fetch';
-import { revalidateTag } from 'next/cache';
 
 export async function auth0Fetch<D>(url: string | URL, options: RequestInit = {}): Promise<D> {
   // Add token
@@ -15,8 +14,6 @@ export async function auth0Fetch<D>(url: string | URL, options: RequestInit = {}
 
     if (res.status === 401) {
       console.warn('[auth0] Unauthorized call revalidating token');
-      
-      revalidateTag('auth0-management-token');
 
       options.headers = {
         ...options.headers,
