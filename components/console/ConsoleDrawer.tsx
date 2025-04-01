@@ -50,7 +50,7 @@ export default function ConsoleDrawer({ isOpen, onClose }: ConsoleDrawerProps) {
           <List
             component="div"
             subheader={
-              <ListSubheader component="h6" sx={{ m: 0, lineHeight: '36px' }}>
+              <ListSubheader component="h6" disableSticky sx={{ m: 0, lineHeight: '36px' }}>
                 Authentication
               </ListSubheader>
             }
@@ -60,6 +60,5 @@ export default function ConsoleDrawer({ isOpen, onClose }: ConsoleDrawerProps) {
         </RightGate>
       </List>
     </Drawer>
-
-  )
+  );
 }
