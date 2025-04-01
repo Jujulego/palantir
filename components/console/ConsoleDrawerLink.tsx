@@ -8,14 +8,14 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
 
-export interface DrawerLinkProps {
+export interface ConsoleDrawerLinkProps {
   readonly href: string;
   readonly icon: ReactNode;
   readonly primary: ReactNode;
   readonly exactMatch?: boolean;
 }
 
-export default function DrawerLink({ href, icon, primary, exactMatch }: DrawerLinkProps) {
+export default function ConsoleDrawerLink({ href, icon, primary, exactMatch }: ConsoleDrawerLinkProps) {
   const pathname = usePathname();
   const selected = exactMatch ? pathname === href : pathname.startsWith(href);
 
