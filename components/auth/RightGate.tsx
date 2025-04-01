@@ -1,10 +1,10 @@
 'use client';
 
+import { useSessionRights } from '@/components/auth/session-rights.context';
 import type { RightKey } from '@/lib/auth/permissions';
-import { actSessionRights } from '@/lib/auth/rights.actions';
 import type { ReactNode } from 'react';
-import useSWR from 'swr';
 
+// Component
 export interface RightGateProps {
   readonly children: ReactNode;
   readonly right: RightKey;
@@ -13,9 +13,9 @@ export interface RightGateProps {
 }
 
 export default function RightGate({ children, fallback = null, right }: RightGateProps) {
-  const { data } = useSWR(['rights'], actSessionRights);
+  const rights = useSessionRights();
 
-  if (data?.includes(right)) {
+  if (rights.includes(right)) {
     return children;
   } else {
     return fallback;

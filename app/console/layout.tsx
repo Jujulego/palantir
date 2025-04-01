@@ -1,6 +1,8 @@
+import AuthProvider from '@/components/auth/AuthProvider';
 import ConsoleDrawer from '@/components/console/ConsoleDrawer';
 import HomeLink from '@/components/HomeLink';
 import ProfileMenu from '@/components/profile/ProfileMenu';
+import { querySessionRights } from '@/lib/auth/need-right';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -15,22 +17,24 @@ export interface ConsoleLayoutProps {
 
 export default async function ConsoleLayout({ children }: ConsoleLayoutProps) {
   return (
-    <Box sx={{ display: 'flex', '--mui-palette-TableCell-border': 'var(--mui-palette-divider)' }}>
-      <AppBar position="fixed" elevation={2}>
-        <Toolbar>
-          <HomeLink sx={{ mr: 'auto' }} />
+    <AuthProvider sessionRights={await querySessionRights()}>
+      <Box sx={{ display: 'flex', '--mui-palette-TableCell-border': 'var(--mui-palette-divider)' }}>
+        <AppBar position="fixed" elevation={2}>
+          <Toolbar>
+            <HomeLink sx={{ mr: 'auto' }} />
 
-          <ProfileMenu />
-        </Toolbar>
-      </AppBar>
+            <ProfileMenu />
+          </Toolbar>
+        </AppBar>
 
-      <ConsoleDrawer />
+        <ConsoleDrawer />
 
-      <Stack component="main" sx={{ height: '100vh', flex: '1 0 0', overflow: 'auto' }}>
-        <Toolbar />
-        { children }
-      </Stack>
-    </Box>
+        <Stack component="main" sx={{ height: '100vh', flex: '1 0 0', overflow: 'auto' }}>
+          <Toolbar />
+          { children }
+        </Stack>
+      </Box>
+    </AuthProvider>
   );
 }
 
