@@ -10,13 +10,16 @@ import Toolbar from '@mui/material/Toolbar';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useEffect } from 'react';
 
+// Constants
+const DRAWER_WIDTH = 320;
+
 // Component
 export interface ConsoleDrawerProps {
-  readonly isOpen: boolean;
+  readonly open: boolean;
   readonly onClose: () => void;
 }
 
-export default function ConsoleDrawer({ isOpen, onClose }: ConsoleDrawerProps) {
+export default function ConsoleDrawer({ open, onClose }: ConsoleDrawerProps) {
   const theme = useTheme();
 
   // State
@@ -28,19 +31,55 @@ export default function ConsoleDrawer({ isOpen, onClose }: ConsoleDrawerProps) {
 
   // Render
   return (
-    <Drawer
-      open={isOpen}
-      onClose={onClose}
-      variant={isTemporary ? 'temporary' : 'permanent'}
-      sx={{
-        flex: '0 0 auto',
-        width: 320,
+    <>
+      <Drawer
+        variant="permanent"
+        sx={{
+          display: { xs: 'none', md: 'block' },
+          flex: '0 0 auto',
+          width: DRAWER_WIDTH,
 
-        '& .MuiDrawer-paper': {
-          width: 320,
-        }
-      }}
-    >
+          '& .MuiDrawer-paper': {
+            boxSizing: 'border-box',
+            width: DRAWER_WIDTH,
+          }
+        }}
+      >
+        <DrawerContent />
+      </Drawer>
+
+      <Drawer
+        open={open}
+        onClose={onClose}
+        variant="temporary"
+        sx={{
+          display: { xs: 'block' },
+
+          '& .MuiDrawer-paper': {
+            boxSizing: 'border-box',
+            width: DRAWER_WIDTH,
+          }
+        }}
+        slotProps={{
+          root: {
+            keepMounted: true,
+          },
+        }}
+      >
+        <DrawerContent />
+      </Drawer>
+    </>
+  );
+}
+
+// Utils
+interface DrawerContentProps {
+  readonly onClose?: () => void;
+}
+
+function DrawerContent({ onClose }: DrawerContentProps) {
+  return (
+    <>
       <Toolbar />
 
       <List component="nav">
@@ -59,6 +98,6 @@ export default function ConsoleDrawer({ isOpen, onClose }: ConsoleDrawerProps) {
           </List>
         </RightGate>
       </List>
-    </Drawer>
+    </>
   );
 }
