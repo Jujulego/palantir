@@ -42,17 +42,17 @@ export default function UserTable(props: UsersTableProps) {
     <VirtualTable
       {...tableProps}
       columnLayout={{
-        xs: '1fr 1fr',
-        sm: '2fr 1fr 2fr',
-        md: '2fr 2fr 1fr 1fr 2fr',
+        '@xs': '1fr 1fr',
+        '@sm': '2fr 1fr 2fr',
+        '@md': '2fr 2fr 1fr 1fr 2fr',
       }}
       data={users}
       head={
         <VirtualRow aria-rowindex={1}>
           <VirtualCell scope="col" size="small">Name</VirtualCell>
-          <VirtualCell scope="col" size="small" sx={{ display: { xs: 'none', md: 'block' } }}>Email</VirtualCell>
-          <VirtualCell scope="col" size="small" sx={{ display: { xs: 'none', sm: 'block' } }}>Identities</VirtualCell>
-          <VirtualCell scope="col" size="small" sx={{ display: { xs: 'none', md: 'block' } }}>Login count</VirtualCell>
+          <VirtualCell scope="col" size="small" sx={{ display: { '@xs': 'none', '@md': 'block' } }}>Email</VirtualCell>
+          <VirtualCell scope="col" size="small" sx={{ display: { '@xs': 'none', '@sm': 'block' } }}>Identities</VirtualCell>
+          <VirtualCell scope="col" size="small" sx={{ display: { '@xs': 'none', '@md': 'block' } }}>Login count</VirtualCell>
           <VirtualCell scope="col" size="small">Last login</VirtualCell>
         </VirtualRow>
       }

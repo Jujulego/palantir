@@ -25,7 +25,12 @@ export default function ConsoleLayout({ children }: ConsoleLayoutProps) {
 
   // Render
   return (
-    <Box sx={{ display: 'flex', '--mui-palette-TableCell-border': 'var(--mui-palette-divider)' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        '--mui-palette-TableCell-border': 'var(--mui-palette-divider)'
+      }}
+    >
       <AppBar position="fixed" elevation={2}>
         <Toolbar disableGutters sx={{ px: 2 }}>
           <IconButton onClick={handleOpenDrawer} sx={{ display: { md: 'none' } }}>
@@ -40,7 +45,15 @@ export default function ConsoleLayout({ children }: ConsoleLayoutProps) {
 
       <ConsoleDrawer isOpen={drawerOpen} onClose={handleCloseDrawer} />
 
-      <Stack component="main" sx={{ height: '100vh', flex: '1 0 0', overflow: 'auto' }}>
+      <Stack
+        component="main"
+        sx={{
+          containerType: 'inline-size',
+          height: '100vh',
+          flex: '1 0 0',
+          overflow: 'auto',
+        }}
+      >
         <Toolbar />
         { children }
       </Stack>

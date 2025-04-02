@@ -42,15 +42,15 @@ export default function UserRow({ user, ...rest }: VirtualUserRowProps) {
         </ButtonBase>
       </VirtualCell>
 
-      <VirtualCell sx={{ display: { xs: 'none', md: 'block' } }}>
+      <VirtualCell sx={{ display: { '@xs': 'none', '@md': 'block' } }}>
         <UserEmail user={user} />
       </VirtualCell>
 
-      <VirtualCell sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'center', py: 0, gap: 1 }}>
+      <VirtualCell sx={{ display: { '@xs': 'none', '@sm': 'flex' }, alignItems: 'center', py: 0, gap: 1 }}>
         <UserIdentities identities={user.identities} />
       </VirtualCell>
 
-      <VirtualCell sx={{ display: { xs: 'none', md: 'block' } }}>
+      <VirtualCell sx={{ display: { '@xs': 'none', '@md': 'block' } }}>
         { user.logins_count ?? 0 }
       </VirtualCell>
 
