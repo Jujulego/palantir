@@ -12,6 +12,7 @@ export default async function AdminPage() {
       </Typography>
 
       <Box
+        component="section"
         sx={{
           display: 'grid',
           gridTemplateColumns: 'repeat(12, 1fr)',

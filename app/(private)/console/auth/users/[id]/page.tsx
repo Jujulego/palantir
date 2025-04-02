@@ -31,8 +31,18 @@ export default async function ConsoleUsersId({ params }: ConsoleUsersIdProps) {
   }
 
   return (
-    <Box component="article" sx={{ flex: '1 0 0', overflow: 'auto' }}>
-      <Box component="section" sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', alignContent: 'start', my: 3, px: 3, gap: 3 }}>
+    <Box component="article" sx={{ flex: '1 0 0', overflow: 'auto', pt: 2 }}>
+      <Box
+        component="section"
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { '@xs': '1fr', '@sm': 'repeat(2, 1fr)' },
+          alignContent: 'start',
+          mb: 3,
+          px: 3,
+          gap: 3
+        }}
+      >
         <DataField
           label="Name"
           value={user.name && <Typography>{ user.name }</Typography>}
@@ -55,7 +65,14 @@ export default async function ConsoleUsersId({ params }: ConsoleUsersIdProps) {
         <Typography component="h2" variant="h5" sx={{ mb: 1 }}>Logins</Typography>
         <Divider sx={{ mb: 2 }} />
 
-        <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', alignContent: 'start', gap: 3 }}>
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: { '@xs': '1fr', '@sm': 'repeat(2, 1fr)' },
+            alignContent: 'start',
+            gap: 3
+          }}
+        >
           <DataField
             label="Last login"
             value={user.last_login && <FormatDate date={user.last_login} format="lll" />}
