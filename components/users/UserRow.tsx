@@ -7,6 +7,7 @@ import UserEmail from '@/components/users/UserEmail';
 import UserIdentities from '@/components/users/UserIdentities';
 import FormatDate from '@/components/utils/FormatDate';
 import type { UserDto } from '@/lib/users/user.dto';
+import Box from '@mui/material/Box';
 import ButtonBase from '@mui/material/ButtonBase';
 import Link from 'next/link';
 
@@ -24,6 +25,8 @@ export default function UserRow({ user, ...rest }: VirtualUserRowProps) {
           href={`/console/auth/users/${encodeURIComponent(user.user_id)}`}
           sx={{
             height: '100%',
+            width: '100%',
+            overflow: 'hidden',
             px: 2,
 
             display: 'flex',
@@ -33,19 +36,21 @@ export default function UserRow({ user, ...rest }: VirtualUserRowProps) {
           }}
         >
           <UserAvatar user={user} size={24} />
-          <span>{user.nickname ?? user.name}</span>
+          <Box sx={{ flex: '1 0 0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            {user.nickname ?? user.name}
+          </Box>
         </ButtonBase>
       </VirtualCell>
 
-      <VirtualCell sx={{ py: 0 }}>
-        <UserEmail user={user} sx={{ height: '100%' }} />
+      <VirtualCell sx={{ display: { '@xs': 'none', '@md': 'block' } }}>
+        <UserEmail user={user} />
       </VirtualCell>
 
-      <VirtualCell sx={{ display: 'flex', alignItems: 'center', py: 0, gap: 1 }}>
+      <VirtualCell sx={{ display: { '@xs': 'none', '@sm': 'flex' }, alignItems: 'center', py: 0, gap: 1 }}>
         <UserIdentities identities={user.identities} />
       </VirtualCell>
 
-      <VirtualCell>
+      <VirtualCell sx={{ display: { '@xs': 'none', '@md': 'block' } }}>
         { user.logins_count ?? 0 }
       </VirtualCell>
 

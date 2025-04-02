@@ -6,6 +6,14 @@ export type VirtualCellProps = TableCellProps;
 
 export default function VirtualCell({ sx, ...rest }: VirtualCellProps) {
   return (
-    <TableCell {...rest} sx={mergeSx({ display: 'block' }, sx)} />
+    <TableCell
+      {...rest}
+      sx={mergeSx({
+        display: 'block',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap'
+      }, sx)}
+    />
   );
 }

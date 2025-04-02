@@ -2,11 +2,12 @@ import { mergeSx } from '@/lib/utils/mui';
 import Table, { type TableProps } from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableHead from '@mui/material/TableHead';
+import { ResponsiveStyleValue } from '@mui/system';
 import { type ReactNode } from 'react';
 
 // Component
 export interface VirtualTableSkeletonProps extends Omit<TableProps, 'component'> {
-  readonly columnLayout: string;
+  readonly columnLayout: ResponsiveStyleValue<string>;
   readonly head?: ReactNode;
 }
 

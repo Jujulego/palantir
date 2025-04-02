@@ -5,6 +5,7 @@ import { mergeSx } from '@/lib/utils/mui';
 import Table, { type TableProps } from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableHead from '@mui/material/TableHead';
+import type { ResponsiveStyleValue } from '@mui/system';
 import { collect$, map$, pipe$ } from 'kyrielle';
 import { type ReactNode, type UIEvent, useCallback, useEffect, useRef, useState } from 'react';
 
@@ -13,7 +14,7 @@ const DEFAULT_ROW_SIZE = 52.68;
 
 // Component
 export interface VirtualTableProps<in out D = unknown> extends Omit<TableProps, 'component'> {
-  readonly columnLayout: string;
+  readonly columnLayout: ResponsiveStyleValue<string>;
   readonly data: D;
   readonly head?: ReactNode;
   readonly loadedCount?: number;
