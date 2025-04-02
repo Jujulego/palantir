@@ -1,7 +1,7 @@
 import UserCount from '@/components/UserCount';
 import UserCountSkeleton from '@/components/users/UserCountSkeleton';
-import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import Box from '@mui/system/Box';
 import { Suspense } from 'react';
 
 export default async function AdminPage() {
@@ -11,13 +11,18 @@ export default async function AdminPage() {
         Dashboard
       </Typography>
 
-      <Grid container spacing={2} padding={2}>
-        <Grid size={3}>
-          <Suspense fallback={<UserCountSkeleton />}>
-            <UserCount />
-          </Suspense>
-        </Grid>
-      </Grid>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(12, 1fr)',
+          p: 2,
+          gap: 2,
+        }}
+      >
+        <Suspense fallback={<UserCountSkeleton />}>
+          <UserCount sx={{ gridColumn: { '@xs': 'span 12', '@sm': 'span 6', '@md': 'span 3' } }} />
+        </Suspense>
+      </Box>
     </>
   );
 }

@@ -17,7 +17,7 @@ export default function ConsoleHomeLink({ sx }: HomeLinkProps) {
       color="inherit"
       sx={mergeSx({ gap: 2, fontSize: '1.25rem', lineHeight: 1.25, textTransform: 'capitalize' }, sx)}
     >
-      <PalantirIcon width={24} height={24} sx={{ display: { xs: 'none', md: 'block' } }} />
+      <PalantirIcon width={24} height={24} sx={{ display: { xs: 'none', lg: 'block' } }} />
       Palantir
     </Button>
   );

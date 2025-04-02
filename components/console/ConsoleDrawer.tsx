@@ -2,13 +2,10 @@ import RightGate from '@/components/auth/RightGate';
 import ConsoleDrawerLink from '@/components/console/ConsoleDrawerLink';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
-import { useTheme } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListSubheader from '@mui/material/ListSubheader';
 import Toolbar from '@mui/material/Toolbar';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useEffect } from 'react';
 
 // Constants
 const DRAWER_WIDTH = 320;
@@ -20,22 +17,12 @@ export interface ConsoleDrawerProps {
 }
 
 export default function ConsoleDrawer({ open, onClose }: ConsoleDrawerProps) {
-  const theme = useTheme();
-
-  // State
-  const isTemporary = useMediaQuery(theme.breakpoints.down('md'));
-
-  useEffect(() => {
-    if (!isTemporary) onClose();
-  }, [isTemporary, onClose]);
-
-  // Render
   return (
     <>
       <Drawer
         variant="permanent"
         sx={{
-          display: { xs: 'none', md: 'block' },
+          display: { xs: 'none', lg: 'block' },
           flex: '0 0 auto',
           width: DRAWER_WIDTH,
 
@@ -53,7 +40,7 @@ export default function ConsoleDrawer({ open, onClose }: ConsoleDrawerProps) {
         onClose={onClose}
         variant="temporary"
         sx={{
-          display: { xs: 'block' },
+          display: { lg: 'block' },
 
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
