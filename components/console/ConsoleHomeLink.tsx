@@ -1,3 +1,5 @@
+'use client';
+
 import PalantirIcon from '@/components/icons/PalantirIcon';
 import { mergeSx } from '@/lib/utils/mui';
 import Button from '@mui/material/Button';
@@ -5,11 +7,11 @@ import { SxProps, Theme } from '@mui/material/styles';
 import Link from 'next/link';
 
 // Component
-export interface HomeLinkProps {
+export interface ConsoleHomeLinkProps {
   readonly sx?: SxProps<Theme>;
 }
 
-export default function ConsoleHomeLink({ sx }: HomeLinkProps) {
+export default function ConsoleHomeLink({ sx }: ConsoleHomeLinkProps) {
   return (
     <Button
       component={Link}

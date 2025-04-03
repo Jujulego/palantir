@@ -33,7 +33,7 @@ export default function ConsoleLayout({ children }: ConsoleLayoutProps) {
     >
       <AppBar position="fixed" elevation={2}>
         <Toolbar disableGutters sx={{ px: 2 }}>
-          <IconButton onClick={handleToggleDrawer} color="inherit" sx={{ display: { md: 'none' } }}>
+          <IconButton onClick={handleToggleDrawer} color="inherit" sx={{ display: { lg: 'none' } }}>
             <MenuIcon />
           </IconButton>
 

@@ -8,7 +8,6 @@ import SearchBox from '@/components/search/SearchBox';
 import { SearchBoxSkeleton } from '@/components/search/SearchBoxSkeleton';
 import ServerSearchOptions from '@/components/server/ServerSearchOptions';
 import Paper from '@mui/material/Paper';
-import { domAnimation, LazyMotion } from 'motion/react';
 import type { Metadata } from 'next';
 import { type ReactNode, Suspense } from 'react';
 
@@ -20,27 +19,25 @@ export interface WithMapLayoutProps {
 export default async function WithMapLayout({ children }: WithMapLayoutProps) {
   // Render
   return (
-    <LazyMotion features={domAnimation} strict>
-      <MapLayout>
-        <MapToolbar component="header">
-          <Suspense fallback={<SearchBoxSkeleton sx={{ width: 384 }} />}>
-            <SearchBox sx={{ width: 384 }}>
-              <AnimalSearchOptions />
-              <DnsSearchOptions />
-              <ServerSearchOptions />
-            </SearchBox>
-          </Suspense>
+    <MapLayout>
+      <MapToolbar component="header">
+        <Suspense fallback={<SearchBoxSkeleton sx={{ width: 384 }} />}>
+          <SearchBox sx={{ width: 384 }}>
+            <AnimalSearchOptions />
+            <DnsSearchOptions />
+            <ServerSearchOptions />
+          </SearchBox>
+        </Suspense>
 
-          <Paper elevation={2} sx={{ ml: 'auto', p: 0.5, borderRadius: 9999 }}>
-            <ProfileMenu />
-          </Paper>
-        </MapToolbar>
+        <Paper elevation={2} sx={{ ml: 'auto', p: 0.5, borderRadius: 9999 }}>
+          <ProfileMenu />
+        </Paper>
+      </MapToolbar>
 
-        <MapDrawerSurface>
-          { children }
-        </MapDrawerSurface>
-      </MapLayout>
-    </LazyMotion>
+      <MapDrawerSurface>
+        { children }
+      </MapDrawerSurface>
+    </MapLayout>
   );
 }
 

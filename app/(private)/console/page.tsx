@@ -1,9 +1,9 @@
-import UserCount from '@/components/UserCount';
-import UserCountSkeleton from '@/components/users/UserCountSkeleton';
+import UserCountSsr from '@/components/users/UserCountSsr';
+import StatCard from '@/components/utils/StatCard';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/system/Box';
-import { Suspense } from 'react';
 
+// Page
 export default async function AdminPage() {
   return (
     <>
@@ -20,9 +20,13 @@ export default async function AdminPage() {
           gap: 2,
         }}
       >
-        <Suspense fallback={<UserCountSkeleton />}>
-          <UserCount sx={{ gridColumn: { '@xs': 'span 12', '@sm': 'span 6', '@md': 'span 3' } }} />
-        </Suspense>
+        <StatCard
+          title="Users"
+          href="/console/auth/users"
+          sx={{ gridColumn: { '@xs': 'span 12', '@sm': 'span 6', '@md': 'span 3' } }}
+        >
+          <UserCountSsr />
+        </StatCard>
       </Box>
     </>
   );

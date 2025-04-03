@@ -3,6 +3,7 @@ import theme from '@/theme';
 import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { domAnimation, LazyMotion } from 'motion/react';
 import type { Metadata, Viewport } from 'next';
 import { ReactNode } from 'react';
 
@@ -19,7 +20,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <InitColorSchemeScript attribute="class" />
 
       <MuiProvider>
-        { children }
+        <LazyMotion features={domAnimation} strict>
+          { children }
+        </LazyMotion>
       </MuiProvider>
 
       <Analytics />
