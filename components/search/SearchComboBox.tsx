@@ -76,7 +76,7 @@ export function SearchComboBox(props: SearchComboBoxProps) {
     onInputChange('');
     onClose();
     inputRef.current?.focus();
-  }, [onClose, onInputChange]);
+  }, [inputRef, onClose, onInputChange]);
   
   // Render
   return (

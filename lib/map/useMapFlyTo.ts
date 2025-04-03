@@ -73,7 +73,7 @@ export function useMapFlyTo() {
     animate(camera.lat, [startCenter.lat, center.lat], { duration, ease: (k) => u(k * S) });
     animate(camera.lng, [startCenter.lng, center.lng], { duration, ease: (k) => u(k * S) });
     animate(camera.zoom, [0, zoom], { duration, ease: (k) => (startZoom + tr.scaleZoom(1 / w(k * S))) / zoom });
-  }, [animate, camera.lat, camera.lng, camera.zoom, isLoaded, map]);
+  }, [animate, camera.lat, camera.lng, camera.zoom, isLoaded, map, mapboxRef]);
 
   return { flyTo, isReady: !!map && isLoaded && isMapboxLoaded };
 }
