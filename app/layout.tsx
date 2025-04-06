@@ -7,6 +7,11 @@ import { domAnimation, LazyMotion } from 'motion/react';
 import type { Metadata, Viewport } from 'next';
 import { ReactNode } from 'react';
 
+// Constants
+const APP_NAME = 'Palantir';
+const TITLE = 'Palantir';
+const DESCRIPTION = 'One map to locate them all';
+
 // Layout
 export interface RootLayoutProps {
   readonly children: ReactNode;
@@ -33,10 +38,39 @@ export default function RootLayout({ children }: RootLayoutProps) {
 }
 
 export const metadata: Metadata = {
-  description: 'One map to locate them all',
+  applicationName: APP_NAME,
+  title: {
+    default: TITLE,
+    template: `${TITLE} - %s`,
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  description: DESCRIPTION,
+
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black',
+    title: TITLE,
+  },
+
   openGraph: {
-    siteName: 'Palantir',
-    description: 'One map to locate them all',
+    type: 'website',
+    siteName: APP_NAME,
+    title: {
+      default: TITLE,
+      template: `${TITLE} - %s`,
+    },
+    description: DESCRIPTION,
+  },
+
+  twitter: {
+    card: 'summary',
+    title: {
+      default: TITLE,
+      template: `${TITLE} - %s`,
+    },
+    description: DESCRIPTION,
   }
 };
 
