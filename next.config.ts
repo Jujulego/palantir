@@ -1,7 +1,6 @@
 import { codecovNextJSWebpackPlugin } from '@codecov/nextjs-webpack-plugin';
 import withBundleAnalyzer from '@next/bundle-analyzer';
 import { withSentryConfig } from '@sentry/nextjs';
-import withSerwistInit from '@serwist/next';
 import type { NextConfig } from 'next';
 import { webpack } from 'next/dist/compiled/webpack/webpack';
 
@@ -71,10 +70,6 @@ const plugins = [
     tunnelRoute: '/monitoring',
     widenClientFileUpload: !!process.env.CI,
   }),
-  withSerwistInit({
-    swSrc: 'app/sw.ts',
-    swDest: 'public/sw.js',
-  })
 ];
 
 export default plugins.reduce((cfg, plugin) => plugin(cfg), nextConfig);
