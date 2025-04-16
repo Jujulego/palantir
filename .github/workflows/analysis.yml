@@ -20,10 +20,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
 
-      - name: Use Node.js 20.18.x
+      - name: Use Node.js 22.x
         uses: actions/setup-node@v4.4.0
         with:
-          node-version: 22.14.x
+          node-version: 22.x
           cache: yarn
 
       - name: Install
@@ -47,10 +47,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
 
-      - name: Use Node.js 20.18.x
+      - name: Use Node.js 22.x
         uses: actions/setup-node@v4.4.0
         with:
-          node-version: 22.14.x
+          node-version: 22.x
           cache: yarn
 
       - name: Install
