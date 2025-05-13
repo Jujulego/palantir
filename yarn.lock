@@ -5462,11 +5462,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:^12.10.5":
-  version: 12.10.5
-  resolution: "framer-motion@npm:12.10.5"
+"framer-motion@npm:^12.11.0":
+  version: 12.11.0
+  resolution: "framer-motion@npm:12.11.0"
   dependencies:
-    motion-dom: "npm:^12.10.5"
+    motion-dom: "npm:^12.11.0"
     motion-utils: "npm:^12.9.4"
     tslib: "npm:^2.4.0"
   peerDependencies:
@@ -5480,7 +5480,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 10c0/a24a44b7a1b21e347f93f9ec3c1218b9ebf2b2bc2883c26ab9951e19a62fdc2e03f80a57d0c78eaf408d098ed6f0fbcae48207313921c1f5462eb04296adf55b
+  checksum: 10c0/369026997d12e51ba5ca12ecf507ccf2108941c9e634d0d57ff93524d56d72dc38cd909ce1272a155d15b92faf0ddf9268942908be29032e36cc535a353fd497
   languageName: node
   linkType: hard
 
@@ -7066,12 +7066,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"motion-dom@npm:^12.10.5":
-  version: 12.10.5
-  resolution: "motion-dom@npm:12.10.5"
+"motion-dom@npm:^12.11.0":
+  version: 12.11.0
+  resolution: "motion-dom@npm:12.11.0"
   dependencies:
     motion-utils: "npm:^12.9.4"
-  checksum: 10c0/2c362eb94c941bbbc42288a6738b8c7a11933687b3b20aa6c9f2c3dedc69e5c7995c7348499b535f8abe5ed9ea81d88f9eb2f98b69f5012bcd80b8f7a64a1c2c
+  checksum: 10c0/9fd7441c38b28560ea2db0f4dbd6f412873e777f5d32e623792cc8ff32c0bbff761f68102115060af81325227cc639e548f6123bdced50722f55bc2abda76b55
   languageName: node
   linkType: hard
 
@@ -7082,11 +7082,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"motion@npm:12.10.5":
-  version: 12.10.5
-  resolution: "motion@npm:12.10.5"
+"motion@npm:12.11.0":
+  version: 12.11.0
+  resolution: "motion@npm:12.11.0"
   dependencies:
-    framer-motion: "npm:^12.10.5"
+    framer-motion: "npm:^12.11.0"
     tslib: "npm:^2.4.0"
   peerDependencies:
     "@emotion/is-prop-valid": "*"
@@ -7099,7 +7099,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 10c0/d8f1755a565332e6122e2079e164026b945eda34827170f2615999d74d3df2ad77984ca55304d7682b97a2ccf83c33508d234af619b043cd18056047884396d1
+  checksum: 10c0/1066de76a5d8a7a6898d8b47afe4363098466c67ed79cb989c0f05c11aa62a2cc83f61cc283ec07b452ae0622f6cd1c4584f1a0a68174798d67ba8811c52ac11
   languageName: node
   linkType: hard
 
@@ -7527,7 +7527,7 @@ __metadata:
     jsdom: "npm:26.1.0"
     kyrielle: "npm:2.2.2"
     mapbox-gl: "npm:3.12.0"
-    motion: "npm:12.10.5"
+    motion: "npm:12.11.0"
     next: "npm:15.3.2"
     next-connect: "npm:1.0.0"
     prismjs: "npm:1.30.0"
