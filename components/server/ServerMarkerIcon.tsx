@@ -21,7 +21,7 @@ export default function ServerMarkerIcon({ markerKey, tooltip, sx }: ServerMarke
 
   return (
     <m.div
-      initial={{ scale: 0, translateY: '8.33%' }}
+      initial={{ scale: 0, y: '8.33%' }}
       style={{
         transformOrigin: 'bottom center',
       }}
