@@ -27,7 +27,7 @@ export default function AnimalMarker({ coordinates }: AnimalMarkerProps) {
     <NoSsr>
       <MapMarker latitude={coordinates.latitude} longitude={coordinates.longitude}>
         <m.div
-          initial={{ scale: 0, translateY: '8.33%' }}
+          initial={{ scale: 0, y: '8.33%' }}
           animate={{
             scale: 1.325,
           }}
