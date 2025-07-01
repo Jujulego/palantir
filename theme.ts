@@ -107,6 +107,7 @@ const theme = createTheme({
     appBar: 1200,
     drawer: 1100,
   },
+  modularCssLayers: true,
 });
 
 export default theme;

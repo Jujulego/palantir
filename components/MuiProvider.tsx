@@ -12,7 +12,7 @@ export interface MuiProviderProps {
 
 export default function MuiProvider({ children }: MuiProviderProps) {
   return (
-    <AppRouterCacheProvider>
+    <AppRouterCacheProvider options={{ enableCssLayer: true }}>
       <ThemeProvider theme={theme}>
         <CssBaseline enableColorScheme />
 
