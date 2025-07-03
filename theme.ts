@@ -61,6 +61,7 @@ const theme = createTheme({
   cssVariables: {
     colorSchemeSelector: 'class'
   },
+  modularCssLayers: '@layer mapbox, mui;',
   palette: {
     mode: 'light',
     bigDataCloud: base.palette.augmentColor({

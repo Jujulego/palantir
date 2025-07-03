@@ -2,10 +2,10 @@ import type { MapCamera } from '@/components/map/map.context';
 import { useLazyMapbox } from '@/lib/map/useLazyMapbox';
 import { styled } from '@mui/material';
 import type { Map } from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
 import { m, useTransform } from 'motion/react';
 import { useEffect, useRef } from 'react';
 import { preconnect, prefetchDNS } from 'react-dom';
+import './mapbox.css';
 
 // Component
 preconnect('https://api.mapbox.com');
