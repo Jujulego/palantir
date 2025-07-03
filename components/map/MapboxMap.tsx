@@ -5,8 +5,7 @@ import type { Map } from 'mapbox-gl';
 import { m, useTransform } from 'motion/react';
 import { useEffect, useRef } from 'react';
 import { preconnect, prefetchDNS } from 'react-dom';
-
-import 'mapbox-gl/dist/mapbox-gl.css';
+import './mapbox.css';
 
 // Component
 preconnect('https://api.mapbox.com');
@@ -86,7 +85,6 @@ export default function MapboxMap(props: MapboxMapProps) {
     <Container
       ref={containerRef}
       style={{
-        position: 'absolute',
         height: camera.height,
         width: camera.width,
         '--MapboxMap-top': top,

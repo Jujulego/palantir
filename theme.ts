@@ -61,6 +61,7 @@ const theme = createTheme({
   cssVariables: {
     colorSchemeSelector: 'class'
   },
+  modularCssLayers: '@layer theme, base, mapbox, mui, components, utilities;',
   palette: {
     mode: 'light',
     bigDataCloud: base.palette.augmentColor({
@@ -107,7 +108,6 @@ const theme = createTheme({
     appBar: 1200,
     drawer: 1100,
   },
-  modularCssLayers: true,
 });
 
 export default theme;

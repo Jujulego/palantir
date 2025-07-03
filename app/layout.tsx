@@ -7,8 +7,6 @@ import { domAnimation, LazyMotion } from 'motion/react';
 import type { Metadata, Viewport } from 'next';
 import { ReactNode } from 'react';
 
-import './global.css';
-
 // Constants
 const APP_NAME = 'Palantir';
 const TITLE = 'Palantir';
