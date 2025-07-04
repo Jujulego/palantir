@@ -1,4 +1,3 @@
-import { codecovNextJSWebpackPlugin } from '@codecov/nextjs-webpack-plugin';
 import withBundleAnalyzer from '@next/bundle-analyzer';
 import { withSentryConfig } from '@sentry/nextjs';
 import type { NextConfig } from 'next';
@@ -31,14 +30,8 @@ const nextConfig: NextConfig = {
       hmrRefreshes: true,
     }
   },
-  webpack(config: NextConfig, options) {
+  webpack(config: NextConfig) {
     config.plugins.push(
-      codecovNextJSWebpackPlugin({
-        enableBundleAnalysis: !!process.env.CODECOV_TOKEN,
-        bundleName: 'palantir',
-        uploadToken: process.env.CODECOV_TOKEN,
-        webpack: options.webpack,
-      }),
       new webpack.DefinePlugin({
         __RRWEB_EXCLUDE_IFRAME__: true,
       })
