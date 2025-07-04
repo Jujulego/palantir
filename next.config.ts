@@ -53,7 +53,7 @@ export default pipe$(
     reactComponentAnnotation: {
       enabled: true,
     },
-    silent: !process.env.CI,
+    silent: true,
     widenClientFileUpload: true,
   })
 );
