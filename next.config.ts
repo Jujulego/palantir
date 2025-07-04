@@ -1,9 +1,17 @@
 import withBundleAnalyzer from '@next/bundle-analyzer';
 import { withSentryConfig } from '@sentry/nextjs';
+import { pipe$ } from 'kyrielle';
 import type { NextConfig } from 'next';
 
 // Config
 const nextConfig: NextConfig = {
+  compiler: {
+    define: {
+      __SENTRY_DEBUG__: 'false',
+      __RRWEB_EXCLUDE_IFRAME__: 'true',
+      __RRWEB_EXCLUDE_SHADOW_DOM__: 'true',
+    }
+  },
   images: {
     remotePatterns: [
       {
@@ -32,11 +40,12 @@ const nextConfig: NextConfig = {
 };
 
 // Plugins
-const plugins = [
+export default pipe$(
+  nextConfig,
   withBundleAnalyzer({
     enabled: process.env.ANALYZE === 'true'
   }),
-  (config: NextConfig) => withSentryConfig(config, {
+  (config) => withSentryConfig(config, {
     org: 'jujulego',
     project: 'palantir',
 
@@ -47,7 +56,5 @@ const plugins = [
     },
     silent: !process.env.CI,
     widenClientFileUpload: true,
-  }),
-];
-
-export default plugins.reduce((cfg, plugin) => plugin(cfg), nextConfig);
+  })
+);
