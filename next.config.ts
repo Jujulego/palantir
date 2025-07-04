@@ -1,10 +1,16 @@
 import withBundleAnalyzer from '@next/bundle-analyzer';
 import { withSentryConfig } from '@sentry/nextjs';
+import { pipe$ } from 'kyrielle';
 import type { NextConfig } from 'next';
-import { webpack } from 'next/dist/compiled/webpack/webpack';
 
 // Config
 const nextConfig: NextConfig = {
+  compiler: {
+    define: {
+      __RRWEB_EXCLUDE_IFRAME__: 'true',
+      __RRWEB_EXCLUDE_SHADOW_DOM__: 'true',
+    }
+  },
   images: {
     remotePatterns: [
       {
@@ -30,39 +36,24 @@ const nextConfig: NextConfig = {
       hmrRefreshes: true,
     }
   },
-  webpack(config: NextConfig) {
-    config.plugins.push(
-      new webpack.DefinePlugin({
-        __RRWEB_EXCLUDE_IFRAME__: true,
-      })
-    );
-
-    return config;
-  }
 };
 
 // Plugins
-const plugins = [
+export default pipe$(
+  nextConfig,
   withBundleAnalyzer({
     enabled: process.env.ANALYZE === 'true'
   }),
-  (config: NextConfig) => withSentryConfig(config, {
+  (config) => withSentryConfig(config, {
     org: 'jujulego',
     project: 'palantir',
 
-    automaticVercelMonitors: true,
+    authToken: process.env.SENTRY_AUTH_TOKEN,
     disableLogger: true,
     reactComponentAnnotation: {
       enabled: true,
     },
-    silent: !process.env.CI,
-    sourcemaps: {
-      disable: !process.env.CI,
-      deleteSourcemapsAfterUpload: true,
-    },
-    tunnelRoute: '/monitoring',
-    widenClientFileUpload: !!process.env.CI,
-  }),
-];
-
-export default plugins.reduce((cfg, plugin) => plugin(cfg), nextConfig);
+    silent: true,
+    widenClientFileUpload: true,
+  })
+);

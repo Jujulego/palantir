@@ -26,18 +26,20 @@ const router = createEdgeRouter<NextRequest, NextFetchEvent>();
 
 router
   .use(async (request, _, next) => {
-    const session = await auth0.getSession();
+    const session = await auth0.getSession(request);
 
-    setUser({
-      id: session?.user?.sub,
-      email: session?.user?.email,
-      ip_address: request.headers.get('X-Forwarded-For') ?? undefined,
-    });
+    if (session) {
+      setUser({
+        id: session.user.sub,
+        username: session.user.name,
+        email: session.user.email,
+      });
+    }
 
     return next();
   })
   .use('/console/', async (request, _, next) => {
-    const session = await auth0.getSession();
+    const session = await auth0.getSession(request);
 
     if (session) {
       return next();
