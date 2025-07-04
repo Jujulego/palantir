@@ -7,7 +7,6 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   compiler: {
     define: {
-      __SENTRY_DEBUG__: 'false',
       __RRWEB_EXCLUDE_IFRAME__: 'true',
       __RRWEB_EXCLUDE_SHADOW_DOM__: 'true',
     }
