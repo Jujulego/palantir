@@ -1,7 +1,6 @@
 import withBundleAnalyzer from '@next/bundle-analyzer';
 import { withSentryConfig } from '@sentry/nextjs';
 import type { NextConfig } from 'next';
-import { webpack } from 'next/dist/compiled/webpack/webpack';
 
 // Config
 const nextConfig: NextConfig = {
@@ -30,15 +29,6 @@ const nextConfig: NextConfig = {
       hmrRefreshes: true,
     }
   },
-  webpack(config: NextConfig) {
-    config.plugins.push(
-      new webpack.DefinePlugin({
-        __RRWEB_EXCLUDE_IFRAME__: true,
-      })
-    );
-
-    return config;
-  }
 };
 
 // Plugins
@@ -50,18 +40,13 @@ const plugins = [
     org: 'jujulego',
     project: 'palantir',
 
-    automaticVercelMonitors: true,
+    authToken: process.env.SENTRY_AUTH_TOKEN,
     disableLogger: true,
     reactComponentAnnotation: {
       enabled: true,
     },
     silent: !process.env.CI,
-    sourcemaps: {
-      disable: !process.env.CI,
-      deleteSourcemapsAfterUpload: true,
-    },
-    tunnelRoute: '/monitoring',
-    widenClientFileUpload: !!process.env.CI,
+    widenClientFileUpload: true,
   }),
 ];
 
