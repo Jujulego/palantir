@@ -1,8 +1,8 @@
 'use client';
 
-import { SessionRightsContext } from '@/components/auth/session-rights.context';
 import type { RightKey } from '@/lib/auth/permissions';
 import type { ReactNode } from 'react';
+import { SWRConfig, unstable_serialize } from 'swr';
 
 // Component
 export interface ProvideAuthProps {
@@ -12,8 +12,12 @@ export interface ProvideAuthProps {
 
 export default function AuthProvider({ children, sessionRights }: ProvideAuthProps) {
   return (
-    <SessionRightsContext value={sessionRights}>
+    <SWRConfig value={{
+      fallback: {
+        [unstable_serialize(['session-rights'])]: sessionRights,
+      }
+    }}>
       { children }
-    </SessionRightsContext>
+    </SWRConfig>
   );
 }
