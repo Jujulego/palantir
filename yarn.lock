@@ -1463,12 +1463,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/bundle-analyzer@npm:15.3.5":
-  version: 15.3.5
-  resolution: "@next/bundle-analyzer@npm:15.3.5"
+"@next/bundle-analyzer@npm:15.4.0":
+  version: 15.4.0
+  resolution: "@next/bundle-analyzer@npm:15.4.0"
   dependencies:
     webpack-bundle-analyzer: "npm:4.10.1"
-  checksum: 10c0/6b69446543bf806ad2a2a373394e6b042fdbe847acf7cdcb408c4cae94cab416ee7c6516fb2868670331c60509f6fa2bbe9f0dfd67eff89f5a7f8e256dc6cebd
+  checksum: 10c0/28b4312f799600ccce037f5ac5d0270f0615d6800351bf0e71cbae4e011532379ac716974d133cc9d8d17cc46632420c9eb1e0ae581f8f12d8d6f1d5ded85451
   languageName: node
   linkType: hard
 
@@ -1479,12 +1479,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/eslint-plugin-next@npm:15.3.5":
-  version: 15.3.5
-  resolution: "@next/eslint-plugin-next@npm:15.3.5"
+"@next/eslint-plugin-next@npm:15.4.0":
+  version: 15.4.0
+  resolution: "@next/eslint-plugin-next@npm:15.4.0"
   dependencies:
     fast-glob: "npm:3.3.1"
-  checksum: 10c0/fb86ead7d0c0b47cd670d866e4c1dfd28d288f30d2db8756a57b5c63a0e47db874202e69e5cf7990815a1e75fb012876acc602d90b43ad4eeeb2b167e20949b6
+  checksum: 10c0/3c96f8d9f0ae1d9b92334d21756c9dd51b099ebfa58c8efad1d3d681dc5660bd0d1d573e393487530715ccbc816123a31f5cef481b1e6611d066511e7723c609
   languageName: node
   linkType: hard
 
@@ -4897,11 +4897,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-next@npm:15.3.5":
-  version: 15.3.5
-  resolution: "eslint-config-next@npm:15.3.5"
+"eslint-config-next@npm:15.4.0":
+  version: 15.4.0
+  resolution: "eslint-config-next@npm:15.4.0"
   dependencies:
-    "@next/eslint-plugin-next": "npm:15.3.5"
+    "@next/eslint-plugin-next": "npm:15.4.0"
     "@rushstack/eslint-patch": "npm:^1.10.3"
     "@typescript-eslint/eslint-plugin": "npm:^5.4.2 || ^6.0.0 || ^7.0.0 || ^8.0.0"
     "@typescript-eslint/parser": "npm:^5.4.2 || ^6.0.0 || ^7.0.0 || ^8.0.0"
@@ -4917,7 +4917,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/fae92e297d834202ed327873946d279bda458041db663f1c7f4bbe7426af54a4de3c8f4b6a3193d2bebee32e48e138de044e4f05668e30c2fe0822e413f08117
+  checksum: 10c0/2f1e650a9e9d507149c967495bdc9a4a2eb398dc8ab7718a7fbee0ca8f55382649ca38e6dbb5ebcd467c7259af3d7d16d09418a7d8a788575646b0d718e10f7d
   languageName: node
   linkType: hard
 
@@ -7404,8 +7404,8 @@ __metadata:
     "@mui/material": "npm:7.2.0"
     "@mui/material-nextjs": "npm:7.2.0"
     "@mui/system": "npm:7.2.0"
-    "@next/bundle-analyzer": "npm:15.3.5"
-    "@next/eslint-plugin-next": "npm:15.3.5"
+    "@next/bundle-analyzer": "npm:15.4.0"
+    "@next/eslint-plugin-next": "npm:15.4.0"
     "@sentry/nextjs": "npm:9.38.0"
     "@testing-library/dom": "npm:10.4.0"
     "@testing-library/jest-dom": "npm:6.6.3"
@@ -7423,7 +7423,7 @@ __metadata:
     "@vitest/coverage-v8": "npm:3.2.4"
     dayjs: "npm:1.11.13"
     eslint: "npm:9.31.0"
-    eslint-config-next: "npm:15.3.5"
+    eslint-config-next: "npm:15.4.0"
     eslint-plugin-react: "npm:7.37.5"
     eslint-plugin-react-hooks: "npm:5.2.0"
     i18n-iso-countries: "npm:7.14.0"
