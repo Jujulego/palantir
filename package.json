@@ -25,7 +25,7 @@
     "dayjs": "1.11.13",
     "i18n-iso-countries": "7.14.0",
     "ipaddr.js": "2.2.0",
-    "kyrielle": "2.2.3",
+    "kyrielle": "2.3.1",
     "mapbox-gl": "3.14.0",
     "motion": "12.23.12",
     "next": "15.4.4",
