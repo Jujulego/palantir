@@ -1,6 +1,6 @@
 import type { Coordinates } from '@/lib/utils/coordinates';
 import { FetchError } from '@/lib/utils/fetch';
-import type { Writeable } from '@/lib/utils/types';
+import type { Writable } from '@/lib/utils/types';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 
@@ -26,7 +26,7 @@ const COORDINATES_REGEX = /\['([^']+)', (-?[0-9.]+), (-?[0-9.]+)],/g;
 // Utils
 async function loadAnimalTrackingPage(name: string): Promise<string | null> {
   console.log(`[animal] loading ${name} tracking page`);
-  const res = await fetch(`https://tracking.clubocean.org/animal/${name}`, {
+  const res = await fetch(`https://tracking.clubocean.org/animal/${encodeURIComponent(name)}`, {
     next: {
       revalidate: 86400,
       tags: [`animal-${name}`]
@@ -53,7 +53,7 @@ export async function scrapAnimalTracking(name: string): Promise<ClubOceanAnimal
     return null;
   }
 
-  const animal: Writeable<ClubOceanAnimal> = {
+  const animal: Writable<ClubOceanAnimal> = {
     name,
     coordinates: []
   };

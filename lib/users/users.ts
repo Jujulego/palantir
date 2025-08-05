@@ -64,7 +64,7 @@ export async function queryUser(id: string): Promise<UserDto | null> {
 
 export async function patchUser(id: string, patch: PatchUserDto): Promise<UserDto | null> {
   console.log(`[auth0] Patch user "${id}"`);
-  const url = new URL(`https://${process.env.AUTH0_DOMAIN}/api/v2/users/${id}`);
+  const url = new URL(`https://${process.env.AUTH0_DOMAIN}/api/v2/users/${encodeURIComponent(id)}`);
   url.searchParams.set('fields', USER_FIELDS.join(','));
 
   try {
@@ -92,7 +92,7 @@ export async function patchUser(id: string, patch: PatchUserDto): Promise<UserDt
 
 export async function linkAccount(id: string, payload: LinkAccountDto): Promise<UserIdentity[]> {
   console.log(`[auth0] Link user "${id}" to account "${payload.user_id}"`);
-  const url = new URL(`https://${process.env.AUTH0_DOMAIN}/api/v2/users/${id}/identities`);
+  const url = new URL(`https://${process.env.AUTH0_DOMAIN}/api/v2/users/${encodeURIComponent(id)}/identities`);
   url.searchParams.set('fields', USER_FIELDS.join(','));
 
   try {

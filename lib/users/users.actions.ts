@@ -24,10 +24,6 @@ export async function actQueryUsers(query: UserListQuery = {}): Promise<UserList
 export async function actPatchUser(id: string, data: PatchUserDto): Promise<UserDto> {
   await needRight('console:ManageUsers');
 
-  if (!AUTH0_USER_ID_REGEX.test(id)) {
-    notFound();
-  }
-
   const result = await patchUser(id, data);
 
   if (!result) {
@@ -40,12 +36,5 @@ export async function actPatchUser(id: string, data: PatchUserDto): Promise<User
 export async function actLinkAccount(id: string, data: LinkAccountDto): Promise<UserIdentity[]> {
   await needRight('console:ManageUsers');
 
-  if (!AUTH0_USER_ID_REGEX.test(id)) {
-    notFound();
-  }
-
   return await linkAccount(id, data);
 }
-
-// Constants
-const AUTH0_USER_ID_REGEX = /^(auth0|google-oauth2)\|[a-z0-9]+$/i;
