@@ -9,7 +9,3 @@ export interface WithMapServerIpPageProps {
 export default async function WithMapServerIpPage({ params }: WithMapServerIpPageProps) {
   permanentRedirect(`/server/${(await params).ip}/ip-info`, RedirectType.replace);
 }
-
-export function generateStaticParams(): WithMapServerIpParams[] {
-  return [{ ip: '8.8.8.8' }];
-}
