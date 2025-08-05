@@ -3,6 +3,7 @@
 import { SearchContext, useLoadingSearchOptions } from '@/components/search/search.context';
 import SearchOption from '@/components/search/SearchOption';
 import { actScrapAnimalTracking } from '@/lib/animal/club-ocean.actions';
+import { ANIMAL_NAME_REGEX } from '@/lib/animal/constants';
 import PetsIcon from '@mui/icons-material/Pets';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -16,7 +17,7 @@ export default function AnimalSearchOptions() {
   const inputValue = _inputValue.toLowerCase();
 
   const { data, isValidating } = useSWR(
-    ANIMAL_RE.test(inputValue)
+    ANIMAL_NAME_REGEX.test(inputValue)
       ? ['animal', inputValue]
       : null,
     { fetcher: animalFetcher }
@@ -45,8 +46,6 @@ export default function AnimalSearchOptions() {
 }
 
 // Utils
-const ANIMAL_RE = /^[a-z]{3,}$/;
-
 type AnimalKey = readonly ['animal', string];
 
 function animalFetcher([, name]: AnimalKey) {

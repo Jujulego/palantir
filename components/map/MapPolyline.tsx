@@ -40,9 +40,16 @@ export default function MapPolyline({ coordinates }: MapPolylineProps) {
       }
     });
 
+    let removed = false;
+    map.once('remove', () => {
+      removed = true;
+    });
+
     return () => {
-      map.removeLayer(`${id}-line`);
-      map.removeSource(id);
+      if (!removed) {
+        map.removeLayer(`${id}-line`);
+        map.removeSource(id);
+      }
     };
   }, [id, isLoaded, map]);
 
