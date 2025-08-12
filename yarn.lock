@@ -7287,7 +7287,7 @@ __metadata:
     react: "npm:19.1.1"
     react-dom: "npm:19.1.1"
     react-syntax-highlighter: "npm:15.6.1"
-    swr: "npm:2.3.5"
+    swr: "npm:2.3.6"
     typescript: "npm:5.9.2"
     vite: "npm:7.1.2"
     vite-tsconfig-paths: "npm:5.1.4"
@@ -8663,15 +8663,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swr@npm:2.3.5, swr@npm:^2.2.5":
-  version: 2.3.5
-  resolution: "swr@npm:2.3.5"
+"swr@npm:2.3.6, swr@npm:^2.2.5":
+  version: 2.3.6
+  resolution: "swr@npm:2.3.6"
   dependencies:
     dequal: "npm:^2.0.3"
     use-sync-external-store: "npm:^1.4.0"
   peerDependencies:
     react: ^16.11.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: 10c0/528580022fdde256541257cf0a4da379664c705c9c66c6341c5943fb4d2dee8dc898b2a8bb0bee3703295f1edb452119e38bcca90656ec83efab26c14571bc8f
+  checksum: 10c0/9534f350982e36a3ae0a13da8c0f7da7011fc979e77f306e60c4e5db0f9b84f17172c44f973441ba56bb684b69b0d9838ab40011a6b6b3e32d0cd7f3d5405f99
   languageName: node
   linkType: hard
 
