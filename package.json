@@ -19,7 +19,7 @@
     "@mui/material": "7.3.2",
     "@mui/material-nextjs": "7.3.2",
     "@mui/system": "7.3.2",
-    "@sentry/nextjs": "10.8.0",
+    "@sentry/nextjs": "10.10.0",
     "@vercel/analytics": "1.5.0",
     "@vercel/speed-insights": "1.2.0",
     "dayjs": "1.11.18",
