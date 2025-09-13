@@ -5532,10 +5532,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gl-matrix@npm:^3.4.3":
-  version: 3.4.3
-  resolution: "gl-matrix@npm:3.4.3"
-  checksum: 10c0/c8ee6e2ce2d089b4ba4ae13ec9d4cb99bf2abe5f68f0cb08d94bbd8bafbec13aacc7230b86539ce5ca01b79226ea8c3194f971f5ca0c81838bc5e4e619dc398e
+"gl-matrix@npm:^3.4.4":
+  version: 3.4.4
+  resolution: "gl-matrix@npm:3.4.4"
+  checksum: 10c0/9aa022ffac0d158212ad0cd29939864ad919ac31cd5dc5a5d35e9d66bb62679ddf152ff7b2173ded20131045e40572b87f31b26a920be2a7583a1516b13b5b4b
   languageName: node
   linkType: hard
 
@@ -6704,9 +6704,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mapbox-gl@npm:3.14.0":
-  version: 3.14.0
-  resolution: "mapbox-gl@npm:3.14.0"
+"mapbox-gl@npm:3.15.0":
+  version: 3.15.0
+  resolution: "mapbox-gl@npm:3.15.0"
   dependencies:
     "@mapbox/jsonlint-lines-primitives": "npm:^2.0.2"
     "@mapbox/mapbox-gl-supported": "npm:^3.0.0"
@@ -6724,7 +6724,7 @@ __metadata:
     csscolorparser: "npm:~1.0.3"
     earcut: "npm:^3.0.1"
     geojson-vt: "npm:^4.0.2"
-    gl-matrix: "npm:^3.4.3"
+    gl-matrix: "npm:^3.4.4"
     grid-index: "npm:^1.1.0"
     kdbush: "npm:^4.0.2"
     martinez-polygon-clipping: "npm:^0.7.4"
@@ -6735,7 +6735,7 @@ __metadata:
     serialize-to-js: "npm:^3.1.2"
     supercluster: "npm:^8.0.1"
     tinyqueue: "npm:^3.0.0"
-  checksum: 10c0/787d65932d08f2501bc0b09e5b5b2b240e0eb146f1aa56e59994e0639f8094cac2a584823f2ffeccfd8b8368d2e71b12ea12fa2279cba8f82b928eebdc93ac30
+  checksum: 10c0/d4d039e2ae6c6055217a1a5a47ce04ad28fc155b0b11c238840ad755c45a40883dfbe1fab34872b682f578d463ce9dd8c6fe5897e361c0a966311a8d1b8ee78b
   languageName: node
   linkType: hard
 
@@ -7354,7 +7354,7 @@ __metadata:
     ipaddr.js: "npm:2.2.0"
     jsdom: "npm:27.0.0"
     kyrielle: "npm:2.5.3"
-    mapbox-gl: "npm:3.14.0"
+    mapbox-gl: "npm:3.15.0"
     motion: "npm:12.23.12"
     next: "npm:15.5.3"
     next-connect: "npm:1.0.0"
