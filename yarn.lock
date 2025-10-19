@@ -6640,13 +6640,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"kyrielle@npm:2.8.2":
-  version: 2.8.2
-  resolution: "kyrielle@npm:2.8.2"
+"kyrielle@npm:2.8.3":
+  version: 2.8.3
+  resolution: "kyrielle@npm:2.8.3"
   dependencies:
     "@repeaterjs/repeater": "npm:^3.0.5"
     "@swc/helpers": "npm:^0.5.3"
-  checksum: 10c0/5d537686fd2f754a3c1cc48689b2b1865c1c899d2cd81c3647ee41b612950608c4a6af76ac2d9b317654e8504927f66896fef0b018bba739f6c1f098d1b91ae2
+  checksum: 10c0/4711c93d11db11dcca7018fbc58cdd58ef5d041b4ac3baae5a52cf4f7da5639cd8814bd98620ad2efe6ffda1305857a9fd4585b8dc545d384f6147777da7c38a
   languageName: node
   linkType: hard
 
@@ -7482,7 +7482,7 @@ __metadata:
     i18n-iso-countries: "npm:7.14.0"
     ipaddr.js: "npm:2.2.0"
     jsdom: "npm:27.0.1"
-    kyrielle: "npm:2.8.2"
+    kyrielle: "npm:2.8.3"
     mapbox-gl: "npm:3.15.0"
     motion: "npm:12.23.24"
     next: "npm:15.5.6"
