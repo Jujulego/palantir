@@ -8,7 +8,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Menu from '@mui/material/Menu';
 import Skeleton from '@mui/material/Skeleton';
 import { styled, type SxProps, type Theme } from '@mui/material/styles';
-import { type ReactNode, useCallback, useId, useRef, useState, useTransition } from 'react';
+import { type MouseEvent, type ReactNode, useCallback, useId, useState, useTransition } from 'react';
 
 export interface MetadataMenuProps {
   readonly children: ReactNode;
@@ -17,13 +17,18 @@ export interface MetadataMenuProps {
 
 export default function MetadataMenu({ children, sx }: MetadataMenuProps) {
   const id = useId();
-  const anchorRef = useRef<HTMLButtonElement | null>(null);
   const [isLoading, startLoading] = useTransition();
 
-  // Open state
-  const [open, setOpen] = useState(false);
-  const handleOpen = useCallback(() => setOpen(true), []);
-  const handleClose = useCallback(() => setOpen(false), []);
+  // Menu state
+  const [anchor, setAnchor] = useState<HTMLButtonElement | null>(null);
+
+  const handleOpen = useCallback((event: MouseEvent<HTMLButtonElement>) => {
+    setAnchor(event.currentTarget);
+  }, []);
+
+  const handleClose = useCallback(() => {
+    setAnchor(null);
+  }, []);
 
   // Selected option
   const [selectedNode, setSelectedNode] = useState<ReactNode>(null);
@@ -36,12 +41,11 @@ export default function MetadataMenu({ children, sx }: MetadataMenuProps) {
       </Fade>
 
       <TriggerButton
-        ref={anchorRef}
         onClick={handleOpen}
         sx={sx}
 
         aria-controls={`${id}-menu`}
-        aria-expanded={open}
+        aria-expanded={!!anchor}
         aria-label="metadata source menu"
         aria-haspopup="true"
       >
@@ -51,12 +55,12 @@ export default function MetadataMenu({ children, sx }: MetadataMenuProps) {
 
       <Menu
         id={`${id}-menu`}
-        open={open}
+        open={!!anchor}
         onClick={handleClose}
         onClose={handleClose}
         keepMounted
 
-        anchorEl={anchorRef.current}
+        anchorEl={anchor}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
 

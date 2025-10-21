@@ -17,8 +17,16 @@ export default function MapMarker({ latitude, longitude, children }: MapMarkerPr
   const { mapboxRef, isLoaded: isMapboxLoaded } = useLazyMapbox();
   const { map, isLoaded } = use(MapContext);
 
-  const elementRef = useRef(document.createElement('div'));
+  const elementRef = useRef<HTMLElement>(null);
   const markerRef = useRef<Marker>(null);
+
+  function element() {
+    if (!elementRef.current) {
+      elementRef.current = document.createElement('div');
+    }
+
+    return elementRef.current;
+  }
 
   useEffect(() => {
     if (!mapboxRef.current) return;
@@ -26,7 +34,7 @@ export default function MapMarker({ latitude, longitude, children }: MapMarkerPr
     const { Marker } = mapboxRef.current;
     const marker = new Marker({
       anchor: 'bottom',
-      element: elementRef.current,
+      element: element(),
       occludedOpacity: 0.75
     }).setLngLat({ lat: latitude, lng: longitude });
 
@@ -59,5 +67,5 @@ export default function MapMarker({ latitude, longitude, children }: MapMarkerPr
   }, [latitude, longitude]);
 
   // Render
-  return createPortal(children, elementRef.current);
+  return createPortal(children, element()); // eslint-disable-line react-hooks/refs
 }
