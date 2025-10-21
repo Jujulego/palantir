@@ -8,7 +8,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { type ChangeEvent, type ReactNode, useCallback, useId, useRef, useTransition } from 'react';
+import { type ChangeEvent, type ReactNode, useCallback, useId, useState, useTransition } from 'react';
 
 // Component
 export interface UserPermissionListItemProps {
@@ -23,12 +23,12 @@ export default function UserPermissionListItem({ user, right, onPatchAction, pri
   const id = useId();
 
   // Action state
-  const pristine = useRef(true);
+  const [pristine, setPristine] = useState(true);
   const [isPending, startChange] = useTransition();
   
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     let permissions = user.app_metadata?.permissions ?? [];
-    pristine.current = false;
+    setPristine(false);
 
     if (event.target.checked) {
       permissions = [...permissions, right];
@@ -50,7 +50,7 @@ export default function UserPermissionListItem({ user, right, onPatchAction, pri
       secondaryAction={
         isPending
           ? <CircularProgress size={24} />
-          : !pristine.current ? <CheckIcon color="success" /> : null
+          : !pristine ? <CheckIcon color="success" /> : null
       }
     >
       <ListItemIcon>

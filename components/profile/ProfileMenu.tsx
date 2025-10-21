@@ -4,6 +4,7 @@ import ColorModeToggle from '@/components/ColorModeToggle';
 import UserAvatar from '@/components/users/UserAvatar';
 import type { UserDto } from '@/lib/users/user.dto';
 import { useUser } from '@auth0/nextjs-auth0';
+import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -20,18 +21,18 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { Suspense, useCallback, useRef, useState } from 'react';
-import GpsFixedIcon from '@mui/icons-material/GpsFixed';
+import { type MouseEvent, Suspense, useCallback, useState } from 'react';
 
 export default function ProfileMenu() {
   const { user = null, isLoading } = useUser();
   const pathname = usePathname();
-  const anchorEl = useRef<HTMLButtonElement>(null);
 
-  // Open state
-  const [isOpen, setIsOpen] = useState(false);
-  const handleOpen = useCallback(() => setIsOpen(true), []);
-  const handleClose = useCallback(() => setIsOpen(false), []);
+  // Popover state
+  const [anchor, setAnchor] = useState<HTMLButtonElement | null>(null);
+  const handleClose = useCallback(() => setAnchor(null), []);
+  const handleOpen = useCallback((event: MouseEvent<HTMLButtonElement>) => {
+    setAnchor(event.currentTarget);
+  }, []);
 
   // Render
   return (
@@ -39,14 +40,14 @@ export default function ProfileMenu() {
       { isLoading ? (
         <Skeleton variant="circular" width={40} height={40} />
       ) : (
-        <IconButton ref={anchorEl} onClick={handleOpen} aria-label="Profile menu" sx={{ padding: 0.5 }}>
+        <IconButton onClick={handleOpen} aria-label="Profile menu" sx={{ padding: 0.5 }}>
           <UserAvatar size={32} user={user as UserDto | null} />
         </IconButton>
       ) }
 
       <Popover
-        open={isOpen}
-        anchorEl={anchorEl.current}
+        open={!!anchor}
+        anchorEl={anchor}
         onClose={handleClose}
         anchorOrigin={{
           vertical: 'top',
