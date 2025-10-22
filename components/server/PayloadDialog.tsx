@@ -1,16 +1,14 @@
 'use client';
 
+import { grey } from '@mui/material/colors';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { styled } from '@mui/material/styles';
 import { useMemo } from 'react';
-import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
-import json from 'react-syntax-highlighter/dist/esm/languages/prism/json';
-import 'prismjs/themes/prism-tomorrow.min.css';
-import { grey } from '@mui/material/colors';
+import { PrismAsyncLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 
-SyntaxHighlighter.registerLanguage('json', json);
+import 'prismjs/themes/prism-tomorrow.min.css';
 
 // Component
 export interface PayloadDialogProps {
