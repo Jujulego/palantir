@@ -1,12 +1,11 @@
 import { decodeName, type WithMapAnimalNameParams } from '@/app/(with-map)/animal/[name]/params';
 import MapDrawerHeader from '@/components/map/drawer/MapDrawerHeader';
+import { IconLink } from '@/components/mui/IconLink';
 import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { type ReactNode } from 'react';
 
 // Layout
@@ -25,14 +24,13 @@ export default async function WithMapAnimalNameLayout({ children, params }: With
           { name }
         </Typography>
 
-        <IconButton
-          component={Link}
+        <IconLink
           href="/"
           sx={{ flex: '0 0 auto', mt: -1 }}
           aria-label="Close panel"
         >
           <CloseIcon />
-        </IconButton>
+        </IconLink>
       </MapDrawerHeader>
 
       <Divider />
