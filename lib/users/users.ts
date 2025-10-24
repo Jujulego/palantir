@@ -77,8 +77,8 @@ export async function patchUser(id: string, patch: PatchUserDto): Promise<UserDt
       cache: 'no-store',
     });
 
-    revalidateTag('users-pages');
-    revalidateTag(`users-${id}`);
+    revalidateTag('users-pages', 'max');
+    revalidateTag(`users-${id}`, 'max');
 
     return result;
   } catch (error) {
@@ -105,9 +105,9 @@ export async function linkAccount(id: string, payload: LinkAccountDto): Promise<
       cache: 'no-store',
     });
 
-    revalidateTag('users-pages');
-    revalidateTag(`users-${id}`);
-    revalidateTag(`users-${payload.user_id}`);
+    revalidateTag('users-pages', 'max');
+    revalidateTag(`users-${id}`, 'max');
+    revalidateTag(`users-${payload.user_id}`, 'max');
 
     return result;
   } catch (error) {

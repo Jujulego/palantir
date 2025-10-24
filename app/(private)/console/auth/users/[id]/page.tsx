@@ -1,4 +1,5 @@
 import { type ConsoleUsersIdParams, decodeId } from '@/app/(private)/console/auth/users/[id]/params';
+import IconLink from '@/components/mui/IconLink';
 import UserEmail from '@/components/users/UserEmail';
 import UserIdentities from '@/components/users/UserIdentities';
 import FormatDate from '@/components/utils/FormatDate';
@@ -7,9 +8,7 @@ import { queryUser } from '@/lib/users/users';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { ReactNode } from 'react';
 
@@ -85,9 +84,9 @@ export default async function ConsoleUsersId({ params }: ConsoleUsersIdProps) {
             label="Last IP address"
             value={user.last_ip && <Typography>{ user.last_ip }</Typography>}
             action={user.last_ip && (
-              <IconButton component={Link} href={`/server/${encodeURIComponent(user.last_ip)}/ip-info`}>
+              <IconLink href={`/server/${encodeURIComponent(user.last_ip)}/ip-info`}>
                 <TravelExploreIcon />
-              </IconButton>
+              </IconLink>
             )}
           />
         </Box>

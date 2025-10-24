@@ -1,6 +1,7 @@
 import RightGate from '@/components/auth/RightGate';
 import HostnameLink from '@/components/dns/HostnameLink';
 import MapDrawerHeader from '@/components/map/drawer/MapDrawerHeader';
+import IconLink from '@/components/mui/IconLink';
 import BigDataCloudOption from '@/components/server/menu/BigDataCloudOption';
 import IpDataOption from '@/components/server/menu/IpDataOption';
 import IpGeolocationOption from '@/components/server/menu/IpGeolocationOption';
@@ -13,12 +14,10 @@ import { reverseDnsLookup } from '@/lib/dns/reverse-dns-lookup';
 import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
 import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import ipaddr from 'ipaddr.js';
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { redirect, RedirectType } from 'next/navigation';
 import { type ReactNode, Suspense } from 'react';
 import { decodeIp, type WithMapServerIpParams } from './params';
@@ -47,14 +46,13 @@ export default async function WithMapServerIpLayout({ params, children }: WithMa
             { ipaddr.parse(ip).toString() }
           </Typography>
 
-          <IconButton
-            component={Link}
+          <IconLink
             href="/"
             sx={{ flex: '0 0 auto', mt: -1 }}
             aria-label="Close panel"
           >
             <CloseIcon />
-          </IconButton>
+          </IconLink>
         </Box>
 
         <Box sx={{ display: 'flex', pl: 2.5, pr: 1.5, pb: 2, alignItems: 'center' }}>
