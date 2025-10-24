@@ -14,7 +14,7 @@ vi.mock('@/lib/utils/fetch', (importOriginal) =>
 
 // Setup
 beforeEach(() => {
-  vi.restoreAllMocks();
+  vi.resetAllMocks();
 });
 
 // Tests
