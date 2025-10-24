@@ -1,11 +1,10 @@
+import Link from '@/components/mui/Link';
 import UserTable from '@/components/users/UserTable';
 import { needRight } from '@/lib/auth/need-right';
 import { queryUsers } from '@/lib/users/users';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Divider from '@mui/material/Divider';
-import MuiLink from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import Link from 'next/link';
 
 // Page
 export default async function ConsoleUsersPage() {
@@ -17,7 +16,7 @@ export default async function ConsoleUsersPage() {
   return (
     <>
       <Breadcrumbs sx={{ mx: 3, mt: 2, mb: 3 }}>
-        <MuiLink underline="hover" color="inherit" component={Link} href="/console">Console</MuiLink>
+        <Link underline="hover" color="inherit" href="/console">Console</Link>
         <Typography sx={{ color: 'text.primary' }}>Users</Typography>
       </Breadcrumbs>
 

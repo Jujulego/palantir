@@ -1,6 +1,6 @@
 import { decodeName, type WithMapAnimalNameParams } from '@/app/(with-map)/animal/[name]/params';
 import MapDrawerHeader from '@/components/map/drawer/MapDrawerHeader';
-import { IconLink } from '@/components/mui/IconLink';
+import IconLink from '@/components/mui/IconLink';
 import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
