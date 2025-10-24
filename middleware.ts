@@ -3,7 +3,7 @@ import { setUser } from '@sentry/nextjs';
 import { createEdgeRouter } from 'next-connect';
 import { type NextFetchEvent, type NextRequest, NextResponse } from 'next/server';
 
-// Proxy
+// Middleware
 export const config = {
   matcher: [
     /*
@@ -17,7 +17,7 @@ export const config = {
   ]
 };
 
-export async function proxy(request: NextRequest, event: NextFetchEvent) {
+export async function middleware(request: NextRequest, event: NextFetchEvent) {
   return router.run(request, event);
 }
 
