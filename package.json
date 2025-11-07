@@ -51,14 +51,14 @@
     "@types/react-dom": "19.2.2",
     "@types/react-syntax-highlighter": "15.5.13",
     "@vitejs/plugin-react": "5.1.0",
-    "@vitest/coverage-v8": "4.0.7",
+    "@vitest/coverage-v8": "4.0.8",
     "eslint": "9.39.1",
     "eslint-config-next": "16.0.1",
     "jsdom": "27.1.0",
     "typescript": "5.9.3",
     "vite": "7.2.2",
     "vite-tsconfig-paths": "5.1.4",
-    "vitest": "4.0.7"
+    "vitest": "4.0.8"
   },
   "packageManager": "yarn@4.10.3"
 }
