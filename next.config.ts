@@ -1,4 +1,3 @@
-import { codecovNextJSWebpackPlugin } from '@codecov/nextjs-webpack-plugin';
 import withBundleAnalyzer from '@next/bundle-analyzer';
 import { withSentryConfig } from '@sentry/nextjs';
 import { pipe$ } from 'kyrielle';
@@ -36,18 +35,6 @@ const nextConfig: NextConfig = {
       fullUrl: true,
       hmrRefreshes: true,
     }
-  },
-  webpack: (config, options) => {
-    config.plugins.push(
-      codecovNextJSWebpackPlugin({
-        enableBundleAnalysis: !!process.env.CODECOV_TOKEN,
-        bundleName: 'palantir',
-        uploadToken: process.env.CODECOV_TOKEN,
-        webpack: options.webpack,
-      }),
-    );
-
-    return config;
   },
 };
 
