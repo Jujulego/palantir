@@ -6463,9 +6463,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mapbox-gl@npm:3.16.0":
-  version: 3.16.0
-  resolution: "mapbox-gl@npm:3.16.0"
+"mapbox-gl@npm:3.17.0":
+  version: 3.17.0
+  resolution: "mapbox-gl@npm:3.17.0"
   dependencies:
     "@mapbox/jsonlint-lines-primitives": "npm:^2.0.2"
     "@mapbox/mapbox-gl-supported": "npm:^3.0.0"
@@ -6491,10 +6491,9 @@ __metadata:
     pbf: "npm:^4.0.1"
     potpack: "npm:^2.0.0"
     quickselect: "npm:^3.0.0"
-    serialize-to-js: "npm:^3.1.2"
     supercluster: "npm:^8.0.1"
     tinyqueue: "npm:^3.0.0"
-  checksum: 10c0/33d9113e906687759d54ba9a405f7c0ecc6701d0acfe0574fb1a2165b6db2115800ecb9f1b9d0b27e6c5586c0fe8d9c42ef7f40b6fe927a55cdc6516165a6263
+  checksum: 10c0/37b5da3d3e119c355a90b24d66abdf107b7be546fda7cd7814b8b096e5d747d6687fa8de038a35ff19ab76c758947ff9dba17800439d5ab0c64c617690427ffb
   languageName: node
   linkType: hard
 
@@ -7114,7 +7113,7 @@ __metadata:
     ipaddr.js: "npm:2.2.0"
     jsdom: "npm:27.2.0"
     kyrielle: "npm:2.8.3"
-    mapbox-gl: "npm:3.16.0"
+    mapbox-gl: "npm:3.17.0"
     motion: "npm:12.23.25"
     next: "npm:16.0.7"
     next-connect: "npm:1.0.0"
@@ -7949,13 +7948,6 @@ __metadata:
   bin:
     semver: bin/semver.js
   checksum: 10c0/4afe5c986567db82f44c8c6faef8fe9df2a9b1d98098fc1721f57c696c4c21cebd572f297fc21002f81889492345b8470473bc6f4aff5fb032a6ea59ea2bc45e
-  languageName: node
-  linkType: hard
-
-"serialize-to-js@npm:^3.1.2":
-  version: 3.1.2
-  resolution: "serialize-to-js@npm:3.1.2"
-  checksum: 10c0/1aa5ba6f7a8e125e8d476b736ceae37e0cee6f45506ddabb04f95f31d7ad2260c922e17fa6da714e8ec84bbd491705b98974653928a57926d8b91f10de556617
   languageName: node
   linkType: hard
 
