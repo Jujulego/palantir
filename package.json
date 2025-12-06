@@ -24,7 +24,7 @@
     "@vercel/speed-insights": "1.2.0",
     "dayjs": "1.11.19",
     "i18n-iso-countries": "7.14.0",
-    "ipaddr.js": "2.2.0",
+    "ipaddr.js": "2.3.0",
     "kyrielle": "2.8.3",
     "mapbox-gl": "3.16.0",
     "motion": "12.23.25",
