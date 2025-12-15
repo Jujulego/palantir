@@ -34,7 +34,7 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-syntax-highlighter": "16.1.0",
-    "swr": "2.3.7"
+    "swr": "2.3.8"
   },
   "devDependencies": {
     "@microsoft/eslint-formatter-sarif": "3.1.0",
