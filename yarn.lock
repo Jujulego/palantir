@@ -70,9 +70,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@auth0/nextjs-auth0@npm:4.13.3":
-  version: 4.13.3
-  resolution: "@auth0/nextjs-auth0@npm:4.13.3"
+"@auth0/nextjs-auth0@npm:4.14.0":
+  version: 4.14.0
+  resolution: "@auth0/nextjs-auth0@npm:4.14.0"
   dependencies:
     "@edge-runtime/cookies": "npm:^5.0.1"
     "@panva/hkdf": "npm:^1.2.1"
@@ -84,7 +84,7 @@ __metadata:
     next: ^14.2.35 || ~15.0.7 || ~15.1.11 || ~15.2.8 || ~15.3.8 || ~15.4.10 || ~15.5.9 || ^16.0.10
     react: ^18.0.0 || ~19.0.1 ||  ~19.1.2 || ^19.2.1
     react-dom: ^18.0.0 || ~19.0.1 || ~19.1.2 || ^19.2.1
-  checksum: 10c0/d9cfb29e7fb9d3ddec136c82cb788a79e9baa57bf9725adadf7f69c25bbac6227806d909e0f296acd9ab85628cc382fb863ad35ca6424d09a9f4d4dd5a65e449
+  checksum: 10c0/28f13c0c72dd7e4ddfae0fd31f61a9ff00445b59fdc9ad06d9c55f60ae3120c2e6d1740f5c297596abb90ff7e140e06702c08c14810455f5eed53e1e8a4d77a0
   languageName: node
   linkType: hard
 
@@ -7092,7 +7092,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "palantir@workspace:."
   dependencies:
-    "@auth0/nextjs-auth0": "npm:4.13.3"
+    "@auth0/nextjs-auth0": "npm:4.14.0"
     "@emotion/cache": "npm:11.14.0"
     "@emotion/react": "npm:11.14.0"
     "@emotion/styled": "npm:11.14.1"
