@@ -6480,9 +6480,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mapbox-gl@npm:3.17.0":
-  version: 3.17.0
-  resolution: "mapbox-gl@npm:3.17.0"
+"mapbox-gl@npm:3.18.0":
+  version: 3.18.0
+  resolution: "mapbox-gl@npm:3.18.0"
   dependencies:
     "@mapbox/jsonlint-lines-primitives": "npm:^2.0.2"
     "@mapbox/mapbox-gl-supported": "npm:^3.0.0"
@@ -6503,25 +6503,25 @@ __metadata:
     gl-matrix: "npm:^3.4.4"
     grid-index: "npm:^1.1.0"
     kdbush: "npm:^4.0.2"
-    martinez-polygon-clipping: "npm:^0.7.4"
+    martinez-polygon-clipping: "npm:^0.8.1"
     murmurhash-js: "npm:^1.0.0"
     pbf: "npm:^4.0.1"
     potpack: "npm:^2.0.0"
     quickselect: "npm:^3.0.0"
     supercluster: "npm:^8.0.1"
     tinyqueue: "npm:^3.0.0"
-  checksum: 10c0/37b5da3d3e119c355a90b24d66abdf107b7be546fda7cd7814b8b096e5d747d6687fa8de038a35ff19ab76c758947ff9dba17800439d5ab0c64c617690427ffb
+  checksum: 10c0/40baa4504b195353d255023a297705ffc0c60f817c8d5ae67a6a9be4b6683e4d7662fa50e890aec813c32a35fad659a5c06b8f7375680235f163a1b515614621
   languageName: node
   linkType: hard
 
-"martinez-polygon-clipping@npm:^0.7.4":
-  version: 0.7.4
-  resolution: "martinez-polygon-clipping@npm:0.7.4"
+"martinez-polygon-clipping@npm:^0.8.1":
+  version: 0.8.1
+  resolution: "martinez-polygon-clipping@npm:0.8.1"
   dependencies:
     robust-predicates: "npm:^2.0.4"
     splaytree: "npm:^0.1.4"
-    tinyqueue: "npm:^1.2.0"
-  checksum: 10c0/0230c06056f2714994c0e65cb98cf487c45dfdffcef3b1c00e080577fdd52af80b71e87e7548283ac5cba7b2b2f9a5164e148fd88d17fd484e87f5d678bf199a
+    tinyqueue: "npm:3.0.0"
+  checksum: 10c0/f02420eebd37cfda170be30bc1aae28de15d4baeafa68fa41629f27439f913e01f347900cb976727efee994ff0abdba8628b2f6680860ecac2519c8d79789567
   languageName: node
   linkType: hard
 
@@ -7124,7 +7124,7 @@ __metadata:
     ipaddr.js: "npm:2.3.0"
     jsdom: "npm:27.4.0"
     kyrielle: "npm:2.8.3"
-    mapbox-gl: "npm:3.17.0"
+    mapbox-gl: "npm:3.18.0"
     motion: "npm:12.25.0"
     next: "npm:16.1.1"
     next-connect: "npm:1.0.0"
@@ -8541,14 +8541,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tinyqueue@npm:^1.2.0":
-  version: 1.2.3
-  resolution: "tinyqueue@npm:1.2.3"
-  checksum: 10c0/413b1ad64f700ef9d8d07242190ceb6ff921d0ab5b47f5b67ff7d3d2a394260914363b0e2c18039b900df793b26763fabc93da61e1b489f910795af6643b0355
-  languageName: node
-  linkType: hard
-
-"tinyqueue@npm:^3.0.0":
+"tinyqueue@npm:3.0.0, tinyqueue@npm:^3.0.0":
   version: 3.0.0
   resolution: "tinyqueue@npm:3.0.0"
   checksum: 10c0/edd6f1a6146aa3aa7bc85b44b3aacf44cddfa805b0901019272d7e9235894b4f28b2f9d09c1bce500ae48883b03708b6b871aa33920e895d2943720f7a9ad3ba
