@@ -49,11 +49,15 @@ export default pipe$(
     project: 'palantir',
 
     authToken: process.env.SENTRY_AUTH_TOKEN,
-    disableLogger: true,
-    reactComponentAnnotation: {
-      enabled: true,
-    },
     silent: true,
     widenClientFileUpload: true,
+    webpack: {
+      reactComponentAnnotation: {
+        enabled: true
+      },
+      treeshake: {
+        removeDebugLogging: true
+      },
+    }
   })
 );

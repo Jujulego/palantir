@@ -2,6 +2,7 @@
 
 import ColorModeToggle from '@/components/ColorModeToggle';
 import UserAvatar from '@/components/users/UserAvatar';
+import { useProfile } from '@/lib/auth/useProfile';
 import type { UserDto } from '@/lib/users/user.dto';
 import { useUser } from '@auth0/nextjs-auth0';
 import GpsFixedIcon from '@mui/icons-material/GpsFixed';
@@ -24,7 +25,7 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { type MouseEvent, Suspense, useCallback, useState } from 'react';
 
 export default function ProfileMenu() {
-  const { user = null, isLoading } = useUser();
+  const { profile = null, isLoading } = useProfile();
   const pathname = usePathname();
 
   // Popover state
@@ -41,7 +42,7 @@ export default function ProfileMenu() {
         <Skeleton variant="circular" width={40} height={40} />
       ) : (
         <IconButton onClick={handleOpen} aria-label="Profile menu" sx={{ padding: 0.5 }}>
-          <UserAvatar size={32} user={user as UserDto | null} />
+          <UserAvatar size={32} user={profile as UserDto | null} />
         </IconButton>
       ) }
 
@@ -73,9 +74,9 @@ export default function ProfileMenu() {
         }}
       >
         <ProfileTopBar>
-          <UserAvatar user={user as UserDto | null} sx={{ flex: '0 0 auto' }} />
+          <UserAvatar user={profile as UserDto | null} sx={{ flex: '0 0 auto' }} />
 
-          <Typography variant="h6" sx={{ flex: '1 0 0' }}>{user?.nickname ?? user?.name ?? 'Anonymous'}</Typography>
+          <Typography variant="h6" sx={{ flex: '1 0 0' }}>{profile?.nickname ?? profile?.name ?? 'Anonymous'}</Typography>
 
           <ColorModeToggle sx={{ mb: 'auto' }} />
         </ProfileTopBar>
@@ -97,7 +98,7 @@ export default function ProfileMenu() {
             </ListItemButton>
           </ListItem>
 
-          { user && (
+          { profile && (
             <ListItem disablePadding>
               <ListItemButton component={Link} href="/console" selected={pathname.startsWith('/console')}>
                 <ListItemIcon>
@@ -113,7 +114,7 @@ export default function ProfileMenu() {
         <Divider />
 
         <List component="nav" disablePadding onClick={handleClose}>
-          { user ? (
+          { profile ? (
             <ListItem disablePadding>
               <ListItemButton component="a" href="/auth/logout">
                 <ListItemIcon>
