@@ -3,7 +3,6 @@ import { FetchError } from '@/lib/utils/fetch';
 import type { Writable } from '@/lib/utils/types';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-import { cacheTag } from 'next/cache';
 
 dayjs.extend(utc);
 

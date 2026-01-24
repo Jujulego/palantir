@@ -1,10 +1,9 @@
 import { jsonFetch } from '@/lib/utils/fetch';
 
 let rawToken = '';
-let expiryTime = 0;
 
-export async function managementApiToken(): Promise<string> {
-  if (expiryTime > new Date().getTime()) {
+export async function managementApiToken(refresh = false): Promise<string> {
+  if (rawToken && !refresh) {
     console.log('[auth0] Reuse cached management token');
     return rawToken;
   }
@@ -25,7 +24,6 @@ export async function managementApiToken(): Promise<string> {
 
   console.log(`[auth0] Loaded management token valid for ${res.expires_in} seconds`);
   rawToken = res.access_token;
-  expiryTime = new Date().getTime() + res.expires_in * 1000;
 
   return rawToken;
 }

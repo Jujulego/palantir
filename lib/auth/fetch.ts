@@ -17,7 +17,7 @@ export async function auth0Fetch<D>(url: string | URL, options: RequestInit = {}
 
       options.headers = {
         ...options.headers,
-        Authorization: `Bearer ${await managementApiToken()}`
+        Authorization: `Bearer ${await managementApiToken(true)}`
       };
 
       continue;
