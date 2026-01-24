@@ -1,3 +1,5 @@
+'use cache';
+
 import { decodeName } from '@/app/(with-map)/animal/[name]/params';
 import AnimalMarker from '@/components/animal/AnimalMarker';
 import MapPolyline from '@/components/map/MapPolyline';
@@ -11,10 +13,13 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import { cacheLife } from 'next/cache';
 import { redirect, RedirectType } from 'next/navigation';
 
 // Page
 export default async function WithMapAnimalPage({ params }: PageProps<'/animal/[name]'>) {
+  cacheLife('days');
+
   const name = await decodeName(params);
   const animal = await scrapAnimalTracking(name);
 

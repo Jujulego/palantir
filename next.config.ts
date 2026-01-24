@@ -5,6 +5,7 @@ import type { NextConfig } from 'next';
 
 // Config
 const nextConfig: NextConfig = {
+  cacheComponents: true,
   reactCompiler: true,
   compiler: {
     define: {
