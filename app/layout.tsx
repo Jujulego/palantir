@@ -4,7 +4,6 @@ import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata, Viewport } from 'next';
-import { ReactNode } from 'react';
 
 // Constants
 const APP_NAME = 'Palantir';
@@ -12,11 +11,7 @@ const TITLE = 'Palantir';
 const DESCRIPTION = 'One map to locate them all';
 
 // Layout
-export interface RootLayoutProps {
-  readonly children: ReactNode;
-}
-
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="en" suppressHydrationWarning>
     <body style={{ overflow: 'hidden' }}>

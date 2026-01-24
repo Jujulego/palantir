@@ -1,4 +1,4 @@
-import { decodeName, type WithMapAnimalNameParams } from '@/app/(with-map)/animal/[name]/params';
+import { decodeName } from '@/app/(with-map)/animal/[name]/params';
 import AnimalMarker from '@/components/animal/AnimalMarker';
 import MapPolyline from '@/components/map/MapPolyline';
 import MapSpin from '@/components/map/MapSpin';
@@ -14,11 +14,7 @@ import ListItemText from '@mui/material/ListItemText';
 import { redirect, RedirectType } from 'next/navigation';
 
 // Page
-export interface WithMapAnimalNamePageProps {
-  readonly params: Promise<WithMapAnimalNameParams>;
-}
-
-export default async function WithMapAnimalPage({ params }: WithMapAnimalNamePageProps) {
+export default async function WithMapAnimalPage({ params }: PageProps<'/animal/[name]'>) {
   const name = await decodeName(params);
   const animal = await scrapAnimalTracking(name);
 

@@ -4,13 +4,9 @@ import MapDrawerIllustration from '@/components/map/drawer/MapDrawerIllustration
 import ColoredImage from '@/components/utils/ColoredImage';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import type { ReactNode } from 'react';
 
-export interface WithMapAnimalLayoutProps {
-  readonly children?: ReactNode;
-}
-
-export default function withMapAnimalLayout({ children }: WithMapAnimalLayoutProps) {
+// Layout
+export default function withMapAnimalLayout({ children }: LayoutProps<'/animal'>) {
   return (
     <MapDrawer>
       <MapDrawerIllustration>
@@ -25,7 +21,7 @@ export default function withMapAnimalLayout({ children }: WithMapAnimalLayoutPro
           <ColoredImage
             src={seaTurtlePng}
             alt="sea turtle"
-            priority
+            preload
             style={{ position: 'absolute', bottom: 0, left: 'calc(50% - 75px)', height: 'auto', width: 150 }}
           />
         </Box>

@@ -19,16 +19,11 @@ import Typography from '@mui/material/Typography';
 import ipaddr from 'ipaddr.js';
 import type { Metadata } from 'next';
 import { redirect, RedirectType } from 'next/navigation';
-import { type ReactNode, Suspense } from 'react';
-import { decodeIp, type WithMapServerIpParams } from './params';
+import { Suspense } from 'react';
+import { decodeIp } from './params';
 
 // Layout
-export interface WithMapServerIpLayoutProps {
-  readonly children: ReactNode;
-  readonly params: Promise<WithMapServerIpParams>;
-}
-
-export default async function WithMapServerIpLayout({ params, children }: WithMapServerIpLayoutProps) {
+export default async function WithMapServerIpLayout({ params, children }: LayoutProps<'/server/[ip]'>) {
   const ip = await decodeIp(params);
 
   if (!ipaddr.isValid(ip)) {
@@ -89,7 +84,7 @@ export default async function WithMapServerIpLayout({ params, children }: WithMa
   );
 }
 
-export async function generateMetadata({ params }: WithMapServerIpLayoutProps): Promise<Metadata> {
+export async function generateMetadata({ params }: LayoutProps<'/server/[ip]'>): Promise<Metadata> {
   const ip = await decodeIp(params);
 
   return {

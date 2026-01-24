@@ -4,13 +4,9 @@ import MapDrawerIllustration from '@/components/map/drawer/MapDrawerIllustration
 import ColoredImage from '@/components/utils/ColoredImage';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import type { ReactNode } from 'react';
 
-export interface WithMapServerLayoutProps {
-  readonly children?: ReactNode;
-}
-
-export default function WithMapServerLayout({ children }: WithMapServerLayoutProps) {
+// Layout
+export default function WithMapServerLayout({ children }: LayoutProps<'/server'>) {
   return (
     <MapDrawer>
       <MapDrawerIllustration>
@@ -25,7 +21,7 @@ export default function WithMapServerLayout({ children }: WithMapServerLayoutPro
           <ColoredImage
             src={computerPng}
             alt="computer"
-            priority
+            preload
             style={{ position: 'absolute', bottom: 0, left: 'calc(50% - 75px)', height: 'auto', width: 150 }}
           />
         </Box>

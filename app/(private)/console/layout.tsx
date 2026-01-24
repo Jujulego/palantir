@@ -9,14 +9,10 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import Toolbar from '@mui/material/Toolbar';
-import { type ReactNode, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 // Layout
-export interface ConsoleLayoutProps {
-  readonly children: ReactNode;
-}
-
-export default function ConsoleLayout({ children }: ConsoleLayoutProps) {
+export default function ConsoleLayout({ children }: LayoutProps<'/console'>) {
   // Drawer state
   const [drawerOpen, setDrawerOpen] = useState(false);
 

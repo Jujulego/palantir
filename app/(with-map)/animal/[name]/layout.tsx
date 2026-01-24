@@ -6,15 +6,9 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import type { Metadata } from 'next';
-import { type ReactNode } from 'react';
 
 // Layout
-export interface WithMapAnimalNameLayoutProps {
-  readonly children: ReactNode;
-  readonly params: Promise<WithMapAnimalNameParams>;
-}
-
-export default async function WithMapAnimalNameLayout({ children, params }: WithMapAnimalNameLayoutProps) {
+export default async function WithMapAnimalNameLayout({ children, params }: LayoutProps<'/animal/[name]'>) {
   const name = await decodeName(params);
 
   return (
@@ -42,7 +36,7 @@ export default async function WithMapAnimalNameLayout({ children, params }: With
   );
 }
 
-export async function generateMetadata({ params }: WithMapAnimalNameLayoutProps): Promise<Metadata> {
+export async function generateMetadata({ params }: LayoutProps<'/animal/[name]'>): Promise<Metadata> {
   const name = await decodeName(params);
 
   return {

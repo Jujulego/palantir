@@ -1,4 +1,4 @@
-import { type ConsoleUsersIdParams, decodeId } from '@/app/(private)/console/auth/users/[id]/params';
+import { decodeId } from '@/app/(private)/console/auth/users/[id]/params';
 import UserPermissionListItem from '@/components/users/UserPermissionListItem';
 import { needRight } from '@/lib/auth/need-right';
 import { queryUser } from '@/lib/users/users';
@@ -11,11 +11,7 @@ import Typography from '@mui/material/Typography';
 import { notFound } from 'next/navigation';
 
 // Page
-export interface ConsoleUsersIdPermissionsProps {
-  readonly params: Promise<ConsoleUsersIdParams>;
-}
-
-export default async function ConsoleUsersIdPermissions({ params }: ConsoleUsersIdPermissionsProps) {
+export default async function ConsoleUsersIdPermissions({ params }: PageProps<'/console/auth/users/[id]/permissions'>) {
   await needRight('console:ManageUsers', {
     forbiddenRedirectTo: '/console',
   });

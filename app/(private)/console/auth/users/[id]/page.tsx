@@ -17,7 +17,7 @@ export interface ConsoleUsersIdProps {
   readonly params: Promise<ConsoleUsersIdParams>;
 }
 
-export default async function ConsoleUsersId({ params }: ConsoleUsersIdProps) {
+export default async function ConsoleUsersId({ params }: PageProps<'/console/auth/users/[id]'>) {
   await needRight('console:ManageUsers', {
     forbiddenRedirectTo: '/console',
   });
@@ -44,25 +44,25 @@ export default async function ConsoleUsersId({ params }: ConsoleUsersIdProps) {
       >
         <DataField
           label="Name"
-          value={user.name && <Typography>{ user.name }</Typography>}
+          value={user.name && <Typography>{user.name}</Typography>}
         />
         <DataField
           label="Nickname"
-          value={user.nickname && <Typography>{ user.nickname }</Typography>}
+          value={user.nickname && <Typography>{user.nickname}</Typography>}
         />
         <DataField
           label="Email"
-          value={user.email && <UserEmail user={user} />}
+          value={user.email && <UserEmail user={user}/>}
         />
         <DataField
           label="Identities"
-          value={<UserIdentities identities={user.identities} />}
+          value={<UserIdentities identities={user.identities}/>}
         />
       </Box>
 
       <Box component="section" sx={{ px: 3 }}>
         <Typography component="h2" variant="h5" sx={{ mb: 1 }}>Logins</Typography>
-        <Divider sx={{ mb: 2 }} />
+        <Divider sx={{ mb: 2 }}/>
 
         <Box
           sx={{
@@ -74,18 +74,18 @@ export default async function ConsoleUsersId({ params }: ConsoleUsersIdProps) {
         >
           <DataField
             label="Last login"
-            value={user.last_login && <FormatDate date={user.last_login} format="lll" />}
+            value={user.last_login && <FormatDate date={user.last_login} format="lll"/>}
           />
           <DataField
             label="Login count"
-            value={<Typography>{ user.logins_count ?? 0 }</Typography>}
+            value={<Typography>{user.logins_count ?? 0}</Typography>}
           />
           <DataField
             label="Last IP address"
-            value={user.last_ip && <Typography>{ user.last_ip }</Typography>}
+            value={user.last_ip && <Typography>{user.last_ip}</Typography>}
             action={user.last_ip && (
               <IconLink href={`/server/${encodeURIComponent(user.last_ip)}/ip-info`}>
-                <TravelExploreIcon />
+                <TravelExploreIcon/>
               </IconLink>
             )}
           />
@@ -106,22 +106,22 @@ function DataField({ label, value, action }: DataFieldProps) {
   return (
     <Box component="div" sx={{ display: 'grid', gridTemplateColumns: '1fr auto', gridTemplateRows: 'auto 24px' }}>
       <Typography component="h6" variant="caption" sx={{ fontWeight: 'bold', gridColumn: '1' }}>
-        { label }
+        {label}
       </Typography>
 
       <Box sx={{ gridColumn: '1', alignSelf: 'center' }}>
-        { value ?? (
+        {value ?? (
           <Typography color="textSecondary">
             unknown
           </Typography>
-        ) }
+        )}
       </Box>
 
-      { action && (
+      {action && (
         <Box sx={{ gridColumn: '2', gridRow: '1 / span 2' }}>
-          { action }
+          {action}
         </Box>
-      ) }
+      )}
     </Box>
   );
 }

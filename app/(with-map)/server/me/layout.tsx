@@ -21,14 +21,10 @@ import ipaddr from 'ipaddr.js';
 import type { Metadata } from 'next';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { type ReactNode, Suspense } from 'react';
+import { Suspense } from 'react';
 
 // Page
-export interface WithMapServerMeLayoutProps {
-  readonly children: ReactNode;
-}
-
-export default async function WithMapServerMeLayout({ children }: WithMapServerMeLayoutProps) {
+export default async function WithMapServerMeLayout({ children }: LayoutProps<'/server/me'>) {
   const forwardedFor = (await headers()).get('x-forwarded-for');
 
   if (forwardedFor === null || !ipaddr.isValid(forwardedFor)) {

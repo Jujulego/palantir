@@ -9,14 +9,10 @@ import { SearchBoxSkeleton } from '@/components/search/SearchBoxSkeleton';
 import ServerSearchOptions from '@/components/server/ServerSearchOptions';
 import Paper from '@mui/material/Paper';
 import type { Metadata } from 'next';
-import { type ReactNode, Suspense } from 'react';
+import { Suspense } from 'react';
 
 // Layout
-export interface WithMapLayoutProps {
-  readonly children: ReactNode;
-}
-
-export default async function WithMapLayout({ children }: WithMapLayoutProps) {
+export default async function WithMapLayout({ children }: LayoutProps<'/'>) {
   // Render
   return (
     <MapLayout>

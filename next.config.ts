@@ -5,6 +5,7 @@ import type { NextConfig } from 'next';
 
 // Config
 const nextConfig: NextConfig = {
+  reactCompiler: true,
   compiler: {
     define: {
       __RRWEB_EXCLUDE_IFRAME__: 'true',

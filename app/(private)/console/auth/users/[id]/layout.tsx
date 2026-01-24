@@ -1,4 +1,4 @@
-import { type ConsoleUsersIdParams, decodeId } from '@/app/(private)/console/auth/users/[id]/params';
+import { decodeId } from '@/app/(private)/console/auth/users/[id]/params';
 import Link from '@/components/mui/Link';
 import UserLayoutTabs from '@/components/users/UserLayoutTabs';
 import UserLayoutToolbar from '@/components/users/UserLayoutToolbar';
@@ -6,15 +6,10 @@ import UserLayoutToolbarSkeleton from '@/components/users/UserLayoutToolbarSkele
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
-import { type ReactNode, Suspense } from 'react';
+import { Suspense } from 'react';
 
 // Page
-export interface ConsoleUsersIdLayoutProps {
-  readonly children: ReactNode;
-  readonly params: Promise<ConsoleUsersIdParams>;
-}
-
-export default async function ConsoleUsersIdLayout({ children, params }: ConsoleUsersIdLayoutProps) {
+export default async function ConsoleUsersIdLayout({ children, params }: LayoutProps<'/console/auth/users/[id]'>) {
   const userId = await decodeId(params);
 
   return (
