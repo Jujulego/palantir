@@ -1,4 +1,4 @@
-import theme from '@/theme';
+import { theme } from '@/lib/theme';
 import type { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {

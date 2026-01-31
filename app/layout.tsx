@@ -1,5 +1,5 @@
 import RootProvider from '@/components/RootProvider';
-import theme from '@/theme';
+import { theme } from '@/lib/theme';
 import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';

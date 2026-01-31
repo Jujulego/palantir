@@ -13,7 +13,7 @@ const roboto = Roboto({
 // Theme
 const base = createTheme({});
 
-const theme = createTheme({
+export const theme = createTheme({
   colorSchemes: {
     light: {
       palette: {
@@ -61,7 +61,6 @@ const theme = createTheme({
   cssVariables: {
     colorSchemeSelector: 'class'
   },
-  modularCssLayers: '@layer mapbox, mui;',
   palette: {
     mode: 'light',
     bigDataCloud: base.palette.augmentColor({
@@ -109,8 +108,6 @@ const theme = createTheme({
     drawer: 1100,
   },
 });
-
-export default theme;
 
 // Type enhancements
 declare module '@mui/material/styles' {
