@@ -10,9 +10,13 @@ import ServerSearchOptions from '@/components/server/ServerSearchOptions';
 import Paper from '@mui/material/Paper';
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
+import { preconnect, prefetchDNS } from 'react-dom';
 
 // Layout
 export default async function WithMapLayout({ children }: LayoutProps<'/'>) {
+  preconnect('https://api.mapbox.com', { crossOrigin: 'anonymous'});
+  prefetchDNS('https://events.mapbox.com');
+
   // Render
   return (
     <MapLayout>

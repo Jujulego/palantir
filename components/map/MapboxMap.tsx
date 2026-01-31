@@ -4,13 +4,9 @@ import { styled } from '@mui/material';
 import type { Map } from 'mapbox-gl';
 import { m, useTransform } from 'motion/react';
 import { useEffect, useRef } from 'react';
-import { preconnect, prefetchDNS } from 'react-dom';
 import './mapbox.css';
 
 // Component
-preconnect('https://api.mapbox.com', { crossOrigin: 'anonymous'});
-prefetchDNS('https://events.mapbox.com');
-
 export interface MapboxMapProps {
   readonly camera: MapCamera;
   readonly onMapCreated: (map: Map) => void;
