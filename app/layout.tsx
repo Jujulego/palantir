@@ -4,7 +4,7 @@ import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata, Viewport } from 'next';
-import { preconnect } from 'react-dom';
+import { prefetchDNS } from 'react-dom';
 
 import './global.css';
 
@@ -15,7 +15,7 @@ const DESCRIPTION = 'One map to locate them all';
 
 // Layout
 export default function RootLayout({ children }: LayoutProps<'/'>) {
-  preconnect(new URL(process.env.NEXT_PUBLIC_SENTRY_DSN!).origin);
+  prefetchDNS(process.env.NEXT_PUBLIC_SENTRY_DSN!);
 
   return (
     <html lang="en" suppressHydrationWarning>
