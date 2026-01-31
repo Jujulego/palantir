@@ -4,7 +4,6 @@ import { SearchContext } from '@/components/search/search.context';
 import SearchListItem from '@/components/search/SearchListItem';
 import { baseUrl } from '@/lib/utils/url';
 import ListItemButton from '@mui/material/ListItemButton';
-import { AnimatePresence, usePresence } from 'motion/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { type MouseEvent, type ReactNode, use, useCallback, useEffect, useId, useMemo } from 'react';
@@ -16,9 +15,8 @@ export interface SearchOptionProps {
 
 export default function SearchOption({ href, children }: SearchOptionProps) {
   const id = useId();
-  const [isPresent, safeToRemove] = usePresence();
 
-  const { activeOption, isOpen, inputValue, search, setActiveOption, registerOption, unregisterOption } = use(SearchContext);
+  const { activeOption, inputValue, search, setActiveOption, registerOption, unregisterOption } = use(SearchContext);
   const pathname = usePathname();
   const isSelected = pathname === href;
 
@@ -35,12 +33,6 @@ export default function SearchOption({ href, children }: SearchOptionProps) {
     return () => unregisterOption(id);
   }, [id, registerOption, unregisterOption, url]);
 
-  useEffect(() => {
-    if (!isPresent) {
-      unregisterOption(id);
-    }
-  }, [id, isPresent, unregisterOption]);
-
   const handleActivate = useCallback(() => {
     setActiveOption(id);
   }, [id, setActiveOption]);
@@ -52,26 +44,22 @@ export default function SearchOption({ href, children }: SearchOptionProps) {
 
   // Render
   return (
-    <AnimatePresence onExitComplete={safeToRemove!}>
-      { isOpen && isPresent && (
-        <SearchListItem
-          id={id}
-          disablePadding
-          selected={isSelected}
-          onMouseEnter={handleActivate}
-          onTouchStart={handleActivate}
-        >
-          <ListItemButton
-            className={activeOption === id ? 'Mui-focusVisible' : ''}
-            component={Link} href={url.toString()} prefetch
-            onClick={handleClick}
-            tabIndex={-1}
-            selected={isSelected}
-          >
-            {children}
-          </ListItemButton>
-        </SearchListItem>
-      ) }
-    </AnimatePresence>
+    <SearchListItem
+      id={id}
+      disablePadding
+      selected={isSelected}
+      onMouseEnter={handleActivate}
+      onTouchStart={handleActivate}
+    >
+      <ListItemButton
+        className={activeOption === id ? 'Mui-focusVisible' : ''}
+        component={Link} href={url.toString()} prefetch
+        onClick={handleClick}
+        tabIndex={-1}
+        selected={isSelected}
+      >
+        {children}
+      </ListItemButton>
+    </SearchListItem>
   );
 }

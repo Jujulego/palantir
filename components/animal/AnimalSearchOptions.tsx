@@ -7,7 +7,6 @@ import { ANIMAL_NAME_REGEX } from '@/lib/animal/constants';
 import PetsIcon from '@mui/icons-material/Pets';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { AnimatePresence } from 'motion/react';
 import { use } from 'react';
 import useSWR from 'swr';
 
@@ -24,24 +23,20 @@ export default function AnimalSearchOptions() {
   );
   useLoadingSearchOptions(isValidating);
 
-  return (
-    <AnimatePresence>
-      { data && (
-        <SearchOption href={`/animal/${inputValue}`}>
-          <ListItemIcon>
-            <PetsIcon color="inherit" />
-          </ListItemIcon>
-          <ListItemText
-            primary={inputValue}
-            slotProps={{
-              primary: {
-                sx: { textTransform: 'capitalize' }
-              }
-            }}
-          />
-        </SearchOption>
-      ) }
-    </AnimatePresence>
+  return data && (
+    <SearchOption href={`/animal/${inputValue}`}>
+      <ListItemIcon>
+        <PetsIcon color="inherit" />
+      </ListItemIcon>
+      <ListItemText
+        primary={inputValue}
+        slotProps={{
+          primary: {
+            sx: { textTransform: 'capitalize' }
+          }
+        }}
+      />
+    </SearchOption>
   );
 }
 

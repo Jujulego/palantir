@@ -77,18 +77,18 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
   // Options
   const optionsRef = useRef(new Map<string, URL>());
   const [activeOption, setActiveOption] = useState<string | null>(null);
-  const [isEmpty, setIsEmpty] = useState(true);
+  const [optionCount, setOptionCount] = useState(0);
 
   const registerOption = useCallback((id: string, target: URL) => {
     optionsRef.current.set(id, target);
-    setIsEmpty(false);
+    setOptionCount(optionsRef.current.size);
   }, []);
 
   const unregisterOption = useCallback((id: string) => {
     optionsRef.current.delete(id);
 
     setActiveOption((old) => old === id ? null : old);
-    setIsEmpty(optionsRef.current.size === 0);
+    setOptionCount(optionsRef.current.size);
   }, []);
 
   const handleFocusDown = useCallback(() => {
@@ -196,11 +196,12 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
             unregisterOption,
           }}
         >
-          <SearchListBox ref={listBoxRef} listBoxId={listBoxId}>
-            <AnimatePresence>
-              { isOpen && isEmpty && <SearchEmptyOption /> }
-            </AnimatePresence>
-
+          <SearchListBox
+            ref={listBoxRef}
+            listBoxId={listBoxId}
+            optionCount={isOpen ? Math.max(optionCount, 1) : 0 }
+          >
+            { isOpen && optionCount === 0 && <SearchEmptyOption /> }
             { children }
           </SearchListBox>
         </SearchContext>
