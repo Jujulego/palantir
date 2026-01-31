@@ -24,7 +24,7 @@ export default function ColoredImage({ style = {}, ...rest }: ImageProps) {
 
   // Render
   return (
-    <div style={{ ...style, height, width, overflow: 'hidden' }}>
+    <div className="overflow-hidden" style={{ ...style, height: height || 'auto', width: width || 'auto' }}>
       {/* eslint-disable-next-line jsx-a11y/alt-text */}
       <Image
         {...rest}

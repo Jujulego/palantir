@@ -3,11 +3,9 @@ import UserPermissionListItem from '@/components/users/UserPermissionListItem';
 import { needRight } from '@/lib/auth/need-right';
 import { queryUser } from '@/lib/users/users';
 import { actPatchUser } from '@/lib/users/users.actions';
-import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import MuiLink from '@mui/material/Link';
 import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
 import { notFound } from 'next/navigation';
 
 // Page
@@ -24,9 +22,9 @@ export default async function ConsoleUsersIdPermissions({ params }: PageProps<'/
   }
 
   return (
-    <Box component="article" sx={{ flex: '1 0 0', p: 2, overflow: 'auto' }}>
+    <article className="p-4 overflow-auto grow shrink-0 basis-0">
       <section>
-        <Typography component="h2" variant="h5" sx={{ mt: 2, mb: 1 }}>IP Address Metadata</Typography>
+        <h2 className="typography-h5 mt-4 mb-2">IP Address Metadata</h2>
         <Divider />
 
         <List disablePadding>
@@ -77,7 +75,7 @@ export default async function ConsoleUsersIdPermissions({ params }: PageProps<'/
       </section>
 
       <section>
-        <Typography component="h2" variant="h5" sx={{ mt: 2, mb: 1 }}>Console</Typography>
+        <h2 className="typography-h5 mt-4 mb-2">Console</h2>
         <Divider />
 
         <List disablePadding>
@@ -91,6 +89,6 @@ export default async function ConsoleUsersIdPermissions({ params }: PageProps<'/
           />
         </List>
       </section>
-    </Box>
+    </article>
   );
 }

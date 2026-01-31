@@ -1,4 +1,4 @@
-import { type ConsoleUsersIdParams, decodeId } from '@/app/(private)/console/auth/users/[id]/params';
+import { decodeId } from '@/app/(private)/console/auth/users/[id]/params';
 import IconLink from '@/components/mui/IconLink';
 import UserEmail from '@/components/users/UserEmail';
 import UserIdentities from '@/components/users/UserIdentities';
@@ -6,17 +6,11 @@ import FormatDate from '@/components/utils/FormatDate';
 import { needRight } from '@/lib/auth/need-right';
 import { queryUser } from '@/lib/users/users';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
-import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
-import Typography from '@mui/material/Typography';
 import { notFound } from 'next/navigation';
 import type { ReactNode } from 'react';
 
 // Page
-export interface ConsoleUsersIdProps {
-  readonly params: Promise<ConsoleUsersIdParams>;
-}
-
 export default async function ConsoleUsersId({ params }: PageProps<'/console/auth/users/[id]'>) {
   await needRight('console:ManageUsers', {
     forbiddenRedirectTo: '/console',
@@ -30,25 +24,15 @@ export default async function ConsoleUsersId({ params }: PageProps<'/console/aut
   }
 
   return (
-    <Box component="article" sx={{ flex: '1 0 0', overflow: 'auto', pt: 2 }}>
-      <Box
-        component="section"
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: { '@xs': '1fr', '@sm': 'repeat(2, 1fr)' },
-          alignContent: 'start',
-          mb: 3,
-          px: 3,
-          gap: 3
-        }}
-      >
+    <article className="grow shrink-0 basis-0 overflow-auto pt-4">
+      <section className="grid grid-cols-1 @sm:grid-cols-2 content-start mb-6 px-6 gap-6">
         <DataField
           label="Name"
-          value={user.name && <Typography>{user.name}</Typography>}
+          value={user.name && <p>{user.name}</p>}
         />
         <DataField
           label="Nickname"
-          value={user.nickname && <Typography>{user.nickname}</Typography>}
+          value={user.nickname && <p>{user.nickname}</p>}
         />
         <DataField
           label="Email"
@@ -58,40 +42,33 @@ export default async function ConsoleUsersId({ params }: PageProps<'/console/aut
           label="Identities"
           value={<UserIdentities identities={user.identities}/>}
         />
-      </Box>
+      </section>
 
-      <Box component="section" sx={{ px: 3 }}>
-        <Typography component="h2" variant="h5" sx={{ mb: 1 }}>Logins</Typography>
+      <section className="px-6">
+        <h2 className="typography-h5 mb-2">Logins</h2>
         <Divider sx={{ mb: 2 }}/>
 
-        <Box
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: { '@xs': '1fr', '@sm': 'repeat(2, 1fr)' },
-            alignContent: 'start',
-            gap: 3
-          }}
-        >
+        <div className="grid grid-cols-1 @sm:grid-cols-2 content-start gap-6">
           <DataField
             label="Last login"
             value={user.last_login && <FormatDate date={user.last_login} format="lll"/>}
           />
           <DataField
             label="Login count"
-            value={<Typography>{user.logins_count ?? 0}</Typography>}
+            value={<p>{user.logins_count ?? 0}</p>}
           />
           <DataField
             label="Last IP address"
-            value={user.last_ip && <Typography>{user.last_ip}</Typography>}
+            value={user.last_ip && <p>{user.last_ip}</p>}
             action={user.last_ip && (
               <IconLink href={`/server/${encodeURIComponent(user.last_ip)}/ip-info`}>
                 <TravelExploreIcon/>
               </IconLink>
             )}
           />
-        </Box>
-      </Box>
-    </Box>
+        </div>
+      </section>
+    </article>
   );
 }
 
@@ -104,24 +81,20 @@ interface DataFieldProps {
 
 function DataField({ label, value, action }: DataFieldProps) {
   return (
-    <Box component="div" sx={{ display: 'grid', gridTemplateColumns: '1fr auto', gridTemplateRows: 'auto 24px' }}>
-      <Typography component="h6" variant="caption" sx={{ fontWeight: 'bold', gridColumn: '1' }}>
+    <div className="grid grid-cols-[1fr_auto] grid-rows-[auto_24px]">
+      <h6 className="typography-caption font-bold col-start-1">
         {label}
-      </Typography>
+      </h6>
 
-      <Box sx={{ gridColumn: '1', alignSelf: 'center' }}>
+      <div className="col-start-1 self-center">
         {value ?? (
-          <Typography color="textSecondary">
-            unknown
-          </Typography>
+          <p color="textSecondary">unknown</p>
         )}
-      </Box>
+      </div>
 
       {action && (
-        <Box sx={{ gridColumn: '2', gridRow: '1 / span 2' }}>
-          {action}
-        </Box>
+        <div className="col-start-2 row-span-2 row-start-1">{ action }</div>
       )}
-    </Box>
+    </div>
   );
 }

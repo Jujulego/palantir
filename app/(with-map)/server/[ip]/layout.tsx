@@ -12,10 +12,8 @@ import MetadataOption from '@/components/server/menu/MetadataOption';
 import ServerMarkers from '@/components/server/ServerMarkers';
 import { reverseDnsLookup } from '@/lib/dns/reverse-dns-lookup';
 import CloseIcon from '@mui/icons-material/Close';
-import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Skeleton from '@mui/material/Skeleton';
-import Typography from '@mui/material/Typography';
 import ipaddr from 'ipaddr.js';
 import type { Metadata } from 'next';
 import { redirect, RedirectType } from 'next/navigation';
@@ -36,10 +34,10 @@ export default async function WithMapServerIpLayout({ params, children }: Layout
   return (
     <>
       <MapDrawerHeader>
-        <Box sx={{ display: 'flex', pl: 2.5, pr: 1, pt: 2 }}>
-          <Typography component="h1" variant="h5" noWrap sx={{ flex: 1 }}>
+        <div className="flex pl-5 pr-2 pt-4">
+          <h1 className="typography-h5 flex-1 text-ellipsis overflow-hidden">
             { ipaddr.parse(ip).toString() }
-          </Typography>
+          </h1>
 
           <IconLink
             href="/"
@@ -48,11 +46,11 @@ export default async function WithMapServerIpLayout({ params, children }: Layout
           >
             <CloseIcon />
           </IconLink>
-        </Box>
+        </div>
 
-        <Box sx={{ display: 'flex', pl: 2.5, pr: 1.5, pb: 2, alignItems: 'center' }}>
+        <div className="flex pl-5 pr-3 pb-4 items-center">
           <Suspense fallback={<Skeleton height={20} width="75%" />}>
-            <HostnameLink hostname={reverseDnsLookup(ip)} sx={{ flex: '0 0 auto' }} />
+            <HostnameLink className="grow-0 shrink-0 basis-auto" hostname={reverseDnsLookup(ip)} />
           </Suspense>
 
           <MetadataMenu sx={{ flex: '0 0 auto', ml: 'auto' }}>
@@ -70,16 +68,16 @@ export default async function WithMapServerIpLayout({ params, children }: Layout
               <MetadataOption href={`${ipUrl}/big-data-cloud`}><BigDataCloudOption /></MetadataOption>
             </RightGate>
           </MetadataMenu>
-        </Box>
+        </div>
       </MapDrawerHeader>
 
       <Divider />
 
-      <Box sx={{ flex: '1 0 0', overflow: 'auto' }}>
+      <div className="grow shrink-0 basis-0 overflow-auto">
         <ServerMarkers>
           { children }
         </ServerMarkers>
-      </Box>
+      </div>
     </>
   );
 }

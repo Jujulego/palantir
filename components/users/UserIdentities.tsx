@@ -3,7 +3,6 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import GoogleIcon from '@mui/icons-material/Google';
 import PersonIcon from '@mui/icons-material/Person';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
 
 export interface UserIdentitiesProps {
@@ -12,7 +11,7 @@ export interface UserIdentitiesProps {
 
 export default function UserIdentities({ identities }: UserIdentitiesProps) {
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', py: 0, gap: 1 }}>
+    <div className="flex items-center py-0 gap-2">
       { identities.map((identity) => {
         switch (identity.connection) {
           case 'github':
@@ -44,6 +43,6 @@ export default function UserIdentities({ identities }: UserIdentitiesProps) {
             );
         }
       }) }
-    </Box>
+    </div>
   );
 }

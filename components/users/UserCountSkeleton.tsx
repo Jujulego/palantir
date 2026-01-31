@@ -5,7 +5,6 @@ import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import Skeleton from '@mui/material/Skeleton';
 import { SxProps, Theme } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 
 // Component
@@ -18,12 +17,12 @@ export default function UserCountSkeleton({ sx }: UserCountSkeletonProps) {
     <Card sx={sx}>
       <CardActionArea component={Link} href="/console/auth/users">
         <CardContent>
-          <Typography component="span" variant="h4">
+          <p className="typography-h4">
             <Skeleton />
-          </Typography>
-          <Typography sx={{ color: 'text.secondary', fontSize: 14 }}>
+          </p>
+          <h6 className="typography-body2 text-text-secondary/70">
             Users
-          </Typography>
+          </h6>
         </CardContent>
       </CardActionArea>
     </Card>

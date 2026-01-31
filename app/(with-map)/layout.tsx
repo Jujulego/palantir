@@ -18,7 +18,7 @@ export default async function WithMapLayout({ children }: LayoutProps<'/'>) {
     <MapLayout>
       <MapToolbar component="header">
         <Suspense fallback={<SearchBoxSkeleton sx={{ width: 384 }} />}>
-          <SearchBox sx={{ width: 384 }}>
+          <SearchBox className="w-96">
             <AnimalSearchOptions />
             <DnsSearchOptions />
             <ServerSearchOptions />

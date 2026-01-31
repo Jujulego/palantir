@@ -1,8 +1,7 @@
-import UserTableSkeleton from '@/components/users/UserTableSkeleton';
 import Link from '@/components/mui/Link';
+import UserTableSkeleton from '@/components/users/UserTableSkeleton';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Divider from '@mui/material/Divider';
-import Typography from '@mui/material/Typography';
 
 // Loading state
 export default function ConsoleUsersLoading() {
@@ -10,12 +9,12 @@ export default function ConsoleUsersLoading() {
     <>
       <Breadcrumbs sx={{ mx: 3, mt: 2, mb: 3 }}>
         <Link underline="hover" color="inherit" href="/console">Console</Link>
-        <Typography sx={{ color: 'text.primary' }}>Users</Typography>
+        <p className="text-text-primary">Users</p>
       </Breadcrumbs>
 
-      <Typography component="h1" variant="h4" sx={{ mx: 3, mb: 3 }}>
+      <h1 className="typography-h4 mx-6 mb-6">
         Users
-      </Typography>
+      </h1>
 
       <Divider />
 

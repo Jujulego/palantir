@@ -2,9 +2,7 @@ import { decodeName, type WithMapAnimalNameParams } from '@/app/(with-map)/anima
 import MapDrawerHeader from '@/components/map/drawer/MapDrawerHeader';
 import IconLink from '@/components/mui/IconLink';
 import CloseIcon from '@mui/icons-material/Close';
-import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
-import Typography from '@mui/material/Typography';
 import type { Metadata } from 'next';
 
 // Layout
@@ -13,10 +11,10 @@ export default async function WithMapAnimalNameLayout({ children, params }: Layo
 
   return (
     <>
-      <MapDrawerHeader sx={{ display: 'flex', pl: 2.5, pr: 1, py: 2 }}>
-        <Typography component="h1" variant="h5" sx={{ flex: '1', textTransform: 'capitalize' }}>
+      <MapDrawerHeader className="flex pl-5 pr-2 py-4">
+        <h1 className="typography-h5 capitalize flex-1">
           { name }
-        </Typography>
+        </h1>
 
         <IconLink
           href="/"
@@ -29,9 +27,9 @@ export default async function WithMapAnimalNameLayout({ children, params }: Layo
 
       <Divider />
 
-      <Box sx={{ flex: '1 0 0', overflow: 'auto' }}>
+      <div className="grow shrink-0 basis-0 overflow-auto">
         { children }
-      </Box>
+      </div>
     </>
   );
 }

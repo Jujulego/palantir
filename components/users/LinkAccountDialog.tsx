@@ -123,6 +123,7 @@ export default function LinkAccountDialog({ userId, open, onClose }: LinkAccount
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
       <DialogTitle>Account linking</DialogTitle>
       <VirtualList
+        className="grow shrink basis-auto overflow-auto border-y border-divider"
         disablePadding
         data={users}
         item={userItem}

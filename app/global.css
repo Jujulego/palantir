@@ -1,6 +1,7 @@
 @layer theme, base, mapbox, mui, components, utilities;
 @import 'tailwindcss';
 
+/* noinspection CssUnresolvedCustomProperty */
 @theme inline {
   /* Material UI typography */
   --font-roboto: var(--font-roboto);
@@ -32,6 +33,12 @@
   --breakpoint-lg: 75rem; /* 1200px */
   --breakpoint-xl: 96rem; /* 1536px */
   --breakpoint-2xl: 120rem; /* 1920px */
+
+  --container-sm: 37.5rem; /* 600px */
+  --container-md: 56.25rem; /* 900px */
+  --container-lg: 75rem; /* 1200px */
+  --container-xl: 96rem; /* 1536px */
+  --container-2xl: 120rem; /* 1920px */
 
   /* Material UI theme colors */
   --color-primary: rgb(var(--mui-palette-primary-mainChannel));
@@ -163,41 +170,40 @@
 /* Material UI base styles */
 @layer base {
   h1 {
-    font: var(--mui-font-h1);
+    @apply typography-h1;
     letter-spacing: -0.01562em;
   }
 
   h2 {
-    font: var(--mui-font-h2);
+    @apply typography-h2;
     letter-spacing: -0.00833em;
   }
 
   h3 {
-    font: var(--mui-font-h3);
+    @apply typography-h3;
   }
 
   h4 {
-    font: var(--mui-font-h4);
+    @apply typography-h4;
     letter-spacing: 0.00735em;
   }
 
   h5 {
-    font: var(--mui-font-h5);
+    @apply typography-h5;
   }
 
   h6 {
-    font: var(--mui-font-h6);
+    @apply typography-h6;
     letter-spacing: 0.0075em;
   }
 
   p {
-    font: var(--mui-font-body1);
+    @apply typography-body1;
     letter-spacing: 0.00938em;
   }
 
-  span {
-    font: var(--mui-font-body2);
-    letter-spacing: 0.01071em;
+  button, input, optgroup, select, textarea {
+    @apply typography-body2;
   }
 }
 

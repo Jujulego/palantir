@@ -1,6 +1,6 @@
 import { useFocusWithin } from '@/lib/utils/useFocusWithin';
 import Paper from '@mui/material/Paper';
-import { styled, type SxProps, type Theme } from '@mui/material/styles';
+import clsx from 'clsx';
 import { m } from 'motion/react';
 import { type KeyboardEvent, type ReactNode, useCallback } from 'react';
 
@@ -11,10 +11,10 @@ export interface SearchSurfaceProps {
   readonly onClose: () => void;
 
   readonly children?: ReactNode;
-  readonly sx?: SxProps<Theme>;
+  readonly className?: string;
 }
 
-export default function SearchSurface({ isOpen, onOpen, onClose, children, sx }: SearchSurfaceProps) {
+export default function SearchSurface({ isOpen, onOpen, onClose, children, className }: SearchSurfaceProps) {
   // Track focus
   const focusProps = useFocusWithin({
     onFocus: onOpen,
@@ -31,10 +31,10 @@ export default function SearchSurface({ isOpen, onOpen, onClose, children, sx }:
   const borderRadius = isOpen ? '16px' : '24px';
 
   return (
-    <SearchPlaceholder
+    <m.div
+      className={clsx('relative rounded-(--SearchSurface-shape)', className)}
       initial={{ '--SearchSurface-shape': borderRadius }}
       animate={{ '--SearchSurface-shape': borderRadius }}
-      sx={sx}
     >
       <Paper
         {...focusProps}
@@ -54,13 +54,6 @@ export default function SearchSurface({ isOpen, onOpen, onClose, children, sx }:
       >
         { children }
       </Paper>
-    </SearchPlaceholder>
+    </m.div>
   );
 }
-
-// Elements
-const SearchPlaceholder = styled(m.div)({
-  position: 'relative',
-
-  borderRadius: 'var(--SearchSurface-shape)',
-});

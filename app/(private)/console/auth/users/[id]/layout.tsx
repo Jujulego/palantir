@@ -5,7 +5,6 @@ import UserLayoutToolbar from '@/components/users/UserLayoutToolbar';
 import UserLayoutToolbarSkeleton from '@/components/users/UserLayoutToolbarSkeleton';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Divider from '@mui/material/Divider';
-import Typography from '@mui/material/Typography';
 import { Suspense } from 'react';
 
 // Page
@@ -17,7 +16,7 @@ export default async function ConsoleUsersIdLayout({ children, params }: LayoutP
       <Breadcrumbs sx={{ mx: 3, mt: 2, mb: 1 }}>
         <Link underline="hover" color="inherit" href="/console">Console</Link>
         <Link underline="hover" color="inherit" href="/console/auth/users">Users</Link>
-        <Typography sx={{ color: 'text.primary' }}>{ userId }</Typography>
+        <p className="text-text-primary">{ userId }</p>
       </Breadcrumbs>
 
       <Suspense fallback={<UserLayoutToolbarSkeleton sx={{ mb: 1 }} />}>

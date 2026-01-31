@@ -5,6 +5,8 @@ import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata, Viewport } from 'next';
 
+import './global.css';
+
 // Constants
 const APP_NAME = 'Palantir';
 const TITLE = 'Palantir';

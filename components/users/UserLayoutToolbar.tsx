@@ -3,7 +3,6 @@ import UserAvatar from '@/components/users/UserAvatar';
 import { queryUser } from '@/lib/users/users';
 import type { SxProps, Theme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 
 // Component
 export interface UserLayoutToolbarProps {
@@ -18,9 +17,9 @@ export default async function UserLayoutToolbar({ userId, sx }: UserLayoutToolba
     <Toolbar sx={sx}>
       <UserAvatar user={user} size={48} sx={{ mr: 2 }}  />
 
-      <Typography component="h1" variant="h4" sx={{ mr: 'auto' }}>
+      <h1 className="typography-h4 mr-auto">
         { user?.nickname ?? user?.name }
-      </Typography>
+      </h1>
 
       <LinkAccountButton disabled={!user?.email_verified} userId={userId} />
     </Toolbar>

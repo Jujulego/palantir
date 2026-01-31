@@ -1,6 +1,5 @@
 import type { Tag } from '@/lib/utils/tag';
 import LabelIcon from '@mui/icons-material/Label';
-import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -17,11 +16,11 @@ export default function TagsItem({ tags }: TagsItemProps) {
         <LabelIcon color="primary" />
       </ListItemIcon>
 
-      <Box component="ul" sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', p: 0, gap: 1 }}>
+      <ul className="flex flex-wrap items-center p-0 gap-2">
         { tags.map((tag) => (
           <Chip key={tag.label} component="li" label={tag.label} size="small" color={tag.color} />
         )) }
-      </Box>
+      </ul>
     </ListItem>
   );
 }

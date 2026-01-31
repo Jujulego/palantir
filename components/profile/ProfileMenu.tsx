@@ -4,7 +4,6 @@ import ColorModeToggle from '@/components/ColorModeToggle';
 import UserAvatar from '@/components/users/UserAvatar';
 import { useProfile } from '@/lib/auth/useProfile';
 import type { UserDto } from '@/lib/users/user.dto';
-import { useUser } from '@auth0/nextjs-auth0';
 import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -19,7 +18,6 @@ import ListItemText from '@mui/material/ListItemText';
 import Popover from '@mui/material/Popover';
 import Skeleton from '@mui/material/Skeleton';
 import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { type MouseEvent, Suspense, useCallback, useState } from 'react';
@@ -76,7 +74,9 @@ export default function ProfileMenu() {
         <ProfileTopBar>
           <UserAvatar user={profile as UserDto | null} sx={{ flex: '0 0 auto' }} />
 
-          <Typography variant="h6" sx={{ flex: '1 0 0' }}>{profile?.nickname ?? profile?.name ?? 'Anonymous'}</Typography>
+          <h6 className="grow shrink-0 basis-0">
+            {profile?.nickname ?? profile?.name ?? 'Anonymous'}
+          </h6>
 
           <ColorModeToggle sx={{ mb: 'auto' }} />
         </ProfileTopBar>

@@ -1,7 +1,6 @@
 'use client';
 
 import { count$ } from '@/lib/utils/kyrielle';
-import Box from '@mui/material/Box';
 import List, { type ListProps } from '@mui/material/List';
 import { collect$, map$, pipe$ } from 'kyrielle';
 import { type ReactNode, type UIEvent, useCallback, useEffect, useRef, useState } from 'react';
@@ -23,6 +22,7 @@ export interface VirtualListProps<in out D = unknown> extends ListProps {
 
 export default function VirtualList<D>(props: VirtualListProps<D>) {
   const {
+    className,
     data,
     loadedCount,
     onIntervalChange,
@@ -30,18 +30,17 @@ export default function VirtualList<D>(props: VirtualListProps<D>) {
     itemCount,
     itemOverScan = 2,
     itemSize = DEFAULT_ITEM_SIZE,
-    sx,
     ...listProps
   } = props;
 
   // Synchronize with screen
-  const containerRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   
   const [firstIdx, setFirstIdx] = useState(0);
   const [printedCount, setPrintedCount] = useState(loadedCount ?? itemCount);
   const [isSynchronized, setIsSynchronized] = useState(false);
 
-  const handleScroll = useCallback((event: UIEvent<HTMLElement>) => {
+  const handleScroll = useCallback((event: UIEvent<HTMLDivElement>) => {
     setFirstIdx(firstPrintableItem(event.currentTarget, itemCount, itemSize));
   }, [itemCount, itemSize]);
 
@@ -83,17 +82,14 @@ export default function VirtualList<D>(props: VirtualListProps<D>) {
 
   // Render
   return (
-    <Box ref={containerRef} onScroll={handleScroll} sx={sx}>
+    <div ref={containerRef} className={className} onScroll={handleScroll}>
       <List
+        className="grid content-start grid-cols-1 overflow-auto"
         component="ul"
         {...listProps}
-        sx={{
-          display: 'grid',
+        style={{
           height: itemCount * itemSize,
-          alignContent: 'start',
-          gridTemplateColumns: '1fr',
           gridAutoRows: itemSize,
-          overflow: 'auto'
         }}
       >
         { pipe$(
@@ -102,7 +98,7 @@ export default function VirtualList<D>(props: VirtualListProps<D>) {
           collect$()
         ) }
       </List>
-    </Box>
+    </div>
   );
 }
 

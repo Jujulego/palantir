@@ -5,23 +5,21 @@ import { SearchComboBox } from '@/components/search/SearchComboBox';
 import SearchEmptyOption from '@/components/search/SearchEmptyOption';
 import SearchListBox from '@/components/search/SearchListBox';
 import SearchSurface from '@/components/search/SearchSurface';
-import { mergeSx } from '@/lib/utils/mui';
 import { useDebounced } from '@/lib/utils/useDebounced';
 import { useSearchParam } from '@/lib/utils/useSearchParam';
 import Fade from '@mui/material/Fade';
 import LinearProgress from '@mui/material/LinearProgress';
-import { styled, type SxProps, type Theme } from '@mui/material/styles';
-import { AnimatePresence } from 'motion/react';
+import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import { type ReactNode, useCallback, useEffect, useId, useRef, useState, useTransition } from 'react';
 
 // Component
 export interface SearchProviderProps {
   readonly children?: ReactNode;
-  readonly sx?: SxProps<Theme>;
+  readonly className?: string;
 }
 
-export default function SearchBox({ children, sx }: SearchProviderProps) {
+export default function SearchBox({ children, className }: SearchProviderProps) {
   const router = useRouter();
 
   const id = useId();
@@ -152,10 +150,10 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
   // Render
   return (
     <SearchSurface
+      className={clsx('h-12', className)}
       isOpen={isOpen}
       onOpen={handleOpen}
       onClose={handleClose}
-      sx={mergeSx(sx, { height: 48 })}
     >
       <SearchComboBox
         inputRef={inputRef}
@@ -176,7 +174,7 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
         sx={{ height: 48, zIndex: 10 }}
       />
 
-      <SearchListBoxContainer>
+      <div className="relative">
         { isOpen && (
           <Fade in={isLoading}>
             <LinearProgress color="primary" sx={{ position: 'absolute', top: 0, left: 0, width: '100%', height: 4 }} />
@@ -205,15 +203,10 @@ export default function SearchBox({ children, sx }: SearchProviderProps) {
             { children }
           </SearchListBox>
         </SearchContext>
-      </SearchListBoxContainer>
+      </div>
     </SearchSurface>
   );
 }
-
-// Elements
-const SearchListBoxContainer = styled('div')({
-  position: 'relative',
-});
 
 // Utils
 function isEnabledOption(element: Element): boolean {

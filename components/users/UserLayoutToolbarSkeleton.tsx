@@ -1,7 +1,6 @@
 import Skeleton from '@mui/material/Skeleton';
 import type { SxProps, Theme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 
 // Component
 export interface UserLayoutToolbarSkeletonProps {
@@ -13,9 +12,9 @@ export default async function UserLayoutToolbarSkeleton({ sx }: UserLayoutToolba
     <Toolbar sx={sx}>
       <Skeleton variant="circular" sx={{ height: 48, width: 48, mr: 2 }}  />
 
-      <Typography component="span" variant="h4" sx={{ flex: '1 0 0' }}>
+      <span className="typography-h4 grow shrink-0 basis-0">
         <Skeleton width="25%" />
-      </Typography>
+      </span>
     </Toolbar>
   );
 }

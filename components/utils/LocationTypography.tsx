@@ -1,7 +1,6 @@
 import type { Address } from '@/lib/utils/address';
 import type { Coordinates } from '@/lib/utils/coordinates';
 import addressFormatter from '@fragaria/address-formatter';
-import Box from '@mui/material/Box';
 import { Fragment } from 'react';
 
 export interface LocationTypographyProps {
@@ -28,7 +27,7 @@ export default function LocationTypography({ address, coordinates }: LocationTyp
     return <>{ lat }&nbsp;{ lng }</>;
   }
 
-  return <Box component="span" sx={{ color: 'text.secondary' }}>Unknown location</Box>;
+  return <span className="text-text-secondary/70">Unknown location</span>;
 }
 
 // Utils

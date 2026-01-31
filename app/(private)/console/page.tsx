@@ -1,25 +1,15 @@
 import UserCountSsr from '@/components/users/UserCountSsr';
 import StatCard from '@/components/utils/StatCard';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/system/Box';
 
 // Page
 export default async function AdminPage() {
   return (
     <>
-      <Typography component="h1" variant="h4" sx={{ flex: '0 0 auto', m: 3 }}>
+      <h1 className="typography-h4 grow-0 shrink-0 m-6">
         Dashboard
-      </Typography>
+      </h1>
 
-      <Box
-        component="section"
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(12, 1fr)',
-          p: 2,
-          gap: 2,
-        }}
-      >
+      <section className="grid grid-cols-12 p-4 gap-4">
         <StatCard
           title="Users"
           href="/console/auth/users"
@@ -27,7 +17,7 @@ export default async function AdminPage() {
         >
           <UserCountSsr />
         </StatCard>
-      </Box>
+      </section>
     </>
   );
 }

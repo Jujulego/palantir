@@ -10,6 +10,9 @@ import {
 import { revalidateTag } from 'next/cache';
 import { FetchError } from '../utils/fetch';
 
+// Constants
+const USER_CACHE_TIMEOUT = 60; // s
+
 // Api calls
 export async function queryUsers(query: UserListQuery & { includeTotals: true }): Promise<UserListDto>;
 export async function queryUsers(query?: UserListQuery & { includeTotals?: false }): Promise<UserDto[]>;
@@ -30,6 +33,10 @@ export async function queryUsers(query: UserListQuery = {}): Promise<UserListDto
 
   return await auth0Fetch(url, {
     method: 'GET',
+    next: {
+      revalidate: USER_CACHE_TIMEOUT,
+      tags: ['users', 'users-pages']
+    }
   });
 }
 
@@ -41,6 +48,10 @@ export async function queryUser(id: string): Promise<UserDto | null> {
   try {
     return await auth0Fetch<UserDto>(url, {
       method: 'GET',
+      next: {
+        revalidate: USER_CACHE_TIMEOUT,
+        tags: ['users', `users-${id}`]
+      }
     });
   } catch (error) {
     if (error instanceof FetchError && error.status === 404) {

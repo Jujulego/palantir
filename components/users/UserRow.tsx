@@ -1,13 +1,12 @@
 'use client';
 
-import VirtualCell from '@/components/virtual/VirtualCell';
-import VirtualRow, { type VirtualRowProps } from '@/components/virtual/VirtualRow';
 import UserAvatar from '@/components/users/UserAvatar';
 import UserEmail from '@/components/users/UserEmail';
 import UserIdentities from '@/components/users/UserIdentities';
 import FormatDate from '@/components/utils/FormatDate';
+import VirtualCell from '@/components/virtual/VirtualCell';
+import VirtualRow, { type VirtualRowProps } from '@/components/virtual/VirtualRow';
 import type { UserDto } from '@/lib/users/user.dto';
-import Box from '@mui/material/Box';
 import ButtonBase from '@mui/material/ButtonBase';
 import Link from 'next/link';
 
@@ -36,9 +35,9 @@ export default function UserRow({ user, ...rest }: VirtualUserRowProps) {
           }}
         >
           <UserAvatar user={user} size={24} />
-          <Box sx={{ flex: '1 0 0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          <div className="grow shrink-0 basis-0 overflow-hidden text-ellipsis whitespace-nowrap">
             {user.nickname ?? user.name}
-          </Box>
+          </div>
         </ButtonBase>
       </VirtualCell>
 

@@ -1,19 +1,18 @@
 'use client';
 
 import { MapDrawerContext } from '@/components/map/drawer/map-drawer.context';
-import { mergeSx } from '@/lib/utils/mui';
-import Box from '@mui/material/Box';
 import { grey } from '@mui/material/colors';
-import { styled, type SxProps, type Theme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
+import clsx from 'clsx';
 import { type ReactNode, type Touch, type TouchEvent, use, useCallback, useEffect, useRef } from 'react';
 
 // Component
 export interface MapDrawerHeaderProps {
   readonly children: ReactNode;
-  readonly sx?: SxProps<Theme>;
+  readonly className?: string;
 }
 
-export default function MapDrawerHeader({ children, sx }: MapDrawerHeaderProps) {
+export default function MapDrawerHeader({ children, className }: MapDrawerHeaderProps) {
   const { mode, setState, setHeaderHeight } = use(MapDrawerContext);
 
   // Drag state
@@ -75,19 +74,15 @@ export default function MapDrawerHeader({ children, sx }: MapDrawerHeaderProps) 
 
   // Render
   return (
-    <Box
+    <div
       ref={containerRef}
+      className={clsx('relative select-none', { 'touch-none': mode === 'mobile' }, className)}
       onTouchStart={mode === 'mobile' ? handleTouchStart : undefined}
       onTouchMove={mode === 'mobile' ? handleTouchMove : undefined}
-      sx={mergeSx(sx, {
-        position: 'relative',
-        userSelect: 'none',
-        touchAction: mode === 'mobile' ? 'none' : undefined,
-      })}
     >
       { mode === 'mobile' && <Grab /> }
       { children }
-    </Box>
+    </div>
   );
 }
 

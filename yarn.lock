@@ -4175,7 +4175,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clsx@npm:^2.1.1":
+"clsx@npm:2.1.1, clsx@npm:^2.1.1":
   version: 2.1.1
   resolution: "clsx@npm:2.1.1"
   checksum: 10c0/c4c8eb865f8c82baab07e71bfa8897c73454881c4f99d6bc81585aecd7c441746c1399d08363dc096c550cceaf97bd4ce1e8854e1771e9998d9f94c4fe075839
@@ -7495,6 +7495,7 @@ __metadata:
     "@vitejs/plugin-react": "npm:5.1.2"
     "@vitest/coverage-v8": "npm:4.0.18"
     babel-plugin-react-compiler: "npm:1.0.0"
+    clsx: "npm:2.1.1"
     dayjs: "npm:1.11.19"
     eslint: "npm:9.39.2"
     eslint-config-next: "npm:16.1.6"
