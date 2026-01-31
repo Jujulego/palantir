@@ -6,12 +6,12 @@
   /* Material UI typography */
   --font-roboto: var(--font-roboto);
 
-  --letter-spacing-h1: -0.01562em;
-  --letter-spacing-h2: -0.00833em;
-  --letter-spacing-h4: 0.00735em;
-  --letter-spacing-h6: 0.0075em;
-  --letter-spacing-body1: 0.00938em;
-  --letter-spacing-body2: 0.01071em;
+  --tracking-h1: -0.01562em;
+  --tracking-h2: -0.00833em;
+  --tracking-h4: 0.00735em;
+  --tracking-h6: 0.0075em;
+  --tracking-body1: 0.00938em;
+  --tracking-body2: 0.01071em;
 
   --typography-h1: var(--mui-font-h1);
   --typography-h2: var(--mui-font-h2);
@@ -170,13 +170,11 @@
 /* Material UI base styles */
 @layer base {
   h1 {
-    @apply typography-h1;
-    letter-spacing: -0.01562em;
+    @apply typography-h1 tracking-h1;
   }
 
   h2 {
-    @apply typography-h2;
-    letter-spacing: -0.00833em;
+    @apply typography-h2 tracking-h2;
   }
 
   h3 {
@@ -184,8 +182,7 @@
   }
 
   h4 {
-    @apply typography-h4;
-    letter-spacing: 0.00735em;
+    @apply typography-h4 tracking-h4;
   }
 
   h5 {
@@ -193,13 +190,11 @@
   }
 
   h6 {
-    @apply typography-h6;
-    letter-spacing: 0.0075em;
+    @apply typography-h6 tracking-h6;
   }
 
   p {
-    @apply typography-body1;
-    letter-spacing: 0.00938em;
+    @apply typography-body1 tracking-body1;
   }
 
   button, input, optgroup, select, textarea {
