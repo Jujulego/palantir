@@ -14,14 +14,14 @@ import { preconnect, prefetchDNS } from 'react-dom';
 
 // Layout
 export default async function WithMapLayout({ children }: LayoutProps<'/'>) {
-  preconnect('https://api.mapbox.com', { crossOrigin: 'anonymous'});
+  preconnect('https://api.mapbox.com', { crossOrigin: 'anonymous' });
   prefetchDNS('https://events.mapbox.com');
 
   // Render
   return (
     <MapLayout>
       <MapToolbar component="header">
-        <Suspense fallback={<SearchBoxSkeleton sx={{ width: 384 }} />}>
+        <Suspense fallback={<SearchBoxSkeleton className="w-96" />}>
           <SearchBox className="w-96">
             <AnimalSearchOptions />
             <DnsSearchOptions />
