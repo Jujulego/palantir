@@ -4,10 +4,10 @@ import MapDrawerSurface from '@/components/map/drawer/MapDrawerSurface';
 import MapLayout from '@/components/map/MapLayout';
 import MapToolbar from '@/components/map/MapToolbar';
 import ProfileMenu from '@/components/profile/ProfileMenu';
+import ProfileMenuV2 from '@/components/profile/ProfileMenuV2';
 import SearchBox from '@/components/search/SearchBox';
 import { SearchBoxSkeleton } from '@/components/search/SearchBoxSkeleton';
 import ServerSearchOptions from '@/components/server/ServerSearchOptions';
-import Paper from '@mui/material/Paper';
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { preconnect, prefetchDNS } from 'react-dom';
@@ -29,9 +29,11 @@ export default async function WithMapLayout({ children }: LayoutProps<'/'>) {
           </SearchBox>
         </Suspense>
 
-        <Paper elevation={2} sx={{ ml: 'auto', p: 0.5, borderRadius: 9999 }}>
+        <div className="ml-auto p-1 rounded-full elevation-2 overlay-2 bg-background-paper">
           <ProfileMenu />
-        </Paper>
+        </div>
+
+        <ProfileMenuV2 className="ml-2" />
       </MapToolbar>
 
       <MapDrawerSurface>

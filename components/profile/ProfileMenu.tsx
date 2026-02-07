@@ -16,14 +16,13 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Popover from '@mui/material/Popover';
-import Skeleton from '@mui/material/Skeleton';
 import { styled } from '@mui/material/styles';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { type MouseEvent, Suspense, useCallback, useState } from 'react';
 
 export default function ProfileMenu() {
-  const { profile = null, isLoading } = useProfile();
+  const { profile = null } = useProfile();
   const pathname = usePathname();
 
   // Popover state
@@ -36,13 +35,9 @@ export default function ProfileMenu() {
   // Render
   return (
     <>
-      { isLoading ? (
-        <Skeleton variant="circular" width={40} height={40} />
-      ) : (
-        <IconButton onClick={handleOpen} aria-label="Profile menu" sx={{ padding: 0.5 }}>
-          <UserAvatar size={32} user={profile as UserDto | null} />
-        </IconButton>
-      ) }
+      <IconButton onClick={handleOpen} aria-label="Profile menu" sx={{ padding: 0.5 }}>
+        <UserAvatar size={32} user={profile as UserDto | null} />
+      </IconButton>
 
       <Popover
         open={!!anchor}
