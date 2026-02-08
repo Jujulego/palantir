@@ -3,7 +3,6 @@ import DnsSearchOptions from '@/components/dns/DnsSearchOptions';
 import MapDrawerSurface from '@/components/map/drawer/MapDrawerSurface';
 import MapLayout from '@/components/map/MapLayout';
 import MapToolbar from '@/components/map/MapToolbar';
-import ProfileMenu from '@/components/profile/ProfileMenu';
 import ProfileMenuV2 from '@/components/profile/ProfileMenuV2';
 import SearchBox from '@/components/search/SearchBox';
 import { SearchBoxSkeleton } from '@/components/search/SearchBoxSkeleton';
@@ -29,11 +28,7 @@ export default async function WithMapLayout({ children }: LayoutProps<'/'>) {
           </SearchBox>
         </Suspense>
 
-        <div className="ml-auto p-1 rounded-full elevation-2 overlay-2 bg-background-paper">
-          <ProfileMenu />
-        </div>
-
-        <ProfileMenuV2 className="ml-2" />
+        <ProfileMenuV2 className="ml-auto" />
       </MapToolbar>
 
       <MapDrawerSurface>

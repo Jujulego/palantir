@@ -1,11 +1,11 @@
 'use client';
 
 import ColorModeToggle from '@/components/ColorModeToggle';
+import ProfileLoginLink from '@/components/profile/ProfileLoginLink';
 import UserAvatar from '@/components/users/UserAvatar';
 import { useProfile } from '@/lib/auth/useProfile';
 import type { UserDto } from '@/lib/users/user.dto';
 import GpsFixedIcon from '@mui/icons-material/GpsFixed';
-import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Divider from '@mui/material/Divider';
@@ -18,8 +18,8 @@ import ListItemText from '@mui/material/ListItemText';
 import Popover from '@mui/material/Popover';
 import { styled } from '@mui/material/styles';
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { type MouseEvent, Suspense, useCallback, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { type MouseEvent, useCallback, useState } from 'react';
 
 export default function ProfileMenu() {
   const { profile = null } = useProfile();
@@ -73,13 +73,13 @@ export default function ProfileMenu() {
             {profile?.nickname ?? profile?.name ?? 'Anonymous'}
           </h6>
 
-          <ColorModeToggle sx={{ mb: 'auto' }} />
+          <ColorModeToggle className="mb-auto" />
         </ProfileTopBar>
 
         <Divider />
 
         <List component="nav" disablePadding onClick={handleClose}>
-          <ListItem disablePadding>
+          <ListItem component="div" disablePadding>
             <ListItemButton
               component={Link}
               href="/server/me/vercel"
@@ -94,7 +94,7 @@ export default function ProfileMenu() {
           </ListItem>
 
           { profile && (
-            <ListItem disablePadding>
+            <ListItem component="div" disablePadding>
               <ListItemButton component={Link} href="/console" selected={pathname.startsWith('/console')}>
                 <ListItemIcon>
                   <SettingsIcon />
@@ -120,9 +120,7 @@ export default function ProfileMenu() {
               </ListItemButton>
             </ListItem>
           ) : (
-            <Suspense fallback={<BasicLoginLink />}>
-              <CompleteLoginLink />
-            </Suspense>
+            <ProfileLoginLink />
           ) }
         </List>
       </Popover>
@@ -141,35 +139,3 @@ const ProfileTopBar = styled('div')(({ theme }) => ({
   padding: theme.spacing(1.25),
   gap: theme.spacing(2),
 }));
-
-function BasicLoginLink() {
-  const url = usePathname();
-
-  return (
-    <ListItem disablePadding>
-      <ListItemButton component="a" href={`/auth/login?returnTo=${encodeURIComponent(url)}`}>
-        <ListItemIcon>
-          <LoginIcon />
-        </ListItemIcon>
-
-        <ListItemText primary="Login" />
-      </ListItemButton>
-    </ListItem>
-  );
-}
-
-function CompleteLoginLink() {
-  const url = `${usePathname()}?${useSearchParams()}`;
-
-  return (
-    <ListItem disablePadding>
-      <ListItemButton component="a" href={`/auth/login?returnTo=${encodeURIComponent(url)}`}>
-        <ListItemIcon>
-          <LoginIcon />
-        </ListItemIcon>
-
-        <ListItemText primary="Login" />
-      </ListItemButton>
-    </ListItem>
-  );
-}

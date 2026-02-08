@@ -1,17 +1,17 @@
 'use client';
 
-import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
 import IconButton from '@mui/material/IconButton';
-import { type SxProps, type Theme, useColorScheme } from '@mui/material/styles';
+import { useColorScheme } from '@mui/material/styles';
 import { useCallback } from 'react';
 
 // Component
 export interface ColorModeToggleProps {
-  readonly sx?: SxProps<Theme>;
+  readonly className?: string;
 }
 
-export default function ColorModeToggle({ sx }: ColorModeToggleProps) {
+export default function ColorModeToggle({ className }: ColorModeToggleProps) {
   const { mode, setMode } = useColorScheme();
 
   const handleClick = useCallback(() => {
@@ -21,9 +21,9 @@ export default function ColorModeToggle({ sx }: ColorModeToggleProps) {
   // Render
   return (
     <IconButton
+      className={className}
       color="primary" aria-label="Switch theme"
       onClick={handleClick}
-      sx={sx}
     >
       { mode === 'dark' ? <DarkModeIcon /> : <LightModeIcon /> }
     </IconButton>
