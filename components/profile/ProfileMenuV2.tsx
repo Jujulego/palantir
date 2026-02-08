@@ -48,6 +48,7 @@ export default function ProfileMenuV2({ className }: ProfileMenuV2Props) {
       <div className="flex items-center gap-4 p-1 w-[320px] rounded-(--ProfileMenuSurface-shape) shadow-2">
         <IconButton className="p-1" aria-label="Profile menu" onClick={handleToggle}>
           <UserAvatar
+            className="transition duration-250 group-data-open:scale-125"
             size={32}
             user={profile}
           />
