@@ -39,7 +39,12 @@ export default function ProfileMenuV2({ className }: ProfileMenuV2Props) {
   }, []);
 
   return (
-    <ProfileMenuSurface className={className} isOpen={isOpen} fullHeight={profile ? 192 : 144}>
+    <ProfileMenuSurface
+      className={className}
+      fullHeight={profile ? 192 : 144}
+      isOpen={isOpen}
+      onClose={handleClose}
+    >
       <div className="flex items-center gap-4 p-1 w-[320px] rounded-(--ProfileMenuSurface-shape) shadow-2">
         <IconButton className="p-1" aria-label="Profile menu" onClick={handleToggle}>
           <UserAvatar
