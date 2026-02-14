@@ -45,7 +45,7 @@ export default function ProfileMenuSurface({ isOpen, fullHeight, onClose, classN
       animate={{ '--ProfileMenuSurface-shape': isOpen ? '16px' : '24px' }}
     >
       <m.div
-        className="absolute top-0 right-0 min-h-12 overflow-hidden rounded-(--ProfileMenuSurface-shape) elevation-2 bg-background-paper"
+        className="absolute top-0 right-0 min-h-12 overflow-hidden rounded-(--ProfileMenuSurface-shape) elevation-1 bg-background-paper"
         initial={{ height: 48, width: 48 }}
         animate={{
           height: isOpen ? fullHeight : 48,

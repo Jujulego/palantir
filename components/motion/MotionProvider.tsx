@@ -9,7 +9,7 @@ export interface MotionProviderProps {
 
 export default function MotionProvider({ children }: MotionProviderProps) {
   return (
-    <MotionConfig reducedMotion="user" transition={{ duration: 0.250 }}>
+    <MotionConfig reducedMotion="user" transition={{ duration: 0.3 }}>
       <LazyMotion features={domAnimation} strict>
         { children }
       </LazyMotion>

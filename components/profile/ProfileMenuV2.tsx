@@ -45,13 +45,9 @@ export default function ProfileMenuV2({ className }: ProfileMenuV2Props) {
       isOpen={isOpen}
       onClose={handleClose}
     >
-      <div className="flex items-center gap-4 p-1 w-[320px] rounded-(--ProfileMenuSurface-shape) shadow-2">
+      <div className="flex items-center gap-4 p-1 w-[320px] rounded-t-(--ProfileMenuSurface-shape) elevation-2 bg-background-paper">
         <IconButton className="p-1" aria-label="Profile menu" onClick={handleToggle}>
-          <UserAvatar
-            className="transition duration-250 group-data-open:scale-125"
-            size={32}
-            user={profile}
-          />
+          <UserAvatar size={32} user={profile} />
         </IconButton>
 
         <h6 className="grow shrink-0 basis-0 truncate">
