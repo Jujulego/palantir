@@ -17,7 +17,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 export interface ProfileMenuV2Props {
   readonly className?: string;
@@ -28,7 +28,25 @@ export default function ProfileMenuV2({ className }: ProfileMenuV2Props) {
 
   const { profile = null } = useProfile();
 
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const [isOpen, setIsOpen] = useState(false);
+  const [contentHeight, setContentHeight] = useState(0);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    setContentHeight(container.clientHeight);
+
+    const observer = new ResizeObserver(() => {
+      setContentHeight(container.clientHeight);
+    });
+
+    observer.observe(container);
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleClose = useCallback(() => {
     setIsOpen(false);
@@ -41,7 +59,7 @@ export default function ProfileMenuV2({ className }: ProfileMenuV2Props) {
   return (
     <ProfileMenuSurface
       className={className}
-      fullHeight={profile ? 192 : 144}
+      fullHeight={contentHeight + 48}
       isOpen={isOpen}
       onClose={handleClose}
     >
@@ -57,51 +75,53 @@ export default function ProfileMenuV2({ className }: ProfileMenuV2Props) {
         <ColorModeToggle />
       </div>
 
-      <List className="w-[320px]" component="nav" disablePadding onClick={handleClose}>
-        <ListItem component="div" disablePadding>
-          <ListItemButton
-            component={Link}
-            href="/server/me/vercel"
-            selected={pathname.startsWith('/server/me')}
-          >
-            <ListItemIcon>
-              <GpsFixedIcon />
-            </ListItemIcon>
-
-            <ListItemText>My IP address</ListItemText>
-          </ListItemButton>
-        </ListItem>
-
-        { profile && (
+      <div className="w-[320px]" ref={containerRef}>
+        <List component="nav" disablePadding onClick={handleClose}>
           <ListItem component="div" disablePadding>
-            <ListItemButton component={Link} href="/console" selected={pathname.startsWith('/console')}>
+            <ListItemButton
+              component={Link}
+              href="/server/me/vercel"
+              selected={pathname.startsWith('/server/me')}
+            >
               <ListItemIcon>
-                <SettingsIcon />
+                <GpsFixedIcon />
               </ListItemIcon>
 
-              <ListItemText primary="Console" />
+              <ListItemText>My IP address</ListItemText>
             </ListItemButton>
           </ListItem>
-        ) }
-      </List>
 
-      <Divider />
+          { profile && (
+            <ListItem component="div" disablePadding>
+              <ListItemButton component={Link} href="/console" selected={pathname.startsWith('/console')}>
+                <ListItemIcon>
+                  <SettingsIcon />
+                </ListItemIcon>
 
-      <List component="nav" disablePadding onClick={handleClose}>
-        { profile ? (
-          <ListItem component="div" disablePadding>
-            <ListItemButton component="a" href="/auth/logout">
-              <ListItemIcon>
-                <LogoutIcon />
-              </ListItemIcon>
+                <ListItemText primary="Console" />
+              </ListItemButton>
+            </ListItem>
+          ) }
+        </List>
 
-              <ListItemText primary="Logout" />
-            </ListItemButton>
-          </ListItem>
-        ) : (
-          <ProfileLoginLink />
-        ) }
-      </List>
+        <Divider />
+
+        <List component="nav" disablePadding onClick={handleClose}>
+          { profile ? (
+            <ListItem component="div" disablePadding>
+              <ListItemButton component="a" href="/auth/logout">
+                <ListItemIcon>
+                  <LogoutIcon />
+                </ListItemIcon>
+
+                <ListItemText primary="Logout" />
+              </ListItemButton>
+            </ListItem>
+          ) : (
+            <ProfileLoginLink />
+          ) }
+        </List>
+      </div>
     </ProfileMenuSurface>
   );
 }
