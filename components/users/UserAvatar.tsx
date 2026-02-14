@@ -7,7 +7,7 @@ import { getImageProps } from 'next/image';
 
 export interface UserAvatarProps extends Omit<AvatarProps, 'alt' | 'children' | 'src'> {
   readonly size?: number;
-  readonly user: UserDto | null;
+  readonly user: Pick<UserDto, 'picture' | 'nickname' | 'name'> | null;
 }
 
 export default function UserAvatar({ size = 40, user, sx, ...rest }: UserAvatarProps) {

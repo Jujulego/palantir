@@ -7,7 +7,6 @@ import ProfileMenu from '@/components/profile/ProfileMenu';
 import SearchBox from '@/components/search/SearchBox';
 import { SearchBoxSkeleton } from '@/components/search/SearchBoxSkeleton';
 import ServerSearchOptions from '@/components/server/ServerSearchOptions';
-import Paper from '@mui/material/Paper';
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { preconnect, prefetchDNS } from 'react-dom';
@@ -29,9 +28,7 @@ export default async function WithMapLayout({ children }: LayoutProps<'/'>) {
           </SearchBox>
         </Suspense>
 
-        <Paper elevation={2} sx={{ ml: 'auto', p: 0.5, borderRadius: 9999 }}>
-          <ProfileMenu />
-        </Paper>
+        <ProfileMenu className="ml-auto" />
       </MapToolbar>
 
       <MapDrawerSurface>

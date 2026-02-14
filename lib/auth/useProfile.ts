@@ -1,5 +1,6 @@
 'use client';
 
+import type { User } from '@auth0/nextjs-auth0/types';
 import useSWR from 'swr';
 
 export function useProfile() {
@@ -17,7 +18,7 @@ export function useProfile() {
       throw new Error('Unauthorized');
     }
 
-    return res.json();
+    return res.json() as Promise<User>;
   }));
 
   return {

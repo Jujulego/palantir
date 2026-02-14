@@ -1,5 +1,4 @@
 import { useFocusWithin } from '@/lib/utils/useFocusWithin';
-import Paper from '@mui/material/Paper';
 import clsx from 'clsx';
 import { m } from 'motion/react';
 import { type KeyboardEvent, type ReactNode, useCallback } from 'react';
@@ -36,24 +35,15 @@ export default function SearchSurface({ isOpen, onOpen, onClose, children, class
       initial={{ '--SearchSurface-shape': borderRadius }}
       animate={{ '--SearchSurface-shape': borderRadius }}
     >
-      <Paper
+      <div
         {...focusProps}
+        className="absolute w-full min-h-full overflow-auto rounded-(--SearchSurface-shape) elevation-2 bg-background-paper"
         onClick={onOpen}
         onTouchStart={onOpen}
         onKeyDown={handleKeyDown}
-
-        elevation={2}
-        sx={{
-          position: 'absolute',
-          minHeight: '100%',
-          width: '100%',
-          overflow: 'auto',
-
-          borderRadius: 'var(--SearchSurface-shape)'
-        }}
       >
         { children }
-      </Paper>
+      </div>
     </m.div>
   );
 }

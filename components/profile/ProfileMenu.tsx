@@ -1,180 +1,54 @@
 'use client';
 
 import ColorModeToggle from '@/components/ColorModeToggle';
+import ProfileLinks from '@/components/profile/ProfileLinks';
+import ProfileMenuSurface from '@/components/profile/ProfileMenuSurface';
 import UserAvatar from '@/components/users/UserAvatar';
 import { useProfile } from '@/lib/auth/useProfile';
-import type { UserDto } from '@/lib/users/user.dto';
-import GpsFixedIcon from '@mui/icons-material/GpsFixed';
-import LoginIcon from '@mui/icons-material/Login';
-import LogoutIcon from '@mui/icons-material/Logout';
-import SettingsIcon from '@mui/icons-material/Settings';
-import Divider from '@mui/material/Divider';
+import { useResizeObserver } from '@/lib/utils/useResizeObserver';
 import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Popover from '@mui/material/Popover';
-import Skeleton from '@mui/material/Skeleton';
-import { styled } from '@mui/material/styles';
-import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { type MouseEvent, Suspense, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 
-export default function ProfileMenu() {
-  const { profile = null, isLoading } = useProfile();
-  const pathname = usePathname();
+export interface ProfileMenuProps {
+  readonly className?: string;
+}
 
-  // Popover state
-  const [anchor, setAnchor] = useState<HTMLButtonElement | null>(null);
-  const handleClose = useCallback(() => setAnchor(null), []);
-  const handleOpen = useCallback((event: MouseEvent<HTMLButtonElement>) => {
-    setAnchor(event.currentTarget);
+export default function ProfileMenu({ className }: ProfileMenuProps) {
+  const { profile = null } = useProfile();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const { ref: resizeRef, height: contentHeight } = useResizeObserver<HTMLDivElement>();
+
+  const handleClose = useCallback(() => {
+    setIsOpen(false);
   }, []);
 
-  // Render
+  const handleToggle = useCallback(() => {
+    setIsOpen((old) => !old);
+  }, []);
+
   return (
-    <>
-      { isLoading ? (
-        <Skeleton variant="circular" width={40} height={40} />
-      ) : (
-        <IconButton onClick={handleOpen} aria-label="Profile menu" sx={{ padding: 0.5 }}>
-          <UserAvatar size={32} user={profile as UserDto | null} />
+    <ProfileMenuSurface
+      className={className}
+      fullHeight={contentHeight + 48}
+      isOpen={isOpen}
+      onClose={handleClose}
+    >
+      <div className="flex items-center gap-4 p-1 w-[320px] rounded-t-(--ProfileMenuSurface-shape) elevation-2 bg-background-paper">
+        <IconButton className="p-1" aria-label="Profile menu" onClick={handleToggle}>
+          <UserAvatar size={32} user={profile} />
         </IconButton>
-      ) }
 
-      <Popover
-        open={!!anchor}
-        anchorEl={anchor}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        keepMounted
-        disablePortal
-        slotProps={{
-          paper: {
-            sx: {
-              marginTop: -1.25,
-              marginLeft: 0.5,
-              borderTopRightRadius: 24,
-              borderTopLeftRadius: 8,
-              borderBottomRightRadius: 8,
-              borderBottomLeftRadius: 8,
-            }
-          }
-        }}
-      >
-        <ProfileTopBar>
-          <UserAvatar user={profile as UserDto | null} sx={{ flex: '0 0 auto' }} />
+        <h6 className="grow shrink-0 basis-0 truncate">
+          {profile?.nickname ?? profile?.name ?? 'Anonymous'}
+        </h6>
 
-          <h6 className="grow shrink-0 basis-0">
-            {profile?.nickname ?? profile?.name ?? 'Anonymous'}
-          </h6>
+        <ColorModeToggle />
+      </div>
 
-          <ColorModeToggle sx={{ mb: 'auto' }} />
-        </ProfileTopBar>
-
-        <Divider />
-
-        <List component="nav" disablePadding onClick={handleClose}>
-          <ListItem disablePadding>
-            <ListItemButton
-              component={Link}
-              href="/server/me/vercel"
-              selected={pathname.startsWith('/server/me')}
-            >
-              <ListItemIcon>
-                <GpsFixedIcon />
-              </ListItemIcon>
-
-              <ListItemText>My IP address</ListItemText>
-            </ListItemButton>
-          </ListItem>
-
-          { profile && (
-            <ListItem disablePadding>
-              <ListItemButton component={Link} href="/console" selected={pathname.startsWith('/console')}>
-                <ListItemIcon>
-                  <SettingsIcon />
-                </ListItemIcon>
-
-                <ListItemText primary="Console" />
-              </ListItemButton>
-            </ListItem>
-          ) }
-        </List>
-
-        <Divider />
-
-        <List component="nav" disablePadding onClick={handleClose}>
-          { profile ? (
-            <ListItem disablePadding>
-              <ListItemButton component="a" href="/auth/logout">
-                <ListItemIcon>
-                  <LogoutIcon />
-                </ListItemIcon>
-
-                <ListItemText primary="Logout" />
-              </ListItemButton>
-            </ListItem>
-          ) : (
-            <Suspense fallback={<BasicLoginLink />}>
-              <CompleteLoginLink />
-            </Suspense>
-          ) }
-        </List>
-      </Popover>
-    </>
-  );
-}
-
-// Elements
-const ProfileTopBar = styled('div')(({ theme }) => ({
-  minHeight: 48,
-  minWidth: 320,
-
-  display: 'flex',
-  alignItems: 'center',
-
-  padding: theme.spacing(1.25),
-  gap: theme.spacing(2),
-}));
-
-function BasicLoginLink() {
-  const url = usePathname();
-
-  return (
-    <ListItem disablePadding>
-      <ListItemButton component="a" href={`/auth/login?returnTo=${encodeURIComponent(url)}`}>
-        <ListItemIcon>
-          <LoginIcon />
-        </ListItemIcon>
-
-        <ListItemText primary="Login" />
-      </ListItemButton>
-    </ListItem>
-  );
-}
-
-function CompleteLoginLink() {
-  const url = `${usePathname()}?${useSearchParams()}`;
-
-  return (
-    <ListItem disablePadding>
-      <ListItemButton component="a" href={`/auth/login?returnTo=${encodeURIComponent(url)}`}>
-        <ListItemIcon>
-          <LoginIcon />
-        </ListItemIcon>
-
-        <ListItemText primary="Login" />
-      </ListItemButton>
-    </ListItem>
+      <div className="w-[320px]" ref={resizeRef}>
+        <ProfileLinks profile={profile} onClose={handleClose} />
+      </div>
+    </ProfileMenuSurface>
   );
 }
