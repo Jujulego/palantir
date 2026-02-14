@@ -12,12 +12,14 @@ export function useResizeObserver<E extends Element = Element>(): UseResizeObser
   const observer = useRef<ResizeObserver>(null);
 
   if (observer.current === null) {
-    observer.current = new ResizeObserver((entries) => {
-      setSize({
-        height: entries[0].target.clientHeight,
-        width: entries[0].target.clientWidth,
-      });
-    });
+    observer.current = typeof window !== 'undefined'
+      ? new ResizeObserver((entries) => {
+        setSize({
+          height: entries[0].target.clientHeight,
+          width: entries[0].target.clientWidth,
+        });
+      })
+      : null;
   }
 
   useEffect(() => {
