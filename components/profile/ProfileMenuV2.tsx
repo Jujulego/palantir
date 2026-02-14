@@ -5,6 +5,7 @@ import ProfileLoginLink from '@/components/profile/ProfileLoginLink';
 import ProfileMenuSurface from '@/components/profile/ProfileMenuSurface';
 import UserAvatar from '@/components/users/UserAvatar';
 import { useProfile } from '@/lib/auth/useProfile';
+import { useResizeObserver } from '@/lib/utils/useResizeObserver';
 import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -17,7 +18,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 export interface ProfileMenuV2Props {
   readonly className?: string;
@@ -28,25 +29,8 @@ export default function ProfileMenuV2({ className }: ProfileMenuV2Props) {
 
   const { profile = null } = useProfile();
 
-  const containerRef = useRef<HTMLDivElement>(null);
-
   const [isOpen, setIsOpen] = useState(false);
-  const [contentHeight, setContentHeight] = useState(0);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    setContentHeight(container.clientHeight);
-
-    const observer = new ResizeObserver(() => {
-      setContentHeight(container.clientHeight);
-    });
-
-    observer.observe(container);
-
-    return () => observer.disconnect();
-  }, []);
+  const { ref: resizeRef, height: contentHeight } = useResizeObserver<HTMLDivElement>();
 
   const handleClose = useCallback(() => {
     setIsOpen(false);
@@ -75,7 +59,7 @@ export default function ProfileMenuV2({ className }: ProfileMenuV2Props) {
         <ColorModeToggle />
       </div>
 
-      <div className="w-[320px]" ref={containerRef}>
+      <div className="w-[320px]" ref={resizeRef}>
         <List component="nav" disablePadding onClick={handleClose}>
           <ListItem component="div" disablePadding>
             <ListItemButton
