@@ -3,7 +3,7 @@ import DnsSearchOptions from '@/components/dns/DnsSearchOptions';
 import MapDrawerSurface from '@/components/map/drawer/MapDrawerSurface';
 import MapLayout from '@/components/map/MapLayout';
 import MapToolbar from '@/components/map/MapToolbar';
-import ProfileMenuV2 from '@/components/profile/ProfileMenuV2';
+import ProfileMenu from '@/components/profile/ProfileMenu';
 import SearchBox from '@/components/search/SearchBox';
 import { SearchBoxSkeleton } from '@/components/search/SearchBoxSkeleton';
 import ServerSearchOptions from '@/components/server/ServerSearchOptions';
@@ -28,7 +28,7 @@ export default async function WithMapLayout({ children }: LayoutProps<'/'>) {
           </SearchBox>
         </Suspense>
 
-        <ProfileMenuV2 className="ml-auto" />
+        <ProfileMenu className="ml-auto" />
       </MapToolbar>
 
       <MapDrawerSurface>

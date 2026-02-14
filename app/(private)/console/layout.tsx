@@ -2,8 +2,7 @@
 
 import ConsoleDrawer from '@/components/console/ConsoleDrawer';
 import ConsoleHomeLink from '@/components/console/ConsoleHomeLink';
-import ProfileMenu from '@/components/profile/ProfileMenu';
-import ProfileMenuV2 from '@/components/profile/ProfileMenuV2';
+import ProfilePopover from '@/components/profile/ProfilePopover';
 import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
 import IconButton from '@mui/material/IconButton';
@@ -29,8 +28,7 @@ export default function ConsoleLayout({ children }: LayoutProps<'/console'>) {
 
           <ConsoleHomeLink sx={{ mr: 'auto' }} />
 
-          <ProfileMenu />
-          <ProfileMenuV2 />
+          <ProfilePopover />
         </Toolbar>
       </AppBar>
 
