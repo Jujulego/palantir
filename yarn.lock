@@ -1219,7 +1219,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mapbox/point-geometry@npm:^1.1.0, @mapbox/point-geometry@npm:~1.1.0":
+"@mapbox/point-geometry@npm:*, @mapbox/point-geometry@npm:^1.1.0, @mapbox/point-geometry@npm:~1.1.0":
   version: 1.1.0
   resolution: "@mapbox/point-geometry@npm:1.1.0"
   checksum: 10c0/fe43d00a92592a28835090722df771be50182ff5fc40705cbd571534e2397beef884a97f701869b4a99a61289700cf709f588883f4b085c034bbe722cf17155d
@@ -1248,13 +1248,6 @@ __metadata:
     "@types/geojson": "npm:^7946.0.16"
     pbf: "npm:^4.0.1"
   checksum: 10c0/3cade1c8c3a4e0896bbe8ee1d6bcdb78cb34dc2257bc0151ba85d06f2cb96c87b5bddfd28f8b8a20131a85aa26af7091965da19ac356bf126eb66e20d48542fa
-  languageName: node
-  linkType: hard
-
-"@mapbox/whoots-js@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "@mapbox/whoots-js@npm:3.1.0"
-  checksum: 10c0/fe9e959a9049bcbc2c05d9d1156e050191ad697a1bd95e41cdfa069051ff1d6f2930ced234a8d68d5a0bf78091feab30d76497418ec800d90f0aac8691fe4fd4
   languageName: node
   linkType: hard
 
@@ -3020,10 +3013,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/mapbox__point-geometry@npm:^0.1.4":
-  version: 0.1.4
-  resolution: "@types/mapbox__point-geometry@npm:0.1.4"
-  checksum: 10c0/670191664ea0a6ccb4563500fe815a9aba029ba2f0528d42f9eb560ccb44f6542ba8674e2a3f6d41bd10ad8855b4df4782b5340c980ca182ef9fe6752f2737b8
+"@types/mapbox__point-geometry@npm:^1.0.87":
+  version: 1.0.87
+  resolution: "@types/mapbox__point-geometry@npm:1.0.87"
+  dependencies:
+    "@mapbox/point-geometry": "npm:*"
+  checksum: 10c0/18ecc7064bbd2356985dc0808f0fd68bb5f17824e9d88e1d98d33f2df1b73085fa5aea11a6b7d65826c94d260f9c5a24915a5b82cc9a19afe3a063663faf2087
   languageName: node
   linkType: hard
 
@@ -6762,9 +6757,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mapbox-gl@npm:3.18.1":
-  version: 3.18.1
-  resolution: "mapbox-gl@npm:3.18.1"
+"mapbox-gl@npm:3.19.0":
+  version: 3.19.0
+  resolution: "mapbox-gl@npm:3.19.0"
   dependencies:
     "@mapbox/jsonlint-lines-primitives": "npm:^2.0.2"
     "@mapbox/mapbox-gl-supported": "npm:^3.0.0"
@@ -6772,10 +6767,9 @@ __metadata:
     "@mapbox/tiny-sdf": "npm:^2.0.6"
     "@mapbox/unitbezier": "npm:^0.0.1"
     "@mapbox/vector-tile": "npm:^2.0.4"
-    "@mapbox/whoots-js": "npm:^3.1.0"
     "@types/geojson": "npm:^7946.0.16"
     "@types/geojson-vt": "npm:^3.2.5"
-    "@types/mapbox__point-geometry": "npm:^0.1.4"
+    "@types/mapbox__point-geometry": "npm:^1.0.87"
     "@types/pbf": "npm:^3.0.5"
     "@types/supercluster": "npm:^7.1.3"
     cheap-ruler: "npm:^4.0.0"
@@ -6792,7 +6786,7 @@ __metadata:
     quickselect: "npm:^3.0.0"
     supercluster: "npm:^8.0.1"
     tinyqueue: "npm:^3.0.0"
-  checksum: 10c0/c35b1c55b290cab84ff08afd634bed2c7a4b4757fff9e08402a9eddff65dc07b936d32670ca4813677d93ef4253fa17b64024523532fbf247e846585c6c75106
+  checksum: 10c0/9ea2c10ee4e2aa2859a6ff0210ae48fcb730a06ef99945189e92b3a8ee00d2f736bfaa4b0f9732297ad2bb0f8f39d605be9dfbddcd11bcbc8a63385724c2bf76
   languageName: node
   linkType: hard
 
@@ -7395,7 +7389,7 @@ __metadata:
     ipaddr.js: "npm:2.3.0"
     jsdom: "npm:28.1.0"
     kyrielle: "npm:2.8.3"
-    mapbox-gl: "npm:3.18.1"
+    mapbox-gl: "npm:3.19.0"
     motion: "npm:12.34.3"
     next: "npm:16.1.6"
     next-connect: "npm:1.0.0"
