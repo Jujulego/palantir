@@ -3444,9 +3444,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vercel/analytics@npm:2.0.0":
-  version: 2.0.0
-  resolution: "@vercel/analytics@npm:2.0.0"
+"@vercel/analytics@npm:2.0.1":
+  version: 2.0.1
+  resolution: "@vercel/analytics@npm:2.0.1"
   peerDependencies:
     "@remix-run/react": ^2
     "@sveltejs/kit": ^1 || ^2
@@ -3463,6 +3463,8 @@ __metadata:
       optional: true
     next:
       optional: true
+    nuxt:
+      optional: true
     react:
       optional: true
     svelte:
@@ -3471,7 +3473,7 @@ __metadata:
       optional: true
     vue-router:
       optional: true
-  checksum: 10c0/21b646859616899012bf3056bdc2d79db096c95b5717189ea1ef7947136cbb2a4efb704ed66fbf56d43cf6c78c1acf1fc52b43ebfec8765df19a5c88fbf96255
+  checksum: 10c0/c788c03d0f072f6f2be52d3f6f4f0680d2343f0d8765a759a044204223b14a6e14b285d0c5d5d05c0b66d4419746c5b245656ebdc48398328d85d96f1ede982b
   languageName: node
   linkType: hard
 
@@ -7370,7 +7372,7 @@ __metadata:
     "@types/react": "npm:19.2.14"
     "@types/react-dom": "npm:19.2.3"
     "@types/react-syntax-highlighter": "npm:15.5.13"
-    "@vercel/analytics": "npm:2.0.0"
+    "@vercel/analytics": "npm:2.0.1"
     "@vercel/speed-insights": "npm:2.0.0"
     "@vitejs/plugin-react": "npm:5.1.4"
     "@vitest/coverage-v8": "npm:4.0.18"
