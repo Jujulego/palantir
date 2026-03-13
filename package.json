@@ -52,7 +52,7 @@
     "@vitejs/plugin-react": "5.2.0",
     "@vitest/coverage-v8": "4.1.0",
     "babel-plugin-react-compiler": "1.0.0",
-    "eslint": "9.39.4",
+    "eslint": "10.0.3",
     "eslint-config-next": "16.1.6",
     "jsdom": "28.1.0",
     "postcss": "8.5.8",
