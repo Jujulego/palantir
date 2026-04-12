@@ -1290,12 +1290,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/bundle-analyzer@npm:16.2.2":
-  version: 16.2.2
-  resolution: "@next/bundle-analyzer@npm:16.2.2"
+"@next/bundle-analyzer@npm:16.2.3":
+  version: 16.2.3
+  resolution: "@next/bundle-analyzer@npm:16.2.3"
   dependencies:
     webpack-bundle-analyzer: "npm:4.10.1"
-  checksum: 10c0/9fd6f82f4e0e690cf0cbf45566e95d09ed3eea7e839a2dfacfeef799204d166d4e9b66bc664f068eeae3dc11b1088dbe131590a0e0b5f2240ad07839e9c7e969
+  checksum: 10c0/c8712e7f8cd0210f2f4b3c185e1d894dd3f23a521d79055b592398a9cdf38ea07039284171537c643ed65654a13bb207e63d7af3bb1115ee5691e21933dea502
   languageName: node
   linkType: hard
 
@@ -1306,12 +1306,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/eslint-plugin-next@npm:16.2.2":
-  version: 16.2.2
-  resolution: "@next/eslint-plugin-next@npm:16.2.2"
+"@next/eslint-plugin-next@npm:16.2.3":
+  version: 16.2.3
+  resolution: "@next/eslint-plugin-next@npm:16.2.3"
   dependencies:
     fast-glob: "npm:3.3.1"
-  checksum: 10c0/261e89cb304e989f1868391ca91cb5dadee196b323dd28ada40cff6aa8bd2c6764cb33dec3bac1a1f5e708ac5bab84c605f550ef5d3b07b551b0f1863537dc15
+  checksum: 10c0/be881aa89e0840ab60455b07a2bb9ec0d686c664a0d91e8ca815797a65ca71d7bd79d186b0df5b6892c2bf57bd07fa05421cd93e2812dfeaedfad5ed9fd1023e
   languageName: node
   linkType: hard
 
@@ -4597,11 +4597,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-next@npm:16.2.2":
-  version: 16.2.2
-  resolution: "eslint-config-next@npm:16.2.2"
+"eslint-config-next@npm:16.2.3":
+  version: 16.2.3
+  resolution: "eslint-config-next@npm:16.2.3"
   dependencies:
-    "@next/eslint-plugin-next": "npm:16.2.2"
+    "@next/eslint-plugin-next": "npm:16.2.3"
     eslint-import-resolver-node: "npm:^0.3.6"
     eslint-import-resolver-typescript: "npm:^3.5.2"
     eslint-plugin-import: "npm:^2.32.0"
@@ -4616,7 +4616,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/edd1d7225425f5a1a1c593ef0bb73b23e291df7dce5376135b8863f9db2b96d89bceac26ac3a37cc81678b382f8fb732992f9897cbaab45f4f6adc593f5fd380
+  checksum: 10c0/c6fd3accadb53c636f034baf4363d22847bf824c8ca1ecfa8047a4eee7882d156e75f60f37098357c7ae07e646dfaa23a176336abd3c74aa9a2df61aee984653
   languageName: node
   linkType: hard
 
@@ -7153,7 +7153,7 @@ __metadata:
     "@mui/material": "npm:7.3.9"
     "@mui/material-nextjs": "npm:7.3.9"
     "@mui/system": "npm:7.3.9"
-    "@next/bundle-analyzer": "npm:16.2.2"
+    "@next/bundle-analyzer": "npm:16.2.3"
     "@sentry/nextjs": "npm:10.47.0"
     "@tailwindcss/postcss": "npm:4.2.2"
     "@testing-library/dom": "npm:10.4.1"
@@ -7172,7 +7172,7 @@ __metadata:
     clsx: "npm:2.1.1"
     dayjs: "npm:1.11.20"
     eslint: "npm:9.39.4"
-    eslint-config-next: "npm:16.2.2"
+    eslint-config-next: "npm:16.2.3"
     i18n-iso-countries: "npm:7.14.0"
     ipaddr.js: "npm:2.3.0"
     jsdom: "npm:29.0.2"
