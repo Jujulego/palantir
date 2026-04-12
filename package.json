@@ -50,7 +50,7 @@
     "@types/react-dom": "19.2.3",
     "@types/react-syntax-highlighter": "15.5.13",
     "@vitejs/plugin-react": "6.0.1",
-    "@vitest/coverage-v8": "4.1.2",
+    "@vitest/coverage-v8": "4.1.4",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "9.39.4",
     "eslint-config-next": "16.2.3",
@@ -60,7 +60,7 @@
     "typescript": "5.9.3",
     "vite": "8.0.8",
     "vite-tsconfig-paths": "6.1.1",
-    "vitest": "4.1.2"
+    "vitest": "4.1.4"
   },
   "packageManager": "yarn@4.13.0"
 }
