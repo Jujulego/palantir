@@ -11,10 +11,10 @@ export default function TagsItemSkeleton() {
         <LabelIcon color="primary" />
       </ListItemIcon>
 
-      <Stack direction="row" alignItems="center" gap={1} flexWrap="wrap">
-        <Skeleton variant="rectangular" height={24} width={75} sx={{ borderRadius: 9999 }} />
-        <Skeleton variant="rectangular" height={24} width={50} sx={{ borderRadius: 9999 }} />
-        <Skeleton variant="rectangular" height={24} width={33} sx={{ borderRadius: 9999 }} />
+      <Stack className="items-center flex-wrap gap-2" direction="row">
+        <Skeleton className="rounded-full" variant="rectangular" height={24} width={75} />
+        <Skeleton className="rounded-full" variant="rectangular" height={24} width={50} />
+        <Skeleton className="rounded-full" variant="rectangular" height={24} width={33} />
       </Stack>
     </ListItem>
   );
