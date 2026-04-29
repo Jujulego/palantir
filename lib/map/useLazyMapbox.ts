@@ -8,7 +8,7 @@ export function useLazyMapbox() {
   useEffect(() => {
     let cleaned = false;
 
-    import('mapbox-gl').then((mapbox) => {
+    import('mapbox-gl/esm').then((mapbox) => {
       if (!cleaned) {
         mapboxRef.current = mapbox;
         setIsLoaded(true);
