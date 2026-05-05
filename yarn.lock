@@ -6471,9 +6471,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mapbox-gl@npm:3.23.0":
-  version: 3.23.0
-  resolution: "mapbox-gl@npm:3.23.0"
+"mapbox-gl@npm:3.23.1":
+  version: 3.23.1
+  resolution: "mapbox-gl@npm:3.23.1"
   dependencies:
     "@mapbox/mapbox-gl-supported": "npm:^3.0.0"
     "@mapbox/point-geometry": "npm:^1.1.0"
@@ -6498,7 +6498,7 @@ __metadata:
     quickselect: "npm:^3.0.0"
     supercluster: "npm:^8.0.1"
     tinyqueue: "npm:^3.0.0"
-  checksum: 10c0/e61bac3917e333ccebcb320d32d658ec9eb2a7622ab90214576d4815be8b08017573b761e2ba12dacc578f77bd874c1a2c303091967aaad6a281f634e4c1d795
+  checksum: 10c0/f999f7aca36c8296cdb9e774ee5369aa7defa308c415f1fba865be5a5404cf136c95af766053859be4bfaf40598bdb0f862a4b190099367e48aac7b7d26484af
   languageName: node
   linkType: hard
 
@@ -7104,7 +7104,7 @@ __metadata:
     ipaddr.js: "npm:2.3.0"
     jsdom: "npm:29.1.1"
     kyrielle: "npm:2.8.3"
-    mapbox-gl: "npm:3.23.0"
+    mapbox-gl: "npm:3.23.1"
     motion: "npm:12.38.0"
     next: "npm:16.2.4"
     next-connect: "npm:1.0.0"
