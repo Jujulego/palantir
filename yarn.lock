@@ -661,12 +661,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fragaria/address-formatter@npm:6.7.1":
-  version: 6.7.1
-  resolution: "@fragaria/address-formatter@npm:6.7.1"
+"@fragaria/address-formatter@npm:7.0.0":
+  version: 7.0.0
+  resolution: "@fragaria/address-formatter@npm:7.0.0"
   dependencies:
     mustache: "npm:^4.0.0"
-  checksum: 10c0/17a9c3378020243447fe26ec61bd6a32d2810e715e55af7d64eab7f6c1acee7d0754cdf4d109bcbc4273d70a82e128674deac44e53e5c940c3f3bb14c60caa4a
+  checksum: 10c0/c898fb9d62c092be91a8b678d8aa1d4eed40088bfd0e0b8b8d2566f5fa04219017d209b28bbb48ab97a7f0f0b48e26dbe0411e27109899686ed5dd715bb7cedf
   languageName: node
   linkType: hard
 
@@ -7074,7 +7074,7 @@ __metadata:
     "@emotion/cache": "npm:11.14.0"
     "@emotion/react": "npm:11.14.0"
     "@emotion/styled": "npm:11.14.1"
-    "@fragaria/address-formatter": "npm:6.7.1"
+    "@fragaria/address-formatter": "npm:7.0.0"
     "@microsoft/eslint-formatter-sarif": "npm:3.1.0"
     "@mui/icons-material": "npm:9.0.1"
     "@mui/material": "npm:9.0.1"
