@@ -5299,13 +5299,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"grid-index@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "grid-index@npm:1.1.0"
-  checksum: 10c0/0ba2a622a52badc86642a002abee79b48c207092347e869528253e634573b9b55494db649fbd1779122d797aaa3b59e284023a96a7a5c666c7375f0e320f8f57
-  languageName: node
-  linkType: hard
-
 "gzip-size@npm:^6.0.0":
   version: 6.0.0
   resolution: "gzip-size@npm:6.0.0"
@@ -6429,9 +6422,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mapbox-gl@npm:3.23.1":
-  version: 3.23.1
-  resolution: "mapbox-gl@npm:3.23.1"
+"mapbox-gl@npm:3.24.0":
+  version: 3.24.0
+  resolution: "mapbox-gl@npm:3.24.0"
   dependencies:
     "@mapbox/mapbox-gl-supported": "npm:^3.0.0"
     "@mapbox/point-geometry": "npm:^1.1.0"
@@ -6447,7 +6440,6 @@ __metadata:
     earcut: "npm:^3.0.1"
     geojson-vt: "npm:^4.0.2"
     gl-matrix: "npm:^3.4.4"
-    grid-index: "npm:^1.1.0"
     kdbush: "npm:^4.0.2"
     martinez-polygon-clipping: "npm:^0.8.1"
     murmurhash-js: "npm:^1.0.0"
@@ -6456,7 +6448,7 @@ __metadata:
     quickselect: "npm:^3.0.0"
     supercluster: "npm:^8.0.1"
     tinyqueue: "npm:^3.0.0"
-  checksum: 10c0/f999f7aca36c8296cdb9e774ee5369aa7defa308c415f1fba865be5a5404cf136c95af766053859be4bfaf40598bdb0f862a4b190099367e48aac7b7d26484af
+  checksum: 10c0/af2c85598980a5cd3176e419895d66a726f7cd162bf46ab19a21226c904360011bb013085f321a9e12ed512bb9748058b3b08a550974cf747540da4e18056911
   languageName: node
   linkType: hard
 
@@ -7062,7 +7054,7 @@ __metadata:
     ipaddr.js: "npm:2.4.0"
     jsdom: "npm:29.1.1"
     kyrielle: "npm:2.8.3"
-    mapbox-gl: "npm:3.23.1"
+    mapbox-gl: "npm:3.24.0"
     motion: "npm:12.39.0"
     next: "npm:16.2.6"
     next-connect: "npm:1.0.0"
