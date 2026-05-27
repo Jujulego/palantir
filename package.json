@@ -23,7 +23,7 @@
     "@vercel/analytics": "2.0.1",
     "@vercel/speed-insights": "2.0.0",
     "clsx": "2.1.1",
-    "dayjs": "1.11.20",
+    "dayjs": "1.11.21",
     "i18n-iso-countries": "7.14.0",
     "ipaddr.js": "2.4.0",
     "kyrielle": "2.8.3",
