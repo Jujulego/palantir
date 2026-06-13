@@ -9,6 +9,7 @@
     "dependencies"
   ],
   "rebaseWhen": "behind-base-branch",
+  "minimumReleaseAge": "7 days",
   "packageRules": [
     {
       "matchCategories": [
