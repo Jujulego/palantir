@@ -1,4 +1,4 @@
-import type * as mapboxgl from 'mapbox-gl';
+import type * as mapboxgl from 'mapbox-gl/esm';
 import { useEffect, useRef, useState } from 'react';
 
 export function useLazyMapbox() {
@@ -8,7 +8,7 @@ export function useLazyMapbox() {
   useEffect(() => {
     let cleaned = false;
 
-    import('mapbox-gl').then((mapbox) => {
+    import('mapbox-gl/esm').then((mapbox) => {
       if (!cleaned) {
         mapboxRef.current = mapbox;
         setIsLoaded(true);

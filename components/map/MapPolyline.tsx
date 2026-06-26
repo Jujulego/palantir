@@ -5,7 +5,7 @@ import { MapContext } from '@/components/map/map.context';
 import type { Coordinates } from '@/lib/utils/coordinates';
 import { useTheme } from '@mui/material';
 import { useColorScheme } from '@mui/material/styles';
-import type { GeoJSONSource } from 'mapbox-gl';
+import type { GeoJSONSource } from 'mapbox-gl/esm';
 import { use, useEffect, useId } from 'react';
 
 // Component

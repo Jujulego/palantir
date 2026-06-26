@@ -1,7 +1,6 @@
 import type { MapCamera } from '@/components/map/map.context';
-import { useLazyMapbox } from '@/lib/map/useLazyMapbox';
 import { styled } from '@mui/material';
-import type { Map } from 'mapbox-gl';
+import { Map } from 'mapbox-gl/esm';
 import { m, useTransform } from 'motion/react';
 import { useEffect, useRef } from 'react';
 import './mapbox.css';
@@ -19,13 +18,10 @@ export default function MapboxMap(props: MapboxMapProps) {
   const { camera, onMapCreated, onMapLoaded, onMapStyleLoaded, onMapRemoved } = props;
 
   // Initiate map
-  const { mapboxRef, isLoaded: isMapboxLoaded } = useLazyMapbox();
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!mapboxRef.current) return;
-
-    const map = new mapboxRef.current.Map({
+    const map = new Map({
       accessToken: process.env.NEXT_PUBLIC_MAPBOX_PK!,
       container: containerRef.current!,
       style: 'mapbox://styles/mapbox/standard?optimize=true',
@@ -54,7 +50,7 @@ export default function MapboxMap(props: MapboxMapProps) {
 
       onMapRemoved();
     };
-  }, [camera.height, camera.width, camera.zoom, isMapboxLoaded, mapboxRef, onMapCreated, onMapLoaded, onMapRemoved, onMapStyleLoaded]);
+  }, [camera.height, camera.width, camera.zoom, onMapCreated, onMapLoaded, onMapRemoved, onMapStyleLoaded]);
 
   // Container height
   useEffect(() => {

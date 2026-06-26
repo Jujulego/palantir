@@ -1,8 +1,7 @@
 'use client';
 
 import { MapContext } from '@/components/map/map.context';
-import { useLazyMapbox } from '@/lib/map/useLazyMapbox';
-import type { Marker } from 'mapbox-gl';
+import { Marker } from 'mapbox-gl/esm';
 import { type ReactNode, use, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -14,7 +13,6 @@ export interface MapMarkerProps {
 }
 
 export default function MapMarker({ latitude, longitude, children }: MapMarkerProps) {
-  const { mapboxRef, isLoaded: isMapboxLoaded } = useLazyMapbox();
   const { map, isLoaded } = use(MapContext);
 
   const elementRef = useRef<HTMLElement>(null);
@@ -29,9 +27,6 @@ export default function MapMarker({ latitude, longitude, children }: MapMarkerPr
   }
 
   useEffect(() => {
-    if (!mapboxRef.current) return;
-
-    const { Marker } = mapboxRef.current;
     const marker = new Marker({
       anchor: 'bottom',
       element: element(),
@@ -47,7 +42,7 @@ export default function MapMarker({ latitude, longitude, children }: MapMarkerPr
         marker.remove();
       };
     }
-  }, [isMapboxLoaded, isLoaded, latitude, longitude, map, mapboxRef]);
+  }, [isLoaded, latitude, longitude, map]);
 
   useEffect(() => {
     const marker = markerRef.current;
