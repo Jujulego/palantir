@@ -4,7 +4,7 @@ import { MapContext } from '@/components/map/map.context';
 import MapboxMap from '@/components/map/MapboxMap';
 import MapCamera from '@/components/map/MapCamera';
 import MapStyle from '@/components/map/MapStyle';
-import type * as mapboxgl from 'mapbox-gl';
+import type * as mapboxgl from 'mapbox-gl/esm';
 import { useMotionValue } from 'motion/react';
 import { type ReactNode, useCallback, useMemo, useState } from 'react';
 

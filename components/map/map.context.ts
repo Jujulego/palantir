@@ -1,4 +1,4 @@
-import type * as mapboxgl from 'mapbox-gl';
+import type * as mapboxgl from 'mapbox-gl/esm';
 import { motionValue, type MotionValue } from 'motion/react';
 import { createContext } from 'react';
 

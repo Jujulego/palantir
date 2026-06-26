@@ -1,5 +1,5 @@
 import { useColorScheme, useTheme } from '@mui/material/styles';
-import type * as mapboxgl from 'mapbox-gl';
+import type * as mapboxgl from 'mapbox-gl/esm';
 import { useEffect } from 'react';
 
 // Component

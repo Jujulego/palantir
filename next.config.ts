@@ -44,7 +44,7 @@ const nextConfig: NextConfig = {
 export default pipe$(
   nextConfig,
   withBundleAnalyzer({
-    enabled: process.env.ANALYZE === 'true'
+    enabled: true,//process.env.ANALYZE === 'true'
   }),
   (config) => withSentryConfig(config, {
     org: 'jujulego',

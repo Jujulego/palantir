@@ -1,6 +1,5 @@
 import { MapContext } from '@/components/map/map.context';
-import { useLazyMapbox } from '@/lib/map/useLazyMapbox';
-import type { LngLat } from 'mapbox-gl';
+import { LngLat } from 'mapbox-gl/esm';
 import { useAnimate } from 'motion/react';
 import { use, useCallback } from 'react';
 
@@ -17,14 +16,12 @@ export interface FlyToOptions {
 
 // Hook
 export function useMapFlyTo() {
-  const { mapboxRef, isLoaded: isMapboxLoaded } = useLazyMapbox();
   const { map, isLoaded, camera } = use(MapContext);
   const [,animate] = useAnimate();
 
   const flyTo = useCallback((opts: FlyToOptions) => {
-    if (!map || !isLoaded || !mapboxRef.current) return;
+    if (!map || !isLoaded) return;
 
-    const { LngLat } = mapboxRef.current!;
     const tr = map.transform;
 
     const startCenter = map.getCenter();
@@ -73,9 +70,9 @@ export function useMapFlyTo() {
     animate(camera.lat, [startCenter.lat, center.lat], { duration, ease: (k) => u(k * S) });
     animate(camera.lng, [startCenter.lng, center.lng], { duration, ease: (k) => u(k * S) });
     animate(camera.zoom, [0, zoom], { duration, ease: (k) => (startZoom + tr.scaleZoom(1 / w(k * S))) / zoom });
-  }, [animate, camera.lat, camera.lng, camera.zoom, isLoaded, map, mapboxRef]);
+  }, [animate, camera.lat, camera.lng, camera.zoom, isLoaded, map]);
 
-  return { flyTo, isReady: !!map && isLoaded && isMapboxLoaded };
+  return { flyTo, isReady: !!map && isLoaded };
 }
 
 // Utils

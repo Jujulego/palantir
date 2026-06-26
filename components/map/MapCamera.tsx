@@ -1,5 +1,5 @@
 import type { MapCamera } from '@/components/map/map.context';
-import type * as mapboxgl from 'mapbox-gl';
+import type * as mapboxgl from 'mapbox-gl/esm';
 import { useTransform } from 'motion/react';
 import { useEffect } from 'react';
 
