@@ -6579,7 +6579,7 @@ __metadata:
     swr: "npm:2.4.2"
     tailwindcss: "npm:4.3.2"
     typescript: "npm:6.0.3"
-    vite: "npm:8.1.1"
+    vite: "npm:8.1.2"
     vite-tsconfig-paths: "npm:6.1.1"
     vitest: "npm:4.1.9"
   languageName: unknown
@@ -8187,9 +8187,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:8.1.1, vite@npm:^6.0.0 || ^7.0.0 || ^8.0.0":
-  version: 8.1.1
-  resolution: "vite@npm:8.1.1"
+"vite@npm:8.1.2, vite@npm:^6.0.0 || ^7.0.0 || ^8.0.0":
+  version: 8.1.2
+  resolution: "vite@npm:8.1.2"
   dependencies:
     fsevents: "npm:~2.3.3"
     lightningcss: "npm:^1.32.0"
@@ -8240,7 +8240,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10c0/ad93a802d001b23f11ad9426f05fa5afa4f06c87eee713bbf20b13f5971178a20af7e738ddc2e2b0137b9819ae256ef80a4856299b2969f4173f8bda186d1456
+  checksum: 10c0/b39731dc31250b267ae5ddae81d737deafe2163bd0e1aa04849fb5f7c66b7ff7bcffa50883480b5f9fb47b1596b772021a8f9f671986e57b88d98300710ded77
   languageName: node
   linkType: hard
 
