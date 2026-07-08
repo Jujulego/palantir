@@ -19,7 +19,7 @@
     "@mui/material": "9.1.2",
     "@mui/material-nextjs": "9.1.1",
     "@mui/system": "9.1.2",
-    "@sentry/nextjs": "10.62.0",
+    "@sentry/nextjs": "10.63.0",
     "@vercel/analytics": "2.0.1",
     "@vercel/speed-insights": "2.0.0",
     "clsx": "2.1.1",
