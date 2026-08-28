@@ -25,7 +25,7 @@
     "clsx": "2.1.1",
     "dayjs": "1.11.23",
     "i18n-iso-countries": "7.14.0",
-    "ipaddr.js": "2.4.0",
+    "ipaddr.js": "2.5.0",
     "kyrielle": "2.8.3",
     "mapbox-gl": "3.27.0",
     "motion": "12.42.2",
