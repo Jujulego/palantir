@@ -6699,7 +6699,7 @@ __metadata:
     react: "npm:19.2.8"
     react-dom: "npm:19.2.8"
     react-syntax-highlighter: "npm:16.1.1"
-    swr: "npm:2.4.2"
+    swr: "npm:2.5.1"
     tailwindcss: "npm:4.3.3"
     typescript: "npm:6.0.3"
     vite: "npm:8.2.2"
@@ -7869,15 +7869,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swr@npm:2.4.2, swr@npm:^2.2.5":
-  version: 2.4.2
-  resolution: "swr@npm:2.4.2"
+"swr@npm:2.5.1, swr@npm:^2.2.5":
+  version: 2.5.1
+  resolution: "swr@npm:2.5.1"
   dependencies:
     dequal: "npm:^2.0.3"
     use-sync-external-store: "npm:^1.6.0"
   peerDependencies:
     react: ^16.11.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: 10c0/fdb54e3cb5e788d4aa53d7db7d541709807c0dde2af41c423e241274cd6595e66dca15a0a310e08a26a49391ff615c153aaa44710016249c2d4c0fe653cc970f
+  checksum: 10c0/46a815a8abaf38378c6febc3beacedf4d7e1fafce0656ff6ed23561cfa9e380de3831d708b36d516f70bd3d0decac824108bce96d0826f258c33cf56e1e837b6
   languageName: node
   linkType: hard
 
