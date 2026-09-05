@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { extractAddress, extractAutonomousSystem, extractCoordinates } from './extractors';
-import type { IpInfoResult } from './ip-info.dto';
+import type { IpInfoData } from './ip-info.dto';
 
 // Constants
 const result = {
@@ -12,7 +12,7 @@ const result = {
   region: 'region',
   country: 'fr',
   anycast: false,
-} as IpInfoResult;
+} as IpInfoData;
 
 // Tests
 describe('extractCoordinates', () => {
