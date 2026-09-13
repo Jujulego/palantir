@@ -1,5 +1,5 @@
 import withBundleAnalyzer from '@next/bundle-analyzer';
-import { withSentryConfig } from '@sentry/nextjs';
+import { withSentryConfig } from '@sentry/nextjs/config';
 import { pipe$ } from 'kyrielle';
 import type { NextConfig } from 'next';
 
