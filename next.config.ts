@@ -1,4 +1,3 @@
-import withBundleAnalyzer from '@next/bundle-analyzer';
 import { withSentryConfig } from '@sentry/nextjs/config';
 import { pipe$ } from 'kyrielle';
 import type { NextConfig } from 'next';
@@ -43,9 +42,6 @@ const nextConfig: NextConfig = {
 // Plugins
 export default pipe$(
   nextConfig,
-  withBundleAnalyzer({
-    enabled: true,//process.env.ANALYZE === 'true'
-  }),
   (config) => withSentryConfig(config, {
     org: 'jujulego',
     project: 'palantir',
