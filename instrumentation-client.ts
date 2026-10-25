@@ -10,10 +10,8 @@ init({
     replayIntegration(),
   ],
 
-  enableLogs: true,
   replaysSessionSampleRate: 0.1,
   replaysOnErrorSampleRate: 1.0,
-  sendDefaultPii: true,
   tracesSampleRate: 1.0
 });
 
