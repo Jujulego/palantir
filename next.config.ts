@@ -6,12 +6,6 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   cacheComponents: true,
   reactCompiler: true,
-  compiler: {
-    define: {
-      __RRWEB_EXCLUDE_IFRAME__: 'true',
-      __RRWEB_EXCLUDE_SHADOW_DOM__: 'true',
-    }
-  },
   images: {
     remotePatterns: [
       {
@@ -49,13 +43,12 @@ export default pipe$(
     authToken: process.env.SENTRY_AUTH_TOKEN,
     silent: true,
     widenClientFileUpload: true,
-    webpack: {
-      reactComponentAnnotation: {
-        enabled: true
-      },
-      treeshake: {
-        removeDebugLogging: true
-      },
+    reactComponentAnnotation: {
+      enabled: true
+    },
+    bundleSizeOptimizations: {
+      excludeReplayIframe: true,
+      excludeReplayShadowDom: true,
     }
   })
 );
