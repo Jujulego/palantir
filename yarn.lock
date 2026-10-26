@@ -4471,7 +4471,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:^13.4.5":
+"framer-motion@npm:13.5.1":
   version: 13.5.1
   resolution: "framer-motion@npm:13.5.1"
   dependencies:
@@ -5916,11 +5916,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"motion@npm:13.4.5":
-  version: 13.4.5
-  resolution: "motion@npm:13.4.5"
+"motion@npm:13.5.1":
+  version: 13.5.1
+  resolution: "motion@npm:13.5.1"
   dependencies:
-    framer-motion: "npm:^13.4.5"
+    framer-motion: "npm:13.5.1"
     tslib: "npm:^2.4.0"
   peerDependencies:
     react: ^18.0.0 || ^19.0.0
@@ -5930,7 +5930,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 10c0/d91b577cd05f6629d8d4bc123501f9fab80fbaa6112ebf27d91d0ee88538b224184fbf5480599c255220aeca839b848613e1d2d2c45a79a43cb85bf11fba1a4e
+  checksum: 10c0/ad6acdda9013d993ed79a8c38653d008d4b5521657ff055ae7ecedbbb86ea770ad448547b14a47f98f416772ed1e974a9d5913f639bf2d844b4fed324ed56d62
   languageName: node
   linkType: hard
 
@@ -6359,7 +6359,7 @@ __metadata:
     jsdom: "npm:30.1.3"
     kyrielle: "npm:2.9.0"
     mapbox-gl: "npm:3.31.0"
-    motion: "npm:13.4.5"
+    motion: "npm:13.5.1"
     next: "npm:16.4.2"
     next-connect: "npm:1.0.0"
     postcss: "npm:8.5.31"
