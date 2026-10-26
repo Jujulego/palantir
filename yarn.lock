@@ -201,7 +201,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.28.4, @babel/runtime@npm:^7.29.7, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.8.7":
+"@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.28.4, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.8.7":
   version: 7.29.10
   resolution: "@babel/runtime@npm:7.29.10"
   checksum: 10c0/32f975da8e9c2cae6b33e1a477f8fe8bbff6722c982b5ce35f99affaf3a7a1b612c8272b43afa0e51d3000928d6f3ba38f9296301115db5640264907c027b0cd
@@ -1049,34 +1049,34 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/core-downloads-tracker@npm:^9.4.0":
+"@mui/core-downloads-tracker@npm:^9.5.0":
   version: 9.5.0
   resolution: "@mui/core-downloads-tracker@npm:9.5.0"
   checksum: 10c0/3008f1c369768246c06273736c36513e35ca1032f46e01a59375f090121003a82aa76b4d7440c6d68ae363403cfc49cab5f379f24dbbd44c15d348a2d4ad210d
   languageName: node
   linkType: hard
 
-"@mui/icons-material@npm:9.4.0":
-  version: 9.4.0
-  resolution: "@mui/icons-material@npm:9.4.0"
+"@mui/icons-material@npm:9.5.0":
+  version: 9.5.0
+  resolution: "@mui/icons-material@npm:9.5.0"
   dependencies:
-    "@babel/runtime": "npm:^7.29.7"
+    "@babel/runtime": "npm:^7.29.7 || ^8.0.5"
   peerDependencies:
-    "@mui/material": ^9.4.0
+    "@mui/material": ^9.5.0
     "@types/react": ^17.0.0 || ^18.0.0 || ^19.0.0
     react: ^17.0.0 || ^18.0.0 || ^19.0.0
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 10c0/929f818e1d514a9478776eac33063956732f353a24cb061221e889c9ee1f69b9b1a16d78157d5c01ab9647a9ba33af37dacd255a3c5f4dff2e1bd3fc4386a55c
+  checksum: 10c0/63dc16b6de0686f22f7e9b08fdd453cbeeb2439658c190b4458ffcfc616597fe4dbf1bc19183358db2083b23063155ef73caa3e4811d75ccfac2c1c711266449
   languageName: node
   linkType: hard
 
-"@mui/material-nextjs@npm:9.4.0":
-  version: 9.4.0
-  resolution: "@mui/material-nextjs@npm:9.4.0"
+"@mui/material-nextjs@npm:9.5.0":
+  version: 9.5.0
+  resolution: "@mui/material-nextjs@npm:9.5.0"
   dependencies:
-    "@babel/runtime": "npm:^7.29.7"
+    "@babel/runtime": "npm:^7.29.7 || ^8.0.5"
   peerDependencies:
     "@emotion/cache": ^11.11.0
     "@emotion/react": ^11.11.4
@@ -1091,30 +1091,30 @@ __metadata:
       optional: true
     "@types/react":
       optional: true
-  checksum: 10c0/9eaccd20077b1a331f2ecb908f4fb47559c8a6d81ad621e792ec1bb765766c11c1dcbce0b10a8e047bfb04aba1101477985db8d7a1f1ec3f61865ca576489cd4
+  checksum: 10c0/575208d55f255fd52677407ffa32a3aacd148df165f51f46954020cb17b9a5a9336c86182ca41e9a5fc62a643ddb62f9fe4f7acea16b6b2ea3404de0be243f21
   languageName: node
   linkType: hard
 
-"@mui/material@npm:9.4.0":
-  version: 9.4.0
-  resolution: "@mui/material@npm:9.4.0"
+"@mui/material@npm:9.5.0":
+  version: 9.5.0
+  resolution: "@mui/material@npm:9.5.0"
   dependencies:
-    "@babel/runtime": "npm:^7.29.7"
-    "@mui/core-downloads-tracker": "npm:^9.4.0"
-    "@mui/system": "npm:^9.4.0"
-    "@mui/types": "npm:^9.4.0"
-    "@mui/utils": "npm:^9.4.0"
+    "@babel/runtime": "npm:^7.29.7 || ^8.0.5"
+    "@mui/core-downloads-tracker": "npm:^9.5.0"
+    "@mui/system": "npm:^9.5.0"
+    "@mui/types": "npm:^9.5.0"
+    "@mui/utils": "npm:^9.5.0"
     "@popperjs/core": "npm:^2.11.8"
     "@types/react-transition-group": "npm:^4.4.12"
     clsx: "npm:^2.1.1"
     csstype: "npm:^3.2.3"
     prop-types: "npm:^15.8.1"
-    react-is: "npm:^19.2.8"
+    react-is: "npm:^19.3.0"
     react-transition-group: "npm:^4.4.5"
   peerDependencies:
     "@emotion/react": ^11.5.0
     "@emotion/styled": ^11.3.0
-    "@mui/material-pigment-css": ^9.4.0
+    "@mui/material-pigment-css": ^9.5.0
     "@types/react": ^17.0.0 || ^18.0.0 || ^19.0.0
     react: ^17.0.0 || ^18.0.0 || ^19.0.0
     react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
@@ -1127,11 +1127,11 @@ __metadata:
       optional: true
     "@types/react":
       optional: true
-  checksum: 10c0/c3b6a0ed22ad8be5d7ef3604a6f46ce889a001298ceeba9636d3df9db9a481c2209fb2fc5b583bbc6c25b7d2a32b7fcfdd0a71e46e551b8e8c23e43792b54842
+  checksum: 10c0/284f30d341d9c4458c4540f663e1018a4bf7a4c2701d155d56f577e3e9ce8c334d780ca16649da67ae30a755c8a279384c9f6d8390a3b6a15b119d7b18ef3f27
   languageName: node
   linkType: hard
 
-"@mui/private-theming@npm:^9.4.0, @mui/private-theming@npm:^9.5.0":
+"@mui/private-theming@npm:^9.5.0":
   version: 9.5.0
   resolution: "@mui/private-theming@npm:9.5.0"
   dependencies:
@@ -1148,7 +1148,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/styled-engine@npm:^9.4.0, @mui/styled-engine@npm:^9.5.0":
+"@mui/styled-engine@npm:^9.5.0":
   version: 9.5.0
   resolution: "@mui/styled-engine@npm:9.5.0"
   dependencies:
@@ -1171,35 +1171,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/system@npm:9.4.0":
-  version: 9.4.0
-  resolution: "@mui/system@npm:9.4.0"
-  dependencies:
-    "@babel/runtime": "npm:^7.29.7"
-    "@mui/private-theming": "npm:^9.4.0"
-    "@mui/styled-engine": "npm:^9.4.0"
-    "@mui/types": "npm:^9.4.0"
-    "@mui/utils": "npm:^9.4.0"
-    clsx: "npm:^2.1.1"
-    csstype: "npm:^3.2.3"
-    prop-types: "npm:^15.8.1"
-  peerDependencies:
-    "@emotion/react": ^11.5.0
-    "@emotion/styled": ^11.3.0
-    "@types/react": ^17.0.0 || ^18.0.0 || ^19.0.0
-    react: ^17.0.0 || ^18.0.0 || ^19.0.0
-  peerDependenciesMeta:
-    "@emotion/react":
-      optional: true
-    "@emotion/styled":
-      optional: true
-    "@types/react":
-      optional: true
-  checksum: 10c0/23964e01db4ee9173b2d63539a14dec6e60ec5ee786eda440d8af6ec3be3f1ed3d34f1f735efbc1186f322465cf2f8d31bbc49589f3ca662f51778db3c75e388
-  languageName: node
-  linkType: hard
-
-"@mui/system@npm:^9.4.0":
+"@mui/system@npm:9.5.0, @mui/system@npm:^9.5.0":
   version: 9.5.0
   resolution: "@mui/system@npm:9.5.0"
   dependencies:
@@ -1227,7 +1199,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/types@npm:^9.4.0, @mui/types@npm:^9.5.0":
+"@mui/types@npm:^9.5.0":
   version: 9.5.0
   resolution: "@mui/types@npm:9.5.0"
   dependencies:
@@ -1241,7 +1213,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/utils@npm:^9.4.0, @mui/utils@npm:^9.5.0":
+"@mui/utils@npm:^9.5.0":
   version: 9.5.0
   resolution: "@mui/utils@npm:9.5.0"
   dependencies:
@@ -6331,10 +6303,10 @@ __metadata:
     "@emotion/styled": "npm:11.14.1"
     "@fragaria/address-formatter": "npm:7.1.2"
     "@microsoft/eslint-formatter-sarif": "npm:3.1.0"
-    "@mui/icons-material": "npm:9.4.0"
-    "@mui/material": "npm:9.4.0"
-    "@mui/material-nextjs": "npm:9.4.0"
-    "@mui/system": "npm:9.4.0"
+    "@mui/icons-material": "npm:9.5.0"
+    "@mui/material": "npm:9.5.0"
+    "@mui/material-nextjs": "npm:9.5.0"
+    "@mui/system": "npm:9.5.0"
     "@sentry/nextjs": "npm:11.8.0"
     "@tailwindcss/postcss": "npm:4.3.3"
     "@testing-library/dom": "npm:10.4.2"
@@ -6605,7 +6577,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-is@npm:^19.2.8, react-is@npm:^19.3.0":
+"react-is@npm:^19.3.0":
   version: 19.3.0
   resolution: "react-is@npm:19.3.0"
   checksum: 10c0/99b16fc1009222ec0bbe05286566c865908430778ea6ba90dd418c7a11594c6cbb8db58432735b9203e3c6463e3eef5a399df1317ee2d75fd96b3a88cfaa662e
