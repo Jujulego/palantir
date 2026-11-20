@@ -5206,9 +5206,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsdom@npm:31.0.0":
-  version: 31.0.0
-  resolution: "jsdom@npm:31.0.0"
+"jsdom@npm:31.0.1":
+  version: 31.0.1
+  resolution: "jsdom@npm:31.0.1"
   dependencies:
     "@exodus/bytes": "npm:^1.16.0"
     bcp-47: "npm:^2.1.2"
@@ -5233,7 +5233,7 @@ __metadata:
   peerDependenciesMeta:
     "@napi-rs/canvas":
       optional: true
-  checksum: 10c0/e7240d72bfd6aab3e06ef2bcbd9656e39011707958d57b30c25caf840503a433ba56ba384f43e07938125f49e835f679856db58a9f762496a1811ec6ab580740
+  checksum: 10c0/e0f5567543401f2897984682a4139e42b8190fe8ed3f5d53f7e391333cb98b553870018685dbea5eb98549649ac8d5980800a774729a19aabca6fa0fd2b5f83d
   languageName: node
   linkType: hard
 
@@ -6124,7 +6124,7 @@ __metadata:
     eslint-config-next: "npm:16.4.6"
     i18n-iso-countries: "npm:7.14.0"
     ipaddr.js: "npm:2.5.0"
-    jsdom: "npm:31.0.0"
+    jsdom: "npm:31.0.1"
     kyrielle: "npm:2.9.0"
     mapbox-gl: "npm:3.34.2"
     motion: "npm:14.10.1"
