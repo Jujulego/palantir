@@ -5575,10 +5575,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mapbox-gl@npm:3.35.0":
-  version: 3.35.0
-  resolution: "mapbox-gl@npm:3.35.0"
-  checksum: 10c0/e9400aa85b72f472b96a3d2052d840d620b739279d952a98372cb856c43170a5a7ff820822407f53fd6c15e91ce6af8adb38bd75650c359fa9220f6b3bba5d69
+"mapbox-gl@npm:3.35.1":
+  version: 3.35.1
+  resolution: "mapbox-gl@npm:3.35.1"
+  checksum: 10c0/50ef62af7b35eb10550291c28e7e1b7ebb6dba1afdb6c233801150a8918b31c2dc384225f560d34527c99cba12b00c115830aee81187d1f35e87906f0c067fd7
   languageName: node
   linkType: hard
 
@@ -6125,7 +6125,7 @@ __metadata:
     ipaddr.js: "npm:2.5.0"
     jsdom: "npm:31.0.1"
     kyrielle: "npm:2.9.0"
-    mapbox-gl: "npm:3.35.0"
+    mapbox-gl: "npm:3.35.1"
     motion: "npm:14.14.0"
     next: "npm:16.4.6"
     next-connect: "npm:1.0.0"
